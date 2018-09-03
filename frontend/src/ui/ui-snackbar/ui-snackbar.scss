@@ -1,0 +1,39 @@
+.ui-snackbar {
+    display: block;
+    padding: 15px 25px;
+    background-color: #0a4968;
+    color: white;
+    max-width: 85%;
+    min-width: 320px;
+    position: fixed;
+    bottom: 15px;
+    border-radius: 3px;
+    transition: bottom 0.6s;
+    font-size: 14px;
+    line-height: 25px;
+    &_active {
+        bottom: 15px;
+        transition: bottom 0.6s;
+    }
+    &__button-close {
+        float: left;
+        margin-right: 25px;
+    }
+
+    &-enter-active {
+      bottom: 15px;
+      transition: bottom 0.6s;
+    }
+    &-leave-active {
+      bottom: -100%;
+      transition: bottom 0.6s;
+    }
+    &-enter {
+      bottom: -100%;
+      transition: bottom 0.6s;
+    }
+    &-leave {
+      bottom: 15px;
+      transition: bottom 0.6s;
+    }
+}

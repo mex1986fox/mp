@@ -1,0 +1,110 @@
+.ui-button {
+  width: auto;
+  height: 36px;
+  padding: 0 30px;
+  margin: 6px;
+  line-height: 36px;
+  background-color: $color-fon;
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: $color-links;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  border: 0;
+  background-color: #ffffff;
+  box-shadow: $color-shadow;
+  overflow: hidden;
+  float: left;
+  display: block;
+  text-decoration: none;
+  &:hover {
+    cursor: pointer;
+    color: $color-links;
+    text-decoration: none;
+  }
+  &:active {
+    color: $color-links;
+    text-decoration: none;
+    box-shadow: $color-shadow-active;
+  }
+  &:visited {
+    color: $color-links;
+    text-decoration: none;
+  }
+  &_circle {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 26px;
+    padding: 0;
+    box-shadow: 0px 5px 6px rgba(100, 124, 137, 0.49);
+    line-height: 46px;
+    margin-bottom: 16px;
+    &_big {
+      width: 52px;
+      height: 52px;
+      line-height: 53px;
+    }
+    &_mini {
+      width: 36px;
+      height: 36px;
+      font-size: 18px;
+      line-height: 36px;
+    }
+    &:active {
+      box-shadow: 0px 9px 10px rgba(100, 124, 137, 0.49);
+      transition-duration: 200ms;
+    }
+  }
+  &_big {
+    height: 46px;
+    font-size: 17px;
+    line-height: 46px;
+  }
+  &_mini {
+    height: 30px;
+    line-height: 30px;
+    font-size: 11px;
+    padding: 0 15px;
+  }
+  &_blue {
+    background-color: #2495ce;
+    color: #ffffff !important;
+    &:hover {
+      background-color: #1389c4;
+    }
+    &:active {
+      background-color: #37a1d6;
+    }
+  }
+  &_red {
+    background-color: #d62526;
+    color: #ffffff !important;
+    &:hover {
+      background-color: #c42222;
+    }
+    &:active {
+      background-color: #d62526;
+    }
+  }
+  &_flat {
+    background-color: rgba(255, 255, 255, 0);
+    color: $color-links !important;
+    box-shadow: none;
+    &:hover {
+      // background-color: #f3f3f3;
+      background-color: $color-list-hover;
+    }
+    &:active {
+      box-shadow: none;
+      background-color: $color-list-active;
+      transition-duration: 200ms;
+    }
+  }
+}

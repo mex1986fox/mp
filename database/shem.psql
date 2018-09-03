@@ -1,0 +1,74 @@
+CREATE TABLE "users" (
+    id serial,
+    LOGIN varchar(64) NOT NULL UNIQUE,
+    PASSWORD varchar(32) NOT NULL,
+    recovery_key varchar(32) NOT NULL, -- ключ для восстановления пароля захеширован MD5
+    name varchar(64) NOT NULL,
+    surname varchar(64),
+    birthdate date,
+    PRIMARY KEY (id)
+);
+
+
+
+-- -- access_status статус доступа, определяет группу пользователей 
+-- -- к которой принадлежит тот или иной пользователь
+-- -- например:
+-- -- superadmin, adminserega, glavbuh, director
+-- -- для каждого запроса указывается группа лиц которым можно проссматривать данный ресурс
+-- CREATE TABLE "apps" (
+--     id serial,
+--     user_id bigint, -- id пользователя которому принадлежит приложение
+--     name varchar(64) NOT NULL, -- access_status varchar(32) not null, -- уровень доступа приложения
+--     redirect text NOT NULL, -- ссылка редиректа на которую будут отправлены пользователи
+--     recovery_key varchar(32) NOT NULL, -- ключ для восстановления token_app (токена доступа приложения) захеширован MD5
+--     PRIMARY KEY (id),
+--     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+-- );
+-- -- токены доступов пользователей
+-- CREATE SEQUENCE tokens_users_id_seq
+-- ;
+-- CREATE TABLE tokens_users (
+--     id bigint NOT NULL DEFAULT nextval('tokens_users_id_seq'),
+--     user_id bigint,
+--     app_id bigint,
+--     lifetime varchar(255),
+--     token varchar(32) NOT NULL DEFAULT md5(currval('tokens_users_id_seq')::text),
+--     PRIMARY KEY (id),
+--     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+--     FOREIGN KEY (app_id) REFERENCES apps (id) ON DELETE CASCADE
+-- );
+-- ALTER SEQUENCE tokens_users_id_seq
+--     CYCLE OWNED BY tokens_users.id;
+-- CREATE SEQUENCE tokens_apps_id_seq
+-- ;
+-- -- токены доступов приложений
+-- CREATE TABLE tokens_apps (
+--     id bigint NOT NULL DEFAULT nextval('tokens_users_id_seq'),
+--     user_id bigint,
+--     lifetime varchar(255),
+--     token varchar(32) NOT NULL DEFAULT md5(currval('tokens_apps_id_seq')::text),
+--     PRIMARY KEY (id),
+--     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+-- );
+-- ALTER SEQUENCE tokens_apps_id_seq
+--     CYCLE OWNED BY tokens_apps.id;
+-- токены доступов пользователей
+-- CREATE TABLE "captcha" (
+--     id serial,
+--     answer varchar(32) NOT NULL,
+--     session varchar(256) NOT NULL,
+--     PRIMARY KEY (id)
+-- );
+-- CREATE SEQUENCE captcha_verification_id_seq
+-- ;
+-- CREATE TABLE captcha_verification (
+--     id bigint NOT NULL DEFAULT nextval('captcha_verification_id_seq'),
+--     captcha_id bigint,
+--     lifetime varchar(255),
+--     verification varchar(32) NOT NULL DEFAULT md5(currval('captcha_verification_id_seq')::text),
+--     PRIMARY KEY (id),
+--     FOREIGN KEY (captcha_id) REFERENCES captcha (id) ON DELETE CASCADE
+-- );
+-- ALTER SEQUENCE captcha_verification_id_seq
+--     CYCLE OWNED BY captcha_verification.id;

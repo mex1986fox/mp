@@ -1,0 +1,36 @@
+.wg-comment {
+  &__avatar {
+    margin: 0px 20px 0px 10px;
+    &_mini {
+      height: 25px;
+      width: 25px;
+      line-height: 23px;
+    }
+  }
+  &__login {
+    float: left;
+    display: block;
+    line-height: 29px;
+    margin-right: 20px;
+    color: $color-text-header;
+    font-weight: 600;
+  }
+  &__date {
+    // float: left;
+    display: block;
+    line-height: 30px;
+    margin-right: 20px;
+    color: $color-disabled;
+  }
+  &__description {
+    position: relative;
+    margin: 10px 10px 10px 0px;
+    overflow: hidden;
+  }
+  &__buttons {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+  }
+}

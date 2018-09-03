@@ -1,0 +1,128 @@
+.ui-file {
+  display: block;
+  float: left;
+  position: relative;
+  width: 100%;
+  margin: 32px 0 2px 0;
+  &__input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+  }
+  &__caption {
+    width: 100%;
+    height: 30px;
+    font-size: 16px;
+    color: #888888;
+    transition-duration: 300ms;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 38px;
+    margin-top: -4px;
+    position: absolute;
+    &_completed {
+      font-size: 13px;
+      margin-top: -32px;
+      transition-duration: 300ms;
+    }
+    &_disabled {
+      color: $color-disabled !important;
+    }
+  }
+  &__files {
+    border-bottom: 1px solid #adadad;
+    min-height: 30px;
+    overflow: hidden;
+    overflow-y: auto;
+    &-file {
+      display: block;
+      padding: 10px 0;
+      overflow: hidden;
+      position: relative;
+      &:hover {
+        background-color: $color-list-hover;
+      }
+    }
+    &-src {
+      display: block;
+      margin: 2px 42px 2px 55px;
+      font-size: 13px;
+      overflow: hidden;
+      height: 35px;
+      line-height: 34px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    &-icon {
+      position: relative;
+      float: left;
+      color: #c8c8c8;
+      & > .fa {
+        font-size: 40px;
+      }
+    }
+    &-type {
+      position: absolute;
+      display: block;
+      margin: 11px 0 0 6px;
+      font-size: 10px;
+      width: 20px;
+      overflow: hidden;
+      height: 21px;
+      color: #898484;
+    }
+  }
+  &__badge {
+    position: absolute;
+    width: auto;
+    bottom: 10px;
+    right: 9px;
+    float: right;
+    &_disabled {
+      color: $color-disabled !important;
+    }
+  }
+  &__edit {
+    position: absolute;
+    right: 0px;
+    left: auto;
+    bottom: 0;
+  }
+
+  & > &__border {
+    content: "";
+    top: -2px;
+    left: 0;
+    position: relative;
+    width: 0px;
+    height: 3px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: $color-disabled;
+    transition-duration: 300ms;
+    &_disabled {
+      display: none;
+    }
+  }
+  &:focus {
+    & > .ui-file__border {
+      background-color: $color-links;
+      width: 100%;
+      transition-duration: 300ms;
+    }
+    & > .ui-file__caption {
+      color: $color-links;
+      transition-duration: 300ms;
+    }
+  }
+}

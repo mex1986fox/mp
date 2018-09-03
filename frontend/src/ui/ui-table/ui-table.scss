@@ -1,0 +1,84 @@
+.ui-table {
+  width: 100%;
+    &__table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    &__theade {
+        color: $color-text-header;
+        display: table-header-group;
+        vertical-align: text-top;
+    }
+    &__tbody {
+        color: $color-text;
+        font-size: 13px;
+        background-color: $color-fon;
+        display: table-header-group;
+        vertical-align: middle;
+    }
+    &__tr {
+        height: 50px;
+        text-align: center;
+    }
+    &__th {
+      padding: 0;
+      border-bottom: 1px solid $color-links-pasiv;
+      padding-bottom:10px;
+    }
+    &__title{
+      margin-top: 10px;
+    }
+
+    &__td {
+        text-align: center;
+        border: none;
+        border-bottom: 1px solid $color-links-pasiv;
+        padding: 5px 5px;
+    }
+    &__button {
+        height: 36px;
+        width: 36px;
+        font-size: 18px;
+        line-height: 0;
+        float: right;
+    }
+    &__text {
+        height: auto;
+        &>.ui-text__input {
+            margin-top: 6px;
+        }
+        margin-left: 5px;
+        margin-bottom: 2px;
+    }
+    &__select {
+        &>.ui-text {
+            height: auto;
+            &>.ui-text__input {
+                margin-top: 6px;
+            }
+        }
+        margin-left: 5px;
+        margin-bottom: 2px;
+    }
+    &_scrolling {
+      &>.ui-table__body{
+        max-height: 450px;
+        overflow-y: auto;
+      }
+    }
+}
+
+@media (max-width: 750px) {
+  .ui-table {
+
+      &__theade {
+        font-size: 12px;
+      }
+      &__tbody {
+
+          font-size: 11px;
+
+      }
+    }
+
+}

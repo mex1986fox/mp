@@ -1,0 +1,13 @@
+.wg-captcha {
+  margin-top: 16px;
+  &__img {
+    height: 44px;
+    overflow: hidden;
+    float: left;
+    position: relative;
+    margin-top: 10px;
+    & > img {
+      height: 100%;
+    }
+  }
+}

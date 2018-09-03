@@ -1,0 +1,16 @@
+.ui-code {
+    padding: 20px 0;
+    &__header {
+        color: $color-text-header;
+    }
+    &__text {
+        background-color: #2c2c2c;
+        height: auto;
+        width: auto;
+        font-size: 13px;
+        color: aliceblue;
+        padding: 10px;
+        line-height: 25px;
+        word-spacing: 5px;
+    }
+}

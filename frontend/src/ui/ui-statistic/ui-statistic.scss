@@ -1,0 +1,25 @@
+.ui-statistic {
+    height: 50px;
+    overflow: hidden;
+    margin: 5px 0 0 0;
+    &__tab {
+        height: 50px;
+        float: left;
+        font-size: 14px;
+        margin-right: 40px;
+        line-height: 50px;
+        color: $color-links-pasiv;
+        cursor: pointer;
+        &:hover .ui-statistic__icon{
+          color: #788e9b;
+        }
+        &:active .ui-statistic__icon{
+          color: #4c6779;
+        }
+    }
+    &__icon {
+        color: #a7b8c1;
+        font-size: 19px;
+        margin-right: 5px;
+    }
+}

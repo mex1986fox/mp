@@ -1,0 +1,35 @@
+.ui-accordion {
+    &__header {
+        cursor: pointer;
+        float: left;
+        position: relative;
+    }
+    &__angel {
+        cursor: pointer;
+        display: inline-block;
+        height: 100%;
+        margin-left: 5px;
+    }
+}
+
+.content-enter-active {
+    overflow: hidden;
+    max-height: 1200px;
+    transition: max-height 0.6s;
+}
+
+.content-leave-active {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.2s;
+}
+
+.content-enter {
+    overflow: hidden;
+    max-height: 0;
+}
+
+.content-leave {
+    overflow: hidden;
+    max-height: 1200px;
+}

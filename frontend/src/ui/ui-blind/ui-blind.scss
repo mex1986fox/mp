@@ -1,0 +1,106 @@
+.ui-blind {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+  z-index: 3000; //opacity: 1;
+  left: 0%;
+  top: 0px;
+  overflow-y: auto;
+  &_flat {
+    background-color: rgba(255, 255, 255, 0);
+  }
+
+  &_enter_left,
+  &_leave-to_left {
+    opacity: 0;
+    left: -100%;
+  }
+  &_enter-act_left,
+  &_leave-act_left {
+    transition-property: left, opacity;
+    transition-duration: 500ms;
+  }
+  &_enter-to_left,
+  &_leave_left {
+    opacity: 1;
+    left: 0%;
+  }
+
+  &_enter_right,
+  &_leave-to_right {
+    opacity: 0;
+    left: 100%;
+  }
+  &_enter-act_right,
+  &_leave-act_right {
+    transition-property: left, opacity;
+    transition-duration: 500ms;
+  }
+  &_enter-to_right,
+  &_leave_right {
+    opacity: 1;
+    left: 0%;
+  }
+
+  &_enter_top,
+  &_leave-to_top {
+    opacity: 0;
+    top: -100%;
+  }
+  &_enter-act_top,
+  &_leave-act_top {
+    transition-property: top, opacity;
+    transition-duration: 500ms;
+  }
+  &_enter-to_top,
+  &_leave_top {
+    opacity: 1;
+    top: 0;
+  }
+
+  &_enter_bottom,
+  &_leave-to_bottom {
+    opacity: 0;
+    top: 100%;
+  }
+  &_enter-act_bottom,
+  &_leave-act_bottom {
+    transition-property: top, opacity;
+    transition-duration: 500ms;
+  }
+  &_enter-to_bottom,
+  &_leave_bottom {
+    opacity: 1;
+    top: 0;
+  }
+
+  &__content {
+    display: flex;
+  }
+
+  &_enter_opacity,
+  &_leave-to_opacity {
+    opacity: 0;
+  }
+  &_enter-act_opacity,
+  &_leave-act_opacity {
+    transition-property: opacity;
+    transition-duration: 500ms;
+  }
+  &_enter-to_opacity,
+  &_leave_opacity {
+    opacity: 1;
+  }
+  &_enter_none,
+  &_leave-to_none {
+    opacity: 1;
+  }
+  &_enter-act_none,
+  &_leave-act_none {
+  }
+  &_enter-to_none,
+  &_leave_none {
+    opacity: 1;
+  }
+}

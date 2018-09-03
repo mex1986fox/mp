@@ -1,0 +1,112 @@
+// элементы
+.ui-text {
+  width: 100%;
+  height: auto;
+  transition-duration: 300ms;
+  position: relative;
+  cursor: pointer;
+  float: left;
+  margin: 2px auto;
+  &__caption {
+    width: 100%;
+    height: 30px;
+    font-size: 16px;
+    color: #888888;
+    position: absolute;
+    transition-duration: 300ms;
+    line-height: 90px;
+    &_active {
+      font-size: 13px;
+      line-height: 45px;
+      color: $color-links;
+      transition-duration: 300ms;
+    }
+    &_completed {
+      font-size: 13px;
+      line-height: 45px;
+      transition-duration: 300ms;
+    }
+    &_disabled {
+      color: $color-disabled;
+    }
+  }
+  &__input {
+    width: 100%;
+    height: 30px;
+    border: 0;
+    border-radius: 0px;
+    border-bottom: 1px solid $color-disabled;
+    color: $color-description;
+    font-size: 16px;
+    padding: 0;
+    margin-top: 30px;
+    transition-duration: 300ms;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: transparent;
+    &:invalid {
+      box-shadow: none;
+    }
+    &:-moz-submit-invalid {
+      box-shadow: none;
+    }
+    &:-moz-ui-invalid {
+      box-shadow: none;
+    }
+    &:focus {
+      outline: none;
+    }
+    &_active {
+      border-bottom: 1px solid rgba(255, 255, 255, 0);
+      transition-duration: 300ms;
+    }
+    &_disabled {
+      background-color: rgba(255, 255, 255, 0);
+      color: $color-disabled;
+    }
+  }
+  &__border {
+    content: "";
+    top: 60px;
+    left: 0;
+    position: absolute;
+    width: 0px;
+    height: 3px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: $color-disabled;
+    transition-duration: 300ms;
+    &_active {
+      background-color: $color-links;
+      width: 100%;
+      transition-duration: 300ms;
+    }
+    &_disabled {
+      background-color: $color-disabled;
+    }
+  }
+  &__help {
+    width: 100%;
+    height: 18px;
+    font-size: 12px;
+    color: $color-disabled;
+    line-height: 14px;
+    display: none;
+    transition-duration: 300ms;
+    padding-top: 3px;
+    position: absolute;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    &_active {
+      color: #e01313;
+      transition-duration: 300ms;
+      display: block;
+    }
+    &_disabled {
+      color: $color-disabled;
+    }
+  }
+}

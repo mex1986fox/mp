@@ -1,0 +1,21 @@
+.ui-avatar-block {
+    height: 60px;
+    font-size: $text-size-mini;
+    position: relative;
+    &__title {
+        position: absolute;
+        height: 25px;
+        left: 77px;
+        top: 30px;
+        color: $color-disabled;
+        font-size: 13px;
+    }
+    &__link {
+        position: absolute;
+        height: 25px;
+        left: 77px;
+        top: 8px;
+        color: $color-links;
+        font-size: 14px;
+    }
+}

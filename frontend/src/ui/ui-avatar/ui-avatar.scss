@@ -1,0 +1,17 @@
+.ui-avatar {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    color: $color-fon;
+    font-size: 35px;
+    text-align: center;
+    background-color: $color-disabled;
+    line-height: 49px;
+    float: left;
+    margin: 5px;
+    &>img {
+        height: 100%;
+        width: auto;
+    }
+}

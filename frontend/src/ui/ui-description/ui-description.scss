@@ -1,0 +1,13 @@
+.ui-description {
+    font-size: $text-size;
+    color: $color-description;
+    line-height: 25px;
+    &_mini {
+        font-size: $text-size-mini;
+        line-height: 22px;
+    }
+    &_big {
+        font-size: $text-size-big;
+        line-height: 27px;
+    }
+}

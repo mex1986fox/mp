@@ -1,0 +1,23 @@
+.ui-link {
+    color: $color-links;
+    font-size: $text-size;
+    cursor: pointer;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+    &:active {
+        color: $color-links;
+        text-decoration: none;
+    }
+    &:visited {
+        color: $color-links;
+        text-decoration: none;
+    }
+    &_mini {
+        font-size: $text-size-mini;
+    }
+    &_big {
+        font-size: $text-size-big;
+    }
+}

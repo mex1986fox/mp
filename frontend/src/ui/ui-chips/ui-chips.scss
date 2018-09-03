@@ -1,0 +1,84 @@
+.ui-chips {
+  background-color: rgba(214, 214, 214, 0.3);
+  height: 22px;
+  display: block;
+  position: relative;
+  float: left;
+  border-radius: 20px;
+  padding: 7px;
+  width: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 5px 10px 5px 0;
+  color: $color-text-header;
+  transition: all 600ms;
+  &__input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+  }
+  &__button {
+    background-color: #666666;
+    color: #fff;
+    margin: -2px -2px 0 0px;
+    padding: 0;
+    border-radius: 50%;
+    height: 26px;
+    width: 26px;
+    font-size: 15px;
+    text-align: center;
+    transition: all 600ms;
+    display: block;
+    float: right;
+    line-height: 24px;
+    &:hover {
+      cursor: pointer;
+      background-color: #464646;
+      transition: all 600ms;
+    }
+    &_disabled {
+      background-color: $color-disabled;
+      &:hover {
+        cursor: auto;
+        background-color: $color-disabled;
+      }
+    }
+  }
+  &__caption {
+    color: $color-text-header;
+    margin-left: 10px;
+    margin-right: 10px;
+    float: left;
+    margin-top: 1px;
+    width: 0%;
+    &_disabled {
+      color: $color-disabled;
+    }
+  }
+  &__icon {
+    border-radius: 50%;
+    height: 36px;
+    width: 36px;
+    overflow: hidden;
+    float: left;
+    margin-top: -7px;
+    margin-left: -5px;
+  }
+  &__img {
+    border-radius: 50%;
+    height: 36px;
+    width: 36px;
+    &_disabled {
+      opacity: 0.2;
+    }
+  }
+}

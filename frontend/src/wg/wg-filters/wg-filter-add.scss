@@ -1,0 +1,71 @@
+.wg-filter-add {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: $color-fon;
+    padding: 0;
+    box-shadow: $color-shadow-active;
+    margin: 10px 0;
+    &__bar {
+        margin-bottom: 5px;
+        background-color: #1280b7;
+        padding: 0;
+        margin: 0;
+        box-shadow: $color-shadow;
+        margin-bottom: 40px;
+    }
+    &__tabs {
+        & .ui-tabs__tab {
+            color: $color-fon;
+            &:after {
+                background-color: $color-fon;
+            }
+            &_active {
+                color: $color-fon;
+                &:after {
+                    background-color: $color-fon;
+                }
+            }
+        }
+        .ui-tabs__button {
+            color: $color-fon;
+        }
+    }
+    &__close {
+        position: absolute;
+        z-index: 2;
+        left: auto;
+        right: 7px;
+        top: 18px;
+        color: $color-fon !important;
+    }
+    &__header {
+        color: #ffffff;
+        border: 31px solid transparent;
+        line-height: 28px;
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
+        border-right: 90px solid transparent;
+    }
+    &__content {
+        padding: 0 30px;
+        overflow: hidden;
+    }
+    &__buttons {
+        padding: 30px;
+        overflow: hidden;
+    }
+    &__button {
+        left: auto;
+        float: right;
+        right: 0px;
+    }
+    &__block-chips {
+        margin: 15px 0 20px 0;
+        overflow: hidden;
+        position: relative;
+        display: block;
+        float: left;
+    }
+}

@@ -1,0 +1,90 @@
+.wg-form-add {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-color: $color-fon;
+  padding: 0;
+  box-shadow: $color-shadow-active;
+  margin: 10px 0;
+  &__bar {
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 5px;
+    background-color: #1280b7;
+    padding: 0;
+    margin: 0;
+    box-shadow: $color-shadow;
+    margin-bottom: 10px;
+    background-image: url(http://www.el-tony.com/wp-content/uploads/2014/10/Lamborghini-Huracan-Side-Abstract-Aerography-Car-2014-Pink-Colors-HD-Wallpapers-design-by-Tony-Kokhan-www.el-tony.com_-900x506.jpg);
+    background-position: center center;
+    opacity: 0.9;
+    &:before {
+      content: "";
+      background-color: rgba(36, 149, 206, 0.91);
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      z-index: -1;
+    }
+  }
+  &__tabs {
+    & .ui-tabs__tab {
+      color: $color-fon;
+      &:after {
+        background-color: $color-fon;
+      }
+      &_active {
+        color: $color-fon;
+        &:after {
+          background-color: $color-fon;
+        }
+      }
+    }
+    .ui-tabs__button {
+      color: $color-fon;
+    }
+  }
+  &__close {
+    position: absolute;
+    z-index: 2;
+    left: auto;
+    right: 7px;
+    top: 18px;
+    color: $color-fon !important;
+  }
+  &__header {
+    color: #ffffff;
+    border: 31px solid transparent;
+    line-height: 28px;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    border-right: 90px solid transparent;
+  }
+  &__content {
+    padding: 0 30px;
+    overflow: hidden;
+  }
+  &__hr {
+    height: auto;
+    width: 100%;
+    color: $color-text-header;
+    font-size: 19px;
+    line-height: 41px;
+    margin-top: 40px;
+    font-weight: 600;
+    float: left;
+    & > .fa {
+      width: 40px;
+    }
+  }
+  &__checkboxs {
+    margin-top: 15px;
+    float: left;
+  }
+  &__buttons {
+    padding: 50px 26px 20px 26px;
+    overflow: hidden;
+    float: left;
+  }
+}

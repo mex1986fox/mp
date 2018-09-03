@@ -1,0 +1,77 @@
+.ui-radio {
+    position: relative;
+    overflow: hidden;
+    height: 32px;
+    padding: 5px 0;
+    cursor: pointer;
+    margin: 5px 0;
+    &__radio {
+        border: 2px solid $color-text;
+        border-radius: 50%;
+        height: 16px;
+        width: 16px;
+        display: block;
+        margin: 6px;
+        position: absolute;
+        &_active {
+            transition: border 0.6s;
+            border: 2px solid $color-links;
+        }
+        &_disabled {
+            cursor: auto;
+            border: 2px solid $color-disabled;
+        }
+    }
+    &__radio-point {
+        background-color: $color-links;
+        border-radius: 50%;
+        height: 10px;
+        width: 10px;
+        display: block;
+        margin: 3px;
+        &-enter,
+        &-leave-to {
+            opacity: 0;
+        }
+        &-enter-active,
+        &-leave-active {
+            transition: opacity 0.5s ease;
+        }
+        &-enter-to,
+        &-leave {
+            opacity: 1;
+        }
+        &_disabled {
+            cursor: auto;
+            background-color: $color-disabled;
+        }
+    }
+    &__input {
+        position: absolute;
+        width: 0;
+        height: 0;
+        margin: 0;
+        padding: 0;
+        opacity: 0;
+        -ms-appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        border: none;
+    }
+    &__caption {
+        font-size: 15px;
+        color: $color-text;
+        z-index: 10;
+        position: absolute;
+        padding: 0px 0px 0px 32px;
+        width: 100%;
+        line-height: 29px;
+        margin-left: 16px;
+        white-space: nowrap;
+        &_disabled {
+            cursor: auto;
+            color: $color-disabled;
+        }
+    }
+}

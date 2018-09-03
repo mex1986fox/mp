@@ -1,0 +1,18 @@
+CREATE TABLE "ads" (
+    id bigserial,
+    name varchar(64) NOT NULL,
+    user_id bigint NOT NULL,
+    city_id smallint NOT NULL,
+    model_id smallint NOT NULL,
+    drive smallint NOT NULL,
+    wheel smallint NOT NULL,
+    fuel smallint NOT NULL,
+    volume_engin smallint NOT NULL,
+    power_engin smallint NOT NULL,
+    year smallint NOT NULL,
+    run integer NOT NULL,
+    photos jsonb NOT NULL,
+    price money NOT NULL,
+    PRIMARY KEY (id)
+);
+

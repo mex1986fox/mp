@@ -1,0 +1,33 @@
+.wg-desc-example {
+    &__description {
+        width: 100%;
+        height: auto;
+        border-top: 1px solid $color-disabled;
+        overflow: hidden;
+        margin-bottom: 50px;
+    }
+    &__button_active {
+
+        color: $color-text !important;
+        font-weight: bold;
+        border-radius: 0;
+    }
+    &__table {
+        width: 100%;
+        table-layout: auto;
+        border-collapse: collapse;
+        border-spacing: 0;
+        line-height: 18px;
+        font-size: $text-size-mini;
+    }
+    &__tr {
+        text-align: left;
+        height: 32px;
+    }
+    &__th {
+        padding: 10px;
+    }
+    &__td {
+        padding: 10px;
+    }
+}
