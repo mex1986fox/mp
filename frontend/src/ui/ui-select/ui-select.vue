@@ -9,10 +9,17 @@
 		         :readonly="true"
 		         @onFocus="isFocus">
 		</ui-text>
-
+		<input class="ui-select__checkbox"
+		       v-for="(val, key) in dMenu"
+		       :key="key"
+		       v-if="val.selected"
+		       type="checkbox"
+		       :name="dName"
+		       :value="val.value"
+		       checked>
 		<transition name="ui-select__arrow">
 			<div class="ui-select__arrow"
-			     v-if="!dFocus && !dDisabled"
+			     v-if="!dFocus || dDisabled"
 			     @click="dFocus=!dFocus">
 				<i class="fa fa-angle-down"></i>
 			</div>
@@ -81,6 +88,7 @@ export default {
       dName: this.name,
       dValue: "",
       dCaption: this.caption,
+      dSheckeds: [],
       // multiple: this.multiple,
       dHelp: this.help,
       dMenu: this.menu,

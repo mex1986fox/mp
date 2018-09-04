@@ -17,12 +17,46 @@ class Create
     {
         try {
 
-            // читаем базу
             $p = $this->request->getQueryParams();
-            $exceptions = [];
             var_dump($p);
+            $user_id = 1; // $_SESSION["user"]["id"];
+
+            $settlements_id = $p["settlement"];
+            $model_id = $p["model"];
+            $mileage = $p["mileage"];
+            $description = $p["description"];
+            $documentation = $p["documentation"];
+            $repair = $p["repair"];
+            $exchange = $p["exchange"];
+            $price = $p["price"];
+
+            // $exceptions = [];
+
             $db = $this->container['db'];
-            return $locations;
+            $q = "insert into ads (
+                    user_id,
+                    settlements_id,
+                    model_id,
+                    mileage,
+                    description,
+                    documentation,
+                    repair,
+                    exchange,
+                    price
+                ) values (
+                    {$user_id},
+                    {$settlements_id},
+                    {$model_id},
+                    {$mileage},
+                    '{$description}',
+                    {$documentation},
+                    {$repair},
+                    {$exchange},
+                    {$price}
+                )  RETURNING id;";
+            echo ($q);
+            $id_add = $db->query($q, \PDO::FETCH_ASSOC)->fetch();
+            return ["add_id" => $id_add, "massege" => "Объявление создано успешно"];
         } catch (RuntimeException | \Exception $e) {
             $exceptions = ['exceptions' => ['massege' => $e->getMessage()]];
             return $exceptions;

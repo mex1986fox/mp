@@ -41,14 +41,14 @@
 						</div>
 						<div class="row">
 							<div class="col_5">
-								<ui-select name="region"
+								<ui-select name="subject"
 								           caption="Субъект"
 								           :menu='menuSubjects'
 								           @onSelect='isSelectedRegion'>
 								</ui-select>
 							</div>
 							<div class="col_5 col_offset-2">
-								<ui-select name="city"
+								<ui-select name="settlement"
 								           caption="Город"
 								           :menu='menuSettlements'
 								           :disabled='(menuSettlements.length==0?true:false)'>
@@ -74,21 +74,30 @@
 								<ui-select name="model"
 								           caption="Модель"
 								           :menu='menuModels'
-								           :disablade="(menuModels.length==0?true:false)">
+								           :disabled="(menuModels.length==0?true:false)">
 								</ui-select>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col_5">
-								<ui-text caption="Пробег"></ui-text>
 							</div>
 						</div>
 
 						<ui-textarea name="description"
 						             caption="Описание"
-						             :autoresize="250"
-						             :height="100">
+						             :autoresize="250">
 						</ui-textarea>
+						<div class="row">
+							<div class="col_4">
+								<ui-select name="year"
+								           caption="Год выпуска"
+								           :menu='menuYear'>
+								</ui-select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col_4">
+								<ui-text name="mileage"
+								         caption="Пробег"></ui-text>
+							</div>
+						</div>
+
 						<div class="wg-form-add__hr">
 							<i class="fa fa-exclamation"
 							   aria-hidden="true"></i>
@@ -105,31 +114,21 @@
 							              :checked="true">
 								требует ремонта
 							</ui-check-box>
-							<ui-check-box name='exchange[]'
+							<ui-check-box name='exchange'
 							              value="1"
 							              :checked="true">
 								готов к обмену
 							</ui-check-box>
-							<ui-check-box name='exchange[]'
-							              value="3"
-							              :checked="true">
-								готов к обмену
-							</ui-check-box>
 						</div>
-
 						<div class="wg-form-add__hr">
-							<i class="fa fa-phone"
+							<i class="fa fa-money"
 							   aria-hidden="true"></i>
-							Связь
+							Стоимость
 						</div>
 						<div class="row">
 							<div class="col_5">
-								<ui-phone caption="Телефон"></ui-phone>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col_5">
-								<ui-text caption="Цена"></ui-text>
+								<ui-text name="price"
+								         caption="Цена"></ui-text>
 							</div>
 						</div>
 						<div class="wg-form-add__buttons">
@@ -192,8 +191,6 @@ export default {
     create(event) {
       let form = document.getElementById("formCreateAdd");
       let body = new FormData(form);
-
-      console.log(body);
       this.$http.post("/api/create/ads", body).then(
         response => {
           if (response.body.exceptions != undefined) {
@@ -232,6 +229,23 @@ export default {
       } else {
         return [];
       }
+    },
+    menuYear() {
+      let maxDate = new Date().getFullYear();
+      let minDate = 1935;
+      let menu = [];
+
+      // {value:"1",option:"Audi", group:"Область", selected:true}
+      while (minDate != maxDate) {
+        menu.push({
+          value: maxDate,
+          option: maxDate,
+          group: "Года",
+          selected: menu.length == 0 ? true : false
+        });
+        maxDate--;
+      }
+      return menu;
     }
   },
   mounted() {
