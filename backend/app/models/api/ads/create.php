@@ -29,6 +29,7 @@ class Create
             $repair = $p["repair"];
             $exchange = $p["exchange"];
             $price = $p["price"];
+            $year = $p["year"];
 
             // $exceptions = [];
 
@@ -42,17 +43,19 @@ class Create
                     documentation,
                     repair,
                     exchange,
-                    price
+                    price,
+                    year
                 ) values (
                     {$user_id},
                     {$settlements_id},
                     {$model_id},
                     {$mileage},
                     '{$description}',
-                    {$documentation},
-                    {$repair},
-                    {$exchange},
-                    {$price}
+                    '{$documentation}',
+                    '{$repair}',
+                    '{$exchange}',
+                    {$price},
+                    {$year}
                 )  RETURNING id;";
             echo ($q);
             $id_add = $db->query($q, \PDO::FETCH_ASSOC)->fetch();

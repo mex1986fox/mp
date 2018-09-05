@@ -4,26 +4,22 @@
 
 			<div class="ui-avatar-block wg-card-ad__avatar-block">
 				<div class="ui-avatar">
-					<img :src="dObj.user.avatar"
-					    alt="">
+					<!-- <img :src="dObj.user.avatar"
+					    alt=""> -->
 				</div>
 				<a class="ui-link ui-avatar-block__link">
-					{{dObj.user.name+" "+dObj.user.surname}}
+					<!-- {{dObj.user.name+" "+dObj.user.surname}} -->
 				</a>
 				<div class="ui-avatar-block__title">
-					{{dObj.date}}
+					<!-- {{dObj.date}} -->
 				</div>
 
 			</div>
 
-			<button @click="showMenu=true"
-			    class="ui-button ui-button_flat ui-button_circle ui-button_circle_mini wg-card-ad__header-button">
-				<i class="fa fa-ellipsis-v"
-				    aria-hidden="true"></i>
+			<button @click="showMenu=true" class="ui-button ui-button_flat ui-button_circle ui-button_circle_mini wg-card-ad__header-button">
+				<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
 			</button>
-			<ui-menu :show="showMenu"
-			    @onHide="showMenu=false"
-			    position="left-bottom">
+			<ui-menu :show="showMenu" @onHide="showMenu=false" position="left-bottom">
 				<ul class="wg-card-ad__menu">
 					<li class="wg-card-ad__menu-li">Комментарии</li>
 					<li class="wg-card-ad__menu-li">Пожаловаться</li>
@@ -32,16 +28,16 @@
 			</ui-menu>
 
 		</div>
-		<router-link class="ui-link wg-card-ad__link"
-		    :to="dObj.link">
-			{{dObj.brand+" "+dObj.model+" "+dObj.year+"г. "+dObj.city}}
+		<router-link class="ui-link wg-card-ad__link" to="/googlre">
+			{{brand.name+" "+model.name+" "+dObj.year+"г. "+city.name}}
 		</router-link>
 		<div class="row">
 			<div class="col_6 col-phone_6">
-				<wg-slider class="wg-card-ad__slider"
-				    :slide="dObj.slide"
-				    :select="1"
-				    @onZoom="showZoomSlider=true">
+				<wg-slider class="wg-card-ad__slider" :slide='[
+                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852445.jpg"},
+                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852304.jpg" },
+                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852320.jpg" }
+							]' :select="1" @onZoom="showZoomSlider=true">
 				</wg-slider>
 			</div>
 			<div class="col_6 col-phone_6">
@@ -75,16 +71,14 @@
 
 		</div>
 		<transition name="wg-card-ad__description">
-			<span v-show="descActive"
-			    class="ui-description ui-description_mini wg-card-ad__description">
+			<span v-show="descActive" class="ui-description ui-description_mini wg-card-ad__description">
 				{{dObj.description}}
 			</span>
 		</transition>
 
 		<div class="wg-card-ad__buttons">
 			<button class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat">
-				<i class="fa fa-thumbs-o-up"
-				    aria-hidden="true"></i>
+				<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
 
 			</button>
 			<span class="wg-card-ad__counter">
@@ -92,48 +86,36 @@
 			</span>
 
 			<button class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat">
-				<i class="fa fa-thumbs-o-down"
-				    aria-hidden="true"></i>
+				<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
 			</button>
 			<span class="wg-card-ad__counter">
 				12
 			</span>
-			<button @click="commentShow=true"
-			    class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat">
-				<i class="fa fa-comments-o"
-				    aria-hidden="true"></i>
+			<button @click="commentShow=true" class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat">
+				<i class="fa fa-comments-o" aria-hidden="true"></i>
 			</button>
 			<span class="wg-card-ad__counter">
 				12 300
 			</span>
-			<button class="ui-button ui-button_circle ui-button_flat ui-button_circle_mini wg-card-ad__angel"
-			    :class="{'wg-card-ad__angel_transit':descActive}"
-			    @click="isDascActive">
-				<i class="fa fa-angle-down"
-				    aria-hidden="true"></i>
+			<button class="ui-button ui-button_circle ui-button_flat ui-button_circle_mini wg-card-ad__angel" :class="{'wg-card-ad__angel_transit':descActive}" @click="isDascActive">
+				<i class="fa fa-angle-down" aria-hidden="true"></i>
 			</button>
 		</div>
-		<wg-slider-zoom 
-			v-if="showZoomSlider"
-			:slide="dObj.slide"
-		    :slideNavigation="dObj.slide_navigation"
-		    :select="1"
-		    :show="showZoomSlider"
-		    @onHide="showZoomSlider=false">
+		<wg-slider-zoom v-if="showZoomSlider" :slide='[
+                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852445.jpg"},
+                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852304.jpg" },
+                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852320.jpg" }
+							]'
+							
+							:slideNavigation="dObj.slide_navigation" :select="1" :show="showZoomSlider" @onHide="showZoomSlider=false">
 		</wg-slider-zoom>
-		<ui-blind ref="blind"
-		    :show="commentShow"
-		    @onHide="commentShow=false"
-		    :centering="true"
-		    animate="opacity">
+		<ui-blind ref="blind" :show="commentShow" @onHide="commentShow=false" :centering="true" animate="opacity">
 			<div class="container">
 
 				<div class="row">
 					<div class="col_8 col_offset-2">
-						<button @click="commentShow=false"
-						    class="ui-button ui-button_circle ui-button_circle_big ui-button_flat wg-card-ad__comments-close">
-							<i aria-hidden="true"
-							    class="fa fa-times"></i>
+						<button @click="commentShow=false" class="ui-button ui-button_circle ui-button_circle_big ui-button_flat wg-card-ad__comments-close">
+							<i aria-hidden="true" class="fa fa-times"></i>
 						</button>
 						<wg-comments>
 
@@ -162,6 +144,19 @@ export default {
     object: {
       type: Object,
       default: () => {}
+    }
+  },
+  computed: {
+    brand() {
+      return this.$store.getters["transports/getBrand"](this.model.brand_id);
+    },
+    model() {
+      return this.$store.getters["transports/getModel"](this.dObj.model_id);
+    },
+    city() {
+      return this.$store.getters["locations/getSettlement"](
+        this.dObj.settlements_id
+      );
     }
   },
   methods: {

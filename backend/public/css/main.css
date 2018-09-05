@@ -60,7 +60,7 @@
 }
 .pg-authorization__remark-header {
     color: #fff;
-    font-family: "OpenSans";
+    font-family: "Open Sans";
     font-weight: 600;
     line-height: 32px;
     font-size: 26px;
@@ -130,6 +130,13 @@
 }
 
 
+.pg-ads__button-show-form-add {
+  position: fixed;
+  bottom: 0;
+  left: auto !important;
+  right: 0px !important;
+}
+
 
 select {
   -webkit-appearance: none;
@@ -147,7 +154,7 @@ select::-ms-expand {
   border: 0; }
 
 @font-face {
-  font-family: "OpenSans";
+  font-family: "Open Sans";
   src: url(/public/src/fonts/open-sans/OpenSans-Regular.ttf); }
 
 html {

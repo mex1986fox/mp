@@ -6,7 +6,16 @@ const locations = {
     settlements: undefined,
     subjects: undefined
   },
-  getters: {},
+  getters: {
+    getSettlement: (state, getters, rootState, rootGetters) => id => {
+      for (let settlement of state.settlements) {
+        if (id == settlement.id) {
+          return settlement;
+        }
+      }
+      return undefined;
+    }
+  },
   mutations: {
     updateLocations(state, transport) {
       state.countries = transport.countries;

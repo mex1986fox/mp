@@ -5,10 +5,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col_7 col-phone_6">
-					<img class="pg-authorization__logo"
-					     src="/public/img/label.png"
-					     alt=""
-					     srcset="">
+					<img class="pg-authorization__logo" src="/public/img/label.png" alt="" srcset="">
 					<div class="pg-authorization__remark">
 						<span class="pg-authorization__remark-header">
 							Социальная сеть для автомобилистов
@@ -17,36 +14,30 @@
 					</div>
 				</div>
 				<div class="col_5 col-phone_6">
-					<div class="pg-authorization__card">
-						<div class="ui-header_1 pg-authorization__header">Вход на Drovito.ru
+					<form @submit.prevent="authorization">
+						<div class="pg-authorization__card">
+							<div class="ui-header_1 pg-authorization__header">Вход на Drovito.ru
+							</div>
+							<ui-text name="login" :caption="'Ваш логин'">
+							</ui-text>
+							<ui-password name="password" :caption="'Ваш пароль'">
+							</ui-password>
+							<div class="pg-authorization__padding" />
+							<div class="pg-authorization__buttons">
+								<button type="submit" class="ui-button ">Войти</button>
+								<div class="ui-button ui-button_red" @click="showRegistrationCard=true">Регистрация</div>
+							</div>
+							<hr class="pg-authorization__hr" />
+							<span style="font-size: 12px; float: left; margin-bottom:10px;">Если вы забыли свой пароль, попробуйте его восстановить!</span><br/><br/>
+							<a style="font-size: 12px; float: left; width: 100%;" class="ui-link" href="http://www.google.com">Восстановить пароль</a>
 						</div>
-						<ui-text :value="'mex1986fox@mail.ru'"
-						         :caption="'Email или логин'">
-						</ui-text>
-						<ui-password :caption="'Пароль'">
-						</ui-password>
-						<div class="pg-authorization__padding" />
-						<div class="pg-authorization__buttons">
-							<button class="ui-button ">Войти</button>
-							<button class="ui-button ui-button_red"
-							        @click="showRegistrationCard=true">Регистрация</button>
-						</div>
-						<hr class="pg-authorization__hr" />
-						<span style="font-size: 12px; float: left; margin-bottom:10px;">Если вы забыли свой пароль, попробуйте его восстановить!</span><br/><br/>
-						<a style="font-size: 12px; float: left; width: 100%;"
-						   class="ui-link"
-						   href="http://www.google.com">Восстановить пароль</a>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>
-		<ui-blind @onHide="showRegistrationCard=!showRegistrationCard"
-		          :show="showRegistrationCard"
-		          animate="right"
-		          class="pg-authorization__blind">
+		<ui-blind @onHide="showRegistrationCard=!showRegistrationCard" :show="showRegistrationCard" animate="right" class="pg-authorization__blind">
 			<div class="container">
-				<form @submit="registered"
-				      action="#">
+				<form @submit="registered" action="#">
 					<div class="row">
 						<div class="col_5 col_offset-7 col-phone_6 col-phone_offset-0">
 							<div class="pg-authorization__card-registration">
@@ -67,24 +58,15 @@
 										</span>
 									</div>
 									<div class="col_5 col-phone_6">
-										<ui-text value=""
-										         caption="Имя"
-										         name="name"
-										         :help="registrationEcept.name">
+										<ui-text value="" caption="Имя" name="name" :help="registrationEcept.name">
 										</ui-text>
 									</div>
 									<div class="col_5 col_offset-2 col-phone_6 col-phone_offset-0">
-										<ui-text value=""
-										         caption="Фамилия"
-										         name="surname"
-										         :help="registrationEcept.surname">
+										<ui-text value="" caption="Фамилия" name="surname" :help="registrationEcept.surname">
 										</ui-text>
 									</div>
 									<div class="col_5">
-										<ui-datepicker :disabled="false"
-										               name="birthdate"
-										               caption="Дата рождения"
-										               :help="registrationEcept.birthdate">
+										<ui-datepicker :disabled="false" name="birthdate" caption="Дата рождения" :help="registrationEcept.birthdate">
 										</ui-datepicker>
 									</div>
 									<div class="col_12">
@@ -95,16 +77,11 @@
 									</div>
 
 									<div class="col_5 col-phone_6">
-										<ui-text value=""
-										         caption="Логин"
-										         name="login"
-										         :help="registrationEcept.login">
+										<ui-text value="" caption="Логин" name="login" :help="registrationEcept.login">
 										</ui-text>
 									</div>
 									<div class="col_5 col_offset-2 col-phone_6 col-phone_offset-0">
-										<ui-password caption="Пароль"
-										             name="password"
-										             :help="registrationEcept.password">
+										<ui-password caption="Пароль" name="password" :help="registrationEcept.password">
 										</ui-password>
 									</div>
 
@@ -121,19 +98,14 @@
 									</div>
 
 									<div class="col_5 col_offset-2 col-phone_6 col-phone_offset-0">
-										<ui-text value=""
-										         caption="Введите символы"
-										         name="captcha"
-										         :help="registrationEcept.captcha">
+										<ui-text value="" caption="Введите символы" name="captcha" :help="registrationEcept.captcha">
 										</ui-text>
 									</div>
 
 									<div class="col_12">
 										<div class="pg-authorization__buttons">
-											<button class="ui-button ui-button_blue"
-											        type="submit">готово</button>
-											<div class="ui-button ui-button_flat"
-											     @click="showRegistrationCard=!showRegistrationCard">Отмена</div>
+											<button class="ui-button ui-button_blue" type="submit">готово</button>
+											<div class="ui-button ui-button_flat" @click="showRegistrationCard=!showRegistrationCard">Отмена</div>
 										</div>
 									</div>
 								</div>
@@ -144,11 +116,7 @@
 
 			</div>
 		</ui-blind>
-		<ui-blind @onHide="showRecoveryCard=!showRecoveryCard"
-		          :show="showRecoveryCard"
-		          animate="opacity"
-		          centering
-		          class="pg-authorization__blind">
+		<ui-blind @onHide="showRecoveryCard=!showRecoveryCard" :show="showRecoveryCard" animate="opacity" centering class="pg-authorization__blind">
 			<div class="container">
 				<div class="row">
 					<div class="col_6 col_offset-3 col-phone_6 col-phone_offset-0">
@@ -157,11 +125,9 @@
 
 								<div class="ui-modal-window">
 									<div class="ui-modal-window__header ">
-										<button @click="showRecoveryCard=false"
-										        class="ui-button ui-button_circle ui-button_circle_mini 
+										<button @click="showRecoveryCard=false" class="ui-button ui-button_circle ui-button_circle_mini 
                                        ui-button_flat ui-modal-window__header__button">
-											<i class="fa fa-times"
-											   aria-hidden="true"></i>
+											<i class="fa fa-times" aria-hidden="true"></i>
 										</button>
 										Код восстановления
 									</div>
@@ -197,6 +163,24 @@ export default {
     };
   },
   methods: {
+    authorization(event) {
+      let body = new FormData(event.target);
+      this.$http.post("/api/authorization/users", body).then(
+        response => {
+          console.log(response.body);
+        },
+        error => {}
+      );
+    },
+    showUser(id) {
+      let body = {"id": id};
+      this.$http.post("/api/show/users", body).then(
+        response => {
+          console.log(response.body);
+        },
+        error => {}
+      );
+    },
     registered(event) {
       event.preventDefault();
       let body = {};
@@ -220,6 +204,9 @@ export default {
         error => {}
       );
     }
+  },
+  mounted() {
+    this.showUser(this.$cookie.get("user_id"));
   }
 };
 </script>

@@ -7,6 +7,7 @@ import Vue from "vue/dist/vue.js";
 import router from "./router/index.js";
 import store from "./stores/index.js";
 
+
 // подключаем библиотеку UI-простейшие компоненты
 import "./ui/index.js";
 // подключаем библиотеку WG-компоненты виджетов
@@ -14,6 +15,10 @@ import "./wg/index.js";
 // подключаем лейаут
 import Layout from "./pages/layout.vue";
 Vue.component("layout", Layout);
+
+//подключаем библиотеку для работы с куками
+var VueCookie = require('vue-cookie');
+Vue.use(VueCookie);
 
 //подключаем библиотеку AJAX запросов
 import Resourсe from "vue-resource";

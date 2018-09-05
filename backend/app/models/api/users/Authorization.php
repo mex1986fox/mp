@@ -15,7 +15,7 @@ class Authorization
     public function run()
     {
         try {
-            if (isset($_SESSION["user"]["id"]) && isset($_SESSION["user"]["login"])) {
+            if (isset($_SESSION["user_id"])) {
                 throw new \Exception("Пользователь уже авторизован");
             }
             // передаем параметры в переменные
@@ -42,19 +42,26 @@ class Authorization
             }
             // пишем в базу
             $db = $this->container['db'];
-            $q = "select id, login from users where login = '{$login}' and  password =md5('{$password}');";
+            $q = "select * from users where login = '{$login}';";
             $sth = $db->query($q, \PDO::FETCH_ASSOC);
             $user = $sth->fetch();
-
-            if (isset($user['id'])) {
-                $_SESSION["user"]["id"] = $user["id"];
-                $_SESSION["user"]["login"] = $user["login"];
+            
+            if(!isset($user["id"])){
+                $exceptions["login"] = "Такой логин не зарегистрирован";
+                throw new \Exception("Ошибки в параметрах");
             }
-            return ["user" => $user];
+            if($user['password']!==md5($password)){
+                $exceptions["password"] = "Не верный пароль";
+                throw new \Exception("Ошибки в параметрах");
+            }
+            if ($user['password']==md5($password)) {
+                $_SESSION["user_id"] = $user["id"];
+                setcookie("user_id", $user["id"], time() + 60*60*12, "/");
+            }
+            return ["massege"=>"Авторизация прошла успешно"];
         } catch (RuntimeException | \Exception $e) {
 
             $exceptions['massege'] = $e->getMessage();
-
             return ["exceptions" => $exceptions];
         }
 

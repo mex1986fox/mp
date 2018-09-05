@@ -10,7 +10,24 @@ const transports = {
     fuels: undefined,
     bodies: undefined
   },
-  getters: {},
+  getters: {
+    getBrand: (state, getters, rootState, rootGetters) => id => {
+      for (let brand of state.brands) {
+        if (id == brand.id) {
+          return brand;
+        }
+      }
+      return undefined;
+    },
+    getModel: (state, getters, rootState, rootGetters) => id => {
+      for (let model of state.models) {
+        if (id == model.id) {
+          return model;
+        }
+      }
+      return undefined;
+    }
+  },
   mutations: {
     updateTransports(state, transport) {
       state.transports = transport.transports;
@@ -39,7 +56,7 @@ const transports = {
             let transports = response.body;
             context.commit("updateTransports", transports);
           },
-          error => {}
+          error => { }
         );
       }
     }

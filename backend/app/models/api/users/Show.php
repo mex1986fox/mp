@@ -20,7 +20,7 @@ class Show
             // передаем параметры в переменные
             $p = $this->request->getQueryParams();
             $exceptions = [];
-            $login = $p["id"];
+            $id = $p["id"];
             $login = $p["login"];
             $name = $p["name"];
             $surname = $p["surname"];
@@ -31,9 +31,11 @@ class Show
             $q = "  select
                         id, login, name, surname, birthdate
                     from
-                        users";
-            $sth = $db->query($q, \PDO::FETCH_ASSOC);
-            return $sth->fetchAll();
+                        users
+                        where id={$id}";
+            $users = $db->query($q, \PDO::FETCH_ASSOC)->fetchAll();
+            
+            return ["users"=>$users];
         } catch (RuntimeException | \Exception $e) {
 
             $exceptions['massege'] = $e->getMessage();

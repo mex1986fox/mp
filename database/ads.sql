@@ -20,5 +20,5 @@ CREATE TABLE "ads" (
     FOREIGN KEY (body_id) REFERENCES transports_bodies(id),
     FOREIGN KEY (drive_id) REFERENCES transports_drives(id),
     FOREIGN KEY (wheel_id) REFERENCES transports_wheels(id),
-    FOREIGN KEY (fuel_id) REFERENCES transports_fuels(id),
+    FOREIGN KEY (fuel_id) REFERENCES transports_fuels(id)
 );
