@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use \App\Models\Api\Users\Authorization as UsersAuthorization;
 use \App\Models\Api\Users\Create as UsersCreate;
+use \App\Models\Api\Users\Logout as UsersLogout;
 use \App\Models\Api\Users\Show as UsersShow;
 
 class UsersController extends MainController
@@ -21,7 +22,12 @@ class UsersController extends MainController
         $cont = $this->container;
         $reg = new UsersCreate($cont, $request, $response);
         $answer = $reg->run();
-        $response = $response->withJson($answer, 200);
+        if (isset($answer['exceptions'])) {
+            $response = $response->withJson($answer, 400);
+        }
+        if (isset($answer['recovery_key'])) {
+            $response = $response->withJson($answer, 200);
+        }
         return $response;
 
     }
@@ -41,9 +47,22 @@ class UsersController extends MainController
         $reg = new UsersAuthorization($cont, $request);
         $answer = $reg->run();
         if (isset($answer['exceptions'])) {
-            $response = $response->withJson($answer, 200);
+            $response = $response->withJson($answer, 400);
         }
         if (isset($answer['user'])) {
+            $response = $response->withJson($answer, 200);
+        }
+        return $response;
+    }
+    public function logout($request, $response, $args)
+    {
+        $cont = $this->container;
+        $reg = new UsersLogout($cont, $request);
+        $answer = $reg->run();
+        if (isset($answer['exceptions'])) {
+            $response = $response->withJson($answer, 400);
+        }
+        if (isset($answer['massege'])) {
             $response = $response->withJson($answer, 200);
         }
         return $response;

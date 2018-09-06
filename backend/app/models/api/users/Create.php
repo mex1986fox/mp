@@ -27,9 +27,9 @@ class Create
             $birthdate = $p["birthdate"];
             $captcha = $p["captcha"];
             // проверяем капчу
-            if (!isset($captcha)) {
+            if (empty($captcha)) {
                 $exceptions["captcha"] = "Не ввели символы";
-            } elseif (!isset($_SESSION['captcha']) && md5($captcha) !== $_SESSION['captcha']) {
+            } elseif (!empty($_SESSION['captcha']) && md5($captcha) !== $_SESSION['captcha']) {
                 $exceptions["captcha"] = "Не верно";
             }
             // убиваем капчу из сессии
@@ -89,7 +89,9 @@ class Create
             }
             return ["recovery_key" => $recoveryKey, "massege" => "Регистрация прошла успешно"];
         } catch (RuntimeException | \Exception $e) {
-
+            if($e->getCode()==23505){
+                $exceptions["login"] = "Этот логин занят";
+            }
             $exceptions['massege'] = $e->getMessage();
             return ["exceptions" => $exceptions];
         }

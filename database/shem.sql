@@ -3,7 +3,7 @@ CREATE DATABASE drovito WITH
     TEMPLATE = template0;
 CREATE USER drovito WITH password 'drovito';
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "drovito";
-
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO "drovito";
 -- таблица пользователей
 CREATE TABLE "users" (
     id serial,
