@@ -10,12 +10,5 @@ $config = [
             'pass' => "drovito",
             'dbname' => "drovito",
         ],
-        'db_photos_ads' => [
-            'host' => "127.0.0.1",
-            'port' => '5432',
-            'user' => "drovito",
-            'pass' => "drovito",
-            'dbname' => "drovito",
-        ],
     ],
 ];
