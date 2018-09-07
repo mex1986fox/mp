@@ -52,5 +52,6 @@ const vue = new Vue({
   mounted() {
     this.$store.dispatch("locations/loadLocations");
     this.$store.dispatch("transports/loadTransports");
+    this.$store.dispatch("user/authentication");
   }
 }).$mount("#app");

@@ -194,11 +194,11 @@ export default {
   },
   methods: {
     authorization(event) {
-			this.authorizationEcept={};
+      this.authorizationEcept = {};
       let body = new FormData(event.target);
       this.$http.post("/api/authorization/users", body).then(
         response => {
-          this.setUser();
+          this.$store.dispatch("user/authentication");
         },
         error => {
           if (error.body.exceptions != undefined) {
@@ -219,20 +219,9 @@ export default {
         );
       }
     },
-    setUser() {
-      let user_id = this.$cookie.get("user_id");
-      if (user_id != undefined) {
-        let body = { id: user_id };
-        this.$http.post("/api/show/users", body).then(
-          response => {
-            this.$store.commit("user/update", response.body.users[0]);
-          },
-          error => {}
-        );
-      }
-    },
+
     registered(event) {
-			this.registrationEcept={};
+      this.registrationEcept = {};
       event.preventDefault();
       let body = {};
       for (let elForm of event.target) {
@@ -257,9 +246,7 @@ export default {
       );
     }
   },
-  mounted() {
-    this.setUser();
-  }
+
 };
 </script>
 

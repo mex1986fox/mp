@@ -8,7 +8,7 @@ $config = [
             'port' => '5432',
             'user' => "drovito",
             'pass' => "drovito",
-            'dbname' => "drovito",
+            'dbname' => "photos_ads",
         ],
     ],
 ];

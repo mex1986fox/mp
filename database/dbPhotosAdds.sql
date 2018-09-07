@@ -5,17 +5,8 @@ CREATE USER drovito WITH password 'drovito';
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "drovito";
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO "drovito";
 
-CREATE TABLE "users" (
-    id bigserial,
-    session varchar(42) NULL,
-    lifetime timestamp,
-    PRIMARY KEY (id)
-);
-
-create table "ads"(
-    id bigserial,
-    user_id bigint,
+create table "lincks"(
+    ads_id bigint UNIQUE,
     lincks jsonb,
-    PRIMARY KEY (id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    PRIMARY KEY (ads_id)
 );

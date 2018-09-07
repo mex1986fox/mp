@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use \App\Models\Api\Users\Authorization as UsersAuthorization;
+use \App\Models\Api\Users\Authentication as UsersAuthentication;
 use \App\Models\Api\Users\Create as UsersCreate;
 use \App\Models\Api\Users\Logout as UsersLogout;
 use \App\Models\Api\Users\Show as UsersShow;
@@ -61,6 +62,19 @@ class UsersController extends MainController
         $answer = $reg->run();
         if (isset($answer['exceptions'])) {
             $response = $response->withJson($answer, 400);
+        }
+        if (isset($answer['massege'])) {
+            $response = $response->withJson($answer, 200);
+        }
+        return $response;
+    }
+    public function authentication($request, $response, $args)
+    {
+        $cont = $this->container;
+        $reg = new UsersAuthentication($cont, $request);
+        $answer = $reg->run();
+        if (isset($answer['exceptions'])) {
+            $response = $response->withJson($answer, 401);
         }
         if (isset($answer['massege'])) {
             $response = $response->withJson($answer, 200);

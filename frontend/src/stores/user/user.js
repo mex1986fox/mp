@@ -23,6 +23,34 @@ const user = {
     }
   },
   actions: {
+    authentication(context) {
+      let user_id = Vue.cookie.get("user_id");
+      if (user_id != undefined) {
+        let body = { user_id: user_id };
+        Vue.http.post("/api/authentication/users", body).then(
+          () => {
+            context.dispatch("setUser");
+          },
+          () => {
+            context.commit("drop");
+          }
+        );
+      }else{
+				 context.commit("drop");
+			}
+    },
+    setUser(context) {
+      let user_id = Vue.cookie.get("user_id");
+      if (user_id != undefined) {
+        let body = { id: user_id };
+        Vue.http.post("/api/show/users", body).then(
+          response => {
+            context.commit("update", response.body.users[0]);
+          },
+          error => {}
+        );
+      }
+    },
   }
 };
 export default user;

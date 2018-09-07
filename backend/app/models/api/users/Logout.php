@@ -15,15 +15,13 @@ class Logout
     public function run()
     {
         try {
-            if (!isset($_SESSION["user_id"])) {
-                throw new \Exception("Пользователь не был авторизован");
-            }else{
-                unset($_SESSION["user_id"]);
-                setcookie("user_id", $user["id"], time() - 60*60*12, "/");
-            }
-            
-            
-            return ["massege"=>"Выход из системы прошел успешно"];
+            $p = $this->request->getQueryParams();
+          
+            $login = $p["user_id"];
+            unset($_SESSION["user_id"]);
+            setcookie("user_id", $user["id"], time() - 60 * 60 * 12, "/");
+
+            return ["massege" => "Выход из системы прошел успешно"];
         } catch (RuntimeException | \Exception $e) {
 
             $exceptions['massege'] = $e->getMessage();
