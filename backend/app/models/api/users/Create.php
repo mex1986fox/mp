@@ -76,10 +76,10 @@ class Create
             $q = "  insert into users
                         ( login, password, recovery_key, name, surname, birthdate )
                     values
-                        (
-                            '{$login}',md5('{$password}'),md5('{$recoveryKey}'),
+                        ('{$login}',md5('{$password}'),md5('{$recoveryKey}'),
                             '{$name}','{$surname}','{$birthdate}'
                         ) RETURNING id;";
+
             $sth = $db->query($q, \PDO::FETCH_ASSOC);
             $user = $sth->fetch();
             // добавить в сессию
@@ -89,7 +89,7 @@ class Create
             }
             return ["recovery_key" => $recoveryKey, "massege" => "Регистрация прошла успешно"];
         } catch (RuntimeException | \Exception $e) {
-            if($e->getCode()==23505){
+            if ($e->getCode() == 23505) {
                 $exceptions["login"] = "Этот логин занят";
             }
             $exceptions['massege'] = $e->getMessage();

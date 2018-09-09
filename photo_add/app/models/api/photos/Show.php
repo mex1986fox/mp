@@ -1,5 +1,5 @@
 <?php
-namespace App\Models\Api\Ads;
+namespace App\Models\Api\Photos;
 
 use \Zend\Validator\Exception\RuntimeException as RuntimeException;
 
@@ -17,14 +17,11 @@ class Show
     {
         try {
             $p = $this->request->getQueryParams();
-            $qWhere = "";
-            $qWhere = $qWhere . (empty($p["add_id"]) ? "" : "id=" . $p["add_id"]);
-            $qWhere = (empty($qWhere) ? "" : "where ") . $qWhere;
-
             $db = $this->container['db'];
-            $q = "select * from ads " . $qWhere;
-            $ads = $db->query($q, \PDO::FETCH_ASSOC)->fetchAll();
-            return ["ads" => $ads];
+            $q = "select lincks from lincks where ads_id=" . $p["add_id"];
+            $resp = $db->query($q, \PDO::FETCH_ASSOC)->fetchAll();
+            $lincks = json_decode($resp[0]["lincks"])->lincks;
+            return ["lincks" => $lincks];
         } catch (RuntimeException | \Exception $e) {
             $exceptions = ['exceptions' => ['massege' => $e->getMessage()]];
             return $exceptions;

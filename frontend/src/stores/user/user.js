@@ -35,9 +35,9 @@ const user = {
             context.commit("drop");
           }
         );
-      }else{
-				 context.commit("drop");
-			}
+      } else {
+        context.commit("drop");
+      }
     },
     setUser(context) {
       let user_id = Vue.cookie.get("user_id");
@@ -50,7 +50,7 @@ const user = {
           error => {}
         );
       }
-    },
+    }
   }
 };
 export default user;

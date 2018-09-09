@@ -5,7 +5,7 @@
 		<input class="ui-file__input"
 		       ref="file"
 		       type="file"
-		       name="file"
+		       name="files[]"
 		       :accept="accept"
 		       multiple>
 		<span class="ui-file__caption"
@@ -42,12 +42,20 @@
 			   aria-hidden="true"></i>
 
 		</span>
-		<button v-if="dFiles.length>0"
-		        @click="isClickEditFile"
-		        class="ui-button ui-button_circle ui-button_circle_mini ui-file__edit">
-			<i class="fa fa-pencil"
-			   aria-hidden="true"></i>
-		</button>
+		<div v-if="dFiles.length>0"
+		     class="ui-file__edit">
+
+			<div @click="isClickEditFile"
+			     class="ui-button ui-button_circle ui-button_circle_mini">
+				<i class="fa fa-pencil"
+				   aria-hidden="true"></i>
+			</div>
+			<button type="submit"
+			        class="ui-button ui-button_circle ui-button_circle_mini ui-button_red">
+				<i class="fa fa-cloud-download"
+				   aria-hidden="true"></i>
+			</button>
+		</div>
 
 	</div>
 </template>

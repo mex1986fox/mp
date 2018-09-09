@@ -7,7 +7,10 @@ import Vue from "vue/dist/vue.js";
 import router from "./router/index.js";
 import store from "./stores/index.js";
 
-
+//подключаем имена хостов
+// которые будем использовать в проекте
+import Hosts from "./plugins/hosts.js";
+Vue.use(Hosts);
 // подключаем библиотеку UI-простейшие компоненты
 import "./ui/index.js";
 // подключаем библиотеку WG-компоненты виджетов
@@ -17,7 +20,7 @@ import Layout from "./pages/layout.vue";
 Vue.component("layout", Layout);
 
 //подключаем библиотеку для работы с куками
-var VueCookie = require('vue-cookie');
+var VueCookie = require("vue-cookie");
 Vue.use(VueCookie);
 
 //подключаем библиотеку AJAX запросов

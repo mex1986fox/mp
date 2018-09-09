@@ -11,4 +11,7 @@ $config = [
             'dbname' => "photos_ads",
         ],
     ],
+    'hosts' => [
+        'auth' => 'http://drovito.ru',
+    ],
 ];

@@ -17,12 +17,16 @@ class StandardFiltering
     }
     public function __invoke($request, $response, $next)
     {
+        // var_dump($_REQUEST);
+
         if ($request->isPost()) {
             $p = $request->getParsedBody();
         }
         if ($request->isGet()) {
             $p = $request->getQueryParams();
         }
+
+        // var_dump($request->getParsedBody());
         // var_dump($p);
         if (isset($p)) {
             // фильтруем параметры

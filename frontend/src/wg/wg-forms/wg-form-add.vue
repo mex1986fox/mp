@@ -149,13 +149,28 @@
 
 						Фотографии
 					</div>
-					<ui-file caption="Выберите фотографии"
-					         captionCompleted="Выбранные фотографии"
-					         :autoresize="300"
-					         accept="image/*">
+					<form id="formLoadPhotos"
+					      enctype="multipart/form-data"
+					      @submit.prevent="loadPhotos">
+						<div class="row">
+							<div class="col_5">
+								<ui-text name="add_id"
+								         caption="номер объявления"></ui-text>
+							</div>
+						</div>
+						<img style="height:60px"
+						     v-for="(val, key) in photoLincks"
+						     :key="key"
+						     :src="$hosts.photosAds+val"
+						     alt=""
+						     srcset="">
+						<ui-file caption="Выберите фотографии"
+						         captionCompleted="Выбранные фотографии"
+						         :autoresize="300"
+						         accept="image/*">
 
-					</ui-file>
-
+						</ui-file>
+					</form>
 				</div>
 
 			</div>
@@ -171,7 +186,8 @@ export default {
     return {
       tabs: "basick",
       selectedRegion: undefined,
-      selectedBrand: undefined
+      selectedBrand: undefined,
+      photoLincks: undefined
     };
   },
   methods: {
@@ -205,6 +221,31 @@ export default {
         },
         error => {}
       );
+    },
+    loadPhotos() {
+      let form = document.getElementById("formLoadPhotos");
+      let body = new FormData(form);
+      body.set("session_id", this.$cookie.get("PHPSESSID"));
+      body.set("user_id", this.$cookie.get("user_id"));
+      this.$http.post(this.$hosts.photosAds + "/api/create/photos", body).then(
+        response => {
+          this.updatePhotoLincks();
+        },
+        error => {}
+      );
+    },
+    updatePhotoLincks() {
+      let params = { add_id: "6" };
+      let headers = { "Content-Type": "multipart/form-data" };
+
+      this.$http
+        .post(this.$hosts.photosAds + "/api/show/photos", params, headers)
+        .then(
+          response => {
+            this.photoLincks = response.body.lincks;
+          },
+          error => {}
+        );
     }
   },
   computed: {
