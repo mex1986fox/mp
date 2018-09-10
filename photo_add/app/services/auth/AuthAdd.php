@@ -11,6 +11,8 @@ class AuthAdd
     public function Authed($user_id, $add_id)
     {
 
+        
+        echo $add_id;
         $authHost = $this->container["hosts"]["auth"];
         $jsonDatas = array(
             'add_id' => $add_id,
@@ -27,8 +29,9 @@ class AuthAdd
         $rCode = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
         curl_close($ch);
         $dj = json_decode($output);
-        // var_dump($dj);
-        if ($rCode == 200) {
+         var_dump($dj);
+        if ($rCode == 200 && !isset($dj->exceptions)) {
+            
             if (count($dj->ads) != 0 && $dj->ads[0]->user_id == $user_id) {
                 return true;
             }

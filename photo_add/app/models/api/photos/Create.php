@@ -66,7 +66,7 @@ class Create
                     if (!file_exists($path . "/" . $name)) {
                         //сохраняем если нет такого файла
                         move_uploaded_file($_FILES['files']['tmp_name'][$key], $path . "/" . $name);
-                        echo $qUpdate = "update lincks
+                        $qUpdate = "update lincks
                                         set lincks = jsonb_set(lincks, '{lincks}', lincks->'lincks'||'\"{$links}/{$name}\"')
                                         where ads_id={$addID};";
                         $db->query($qUpdate, \PDO::FETCH_ASSOC)->fetch();

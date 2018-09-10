@@ -1820,6 +1820,14 @@ body {
         bottom: 0px;
         left: 0px;
         transition: width 0.5s ease; }
+    .ui-tabs__tab_disabled {
+      color: #fffff94d !important; }
+      .ui-tabs__tab_disabled:hover {
+        background-color: rgba(0, 0, 0, 0); }
+      .ui-tabs__tab_disabled:active {
+        background-color: rgba(0, 0, 0, 0); }
+      .ui-tabs__tab_disabled:after {
+        background-color: #fffff94d !important; }
 
 .ui-counter {
   position: relative;

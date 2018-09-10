@@ -14,16 +14,27 @@
 						<ui-tabs-tab id="basick"
 						             :checked="tabs=='basick'"
 						             @onFocus="isTabs">
+												 <div class="ui-tabs__icone">
+													 1
+												 </div>
 							Основное
 						</ui-tabs-tab>
 						<ui-tabs-tab id="photo"
 						             :checked="tabs=='photo'"
-						             @onFocus="isTabs">
+						             @onFocus="isTabs"
+												 :disabled="disanledTabs">
+												 <div class="ui-tabs__icone">
+													 2
+												 </div>
 							Фотографии
 						</ui-tabs-tab>
 						<ui-tabs-tab id="excess"
 						             :checked="tabs=='excess'"
-						             @onFocus="isTabs">
+						             @onFocus="isTabs"
+												:disabled="disanledTabs">
+												 <div class="ui-tabs__icone">
+													 3
+												 </div>
 							Дополнительно
 						</ui-tabs-tab>
 					</ui-tabs>
@@ -152,12 +163,6 @@
 					<form id="formLoadPhotos"
 					      enctype="multipart/form-data"
 					      @submit.prevent="loadPhotos">
-						<div class="row">
-							<div class="col_5">
-								<ui-text name="add_id"
-								         caption="номер объявления"></ui-text>
-							</div>
-						</div>
 						<img style="height:60px"
 						     v-for="(val, key) in photoLincks"
 						     :key="key"
@@ -187,7 +192,9 @@ export default {
       tabs: "basick",
       selectedRegion: undefined,
       selectedBrand: undefined,
-      photoLincks: undefined
+			photoLincks: undefined,
+			disanledTabs: true,
+			add_id: undefined
     };
   },
   methods: {
@@ -209,15 +216,10 @@ export default {
       let body = new FormData(form);
       this.$http.post("/api/create/ads", body).then(
         response => {
-          if (response.body.exceptions != undefined) {
-            // this.registrationEcept = response.body.exceptions;
-            // this.$refs.captcha.$emit("onRefresh");
-          }
-          if (response.body.recovery_key != undefined) {
-            // this.recovery_key = response.body.recovery_key;
-            // this.showRecoveryCard = true;
-            // this.showRegistrationCard = false;
-          }
+					this.disanledTabs=false;
+					this.tabs="photo";
+					this.add_id=response.body.add_id
+
         },
         error => {}
       );
@@ -226,7 +228,8 @@ export default {
       let form = document.getElementById("formLoadPhotos");
       let body = new FormData(form);
       body.set("session_id", this.$cookie.get("PHPSESSID"));
-      body.set("user_id", this.$cookie.get("user_id"));
+			body.set("user_id", this.$cookie.get("user_id"));
+			body.set("add_id", this.add_id);
       this.$http.post(this.$hosts.photosAds + "/api/create/photos", body).then(
         response => {
           this.updatePhotoLincks();
@@ -235,7 +238,7 @@ export default {
       );
     },
     updatePhotoLincks() {
-      let params = { add_id: "6" };
+      let params = { add_id: this.add_id };
       let headers = { "Content-Type": "multipart/form-data" };
 
       this.$http

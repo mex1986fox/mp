@@ -18,7 +18,6 @@ class Create
         try {
 
             $p = $this->request->getQueryParams();
-            var_dump($p);
             $user_id = 1; // $_SESSION["user"]["id"];
 
             $settlements_id = $p["settlement"];
@@ -57,9 +56,8 @@ class Create
                     {$price},
                     {$year}
                 )  RETURNING id;";
-            echo ($q);
             $id_add = $db->query($q, \PDO::FETCH_ASSOC)->fetch();
-            return ["add_id" => $id_add, "massege" => "Объявление создано успешно"];
+            return ["add_id" => $id_add['id'], "massege" => "Объявление создано успешно"];
         } catch (RuntimeException | \Exception $e) {
             $exceptions = ['exceptions' => ['massege' => $e->getMessage()]];
             return $exceptions;
