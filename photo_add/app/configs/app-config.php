@@ -12,6 +12,7 @@ $config = [
         ],
     ],
     'hosts' => [
+        'this' => 'http://photos-ads.ru',
         'auth' => 'http://drovito.ru',
     ],
 ];

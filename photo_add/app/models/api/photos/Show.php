@@ -20,6 +20,7 @@ class Show
             $db = $this->container['db'];
             $q = "select lincks from lincks where ads_id=" . $p["add_id"];
             $resp = $db->query($q, \PDO::FETCH_ASSOC)->fetchAll();
+
             $lincks = json_decode($resp[0]["lincks"])->lincks;
             return ["lincks" => $lincks];
         } catch (RuntimeException | \Exception $e) {

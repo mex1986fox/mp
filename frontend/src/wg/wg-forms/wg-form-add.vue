@@ -14,27 +14,27 @@
 						<ui-tabs-tab id="basick"
 						             :checked="tabs=='basick'"
 						             @onFocus="isTabs">
-												 <div class="ui-tabs__icone">
-													 1
-												 </div>
+							<div class="ui-tabs__icone">
+								1
+							</div>
 							Основное
 						</ui-tabs-tab>
 						<ui-tabs-tab id="photo"
 						             :checked="tabs=='photo'"
 						             @onFocus="isTabs"
-												 :disabled="disanledTabs">
-												 <div class="ui-tabs__icone">
-													 2
-												 </div>
+						             :disabled="disanledTabs">
+							<div class="ui-tabs__icone">
+								2
+							</div>
 							Фотографии
 						</ui-tabs-tab>
 						<ui-tabs-tab id="excess"
 						             :checked="tabs=='excess'"
 						             @onFocus="isTabs"
-												:disabled="disanledTabs">
-												 <div class="ui-tabs__icone">
-													 3
-												 </div>
+						             :disabled="disanledTabs">
+							<div class="ui-tabs__icone">
+								3
+							</div>
 							Дополнительно
 						</ui-tabs-tab>
 					</ui-tabs>
@@ -160,15 +160,22 @@
 
 						Фотографии
 					</div>
+					<div v-if="slide!=undefined">
+						<wg-slider class="wg-card-photo__slider"
+						           :slide='slide'
+						           :select="selectPhoto"
+						           @onSelect="isSelectPhoto">
+						</wg-slider>
+						<wg-slider-navig class="wg-card-photo__slider-navig"
+						                 :slide='slide'
+						                 :select="selectPhoto"
+						                 @onSelect="isSelectPhoto">
+						</wg-slider-navig>
+					</div>
 					<form id="formLoadPhotos"
 					      enctype="multipart/form-data"
 					      @submit.prevent="loadPhotos">
-						<img style="height:60px"
-						     v-for="(val, key) in photoLincks"
-						     :key="key"
-						     :src="$hosts.photosAds+val"
-						     alt=""
-						     srcset="">
+
 						<ui-file caption="Выберите фотографии"
 						         captionCompleted="Выбранные фотографии"
 						         :autoresize="300"
@@ -192,9 +199,10 @@ export default {
       tabs: "basick",
       selectedRegion: undefined,
       selectedBrand: undefined,
-			photoLincks: undefined,
-			disanledTabs: true,
-			add_id: undefined
+      photoLincks: undefined,
+      disanledTabs: true,
+      add_id: undefined,
+      selectPhoto: 0
     };
   },
   methods: {
@@ -211,15 +219,17 @@ export default {
     isSelectedBrand(brand) {
       this.selectedBrand = brand[0].value;
     },
+    isSelectPhoto(nPhoto) {
+      this.selectPhoto = nPhoto;
+    },
     create(event) {
       let form = document.getElementById("formCreateAdd");
       let body = new FormData(form);
       this.$http.post("/api/create/ads", body).then(
         response => {
-					this.disanledTabs=false;
-					this.tabs="photo";
-					this.add_id=response.body.add_id
-
+          this.disanledTabs = false;
+          this.tabs = "photo";
+          this.add_id = response.body.add_id;
         },
         error => {}
       );
@@ -228,14 +238,23 @@ export default {
       let form = document.getElementById("formLoadPhotos");
       let body = new FormData(form);
       body.set("session_id", this.$cookie.get("PHPSESSID"));
-			body.set("user_id", this.$cookie.get("user_id"));
-			body.set("add_id", this.add_id);
-      this.$http.post(this.$hosts.photosAds + "/api/create/photos", body).then(
-        response => {
-          this.updatePhotoLincks();
-        },
-        error => {}
-      );
+      body.set("user_id", this.$cookie.get("user_id"));
+      body.set("add_id", this.add_id);
+      this.$http
+        .post(this.$hosts.photosAds + "/api/create/photos", body, {
+          progress(e) {
+            console.log(e.lengthComputable);
+            if (e.lengthComputable) {
+              console.log(e.loaded / e.total * 100);
+            }
+          }
+        })
+        .then(
+          response => {
+            this.updatePhotoLincks();
+          },
+          error => {}
+        );
     },
     updatePhotoLincks() {
       let params = { add_id: this.add_id };
@@ -245,13 +264,24 @@ export default {
         .post(this.$hosts.photosAds + "/api/show/photos", params, headers)
         .then(
           response => {
-            this.photoLincks = response.body.lincks;
+            this.photoLincks = undefined;
+            setTimeout(() => {
+              this.photoLincks = response.body.lincks;
+            }, 100);
           },
           error => {}
         );
     }
   },
   computed: {
+    slide() {
+      if (this.photoLincks != undefined) {
+        return this.photoLincks.map(function(slide) {
+          return { src: slide };
+        });
+      }
+      return undefined;
+    },
     menuSubjects() {
       return this.$store.getters["form_add/getSubjects"];
     },

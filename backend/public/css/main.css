@@ -2276,6 +2276,7 @@ select::-ms-expand {
   position: relative;
   overflow: hidden; }
   .wg-slider__img {
+    position: relative;
     z-index: 1; }
     .wg-slider__img_horizon {
       position: absolute;
@@ -2301,8 +2302,7 @@ select::-ms-expand {
     height: 104%;
     top: -2%;
     opacity: 0.05;
-    left: -2%;
-    z-index: -1; }
+    left: -2%; }
   .wg-slider__buttons {
     width: 100%;
     position: absolute; }

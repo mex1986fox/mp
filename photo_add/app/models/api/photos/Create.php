@@ -16,7 +16,7 @@ class Create
     public function run()
     {
         try {
-
+            $thisHost = $this->container["hosts"]["this"];
             // передаем параметры в переменные
             $p = $this->request->getQueryParams();
 
@@ -56,10 +56,11 @@ class Create
             foreach ($_FILES["files"]["name"] as $key => $name) {
                 if ($_FILES['files']['error'][$key] == 0) {
                     $path = MP_PRODIR . "/public/photos/$userID/$addID";
-                    $links = "/public/photos/$userID/$addID";
+                    $links = $thisHost . "/public/photos/$userID/$addID";
+                    file_exists($path . "/");
                     if (!file_exists($path)) {
                         mkdir($path, 0777, true);
-                        $qInsert = "insert into lincks (ads_id, lincks) values ($addID, '{\"links\":[]}');";
+                        $qInsert = "insert into lincks (ads_id, lincks) values ($addID, '{\"lincks\":[]}');";
                         $db->query($qInsert, \PDO::FETCH_ASSOC)->fetch();
                     }
                     //проверить наличие подобного файла
