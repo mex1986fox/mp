@@ -57,17 +57,17 @@ export default {
     show(event) {
       this.$http.post("/api/show/ads").then(
         response => {
-					this.ads = response.body.ads;
-					this.updatePhotoLincks();
+          this.ads = response.body.ads;
+          this.updatePhotoLincks();
         },
         error => {}
       );
-		},
-		updatePhotoLincks() {
-			let ads_id=[];
-			this.ads.forEach(element => {
-				ads_id.push(element.id);
-			});
+    },
+    updatePhotoLincks() {
+      let ads_id = [];
+      this.ads.forEach(element => {
+        ads_id.push(element.id);
+      });
       let params = { ads_id: ads_id };
       let headers = { "Content-Type": "multipart/form-data" };
 
@@ -75,7 +75,21 @@ export default {
         .post(this.$hosts.photosAds + "/api/show/photos", params, headers)
         .then(
           response => {
-						console.log(response.body);
+            let ads = this.ads;
+            this.ads = undefined;
+            let lincks = response.body.ads;
+            lincks.forEach(linck => {
+              ads.forEach((ad, key) => {
+                if (ad.id == linck.id) {
+                  ads[key].slide = linck.lincks.map(src => {
+                    return { src: src };
+                  });
+                }
+              });
+            });
+            setTimeout(() => {
+              this.ads = ads;
+            }, 100);
           },
           error => {}
         );

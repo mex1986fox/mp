@@ -34,6 +34,7 @@ class Show
             $q = "select ads_id as id, lincks from lincks" . $qWhere;
             $ans = $db->query($q, \PDO::FETCH_ASSOC)->fetchAll();
             foreach ($ans as $key => $value) {
+                // var_dump(json_decode($value["lincks"]));
                 $ads[$key] = ["id" => $value["id"], "lincks" => json_decode($value["lincks"])->lincks];
             }
             return ["ads" => $ads];
