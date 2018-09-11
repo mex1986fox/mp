@@ -1,63 +1,48 @@
 <template>
-	<div class="ui-file"
-	     tabindex="0"
-	     @click="isClickAddFile">
-		<input class="ui-file__input"
-		       ref="file"
-		       type="file"
-		       name="files[]"
-		       :accept="accept"
-		       multiple>
-		<span class="ui-file__caption"
-		      :class="{ 'ui-file__caption_completed':modCompleted,
-                    'ui-file__caption_disabled':disabled}">
-			{{captionCompleted!="" && modCompleted?captionCompleted:caption}}
-		</span>
-		<div ref="files"
-		     class="ui-file__files">
-			<div class="ui-file__files-file"
-			     v-for="(val, key) in dFiles"
-			     :key="key"
-			     @click="isSelectFile(key)">
-				<div class="ui-file__files-icon">
-					<i class="fa fa-file-o"
-					   aria-hidden="true"></i>
-				</div>
-				<div class="ui-file__files-type">
-					{{val.type.split("/")[1]}}
-				</div>
-				<div class="ui-file__files-src">
-					{{val.name}}
-				</div>
-			</div>
+  <div class="ui-file" tabindex="0" @click="isClickAddFile">
+    <input class="ui-file__input" ref="file" type="file" name="files[]" :accept="accept" multiple>
+    <span class="ui-file__caption" :class="{ 'ui-file__caption_completed':modCompleted,
+                    'ui-file__caption_disabled':disabled,'ui-file__caption_disabled': percent!=undefined}">
+      {{captionCompleted!="" && modCompleted?captionCompleted:caption}}
+    </span>
+    <div ref="files" class="ui-file__files">
+      <div class="ui-file__files-file" v-for="(val, key) in dFiles" :key="key" @click="isSelectFile(key)">
+        <div class="ui-file__files-icon">
+          <i class="fa fa-file-o" aria-hidden="true"></i>
+        </div>
+        <div class="ui-file__files-type">
+          {{val.type.split("/")[1]}}
+        </div>
+        <div class="ui-file__files-src">
+          {{val.name}}
+        </div>
 
-		</div>
+      </div>
 
-		<hr class="ui-file__border"
-		    :class="{ 'ui-file__border_disabled':disabled}">
-		<span v-if="dFiles.length==0"
-		      class="ui-file__badge"
-		      :class="{'ui-file__badge_disabled':disabled}">
-			<i class="fa fa-plus"
-			   aria-hidden="true"></i>
+    </div>
 
-		</span>
-		<div v-if="dFiles.length>0"
-		     class="ui-file__edit">
+    <hr class="ui-file__border" :class="{ 'ui-file__border_disabled':disabled,'ui-file__border_disabled': percent!=undefined}">
 
-			<div @click="isClickEditFile"
-			     class="ui-button ui-button_circle ui-button_circle_mini">
-				<i class="fa fa-pencil"
-				   aria-hidden="true"></i>
-			</div>
-			<button type="submit"
-			        class="ui-button ui-button_circle ui-button_circle_mini ui-button_red">
-				<i class="fa fa-cloud-download"
-				   aria-hidden="true"></i>
-			</button>
-		</div>
+    <hr v-if="percent!=undefined" class="ui-file__files-loader" :style="{'width':percent+'%'}" />
+    <span v-if="percent!=undefined">
+      {{percent.toFixed(2)+'%'}}
+    </span>
 
-	</div>
+    <span v-if="dFiles.length==0" class="ui-file__badge" :class="{'ui-file__badge_disabled':disabled,'ui-file__badge_disabled': percent!=undefined}">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+
+    </span>
+    <div v-if="dFiles.length>0 && percent==undefined" class="ui-file__edit">
+
+      <div @click="isClickEditFile" class="ui-button ui-button_circle ui-button_circle_mini">
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+      </div>
+      <button  type="submit" class="ui-button ui-button_circle ui-button_circle_mini ui-button_red">
+        <i class="fa fa-cloud-download" aria-hidden="true"></i>
+      </button>
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -98,9 +83,12 @@ export default {
     accept: {
       type: String,
       default: ""
+    },
+    percent: {
+      type: Number,
+      default: undefined
     }
   },
-
   methods: {
     isClickAddFile() {
       if (this.modCompleted == false && this.disabled == false) {

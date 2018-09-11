@@ -57,10 +57,28 @@ export default {
     show(event) {
       this.$http.post("/api/show/ads").then(
         response => {
-          this.ads = response.body.ads;
+					this.ads = response.body.ads;
+					this.updatePhotoLincks();
         },
         error => {}
       );
+		},
+		updatePhotoLincks() {
+			let ads_id=[];
+			this.ads.forEach(element => {
+				ads_id.push(element.id);
+			});
+      let params = { ads_id: ads_id };
+      let headers = { "Content-Type": "multipart/form-data" };
+
+      this.$http
+        .post(this.$hosts.photosAds + "/api/show/photos", params, headers)
+        .then(
+          response => {
+						console.log(response.body);
+          },
+          error => {}
+        );
     }
   },
   mounted() {

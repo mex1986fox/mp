@@ -903,6 +903,14 @@ body {
       overflow: hidden;
       height: 21px;
       color: #898484; }
+    .ui-file__files-loader {
+      position: absolute;
+      display: block;
+      margin: -1px 0 0 0px;
+      width: 0;
+      height: 3px;
+      background-color: #d62526;
+      border: none; }
   .ui-file__badge {
     position: absolute;
     width: auto;

@@ -18,11 +18,25 @@ class Show
         try {
             $p = $this->request->getQueryParams();
             $db = $this->container['db'];
-            $q = "select lincks from lincks where ads_id=" . $p["add_id"];
-            $resp = $db->query($q, \PDO::FETCH_ASSOC)->fetchAll();
+            $qWhere = "";
+            $qWhere = $qWhere . (empty($p["add_id"]) || !empty($p["ads_id"]) ? "" : "ads_id=" . $p["add_id"]);
+            // var_dump($p);
+            if (!empty($p["ads_id"])) {
+                $inAds = "";
+                foreach ($p["ads_id"] as $key => $value) {
+                    $inAds = $inAds == "" ? $value : $inAds . ", " . $value;
+                }
+                $qWhere = "ads_id IN (" . $inAds . ") ";
+            }
 
-            $lincks = json_decode($resp[0]["lincks"])->lincks;
-            return ["lincks" => $lincks];
+            $qWhere = (empty($qWhere) ? "" : " where ") . $qWhere;
+
+            $q = "select ads_id as id, lincks from lincks" . $qWhere;
+            $ans = $db->query($q, \PDO::FETCH_ASSOC)->fetchAll();
+            foreach ($ans as $key => $value) {
+                $ads[$key] = ["id" => $value["id"], "lincks" => json_decode($value["lincks"])->lincks];
+            }
+            return ["ads" => $ads];
         } catch (RuntimeException | \Exception $e) {
             $exceptions = ['exceptions' => ['massege' => $e->getMessage()]];
             return $exceptions;
