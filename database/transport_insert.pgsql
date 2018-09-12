@@ -10,10 +10,10 @@ VALUES
 
 INSERT INTO transports_fuels(transport_id, name, name_url)
 VALUES 
-(1,'бензин','benzin'),
-(1,'дизель','dizel'),
-(1,'электро','elektro'),
-(1,'гибрид','gibrid'),
+(1,'Бензин','benzin'),
+(1,'Дизель','dizel'),
+(1,'Электро','elektro'),
+(1,'Гибрид','gibrid'),
 (1,'ГБО','gbo');
 INSERT INTO transports_volums(transport_id, value)
 VALUES 

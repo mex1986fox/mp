@@ -29,8 +29,13 @@ class Create
             $exchange = $p["exchange"];
             $price = $p["price"];
             $year = $p["year"];
-
-            // $exceptions = [];
+            // фильтруем параметры
+            $filters = $this->container['filters'];
+            // убирае все кроме цифр
+            $fDigits = $filters->Digits;
+            $mileage = $fDigits->filter($mileage);
+            $price = $fDigits->filter($price);
+            $year = $fDigits->filter($year);
 
             $db = $this->container['db'];
             $q = "insert into ads (

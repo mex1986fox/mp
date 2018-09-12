@@ -75,15 +75,19 @@ const form_add = {
     },
     getVolums: (state, getters, rootState, rootGetters) => idFuels => {
       let volums = [];
-      for (let volum of rootState.transports.volums) {
-        if (rootState.transports.fuels[idFuels].name != "электро") {
-          volums.push({
-            value: volum.id,
-            option: volum.value,
-            group: "Объем"
+
+      rootState.transports.fuels.forEach(fuel => {
+        if (fuel.id == idFuels && fuel.name.toLowerCase() != "электро") {
+          rootState.transports.volums.forEach(volum => {
+            volums.push({
+              value: volum.id,
+              option: volum.value,
+              group: "Объем"
+            });
           });
         }
-      }
+      });
+
       return volums;
     },
     getBodies: (state, getters, rootState, rootGetters) => {
@@ -94,14 +98,12 @@ const form_add = {
           option: body.name,
           group: body.name[0]
         });
-
       }
       return bodies;
-    },
-
+    }
   },
   mutations: {
-    update(state, transport) { }
+    update(state, transport) {}
   },
   actions: {}
 };

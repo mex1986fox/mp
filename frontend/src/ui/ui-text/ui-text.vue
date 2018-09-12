@@ -1,19 +1,35 @@
 <template>
-  <div class="ui-text" @click="isClick()">
-    <span class="ui-text__caption" :class="{'ui-text__caption_active':modFocus, 
+	<div class="ui-text"
+	     @click="isClick()">
+		<span class="ui-text__caption"
+		      :class="{'ui-text__caption_active':modFocus, 
                    'ui-text__caption_completed':modCompleted,
-                   'ui-text__caption_disabled':dDisabled}" @click="isClick()">
-      {{dCaption}}
-    </span>
-    <input class="ui-text__input" :class="{'ui-text__input_active':modFocus,
-                   'ui-text__input_disabled':dDisabled}" ref="input" @focus="isFocus()" @blur="isBlur()" @input="isInputText()" :name="dName" :value="dValue" :readonly="dReadonly" :disabled="dDisabled" :maxlength="maxlength" />
-    <hr class="ui-text__border" :class="{'ui-text__border_active':modFocus,
+                   'ui-text__caption_disabled':dDisabled}"
+		      @click="isClick()">
+			{{dCaption}}
+		</span>
+		<input class="ui-text__input"
+		       :class="{'ui-text__input_active':modFocus,
+                   'ui-text__input_disabled':dDisabled}"
+		       ref="input"
+		       @focus="isFocus()"
+		       @blur="isBlur()"
+		       @input="isInputText()"
+		       :name="dName"
+		       :value="dValue"
+		       :readonly="dReadonly"
+		       :disabled="dDisabled"
+		       :maxlength="maxlength" />
+		<hr class="ui-text__border"
+		    :class="{'ui-text__border_active':modFocus,
                   'ui-text__border_disabled':dDisabled}">
-    <span class="ui-text__help" :class="{'ui-text__help_active':help,
-                    'ui-text__help_disabled':dDisabled}" @click="isClick()">
-      {{help}}
-    </span>
-  </div>
+		<span class="ui-text__help"
+		      :class="{'ui-text__help_active':help,
+                    'ui-text__help_disabled':dDisabled}"
+		      @click="isClick()">
+			{{help}}
+		</span>
+	</div>
 </template>
 
 <script>
@@ -70,7 +86,7 @@ export default {
       default: undefined
     },
     masc: {
-      type: String,
+      type: Object,
       default: undefined
     }
   },
@@ -98,9 +114,6 @@ export default {
     isInputText() {
       this.dValue = this.$refs.input.value;
       this.$emit("onInput", this.dValue);
-    },
-    mascNumber(value) {
-      this.dValue = value.replace(/[^-0-9]/gim, "");
     }
   },
   computed: {
@@ -116,13 +129,9 @@ export default {
     value(newQ, oldQ) {
       this.dValue = newQ;
     },
-    dValue(newQ) {
+    dValue(newV) {
       if (this.masc != undefined) {
-        switch (this.masc) {
-          case "number":
-            this.mascNumber(newQ);
-            break;
-        }
+        this.dValue = this.masc.use(newV);
       }
     },
     caretStart(newQ) {
