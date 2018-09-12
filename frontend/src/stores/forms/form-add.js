@@ -60,10 +60,48 @@ const form_add = {
         }
       }
       return models;
-    }
+    },
+    getFuels: (state, getters, rootState, rootGetters) => {
+      let fuels = [];
+
+      for (let fuel of rootState.transports.fuels) {
+        fuels.push({
+          value: fuel.id,
+          option: fuel.name,
+          group: "Топливо"
+        });
+      }
+      return fuels;
+    },
+    getVolums: (state, getters, rootState, rootGetters) => idFuels => {
+      let volums = [];
+      for (let volum of rootState.transports.volums) {
+        if (rootState.transports.fuels[idFuels].name != "электро") {
+          volums.push({
+            value: volum.id,
+            option: volum.value,
+            group: "Объем"
+          });
+        }
+      }
+      return volums;
+    },
+    getBodies: (state, getters, rootState, rootGetters) => {
+      let bodies = [];
+      for (let body of rootState.transports.bodies) {
+        bodies.push({
+          value: body.id,
+          option: body.name,
+          group: body.name[0]
+        });
+
+      }
+      return bodies;
+    },
+
   },
   mutations: {
-    update(state, transport) {}
+    update(state, transport) { }
   },
   actions: {}
 };

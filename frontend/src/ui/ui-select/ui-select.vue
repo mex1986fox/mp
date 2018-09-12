@@ -1,84 +1,44 @@
 <template>
-	<div class="ui-select"
-	     @click="isClick">
-		<ui-text ref="text"
-		         :disabled="this.dDisabled"
-		         :value="this.dValue"
-		         :caption="this.caption"
-		         :help="this.dHelp"
-		         :readonly="true"
-		         @onFocus="isFocus">
-		</ui-text>
-		<input class="ui-select__checkbox"
-		       v-for="(val, key) in dMenu"
-		       :key="key"
-		       v-if="val.selected"
-		       type="checkbox"
-		       :name="dName"
-		       :value="val.value"
-		       checked>
-		<transition name="ui-select__arrow">
-			<div class="ui-select__arrow"
-			     v-if="!dFocus || dDisabled"
-			     @click="dFocus=!dFocus">
-				<i class="fa fa-angle-down"></i>
-			</div>
-		</transition>
-		<transition name="ui-select__arrow_transit">
-			<div class="ui-select__arrow_transit"
-			     v-if="dFocus && !dDisabled"
-			     @click="dFocus=!dFocus">
-				<i class="fa fa-angle-down"></i>
-			</div>
-		</transition>
-		<ui-blind :show="dFocus"
-		          @onHide="dFocus=false"
-		          animate="opacity"
-		          class="ui-select__blind">
+  <div class="ui-select" @click="isClick">
+    <ui-text ref="text" :disabled="this.dDisabled" :value="this.dValue" :caption="this.caption" :help="this.dHelp" :readonly="true" @onFocus="isFocus">
+    </ui-text>
+    <input class="ui-select__checkbox" v-for="(val, key) in dMenu" :key="key" v-if="val.selected" type="checkbox" :name="dName" :value="val.value" checked>
+    <transition name="ui-select__arrow">
+      <div class="ui-select__arrow" :class="{'ui-select__arrow_disabled':dDisabled}" v-if="!dFocus || dDisabled" @click="dFocus=!dFocus">
+        <i class="fa fa-angle-down"></i>
+      </div>
+    </transition>
+    <transition name="ui-select__arrow_transit">
+      <div class="ui-select__arrow_transit" v-if="dFocus && !dDisabled" @click="dFocus=!dFocus">
+        <i class="fa fa-angle-down"></i>
+      </div>
+    </transition>
+    <ui-blind :show="dFocus" @onHide="dFocus=false" animate="opacity" class="ui-select__blind">
 
-			<ul ref="menu"
-			    class="ui-select__menu"
-			    v-show="dFocus">
-				<template v-for="(val, key) in sortMenu">
-					<li v-if="key==0 || sortMenu[key-1].group!=sortMenu[key].group"
-					    class="ui-select__group"
-					    :key="key">
-						{{val.group}}
-					</li>
-					<li class="ui-select__option ui-select__option_disabled"
-					    :key="'option'+key"
-					    v-if="val.disabled">
-						<ui-check-box :key="'cheked'+key"
-						              :name="dName"
-						              :disabled="true"
-						              :checked="val.selected"
-						              :value="val.value"
-						              v-show="multiple">
-							{{val.option}}
-						</ui-check-box>
-						<span v-if="val.disabled">{{val.option}}</span>
-					</li>
-					<li class="ui-select__option"
-					    :key="'option'+key"
-					    @click="isClickOption(key)"
-					    v-if="!val.disabled">
-						<ui-check-box :key="'cheked'+key"
-						              :name="dName"
-						              :disabled="false"
-						              :checked="val.selected"
-						              :value="val.value"
-						              v-if="multiple">
-							{{val.option}}
-						</ui-check-box>
-						<span v-if="!multiple">
-							{{val.option}}
-						</span>
-					</li>
-				</template>
-			</ul>
+      <ul ref="menu" class="ui-select__menu" v-show="dFocus">
+        <template v-for="(val, key) in sortMenu">
+          <li v-if="key==0 || sortMenu[key-1].group!=sortMenu[key].group" class="ui-select__group" :key="key">
+            {{val.group}}
+          </li>
+          <li class="ui-select__option ui-select__option_disabled" :key="'option'+key" v-if="val.disabled">
+            <ui-check-box :key="'cheked'+key" :name="dName" :disabled="true" :checked="val.selected" :value="val.value" v-show="multiple">
+              {{val.option}}
+            </ui-check-box>
+            <span v-if="val.disabled">{{val.option}}</span>
+          </li>
+          <li class="ui-select__option" :key="'option'+key" @click="isClickOption(key)" v-if="!val.disabled">
+            <ui-check-box :key="'cheked'+key" :name="dName" :disabled="false" :checked="val.selected" :value="val.value" v-if="multiple">
+              {{val.option}}
+            </ui-check-box>
+            <span v-if="!multiple">
+              {{val.option}}
+            </span>
+          </li>
+        </template>
+      </ul>
 
-		</ui-blind>
-	</div>
+    </ui-blind>
+  </div>
 
 </template>
 <script>
@@ -119,7 +79,9 @@ export default {
     },
     menu: {
       type: Array,
-      default: []
+      default() {
+        return [];
+      }
     }
   },
   methods: {

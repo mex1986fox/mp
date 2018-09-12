@@ -32,14 +32,6 @@ CREATE TABLE transports_drives(
     PRIMARY KEY (id),
     FOREIGN KEY (transport_id) REFERENCES transports(id)
 );
-CREATE TABLE transports_wheels(
-    id serial NOT NULL,
-    transport_id INTEGER,
-    name varchar(32),
-    name_url varchar(32),
-    PRIMARY KEY (id),
-    FOREIGN KEY (transport_id) REFERENCES transports(id)
-);
 CREATE TABLE transports_fuels(
     id serial NOT NULL,
     transport_id INTEGER,
@@ -48,6 +40,14 @@ CREATE TABLE transports_fuels(
     PRIMARY KEY (id),
     FOREIGN KEY (transport_id) REFERENCES transports(id)
 );
+CREATE TABLE transports_volums(
+    id serial NOT NULL,
+    transport_id INTEGER,
+    value NUMERIC(2,1),
+    PRIMARY KEY (id),
+    FOREIGN KEY (transport_id) REFERENCES transports(id)
+);
+
 
 CREATE TABLE transports_bodies(
     id serial NOT NULL,

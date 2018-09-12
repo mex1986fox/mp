@@ -46,7 +46,7 @@ export default {
       default: ""
     },
     value: {
-      type: String,
+      type: [String, Number],
       default: ""
     },
     checked: {

@@ -73,5 +73,8 @@
             cursor: auto;
             color: $color-disabled;
         }
+        &:first-letter {
+            text-transform: uppercase;
+        }
     }
 }

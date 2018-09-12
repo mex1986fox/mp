@@ -23,7 +23,7 @@ class Show
             $qBrands = "select * from transports_brands;";
             $qModels = "select * from transports_models;";
             $qDrives = "select * from transports_drives;";
-            $qWheels = "select * from transports_wheels;";
+            $qVolums = "select * from transports_volums;";
             $qFuels = "select * from transports_fuels;";
             $qBodies = "select * from transports_bodies;";
 
@@ -31,7 +31,7 @@ class Show
             $brands = $db->query($qBrands, \PDO::FETCH_ASSOC)->fetchAll();
             $models = $db->query($qModels, \PDO::FETCH_ASSOC)->fetchAll();
             $drives = $db->query($qDrives, \PDO::FETCH_ASSOC)->fetchAll();
-            $wheels = $db->query($qWheels, \PDO::FETCH_ASSOC)->fetchAll();
+            $volums = $db->query($qVolums, \PDO::FETCH_ASSOC)->fetchAll();
             $fuels = $db->query($qFuels, \PDO::FETCH_ASSOC)->fetchAll();
             $bodies = $db->query($qBodies, \PDO::FETCH_ASSOC)->fetchAll();
 
@@ -40,7 +40,7 @@ class Show
                 'brands' => $brands,
                 'models' => $models,
                 'drives' => $drives,
-                'wheels' => $wheels,
+                'volums' => $volums,
                 'fuels' => $fuels,
                 'bodies' => $bodies,
             ];

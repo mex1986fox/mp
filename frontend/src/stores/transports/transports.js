@@ -6,8 +6,8 @@ const transports = {
     brands: undefined,
     models: undefined,
     drives: undefined,
-    wheels: undefined,
     fuels: undefined,
+    volums: undefined,
     bodies: undefined
   },
   getters: {
@@ -34,8 +34,8 @@ const transports = {
       state.brands = transport.brands;
       state.models = transport.models;
       state.drives = transport.drives;
-      state.wheels = transport.wheels;
       state.fuels = transport.fuels;
+      state.volums = transport.volums;
       state.bodies = transport.bodies;
     }
   },
@@ -47,8 +47,8 @@ const transports = {
         state.brands == undefined ||
         state.models == undefined ||
         state.drives == undefined ||
-        state.wheels == undefined ||
         state.fuels == undefined ||
+        state.volums == undefined ||
         state.bodies == undefined
       ) {
         Vue.http.post("/api/show/transports").then(

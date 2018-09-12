@@ -10,15 +10,48 @@ VALUES
 
 INSERT INTO transports_fuels(transport_id, name, name_url)
 VALUES 
-(1,'левый','left'),
-(1,'правый','right');
-INSERT INTO transports_wheels(transport_id, name, name_url)
-VALUES 
 (1,'бензин','benzin'),
 (1,'дизель','dizel'),
 (1,'электро','elektro'),
 (1,'гибрид','gibrid'),
 (1,'ГБО','gbo');
+INSERT INTO transports_volums(transport_id, value)
+VALUES 
+(1, 0.7),
+(1, 0.8),
+(1, 1.0),
+(1, 1.1),
+(1, 1.2),
+(1, 1.3),
+(1, 1.4),
+(1, 1.5),
+(1, 1.6),
+(1, 1.7),
+(1, 1.8),
+(1, 1.9),
+(1, 2.0),
+(1, 2.2),
+(1, 2.3),
+(1, 2.4),
+(1, 2.5),
+(1, 2.7),
+(1, 2.8),
+(1, 3.0),
+(1, 3.2),
+(1, 3.3),
+(1, 3.5),
+(1, 3.6),
+(1, 4.0),
+(1, 4.2),
+(1, 4.4),
+(1, 4.5),
+(1, 4.6),
+(1, 4.7),
+(1, 5.0),
+(1, 5.5),
+(1, 5.7),
+(1, 6.0);
+
 INSERT INTO transports_bodies(transport_id, name, name_url)
 VALUES 
 (1,'седан','sedan'),
