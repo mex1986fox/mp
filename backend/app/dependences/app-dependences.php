@@ -38,3 +38,8 @@ $container['validators'] = function ($c) {
     $validators = new \App\Services\Validator\ValidatorFactory();
     return $validators;
 };
+//добавляем в контейнер сервисы авторизации
+$container['auths'] = function ($c) {
+    $auths = new \App\Services\Auth\FactoryAuth($c);
+    return $auths;
+};

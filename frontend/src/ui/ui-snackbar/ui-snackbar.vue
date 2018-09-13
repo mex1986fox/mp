@@ -1,49 +1,51 @@
 <template>
-<transition  name="ui-snackbar">
-  <div class="ui-snackbar">
-    <button
-      class="ui-button ui-button_circle ui-button_mini ui-snackbar__button-close"
-      @click="hide()">
-      <i class="fa fa-angle-down"></i>
+  <transition name="ui-snackbar">
+    <div v-if="dShow" class="ui-snackbar">
+      <button class="ui-button ui-button_flat ui-button_circle ui-button_circle_mini ui-snackbar__button-close" @click="hide()">
+        <i class="fa fa-angle-down"></i>
 
-    </button>
-    <slot>
+      </button>
+      <slot>
 
-    </slot>
-  </div>
-</transition>
+      </slot>
+    </div>
+  </transition>
 </template>
 <script>
 export default {
+  data(){
+    return {
+      timer: undefined
+    }
+  },
   props: {
-    show: Boolean,
-    time: Number
+    show: {
+      type: Boolean,
+      default: false
+    },
+    time: {
+      type: Number,
+      default: undefined
+    }
   },
   data() {
     return {
-      timeSnack: this.time ? this.time : 0,
-      setTime: undefined
+      dShow: this.show
     };
   },
   watch: {
-    show() {
-      this.showSnack = this.show;
-      if (this.showSnack == true) {
-        if (this.timeSnack > 0) {
-          this.setTime=setTimeout(() => {
-            this.hide();
-          }, this.timeSnack);
-        }
+    show(newQ) {
+      this.dShow = newQ;
+      if(newQ==true, this.time!=undefined){
+        this.timer=setTimeout(()=>{
+          this.hide();
+        }, this.time);
       }
-    },
-    time() {
-      this.timeSnack = this.time;
     }
   },
   methods: {
     hide() {
-      clearTimeout(this.setTime);
-      this.showSnack = false;
+      this.dShow = false;
       this.$emit("onHide");
     }
   }

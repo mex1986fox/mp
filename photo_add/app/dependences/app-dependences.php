@@ -23,10 +23,8 @@ $container['validators'] = function ($c) {
     $validators = new \App\Services\Validator\ValidatorFactory();
     return $validators;
 };
-//добавляем в контейнер зависимостей валидаторы
-// валидаторы взяты из Zend Fr. 3
+//добавляем в контейнер сервисы авторизации
 $container['auths'] = function ($c) {
     $auths = new \App\Services\Auth\FactoryAuth($c);
-
     return $auths;
 };

@@ -2009,6 +2009,45 @@ body {
     margin: 35px 0 0 0;
     float: right; }
 
+.ui-snackbar {
+  display: block;
+  padding: 15px 25px;
+  background-color: #424242;
+  color: white;
+  max-width: 85%;
+  min-width: 320px;
+  position: fixed;
+  bottom: 15px;
+  border-radius: 3px;
+  transition: bottom 0.6s;
+  font-size: 14px;
+  line-height: 25px;
+  z-index: 100;
+  box-shadow: 0px 2px 8px rgba(100, 124, 137, 0.49); }
+  .ui-snackbar_active {
+    bottom: 15px;
+    transition: bottom 0.6s; }
+  .ui-snackbar__button-close {
+    color: #424242 !important;
+    background-color: rgba(255, 255, 255, 0.57) !important;
+    float: right;
+    margin-left: 25px;
+    left: auto;
+    margin-bottom: 5px;
+    margin-right: 0px; }
+  .ui-snackbar-enter-active {
+    bottom: 15px;
+    transition: bottom 0.6s; }
+  .ui-snackbar-leave-active {
+    bottom: -100%;
+    transition: bottom 0.6s; }
+  .ui-snackbar-enter {
+    bottom: -100%;
+    transition: bottom 0.6s; }
+  .ui-snackbar-leave {
+    bottom: 15px;
+    transition: bottom 0.6s; }
+
 .ui-card {
   position: relative;
   overflow: hidden;

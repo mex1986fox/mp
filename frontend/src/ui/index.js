@@ -77,8 +77,8 @@ Vue.component("ui-chips", UiChips);
 
 // import UiStatistic from './ui-statistic/ui-statistic.vue'
 // Vue.component('ui-statistic', UiStatistic);
-// import UiSnackbar from './ui-snackbar/ui-snackbar.vue'
-// Vue.component('ui-snackbar', UiSnackbar);
+import UiSnackbar from './ui-snackbar/ui-snackbar.vue'
+Vue.component('ui-snackbar', UiSnackbar);
 // import UiEditingWindow from './ui-editing-window/ui-editing-window.vue'
 // Vue.component('ui-editing-window', UiEditingWindow);
 // import UiTableFilter from './ui-table-filter/ui-table-filter.vue'

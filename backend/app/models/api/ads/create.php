@@ -16,23 +16,31 @@ class Create
     public function run()
     {
         try {
+            // проверяем авторизацию
+            $auths = $this->container['auths'];
+            if (!$auths->AuthUser->Authed()) {
+                throw new \Exception("Не авторизован");
+            }
 
             $p = $this->request->getQueryParams();
-            $user_id = 1; // $_SESSION["user"]["id"];
-
+            //передаем параметры в переменные
+            $user_id = $_SESSION["user_id"];
             $settlements_id = $p["settlement"];
             $model_id = $p["model"];
             $mileage = $p["mileage"];
             $description = $p["description"];
-            $documentation = $p["documentation"];
-            $repair = $p["repair"];
-            $exchange = $p["exchange"];
+            // $documentation = $p["documentation"];
+            // $repair = $p["repair"];
+            // $exchange = $p["exchange"];
             $price = $p["price"];
             $year = $p["year"];
+
             // фильтруем параметры
             $filters = $this->container['filters'];
             // убирае все кроме цифр
             $fDigits = $filters->Digits;
+            $settlements_id = $fDigits->filter($settlements_id);
+            $model_id = $fDigits->filter($model_id);
             $mileage = $fDigits->filter($mileage);
             $price = $fDigits->filter($price);
             $year = $fDigits->filter($year);
@@ -44,9 +52,6 @@ class Create
                     model_id,
                     mileage,
                     description,
-                    documentation,
-                    repair,
-                    exchange,
                     price,
                     year
                 ) values (
@@ -55,9 +60,6 @@ class Create
                     {$model_id},
                     {$mileage},
                     '{$description}',
-                    '{$documentation}',
-                    '{$repair}',
-                    '{$exchange}',
                     {$price},
                     {$year}
                 )  RETURNING id;";
