@@ -1,46 +1,50 @@
 .ui-snackbar {
-    display: block;
-    padding: 15px 25px;
-    background-color: #424242;
-    color: white;
-    max-width: 85%;
-    min-width: 320px;
-    position: fixed;
+  display: block;
+  padding: 15px 25px;
+  background-color: #424242;
+  margin: 10px 10px 0px 0px;
+  position: fixed;
+  bottom: 15px;
+  border-radius: 3px;
+  transition: bottom 0.6s;
+  line-height: 25px;
+  z-index: 3500;
+
+  box-shadow: $color-shadow-active;
+  right: 0px;
+
+  &__descripton {
+    color: #fff;
+    margin: 10px 0 10px 0;
+  }
+  &_active {
     bottom: 15px;
-    border-radius: 3px;
     transition: bottom 0.6s;
-    font-size: 14px;
-    line-height: 25px;
-    z-index: 100;
-    box-shadow: $color-shadow-active;
-    &_active {
-        bottom: 15px;
-        transition: bottom 0.6s;
-        
-    }
-    &__button-close {
-        color: #424242 !important;
-        background-color: rgba(255, 255, 255, 0.57) !important;
-        float: right;
-        margin-left: 25px;
-        left: auto;
-        margin-bottom: 5px;
-        margin-right: 0px;
-    }
-    &-enter-active {
-        bottom: 15px;
-        transition: bottom 0.6s;
-    }
-    &-leave-active {
-        bottom: -100%;
-        transition: bottom 0.6s;
-    }
-    &-enter {
-        bottom: -100%;
-        transition: bottom 0.6s;
-    }
-    &-leave {
-        bottom: 15px;
-        transition: bottom 0.6s;
-    }
+  }
+  &__button-close {
+    color: #424242 !important;
+    background-color: rgba(255, 255, 255, 0.37);
+
+    float: right;
+    margin-left: 25px;
+    left: auto;
+    margin-bottom: 5px;
+    margin-right: 0px;
+  }
+  &-enter-active {
+    bottom: 15px;
+    transition: bottom 0.6s;
+  }
+  &-leave-active {
+    bottom: -100%;
+    transition: bottom 0.6s;
+  }
+  &-enter {
+    bottom: -100%;
+    transition: bottom 0.6s;
+  }
+  &-leave {
+    bottom: 15px;
+    transition: bottom 0.6s;
+  }
 }

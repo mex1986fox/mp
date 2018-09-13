@@ -1,143 +1,3 @@
-
-.pg-authorization__fon {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  background: url(http://s1.fotokto.ru/photo/full/13/130568.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-.pg-authorization__card {
-  margin-top: 30px;
-  background-color: #fff;
-  box-shadow: 0px 2px 8px rgba(100, 124, 137, 0.49);
-  padding: 40px;
-  overflow: hidden;
-  margin-bottom: 30px;
-}
-.pg-authorization__card-registration {
-  margin: 30px 0;
-  background-color: #fff;
-  box-shadow: 0px 2px 8px rgba(100, 124, 137, 0.49);
-  padding: 40px;
-  overflow: hidden;
-}
-.pg-authorization__logo {
-  height: 160px;
-  float: left;
-  margin-top: 50px;
-}
-.pg-authorization__header {
-  margin-bottom: 38px !important;
-  line-height: 30px;
-}
-.pg-authorization__hr {
-  border: 0;
-  border-bottom: 1px dashed #d2d2d2cc;
-  margin: 35px 0 0 0;
-  float: left;
-  position: relative;
-  width: 100%;
-}
-.pg-authorization__padding {
-  margin-top: 20px;
-  position: relative;
-  float: left;
-  width: 100%;
-}
-.pg-authorization__remark {
-  padding: 100px 279px 100px 70px;
-  background-color: rgba(0, 0, 0, 0.3);
-  color: #fff;
-  text-align: left;
-  margin-left: 147px;
-  margin-top: 172px;
-  margin-right: -230px;
-  font-size: 18px;
-  line-height: 32px;
-}
-.pg-authorization__remark-header {
-    color: #fff;
-    font-family: "Open Sans";
-    font-weight: 600;
-    line-height: 32px;
-    font-size: 26px;
-    display: block;
-}
-.pg-authorization__blind {
-  background-color: rgba(255, 255, 255, 0) !important;
-}
-.pg-authorization__buttons {
-  margin: 50px 0 20px -4px;
-}
-@media (min-width: 770px) and (max-width: 990px) {
-.pg-authorization__card {
-    margin-top: 30px;
-    padding: 40px;
-    margin-bottom: 30px;
-}
-.pg-authorization__card-registration {
-    padding: 40px;
-    margin: 30px 0;
-}
-.pg-authorization__logo {
-    height: 110px;
-    margin-top: 85px;
-}
-.pg-authorization__remark {
-    padding: 45px 288px 45px 50px;
-    margin-left: 103px;
-    margin-top: 170px;
-    margin-right: -236px;
-    font-size: 14px;
-    line-height: 21px;
-}
-.pg-authorization__remark-header {
-      line-height: 26px;
-      font-size: 22px;
-}
-}
-@media (max-width: 770px) {
-.pg-authorization__card {
-    margin-top: -129px;
-    padding: 15px;
-    overflow: hidden;
-    margin-bottom: 15px;
-}
-.pg-authorization__card-registration {
-    padding: 15px;
-    margin: 15px 0;
-}
-.pg-authorization__logo {
-    height: 55px;
-    margin: 15px 0px 0px 0px;
-}
-.pg-authorization__hr {
-    margin: 25px 0 10px 0;
-}
-.pg-authorization__remark {
-    padding: 15px 15px 150px 15px;
-    margin: 60px 0 0 50px;
-    font-size: 14px;
-    line-height: 21px;
-}
-.pg-authorization__remark-header {
-      line-height: 26px;
-      font-size: 22px;
-}
-}
-
-
-.pg-ads__button-show-form-add {
-  position: fixed;
-  bottom: 0;
-  left: auto !important;
-  right: 0px !important;
-}
-
-
 select {
   -webkit-appearance: none;
   -moz-appearance: none; }
@@ -2013,23 +1873,24 @@ body {
   display: block;
   padding: 15px 25px;
   background-color: #424242;
-  color: white;
-  max-width: 85%;
-  min-width: 320px;
+  margin: 10px 10px 0px 0px;
   position: fixed;
   bottom: 15px;
   border-radius: 3px;
   transition: bottom 0.6s;
-  font-size: 14px;
   line-height: 25px;
-  z-index: 100;
-  box-shadow: 0px 2px 8px rgba(100, 124, 137, 0.49); }
+  z-index: 3500;
+  box-shadow: 0px 2px 8px rgba(100, 124, 137, 0.49);
+  right: 0px; }
+  .ui-snackbar__descripton {
+    color: #fff;
+    margin: 10px 0 10px 0; }
   .ui-snackbar_active {
     bottom: 15px;
     transition: bottom 0.6s; }
   .ui-snackbar__button-close {
     color: #424242 !important;
-    background-color: rgba(255, 255, 255, 0.57) !important;
+    background-color: rgba(255, 255, 255, 0.37);
     float: right;
     margin-left: 25px;
     left: auto;
@@ -2744,6 +2605,129 @@ select::-ms-expand {
     margin-top: 10px; }
     .wg-captcha__img > img {
       height: 100%; }
+
+.pg-ads__button-show-form-add {
+  position: fixed;
+  bottom: 0;
+  left: auto !important;
+  right: 0px !important; }
+
+.pg-authorization__fon {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: url(http://s1.fotokto.ru/photo/full/13/130568.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
+
+.pg-authorization__card {
+  margin-top: 30px;
+  background-color: #fff;
+  box-shadow: 0px 2px 8px rgba(100, 124, 137, 0.49);
+  padding: 40px;
+  overflow: hidden;
+  margin-bottom: 30px; }
+
+.pg-authorization__card-registration {
+  margin: 30px 0;
+  background-color: #fff;
+  box-shadow: 0px 2px 8px rgba(100, 124, 137, 0.49);
+  padding: 40px;
+  overflow: hidden; }
+
+.pg-authorization__logo {
+  height: 160px;
+  float: left;
+  margin-top: 50px; }
+
+.pg-authorization__header {
+  margin-bottom: 38px !important;
+  line-height: 30px; }
+
+.pg-authorization__hr {
+  border: 0;
+  border-bottom: 1px dashed #d2d2d2cc;
+  margin: 35px 0 0 0;
+  float: left;
+  position: relative;
+  width: 100%; }
+
+.pg-authorization__padding {
+  margin-top: 20px;
+  position: relative;
+  float: left;
+  width: 100%; }
+
+.pg-authorization__remark {
+  padding: 100px 279px 100px 70px;
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  text-align: left;
+  margin-left: 147px;
+  margin-top: 172px;
+  margin-right: -230px;
+  font-size: 18px;
+  line-height: 32px; }
+  .pg-authorization__remark-header {
+    color: #fff;
+    font-family: "Open Sans";
+    font-weight: 600;
+    line-height: 32px;
+    font-size: 26px;
+    display: block; }
+
+.pg-authorization__blind {
+  background-color: rgba(255, 255, 255, 0) !important; }
+
+.pg-authorization__buttons {
+  margin: 50px 0 20px -4px; }
+
+@media (min-width: 770px) and (max-width: 990px) {
+  .pg-authorization__card {
+    margin-top: 30px;
+    padding: 40px;
+    margin-bottom: 30px; }
+  .pg-authorization__card-registration {
+    padding: 40px;
+    margin: 30px 0; }
+  .pg-authorization__logo {
+    height: 110px;
+    margin-top: 85px; }
+  .pg-authorization__remark {
+    padding: 45px 288px 45px 50px;
+    margin-left: 103px;
+    margin-top: 170px;
+    margin-right: -236px;
+    font-size: 14px;
+    line-height: 21px; }
+    .pg-authorization__remark-header {
+      line-height: 26px;
+      font-size: 22px; } }
+
+@media (max-width: 770px) {
+  .pg-authorization__card {
+    margin-top: -129px;
+    padding: 15px;
+    overflow: hidden;
+    margin-bottom: 15px; }
+  .pg-authorization__card-registration {
+    padding: 15px;
+    margin: 15px 0; }
+  .pg-authorization__logo {
+    height: 55px;
+    margin: 15px 0px 0px 0px; }
+  .pg-authorization__hr {
+    margin: 25px 0 10px 0; }
+  .pg-authorization__remark {
+    padding: 15px 15px 150px 15px;
+    margin: 60px 0 0 50px;
+    font-size: 14px;
+    line-height: 21px; }
+    .pg-authorization__remark-header {
+      line-height: 26px;
+      font-size: 22px; } }
 
 
 /*# sourceMappingURL=main.css.map*/

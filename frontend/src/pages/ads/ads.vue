@@ -1,44 +1,54 @@
 <template>
-  <layout>
-    <div class="container">
-      <div class="row">
-        <div class="col_12">
-          <ui-snackbar show="true" :time="15000">
-            Сообщение об ошибке Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam ipsa laboriosam voluptates suscipit doloremque ratione sed vero, harum possimus sapiente provident ullam ducimus? Enim recusandae libero facilis. Esse, ullam aperiam.
-          </ui-snackbar>
-        </div>
-        <div class="col_6 col_offset-3 col-phone_6 col-phone_offset-0">
-          <div class="row">
-            <div class="col-12">
-              <div v-for="(val, key) in ads" :key="key" class="wg-content-frame">
-                <wg-card-ad :object="val">
-                </wg-card-ad>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col_12">
+	<layout>
+		<div class="container">
+			<div class="row">
+				<div class="col_12">
+					<ui-snackbar :show="showSnackbar"
+					             @onHide="showSnackbar=false"
+					             :time="15000">
+						{{descSnackbar}}
+					</ui-snackbar>
+				</div>
+				<div class="col_6 col_offset-3 col-phone_6 col-phone_offset-0">
+					<div class="row">
+						<div class="col-12">
+							<div v-for="(val, key) in ads"
+							     :key="key"
+							     class="wg-content-frame">
+								<wg-card-ad :object="val">
+								</wg-card-ad>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col_12">
 
-          <ui-blind :show="showFormAdd" @onHide="showFormAdd=false" animate="top" style="background-color: rgba(255, 255, 255, 0);">
-            <div class="container">
-              <div class="row">
-                <div class="col_6 col_offset-3 col-tablet_8 col-tablet_offset-2 col-phone_6 col-phone_offset-0">
-                  <wg-form-add @onHide="
+					<ui-blind :show="showFormAdd"
+					          @onHide="showFormAdd=false"
+					          animate="top"
+					          style="background-color: rgba(255, 255, 255, 0);">
+						<div class="container">
+							<div class="row">
+								<div class="col_6 col_offset-3 col-tablet_8 col-tablet_offset-2 col-phone_6 col-phone_offset-0">
+									<wg-form-add @onHide="
 								     showFormAdd=false
 								     ">
 
-                  </wg-form-add>
-                </div>
-              </div>
-            </div>
-          </ui-blind>
-        </div>
-      </div>
-    </div>
-    <div v-if="!showFormAdd" @click="showFormAdd=true" class="ui-button ui-button_circle ui-button_red pg-ads__button-show-form-add">
-      <i class="fa fa-plus" aria-hidden="true"></i>
-    </div>
-  </layout>
+									</wg-form-add>
+								</div>
+							</div>
+						</div>
+					</ui-blind>
+				</div>
+			</div>
+		</div>
+		<div v-if="!showFormAdd"
+		     @click="isShowFormAdd"
+		     class="ui-button ui-button_circle ui-button_red pg-ads__button-show-form-add">
+			<i class="fa fa-plus"
+			   aria-hidden="true"></i>
+		</div>
+	</layout>
 </template>
 
 <script>
@@ -47,10 +57,21 @@ export default {
   data() {
     return {
       showFormAdd: false,
+      showSnackbar: false,
+      descSnackbar: "",
       ads: undefined
     };
   },
   methods: {
+    isShowFormAdd() {
+      if (this.$store.state.user.id != undefined) {
+        this.showFormAdd = true;
+      } else {
+        this.descSnackbar =
+          "Добавлять объявления могут только авторизованные пользователи. Войдите или зарегистрируйтесь.";
+        this.showSnackbar = true;
+      }
+    },
     show(event) {
       this.$http.post("/api/show/ads").then(
         response => {
@@ -97,7 +118,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-@import "./ads.scss";
-</style>

@@ -1,51 +1,51 @@
 <template>
-  <div class="wg-slider"
-    @mouseover="buttonsShow=true"
-    @mouseout="buttonsShow=false">
-    <div class="wg-slider__buttons"
-      :style="marginButtons"
-      v-show="buttonsShow">
-      <div class="wg-slider__left-button"
-        @click="leafLeft">
-        <button class="ui-button ui-button_circle ui-button_flat wg-slider__button_flat">
-          <i aria-hidden="true"
-            class="fa fa-angle-left"></i>
-        </button>
-      </div>
-      <div class="wg-slider__right-button"
-        @click="leafRight">
-        <button class="ui-button ui-button_circle ui-button_flat wg-slider__button_flat">
-          <i aria-hidden="true"
-            class="fa fa-angle-right"></i>
-        </button>
-      </div>
-    </div>
-    <div class="wg-slider__menu"
-      v-show="buttonsShow">
-      <div class="wg-slider__numeric">
-        {{dSlide[0].number}} / {{dSlide.length}}
-      </div>
-    </div>
-    <div ref="container"
-      class="wg-slider__container">
-      <div ref="frame"
-        @click="isZoom(val.number)"
-        class="wg-slider__frame"
-        v-for="(val, key) in dSlide"
-        :key="key"
-        v-if="key<3">
+	<div class="wg-slider"
+	     @mouseover="buttonsShow=true"
+	     @mouseout="buttonsShow=false">
+		<div class="wg-slider__buttons"
+		     :style="marginButtons"
+		     v-show="buttonsShow">
+			<div class="wg-slider__left-button"
+			     @click="leafLeft">
+				<button class="ui-button ui-button_circle ui-button_flat wg-slider__button_flat">
+					<i aria-hidden="true"
+					   class="fa fa-angle-left"></i>
+				</button>
+			</div>
+			<div class="wg-slider__right-button"
+			     @click="leafRight">
+				<button class="ui-button ui-button_circle ui-button_flat wg-slider__button_flat">
+					<i aria-hidden="true"
+					   class="fa fa-angle-right"></i>
+				</button>
+			</div>
+		</div>
+		<div class="wg-slider__menu"
+		     v-show="buttonsShow">
+			<div class="wg-slider__numeric">
+				{{dSlide[0].number}} / {{dSlide.length}}
+			</div>
+		</div>
+		<div ref="container"
+		     class="wg-slider__container">
+			<div ref="frame"
+			     @click="isZoom(val.number)"
+			     class="wg-slider__frame"
+			     v-for="(val, key) in dSlide"
+			     :key="key"
+			     v-if="key<3">
 
-        <img class="wg-slider__fon"
-          :src="val.src"
-          alt="">
-        <img ref="photo"
-          class="wg-slider__img"
-          :class="val.style"
-          :src="val.src"
-          alt="">
-      </div>
-    </div>
-  </div>
+				<img class="wg-slider__fon"
+				     :src="val.src"
+				     alt="">
+				<img ref="photo"
+				     class="wg-slider__img"
+				     :class="val.style"
+				     :src="val.src"
+				     alt="">
+			</div>
+		</div>
+	</div>
 </template>
 <script>
 export default {
@@ -63,7 +63,7 @@ export default {
   methods: {
     //чистит dSlide
     clearDSlide() {
-       for (let key in this.dSlide) {
+      for (let key in this.dSlide) {
         this.dSlide[key].style = undefined;
       }
     },
@@ -102,8 +102,8 @@ export default {
       let n = number != 1 ? number - 1 : this.dSlide.length;
       this.$emit("onZoom", n);
       this.setStyleImg();
-      for(let k in this.dSlide){
-        }
+      for (let k in this.dSlide) {
+      }
     },
     //листает слайдер влево
     leafLeft() {
@@ -167,7 +167,7 @@ export default {
     // Устанавливает стиль для фотографий
     setStyleImg() {
       for (let k in this.$refs.photo) {
-        if (this.searchClass(this.$refs.photo[k].src)==true) {
+        if (this.searchClass(this.$refs.photo[k].src) == true) {
           this.$refs.photo[k].onload = function(event) {
             let photo = event.target;
             let container = this.$refs.frame[0];
@@ -192,7 +192,6 @@ export default {
     this.setPosition();
   },
   mounted() {
-
     this.$el.style.transition = "opacity 0.6s";
     this.$el.style.opacity = 0;
     setTimeout(() => {
@@ -253,5 +252,3 @@ export default {
 //         { src: "/static/img/photo_car4.jpg" }
 //       ]
 </script>
-<style lang="scss">
-</style>

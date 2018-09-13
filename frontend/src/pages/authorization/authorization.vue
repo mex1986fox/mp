@@ -5,7 +5,10 @@
 		<div class="container">
 			<div class="row">
 				<div class="col_7 col-phone_6">
-					<img class="pg-authorization__logo" src="/public/img/label.png" alt="" srcset="">
+					<img class="pg-authorization__logo"
+					     src="/public/img/label.png"
+					     alt=""
+					     srcset="">
 					<div class="pg-authorization__remark">
 						<span class="pg-authorization__remark-header">
 							Социальная сеть для автомобилистов
@@ -15,29 +18,40 @@
 				</div>
 				<div class="col_5 col-phone_6">
 					<form @submit.prevent="authorization">
-						<div class="pg-authorization__card" v-if="user==undefined">
+						<div class="pg-authorization__card"
+						     v-if="user==undefined">
 							<div class="ui-header_1 pg-authorization__header">Вход на Drovito.ru
 							</div>
-							<ui-text name="login" :caption="'Ваш логин'" :help="authorizationEcept.login">
+							<ui-text name="login"
+							         :caption="'Ваш логин'"
+							         :help="authorizationEcept.login">
 							</ui-text>
-							<ui-password name="password" :caption="'Ваш пароль'" :help="authorizationEcept.password">
+							<ui-password name="password"
+							             :caption="'Ваш пароль'"
+							             :help="authorizationEcept.password">
 							</ui-password>
 							<div class="pg-authorization__padding" />
 							<div class="pg-authorization__buttons">
-								<button type="submit" class="ui-button ">Войти</button>
-								<div class="ui-button ui-button_red" @click="showRegistrationCard=true">Регистрация</div>
+								<button type="submit"
+								        class="ui-button ">Войти</button>
+								<div class="ui-button ui-button_red"
+								     @click="showRegistrationCard=true">Регистрация</div>
 							</div>
 							<hr class="pg-authorization__hr" />
 							<span style="font-size: 12px; float: left; margin-bottom:10px;">Если вы забыли свой пароль, попробуйте его восстановить!</span><br/><br/>
-							<a style="font-size: 12px; float: left; width: 100%;" class="ui-link" href="http://www.google.com">Восстановить пароль</a>
+							<a style="font-size: 12px; float: left; width: 100%;"
+							   class="ui-link"
+							   href="http://www.google.com">Восстановить пароль</a>
 						</div>
 					</form>
-					<div class="pg-authorization__card" v-if="user!=undefined">
+					<div class="pg-authorization__card"
+					     v-if="user!=undefined">
 						<div class="ui-header_1 pg-authorization__header">
 							Вы авторизованны как:
 						</div>
 						<div class="ui-avatar-block">
-							<div class="ui-avatar"><img src="/public/img/avatar.jpg" alt=""></div>
+							<div class="ui-avatar"><img src="/public/img/avatar.jpg"
+								     alt=""></div>
 							<a class="ui-link ui-avatar-block__link">
 								{{user.login}}
 							</a>
@@ -46,7 +60,8 @@
 							</div>
 						</div>
 						<div class="pg-authorization__buttons">
-							<button @click="logout" class="ui-button ui-button_blue">Выйти</button>
+							<button @click="logout"
+							        class="ui-button ui-button_blue">Выйти</button>
 						</div>
 
 						<br>
@@ -56,9 +71,13 @@
 				</div>
 			</div>
 		</div>
-		<ui-blind @onHide="showRegistrationCard=!showRegistrationCard" :show="showRegistrationCard" animate="right" class="pg-authorization__blind">
+		<ui-blind @onHide="showRegistrationCard=!showRegistrationCard"
+		          :show="showRegistrationCard"
+		          animate="right"
+		          class="pg-authorization__blind">
 			<div class="container">
-				<form @submit="registered" action="#">
+				<form @submit="registered"
+				      action="#">
 					<div class="row">
 						<div class="col_5 col_offset-7 col-phone_6 col-phone_offset-0">
 							<div class="pg-authorization__card-registration">
@@ -79,15 +98,24 @@
 										</span>
 									</div>
 									<div class="col_5 col-phone_6">
-										<ui-text value="" caption="Имя" name="name" :help="registrationEcept.name">
+										<ui-text value=""
+										         caption="Имя"
+										         name="name"
+										         :help="registrationEcept.name">
 										</ui-text>
 									</div>
 									<div class="col_5 col_offset-2 col-phone_6 col-phone_offset-0">
-										<ui-text value="" caption="Фамилия" name="surname" :help="registrationEcept.surname">
+										<ui-text value=""
+										         caption="Фамилия"
+										         name="surname"
+										         :help="registrationEcept.surname">
 										</ui-text>
 									</div>
 									<div class="col_5">
-										<ui-datepicker :disabled="false" name="birthdate" caption="Дата рождения" :help="registrationEcept.birthdate">
+										<ui-datepicker :disabled="false"
+										               name="birthdate"
+										               caption="Дата рождения"
+										               :help="registrationEcept.birthdate">
 										</ui-datepicker>
 									</div>
 									<div class="col_12">
@@ -98,11 +126,16 @@
 									</div>
 
 									<div class="col_5 col-phone_6">
-										<ui-text value="" caption="Логин" name="login" :help="registrationEcept.login">
+										<ui-text value=""
+										         caption="Логин"
+										         name="login"
+										         :help="registrationEcept.login">
 										</ui-text>
 									</div>
 									<div class="col_5 col_offset-2 col-phone_6 col-phone_offset-0">
-										<ui-password caption="Пароль" name="password" :help="registrationEcept.password">
+										<ui-password caption="Пароль"
+										             name="password"
+										             :help="registrationEcept.password">
 										</ui-password>
 									</div>
 
@@ -119,14 +152,19 @@
 									</div>
 
 									<div class="col_5 col_offset-2 col-phone_6 col-phone_offset-0">
-										<ui-text value="" caption="Введите символы" name="captcha" :help="registrationEcept.captcha">
+										<ui-text value=""
+										         caption="Введите символы"
+										         name="captcha"
+										         :help="registrationEcept.captcha">
 										</ui-text>
 									</div>
 
 									<div class="col_12">
 										<div class="pg-authorization__buttons">
-											<button class="ui-button ui-button_blue" type="submit">готово</button>
-											<div class="ui-button ui-button_flat" @click="showRegistrationCard=!showRegistrationCard">Отмена</div>
+											<button class="ui-button ui-button_blue"
+											        type="submit">готово</button>
+											<div class="ui-button ui-button_flat"
+											     @click="showRegistrationCard=!showRegistrationCard">Отмена</div>
 										</div>
 									</div>
 								</div>
@@ -137,7 +175,11 @@
 
 			</div>
 		</ui-blind>
-		<ui-blind @onHide="showRecoveryCard=!showRecoveryCard" :show="showRecoveryCard" animate="opacity" centering class="pg-authorization__blind">
+		<ui-blind @onHide="showRecoveryCard=!showRecoveryCard"
+		          :show="showRecoveryCard"
+		          animate="opacity"
+		          centering
+		          class="pg-authorization__blind">
 			<div class="container">
 				<div class="row">
 					<div class="col_6 col_offset-3 col-phone_6 col-phone_offset-0">
@@ -146,9 +188,11 @@
 
 								<div class="ui-modal-window">
 									<div class="ui-modal-window__header ">
-										<button @click="showRecoveryCard=false" class="ui-button ui-button_circle ui-button_circle_mini 
+										<button @click="showRecoveryCard=false"
+										        class="ui-button ui-button_circle ui-button_circle_mini 
                                        ui-button_flat ui-modal-window__header__button">
-											<i class="fa fa-times" aria-hidden="true"></i>
+											<i class="fa fa-times"
+											   aria-hidden="true"></i>
 										</button>
 										Код восстановления
 									</div>
@@ -169,6 +213,18 @@
 				</div>
 			</div>
 		</ui-blind>
+		<div class="container">
+			<div class="row">
+				<div class="col_12">
+					<ui-snackbar :show="showSnackbar"
+					             @onHide="showSnackbar=false"
+					             :time="20000">
+						{{descSnackbar}}
+					</ui-snackbar>
+				</div>
+
+			</div>
+		</div>
 	</layout>
 </template>
 
@@ -179,6 +235,8 @@ export default {
     return {
       showRegistrationCard: false,
       showRecoveryCard: false,
+      showSnackbar: false,
+      descSnackbar: "",
       recovery_key: undefined,
       registrationEcept: {},
       authorizationEcept: {}
@@ -203,6 +261,8 @@ export default {
         error => {
           if (error.body.exceptions != undefined) {
             this.authorizationEcept = error.body.exceptions;
+            this.showSnackbar = true;
+            this.descSnackbar = this.authorizationEcept.massege;
           }
         }
       );
@@ -240,16 +300,14 @@ export default {
         error => {
           if (error.body.exceptions != undefined) {
             this.registrationEcept = error.body.exceptions;
+            this.showSnackbar = true;
+            this.descSnackbar = this.registrationEcept.massege;
             this.$refs.captcha.$emit("onRefresh");
           }
         }
       );
     }
-  },
-
+  }
 };
 </script>
 
-<style lang="scss">
-@import "./authorization.scss";
-</style>
