@@ -16,11 +16,9 @@ class Logout
     {
         try {
             $p = $this->request->getQueryParams();
-          
             $login = $p["user_id"];
             unset($_SESSION["user_id"]);
             setcookie("user_id", $user["id"], time() - 60 * 60 * 12, "/");
-
             return ["massege" => "Выход из системы прошел успешно"];
         } catch (RuntimeException | \Exception $e) {
 

@@ -1,7 +1,8 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\App;
 
-class AuthorizationController extends MainController
+
+class AuthorizationController extends \App\Controllers\MainController
 {
 
     public function authorization($request, $response, $args)

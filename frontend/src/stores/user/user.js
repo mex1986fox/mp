@@ -39,6 +39,18 @@ const user = {
         context.commit("drop");
       }
     },
+    logout(context){
+    let user_id = Vue.cookie.get("user_id");
+    if (user_id != undefined) {
+      let body = { id: user_id };
+      Vue.http.post("/api/logout/users", body).then(
+        response => {
+          context.commit("drop");
+        },
+        error => {}
+      );
+    }
+  },
     setUser(context) {
       let user_id = Vue.cookie.get("user_id");
       if (user_id != undefined) {

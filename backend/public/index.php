@@ -1,7 +1,5 @@
 <?php
 session_start(); //стартуем сессию для всех запросов
-
-use \App\Controllers\AuthorizationController as AuthorizationController;
 use \App\Middleware\DepController;
 use \App\Middleware\StandardFiltering;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -29,7 +27,7 @@ $app->add(new DepController($container));
 
 $app->post('/api/{action}/{controller}',
     function (Request $request, Response $response, $args) {
-        $nameController = 'App\\Controllers\\' . ucfirst($args['controller'] . 'Controller');
+        $nameController = 'App\\Controllers\\Api\\' . ucfirst($args['controller'] . 'Controller');
         $nameAction = $args['action'];
         $controller = new $nameController();
         $response = $controller->$nameAction($request, $response, $args);
@@ -39,7 +37,7 @@ $app->post('/api/{action}/{controller}',
 )->add(new StandardFiltering($container));
 $app->get('/api/{action}/{controller}',
     function (Request $request, Response $response, $args) {
-        $nameController = 'App\\Controllers\\' . ucfirst($args['controller'] . 'Controller');
+        $nameController = 'App\\Controllers\\Api\\' . ucfirst($args['controller'] . 'Controller');
         $nameAction = $args['action'];
         $controller = new $nameController();
         $response = $controller->$nameAction($request, $response, $args);
@@ -47,7 +45,7 @@ $app->get('/api/{action}/{controller}',
     }
 
 )->add(new StandardFiltering($container));
-$app->get('/authorization', AuthorizationController::class . ":authorization")->add(new StandardFiltering($container));
-$app->get('/registration', AuthorizationController::class . ":registration")->add(new StandardFiltering($container));
+$app->get('/authorization', \App\Controllers\App\AuthorizationController::class . ":authorization")->add(new StandardFiltering($container));
+$app->get('/ads', \App\Controllers\App\AdsController::class . ":show")->add(new StandardFiltering($container));
 
 $app->run();

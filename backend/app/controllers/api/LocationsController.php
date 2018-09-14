@@ -1,6 +1,7 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\Api;
 
+use \App\Controllers\MainController;
 use \App\Models\Api\Locations\Show as LocationsShow;
 
 class LocationsController extends MainController

@@ -1,6 +1,7 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\Api;
 
+use \App\Controllers\MainController;
 use \App\Models\Api\Transports\Show as TransportsShow;
 
 class TransportsController extends MainController

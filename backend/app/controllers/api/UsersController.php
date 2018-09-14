@@ -1,6 +1,7 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\Api;
 
+use \App\Controllers\MainController;
 use \App\Models\Api\Users\Authorization as UsersAuthorization;
 use \App\Models\Api\Users\Authentication as UsersAuthentication;
 use \App\Models\Api\Users\Create as UsersCreate;

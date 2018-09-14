@@ -11,4 +11,17 @@
         position: fixed;
         z-index: 2000;
     }
+    &__user {
+        position: relative;
+        float: right;
+        right: 0;
+        &-avatar {
+            height: 40px !important;
+            width: 40px !important;
+        }
+        &-exit {
+            margin-top: 10px;
+            color: #2b2b2b !important;
+        }
+    }
 }
