@@ -33,6 +33,39 @@ const transports = {
       } else {
         return undefined;
       }
+    },
+    getFuel: (state, getters, rootState, rootGetters) => id => {
+      if (state.fuels != undefined) {
+        for (let fuel of state.fuels) {
+          if (id == fuel.id) {
+            return fuel;
+          }
+        }
+      } else {
+        return undefined;
+      }
+    },
+    getDrive: (state, getters, rootState, rootGetters) => id => {
+      if (state.drives != undefined) {
+        for (let drive of state.drives) {
+          if (id == drive.id) {
+            return drive;
+          }
+        }
+      } else {
+        return undefined;
+      }
+    },
+    getTransmission: (state, getters, rootState, rootGetters) => id => {
+      if (state.transmissions != undefined) {
+        for (let transmission of state.transmissions) {
+          if (id == transmission.id) {
+            return transmission;
+          }
+        }
+      } else {
+        return undefined;
+      }
     }
   },
   mutations: {
@@ -65,7 +98,7 @@ const transports = {
             let transports = response.body;
             context.commit("updateTransports", transports);
           },
-          error => { }
+          error => {}
         );
       }
     }
