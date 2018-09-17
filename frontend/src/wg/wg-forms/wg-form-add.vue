@@ -16,13 +16,13 @@
 							</div>
 							Основное
 						</ui-tabs-tab>
-						<ui-tabs-tab id="photo" :checked="tabs=='photo'" @onFocus="isTabs" :disabled="disanledTabs">
+						<ui-tabs-tab id="photo" :checked="tabs=='photo'" @onFocus="isTabs" :disabled="disabledTabs">
 							<div class="ui-tabs__icone">
 								2
 							</div>
 							Фотографии
 						</ui-tabs-tab>
-						<ui-tabs-tab id="excess" :checked="tabs=='excess'" @onFocus="isTabs" :disabled="disanledTabs">
+						<ui-tabs-tab id="excess" :checked="tabs=='excess'" @onFocus="isTabs" :disabled="disabledTabs">
 							<div class="ui-tabs__icone">
 								3
 							</div>
@@ -114,106 +114,106 @@
 						</ui-file>
 					</form>
 				</div>
-
-				<div class="wg-form-add__content" v-show="tabs=='excess'">
-					<div class="wg-form-add__hr">
-						Двигатель
-					</div>
-					<div class="row">
-						<div class="col_4">
-							<ui-select name="fuel" caption="Топливо" :menu='menuFuels' @onSelect='isSelectedFuels'>
-							</ui-select>
+				<form id="formUpdateAdd" @submit.prevent="update">
+					<div class="wg-form-add__content" v-show="tabs=='excess'">
+						<div class="wg-form-add__hr">
+							Двигатель
 						</div>
-						<div class="col_3 col_offset-1">
-							<ui-text name="power" caption="Мошьность, л.с." :masc="{use:mascNumber}" :maxlength="4">
-							</ui-text>
-						</div>
-						<div class="col_3 col_offset-1">
-							<ui-select v-if="menuVolums.length>0" name="volume" caption="Объем, л." :menu="menuVolums">
-							</ui-select>
-						</div>
-					</div>
-					<div class="wg-form-add__hr">
-						КПП
-					</div>
-					<div class="row">
-						<div class="col_4">
-							<ui-radio name="transmission" value="1">
-								Автомат
-							</ui-radio>
-							<ui-radio name="transmission" value="2">
-								Механика
-							</ui-radio>
-							<ui-radio name="transmission" value="3">
-								Робот
-							</ui-radio>
-						</div>
-					</div>
-					<div class="wg-form-add__hr">
-						Привод
-					</div>
-					<div class="row">
-						<div class="col_4">
-							<ui-radio name="drive" value="1">
-								Передний
-							</ui-radio>
-							<ui-radio name="drive" value="2">
-								Задний
-							</ui-radio>
-							<ui-radio name="drive" value="3">
-								Полный (4WD)
-							</ui-radio>
-						</div>
-					</div>
-					<div class="wg-form-add__hr">
-						Кузов
-					</div>
-					<div class="row">
-						<div class="col_4">
-							<ui-radio v-for="(val, key) in menuBodies" :key="key" name="body" :value="val.value">
-								{{val.option}}
-							</ui-radio>
-						</div>
-					</div>
-					<div class="wg-form-add__hr">
-						Руль
-					</div>
-					<div class="row">
-						<div class="col_4">
-							<ui-radio name="wheel" value="l">
-								Левый
-							</ui-radio>
-							<ui-radio name="wheel" value="r">
-								Правый
-							</ui-radio>
-						</div>
-					</div>
-					<div class="wg-form-add__hr">
-						<!-- <i class="fa fa-exclamation" aria-hidden="true"></i> -->
-						Особые отметки
-					</div>
-					<div class="row">
-						<div class="col_12">
-							<div class="wg-form-add__checkboxs">
-								<ui-check-box name="documentation" value="1" :checked="true">
-									без документов
-								</ui-check-box>
-								<ui-check-box name="repair" value="1" :checked="true">
-									требует ремонта
-								</ui-check-box>
-								<ui-check-box name='exchange' value="1" :checked="true">
-									готов к обмену
-								</ui-check-box>
+						<div class="row">
+							<div class="col_4">
+								<ui-select name="fuel" caption="Топливо" :menu='menuFuels' @onSelect='isSelectedFuels'>
+								</ui-select>
+							</div>
+							<div class="col_3 col_offset-1">
+								<ui-text name="power" caption="Мошьность, л.с." :masc="{use:mascNumber}" :maxlength="4">
+								</ui-text>
+							</div>
+							<div class="col_3 col_offset-1">
+								<ui-select v-if="menuVolums.length>0" name="volume" caption="Объем, л." :menu="menuVolums">
+								</ui-select>
 							</div>
 						</div>
+						<div class="wg-form-add__hr">
+							КПП
+						</div>
+						<div class="row">
+							<div class="col_4">
+								<ui-radio name="transmission" value="1">
+									Автомат
+								</ui-radio>
+								<ui-radio name="transmission" value="2">
+									Механика
+								</ui-radio>
+								<ui-radio name="transmission" value="3">
+									Робот
+								</ui-radio>
+							</div>
+						</div>
+						<div class="wg-form-add__hr">
+							Привод
+						</div>
+						<div class="row">
+							<div class="col_4">
+								<ui-radio name="drive" value="1">
+									Передний
+								</ui-radio>
+								<ui-radio name="drive" value="2">
+									Задний
+								</ui-radio>
+								<ui-radio name="drive" value="3">
+									Полный (4WD)
+								</ui-radio>
+							</div>
+						</div>
+						<div class="wg-form-add__hr">
+							Кузов
+						</div>
+						<div class="row">
+							<div class="col_4">
+								<ui-radio v-for="(val, key) in menuBodies" :key="key" name="body" :value="val.value">
+									{{val.option}}
+								</ui-radio>
+							</div>
+						</div>
+						<div class="wg-form-add__hr">
+							Руль
+						</div>
+						<div class="row">
+							<div class="col_4">
+								<ui-radio name="wheel" value="l">
+									Левый
+								</ui-radio>
+								<ui-radio name="wheel" value="r">
+									Правый
+								</ui-radio>
+							</div>
+						</div>
+						<div class="wg-form-add__hr">
+							<!-- <i class="fa fa-exclamation" aria-hidden="true"></i> -->
+							Особые отметки
+						</div>
+						<div class="row">
+							<div class="col_12">
+								<div class="wg-form-add__checkboxs">
+									<ui-check-box name="documentation" value="1" :checked="true">
+										без документов
+									</ui-check-box>
+									<ui-check-box name="repair" value="1" :checked="true">
+										требует ремонта
+									</ui-check-box>
+									<ui-check-box name='exchange' value="1" :checked="true">
+										готов к обмену
+									</ui-check-box>
+								</div>
+							</div>
+						</div>
+						<div class="wg-form-add__buttons">
+							<button class="ui-button ui-button_blue  " type="submit">
+								Добавить
+							</button>
+						</div>
 					</div>
-					<div class="wg-form-add__buttons">
-						<button class="ui-button ui-button_blue  " type="submit">
-							Добавить
-						</button>
-					</div>
-				</div>
-
+				</form>
 			</div>
 		</div>
 		<div class="row">
@@ -235,11 +235,11 @@ export default {
       tabs: "excess",
       selectedRegion: undefined,
       selectedBrand: undefined,
-			selectedFuel: undefined,
-			showSnackbar: false,
-			descSnackbar: '',
+      selectedFuel: undefined,
+      showSnackbar: false,
+      descSnackbar: "",
       photoLincks: undefined,
-      disanledTabs: true,
+      disabledTabs: true,
       add_id: undefined,
       selectPhoto: 0,
       percentFL: undefined,
@@ -267,21 +267,32 @@ export default {
       this.selectPhoto = nPhoto;
     },
     create(event) {
-      let form = document.getElementById("formCreateAdd");
-      let body = new FormData(form);
+      let body = new FormData(event.target);
       this.$http.post("/api/create/ads", body).then(
         response => {
-          this.disanledTabs = false;
+          this.disabledTabs = false;
           this.tabs = "photo";
           this.add_id = response.body.add_id;
         },
         error => {
-					let massege = error.body.exceptions.massege;
-				
+          let massege = error.body.exceptions.massege;
+
           if (massege != undefined) {
-						this.showSnackbar=true;
-						this.descSnackbar=massege;
+            this.showSnackbar = true;
+            this.descSnackbar = massege;
           }
+        }
+      );
+    },
+    update(event) {
+			let body = new FormData(event.target);
+			body.set("add_id", this.add_id);
+      this.$http.post("/api/update/ads", body).then(
+        response => {
+					console.log(response);
+        },
+        error => {
+					console.log(error);
         }
       );
     },

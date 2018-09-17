@@ -26,6 +26,7 @@ class Show
             $qVolums = "select * from transports_volums;";
             $qFuels = "select * from transports_fuels;";
             $qBodies = "select * from transports_bodies;";
+            $qTransmissions = "select * from transports_transmissions;";
 
             $transports = $db->query($qTransports, \PDO::FETCH_ASSOC)->fetchAll();
             $brands = $db->query($qBrands, \PDO::FETCH_ASSOC)->fetchAll();
@@ -34,6 +35,7 @@ class Show
             $volums = $db->query($qVolums, \PDO::FETCH_ASSOC)->fetchAll();
             $fuels = $db->query($qFuels, \PDO::FETCH_ASSOC)->fetchAll();
             $bodies = $db->query($qBodies, \PDO::FETCH_ASSOC)->fetchAll();
+            $transmissions = $db->query($qTransmissions, \PDO::FETCH_ASSOC)->fetchAll();
 
             $transports = [
                 'transports' => $transports,
@@ -43,6 +45,7 @@ class Show
                 'volums' => $volums,
                 'fuels' => $fuels,
                 'bodies' => $bodies,
+                'transmissions' => $transmissions,
             ];
             return $transports;
         } catch (RuntimeException | \Exception $e) {

@@ -62,6 +62,12 @@ VALUES
 (1,'купе','kupe'),
 (1,'кабриолет','cabriolet'),
 (1,'пикап','pikap');
+INSERT INTO transports_transmissions(transport_id, name, name_url)
+VALUES 
+(1,'автомат','avtomat'),
+(1,'механика','mehanika'),
+(1,'робот','robot');
+
 insert into transports_brands (transport_id, name, name_url)
 VALUES
 (1,'Acura','acura'),

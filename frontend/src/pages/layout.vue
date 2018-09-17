@@ -11,11 +11,15 @@
 							</button>
 							<div v-if="user!=undefined" class="ui-app-bar__user">
 								<div class="ui-avatar ui-app-bar__user-avatar"><img src="/public/img/avatar.png" alt=""></div>
-								<div @click="logout" class="ui-button ui-button_flat ui-button_mini ui-app-bar__user-exit"> выйти </div>
+								<div @click="logout" class="ui-button ui-button_circle ui-button_flat ui-button_circle_mini ui-app-bar__user-exit">
+									<i class="fa fa-sign-out" aria-hidden="true"></i>
+								
+								</div>
 							</div>
 							<div v-if="user==undefined" class="ui-app-bar__user">
-								<router-link to="/authorization" class="ui-button ui-button_flat ui-button_mini ui-app-bar__user-exit">
-									Вход
+								<router-link to="/authorization" class="ui-button ui-button_circle ui-button_flat ui-button_circle_mini ui-app-bar__user-exit">
+									<i class="fa fa-sign-in" aria-hidden="true"></i>
+								
 								</router-link>
 							</div>
 						</div>

@@ -57,3 +57,12 @@ CREATE TABLE transports_bodies(
     PRIMARY KEY (id),
     FOREIGN KEY (transport_id) REFERENCES transports(id)
 );
+
+CREATE TABLE transports_transmissions(
+    id serial NOT NULL,
+    transport_id INTEGER,
+    name varchar(32),
+    name_url varchar(32),
+    PRIMARY KEY (id),
+    FOREIGN KEY (transport_id) REFERENCES transports(id)
+);

@@ -8,24 +8,31 @@ const transports = {
     drives: undefined,
     fuels: undefined,
     volums: undefined,
-    bodies: undefined
+    bodies: undefined,
+    transmissions: undefined
   },
   getters: {
     getBrand: (state, getters, rootState, rootGetters) => id => {
-      for (let brand of state.brands) {
-        if (id == brand.id) {
-          return brand;
+      if (state.brands) {
+        for (let brand of state.brands) {
+          if (id == brand.id) {
+            return brand;
+          }
         }
+      } else {
+        return undefined;
       }
-      return undefined;
     },
     getModel: (state, getters, rootState, rootGetters) => id => {
-      for (let model of state.models) {
-        if (id == model.id) {
-          return model;
+      if (state.models != undefined) {
+        for (let model of state.models) {
+          if (id == model.id) {
+            return model;
+          }
         }
+      } else {
+        return undefined;
       }
-      return undefined;
     }
   },
   mutations: {
@@ -37,6 +44,7 @@ const transports = {
       state.fuels = transport.fuels;
       state.volums = transport.volums;
       state.bodies = transport.bodies;
+      state.transmissions = transport.transmissions;
     }
   },
   actions: {
@@ -49,7 +57,8 @@ const transports = {
         state.drives == undefined ||
         state.fuels == undefined ||
         state.volums == undefined ||
-        state.bodies == undefined
+        state.bodies == undefined ||
+        state.transmissions == undefined
       ) {
         Vue.http.post("/api/show/transports").then(
           response => {
