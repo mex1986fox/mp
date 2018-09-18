@@ -23,21 +23,44 @@ const locations = {
       }
       return undefined;
     },
-    getMenuSubjects: (state, getters, rootState, rootGetters) => (country_id, selected_id = []) => {
+    getMenuSubjects: (state, getters, rootState, rootGetters) => (
+      country_id,
+      selected_id = []
+    ) => {
       // {value:"1",option:"Audi", group:"Область", selected:true}
-      let subjects = state.subjects.filter((subject) => {
+      let subjects = state.subjects.filter(subject => {
         return subject.country_id == country_id;
       });
 
-      let menu = subjects.map((subject) => {
-        // console.log("selected:"+selected_id.some((sel) => { return sel == subject.id }));
-        
+      let menu = subjects.map(subject => {
         return {
           value: subject.id,
           option: subject.name,
           group: subject.name[0],
-          selected: selected_id.some((sel) => { return sel == subject.id })
-        }
+          selected: selected_id.some(sel => {
+            return sel == subject.id;
+          })
+        };
+      });
+      return menu;
+    },
+    getMenuSettlements: (state, getters, rootState, rootGetters) => (
+      subject_id,
+      selected_id = []
+    ) => {
+      // {value:"1",option:"Audi", group:"Область", selected:true}
+      let settlements = state.settlements.filter(settlement => {
+        return settlement.subject_id == subject_id;
+      });
+      let menu = settlements.map(settlement => {
+        return {
+          value: settlement.id,
+          option: settlement.name,
+          group: settlement.name[0],
+          selected: selected_id.some(sel => {
+            return sel == settlement.id;
+          })
+        };
       });
       // console.log(menu);
       return menu;
@@ -63,7 +86,7 @@ const locations = {
             let locations = response.body;
             context.commit("updateLocations", locations);
           },
-          error => { }
+          error => {}
         );
       }
     }

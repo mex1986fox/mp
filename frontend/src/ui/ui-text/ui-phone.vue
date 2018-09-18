@@ -20,7 +20,7 @@ export default {
   name: "ui-phone",
   data() {
     return {
-      dValue: "+8(___)___-__-__",
+      dValue: this.value,
       dCarret: 3
     };
   },
@@ -44,6 +44,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    value: {
+      type: String,
+      default: "+8(___)___-__-__"
     }
   },
   methods: {
