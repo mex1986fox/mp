@@ -83,7 +83,7 @@ Vue.component('ui-snackbar', UiSnackbar);
 // Vue.component('ui-editing-window', UiEditingWindow);
 // import UiTableFilter from './ui-table-filter/ui-table-filter.vue'
 // Vue.component('ui-table-filter', UiTableFilter);
-// import UiTable from './ui-table/ui-table.vue'
-// Vue.component('ui-table', UiTable);
+import UiTable from './ui-table/ui-table.vue'
+Vue.component('ui-table', UiTable);
 // import UiAppMenu from './ui-app-menu/ui-app-menu.vue'
 // Vue.component('ui-app-menu', UiAppMenu);

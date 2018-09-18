@@ -47,7 +47,7 @@
 							<ui-navigation-list :show="true">
 								<div slot="header">
 									<div class="ui-navigation__unit__header">
-										Cтраници
+										Кабинет
 									</div>
 								</div>
 								<div slot="content">
@@ -57,6 +57,29 @@
 										</div>
 										Вход
 									</router-link>
+									<router-link to="/account/data" class="ui-navigation__unit__button">
+										<div class="ui-navigation__unit__icon">
+											<i class="fa fa-th" aria-hidden="true"></i>
+										</div>
+										Мои данные
+									</router-link>
+									<router-link to="/account/ads" class="ui-navigation__unit__button">
+										<div class="ui-navigation__unit__icon">
+											<i class="fa fa-th" aria-hidden="true"></i>
+										</div>
+										Мои объявления
+									</router-link>
+								</div>
+							</ui-navigation-list>
+						</div>
+	<div class="ui-navigation__unit">
+							<ui-navigation-list :show="true">
+								<div slot="header">
+									<div class="ui-navigation__unit__header">
+										Cтраници
+									</div>
+								</div>
+								<div slot="content">
 									<router-link to="/ads" class="ui-navigation__unit__button">
 										<div class="ui-navigation__unit__icon">
 											<i class="fa fa-th" aria-hidden="true"></i>
@@ -66,7 +89,6 @@
 								</div>
 							</ui-navigation-list>
 						</div>
-
 					</ui-navigation>
 				</div>
 			</div>

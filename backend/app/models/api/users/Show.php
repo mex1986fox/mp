@@ -29,7 +29,7 @@ class Show
             // пишем в базу
             $db = $this->container['db'];
             $q = "  select
-                        id, login, name, surname, birthdate
+                        id, login, name, surname, birthdate, settlement_id, phone, email
                     from
                         users
                         where id={$id}";

@@ -46,6 +46,8 @@ $app->get('/api/{action}/{controller}',
 
 )->add(new StandardFiltering($container));
 $app->get('/authorization', \App\Controllers\App\AuthorizationController::class . ":authorization")->add(new StandardFiltering($container));
+$app->get('/account/data', \App\Controllers\App\AccountDataController::class . ":show")->add(new StandardFiltering($container));
+
 $app->get('/ads', \App\Controllers\App\AdsController::class . ":show")->add(new StandardFiltering($container));
 
 $app->run();

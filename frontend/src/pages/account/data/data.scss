@@ -1,0 +1,36 @@
+.pg-account-data {
+    &__avatar-block {
+        margin-top: 36px;
+    }
+    &__avatar {
+        height: 70px;
+        width: 70px;
+    }
+    &__avatar-linck {
+        color: $color-text !important;
+        font-size: 20px;
+        top: 16px;
+        left: 86px;
+    }
+    &__avatar-title {
+        color: $color-description !important;
+        font-size: 18px;
+        top: 42px;
+        left: 86px;
+    }
+    &__avatar-button {
+        top: 54px;
+        float: right;
+        position: absolute;
+        right: 12px;
+        left: auto;
+    }
+    &__td_left {
+        text-align: left;
+        border-bottom: none;
+    }
+    &__td_right {
+        text-align: right;
+        border-bottom: none;
+    }
+}

@@ -22,7 +22,7 @@
     }
     &__th {
       padding: 0;
-      border-bottom: 1px solid $color-links-pasiv;
+      border-bottom: 1px solid $color-links;
       padding-bottom:10px;
     }
     &__title{
@@ -32,7 +32,7 @@
     &__td {
         text-align: center;
         border: none;
-        border-bottom: 1px solid $color-links-pasiv;
+        border-bottom: 1px solid $color-links;
         padding: 5px 5px;
     }
     &__button {

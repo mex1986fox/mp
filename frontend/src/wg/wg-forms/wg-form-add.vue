@@ -289,7 +289,7 @@ export default {
 			body.set("add_id", this.add_id);
       this.$http.post("/api/update/ads", body).then(
         response => {
-					console.log(response);
+					response;
         },
         error => {
 					console.log(error);

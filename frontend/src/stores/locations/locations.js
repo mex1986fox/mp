@@ -14,6 +14,33 @@ const locations = {
         }
       }
       return undefined;
+    },
+    getSubject: (state, getters, rootState, rootGetters) => id => {
+      for (let subject of state.subjects) {
+        if (id == subject.id) {
+          return subject;
+        }
+      }
+      return undefined;
+    },
+    getMenuSubjects: (state, getters, rootState, rootGetters) => (country_id, selected_id = []) => {
+      // {value:"1",option:"Audi", group:"Область", selected:true}
+      let subjects = state.subjects.filter((subject) => {
+        return subject.country_id == country_id;
+      });
+
+      let menu = subjects.map((subject) => {
+        // console.log("selected:"+selected_id.some((sel) => { return sel == subject.id }));
+        
+        return {
+          value: subject.id,
+          option: subject.name,
+          group: subject.name[0],
+          selected: selected_id.some((sel) => { return sel == subject.id })
+        }
+      });
+      // console.log(menu);
+      return menu;
     }
   },
   mutations: {
@@ -36,7 +63,7 @@ const locations = {
             let locations = response.body;
             context.commit("updateLocations", locations);
           },
-          error => {}
+          error => { }
         );
       }
     }

@@ -5,6 +5,7 @@ use \App\Controllers\MainController;
 use \App\Models\Api\Users\Authorization as UsersAuthorization;
 use \App\Models\Api\Users\Authentication as UsersAuthentication;
 use \App\Models\Api\Users\Create as UsersCreate;
+use \App\Models\Api\Users\Update as UsersUpdate;
 use \App\Models\Api\Users\Logout as UsersLogout;
 use \App\Models\Api\Users\Show as UsersShow;
 
@@ -35,7 +36,15 @@ class UsersController extends MainController
     }
     public function update($request, $response, $args)
     {
-        echo "update hello";
+        $cont = $this->container;
+        $reg = new UsersUpdate($cont, $request, $response);
+        $answer = $reg->run();
+        if (isset($answer['exceptions'])) {
+            $response = $response->withJson($answer, 400);
+        }
+        if (isset($answer['user'])) {
+            $response = $response->withJson($answer, 200);
+        }
         return $response;
     }
     public function delete($request, $response, $args)

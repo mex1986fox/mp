@@ -15,3 +15,9 @@ CREATE TABLE "users" (
     birthdate date,
     PRIMARY KEY (id)
 );
+
+ALTER TABLE users ADD COLUMN settlement_id smallint;
+ALTER TABLE users ADD FOREIGN KEY (settlement_id) REFERENCES locations_settlements(id) ON DELETE CASCADE;
+
+ALTER TABLE users ADD COLUMN phone varchar(20);
+ALTER TABLE users ADD COLUMN email varchar(256);
