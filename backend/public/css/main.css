@@ -922,6 +922,8 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     color: #202020; }
+    .ui-select__option:first-letter {
+      text-transform: uppercase; }
     .ui-select__option:hover {
       background-color: #f3f3f3; }
     .ui-select__option_disabled {
@@ -2673,6 +2675,21 @@ select::-ms-expand {
     margin-top: 10px; }
     .wg-captcha__img > img {
       height: 100%; }
+
+.wg-select-location {
+  margin: 40px 0 10px 0; }
+  .wg-select-location__container {
+    overflow: hidden;
+    border-bottom: 1px solid #bebebe;
+    min-height: 40px;
+    padding-top: 10px; }
+  .wg-select-location__button {
+    position: absolute;
+    right: 0;
+    left: auto;
+    bottom: 0px; }
+  .wg-select-location__caption {
+    top: 20px; }
 
 select {
   -webkit-appearance: none;

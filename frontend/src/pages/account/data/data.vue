@@ -106,7 +106,7 @@ export default {
   data() {
     return {
       showMenu: false,
-      showFormAdd: false
+      showFormAdd: true
     };
   },
   components: {

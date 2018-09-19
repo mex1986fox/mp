@@ -26,3 +26,5 @@ import WgFormAdd from "./wg-forms/wg-form-add.vue";
 Vue.component("wg-form-add", WgFormAdd);
 import WgCaptcha from "./wg-captcha/wg-captcha.vue";
 Vue.component("wg-captcha", WgCaptcha);
+import WgSelectLocation from "./wg-select-location/wg-select-location.vue";
+Vue.component("wg-select-location", WgSelectLocation);

@@ -19,19 +19,12 @@
 							Местоположение
 						</div>
 						<div class="row">
-							<div class="col_5">
-								<ui-select name="subject"
-								           caption="Субъект"
-								           :menu='menuSubjects'
-								           @onSelect='isSelectedRegion'>
-								</ui-select>
-							</div>
-							<div class="col_5 col_offset-2">
-								<ui-select name="settlement"
-								           caption="Город"
-								           :menu='menuSettlements'
-								           :disabled='(menuSettlements.length==0?true:false)'>
-								</ui-select>
+							<div class="col_12">
+								<wg-select-location caption="Страна, регион, город"
+								:selectedSettlement="user.settlement_id"
+								>
+
+								</wg-select-location>
 							</div>
 						</div>
 

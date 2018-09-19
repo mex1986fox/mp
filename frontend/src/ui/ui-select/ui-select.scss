@@ -1,154 +1,157 @@
 .ui-select {
-  position: relative;
-  width: 100%;
-  float: left;
-  &__menu {
-    top: 63px;
-    margin: 0;
-    border: 0;
-    padding: 0;
-    max-height: 200px;
+    position: relative;
     width: 100%;
-    color: $color-text;
-    font-size: 14px;
-    position: absolute;
-    background-color: $color-fon;
-    display: block;
-    float: right;
-    z-index: 100;
-    box-shadow: $color-shadow-active;
-    left: 1px;
-    overflow-y: none;
-    overflow-x: auto;
-    &-enter,
-    &-leave-to {
-      max-height: 0px;
-    }
-    &-enter-active,
-    &-leave-active {
-      transition: max-height 0.5s ease;
-    }
-    &-enter-to,
-    &-leave {
-      max-height: 200px;
-    }
-  }
-  &__blind {
-    background-color: rgba(256, 256, 256, 0) !important;
-  }
-  &__option {
-    position: relative;
-    border: 0;
-    padding: 0px 30px;
-    margin: 0;
-    list-style-type: none;
-    cursor: pointer;
-    height: 40px;
-    width: auto;
-    font-size: 14px;
-    line-height: 38px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: #202020;
-    &:hover {
-      background-color: #f3f3f3;
-    }
-    &_disabled {
-      color: $color-disabled;
-      cursor: auto;
-      &:hover {
+    float: left;
+    &__menu {
+        top: 63px;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        max-height: 200px;
+        width: 100%;
+        color: $color-text;
+        font-size: 14px;
+        position: absolute;
         background-color: $color-fon;
-      }
+        display: block;
+        float: right;
+        z-index: 100;
+        box-shadow: $color-shadow-active;
+        left: 1px;
+        overflow-y: none;
+        overflow-x: auto;
+        &-enter,
+        &-leave-to {
+            max-height: 0px;
+        }
+        &-enter-active,
+        &-leave-active {
+            transition: max-height 0.5s ease;
+        }
+        &-enter-to,
+        &-leave {
+            max-height: 200px;
+        }
     }
-  }
-  &__group {
-    position: relative;
-    border: 0;
-    padding: 0 20px;
-    margin: 0;
-    list-style-type: none;
-    height: 40px;
-    width: auto;
-    font-size: 15px;
-    line-height: 41px;
-    color: $color-disabled;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-transform: uppercase;
-  }
-  &__check {
-    color: $color-links;
-    font-weight: 600;
-    height: 100%;
-    margin-left: 5px;
-    width: 20px;
-  }
-  &__checkbox {
-    opacity: 0;
-    position: absolute;
-  }
-  &__arrow {
-    position: absolute;
-    background-color: $color-fon;
-    float: right;
-    right: 0px;
-    top: 35px;
-    font-size: 22px;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    text-align: center;
-    line-height: 22px;
-    transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    &_disabled{
-      color: $color-disabled;
-      cursor: auto;
+    &__blind {
+        background-color: rgba(256, 256, 256, 0) !important;
     }
-    &-enter {
-      transform: rotate(180deg);
-      -ms-transform: rotate(180deg);
-      -webkit-transform: rotate(180deg);
+    &__option {
+        position: relative;
+        border: 0;
+        padding: 0px 30px;
+        margin: 0;
+        list-style-type: none;
+        cursor: pointer;
+        height: 40px;
+        width: auto;
+        font-size: 14px;
+        line-height: 38px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #202020;
+        &:first-letter {
+            text-transform: uppercase;
+        }
+        &:hover {
+            background-color: #f3f3f3;
+        }
+        &_disabled {
+            color: $color-disabled;
+            cursor: auto;
+            &:hover {
+                background-color: $color-fon;
+            }
+        }
     }
-    &-enter-active {
-      transition: transform 0.8s ease-in-out;
+    &__group {
+        position: relative;
+        border: 0;
+        padding: 0 20px;
+        margin: 0;
+        list-style-type: none;
+        height: 40px;
+        width: auto;
+        font-size: 15px;
+        line-height: 41px;
+        color: $color-disabled;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
     }
-    &-enter-to {
-      transform: rotate(0deg);
-      -ms-transform: rotate(0deg);
-      -webkit-transform: rotate(0deg);
+    &__check {
+        color: $color-links;
+        font-weight: 600;
+        height: 100%;
+        margin-left: 5px;
+        width: 20px;
     }
-  }
-  &__arrow_transit {
-    position: absolute;
-    background-color: $color-fon;
-    float: right;
-    right: 0px;
-    top: 35px;
-    font-size: 22px;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    text-align: center;
-    line-height: 22px;
-    transform: rotate(180deg);
-    -ms-transform: rotate(180deg);
-    -webkit-transform: rotate(180deg);
-    &-enter {
-      transform: rotate(0deg);
-      -ms-transform: rotate(0deg);
-      -webkit-transform: rotate(0deg);
+    &__checkbox {
+        opacity: 0;
+        position: absolute;
     }
-    &-enter-active {
-      transition: transform 0.8s ease-in-out;
+    &__arrow {
+        position: absolute;
+        background-color: $color-fon;
+        float: right;
+        right: 0px;
+        top: 35px;
+        font-size: 22px;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        line-height: 22px;
+        transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        &_disabled {
+            color: $color-disabled;
+            cursor: auto;
+        }
+        &-enter {
+            transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+        }
+        &-enter-active {
+            transition: transform 0.8s ease-in-out;
+        }
+        &-enter-to {
+            transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+        }
     }
-    &-enter-to {
-      transform: rotate(180deg);
-      -ms-transform: rotate(180deg);
-      -webkit-transform: rotate(180deg);
+    &__arrow_transit {
+        position: absolute;
+        background-color: $color-fon;
+        float: right;
+        right: 0px;
+        top: 35px;
+        font-size: 22px;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        line-height: 22px;
+        transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+        &-enter {
+            transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+        }
+        &-enter-active {
+            transition: transform 0.8s ease-in-out;
+        }
+        &-enter-to {
+            transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+        }
     }
-  }
 }
