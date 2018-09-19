@@ -1,58 +1,87 @@
 <template>
-    <div class="wg-select-location">
-        <span class="ui-text__caption wg-select-location__caption" :class="{'ui-text__caption_active':showModal, 
+	<div class="wg-select-location">
+		<span class="ui-text__caption wg-select-location__caption"
+		      :class="{'ui-text__caption_active':showModal, 
                    'ui-text__caption_completed':modCompleted,
                    'ui-text__caption_disabled':dDisabled}">
-            {{dCaption}}
-        </span>
-        <div class="wg-select-location__container">
-            <ui-chips v-if="country!=undefined" name="countries" :value="dSelCountry" :caption="country.name">
-            </ui-chips>
-            <ui-chips v-if="subject!=undefined" name="subjects" :value="dSelSubject" :caption="subject.name">
-            </ui-chips>
-            <ui-chips v-if="settlement!=undefined" name="settlements" :value="dSelSettlement" :caption="settlement.name">
-            </ui-chips>
-        </div>
-        <div @click="showModal=true" class="ui-button  ui-button_circle ui-button_circle_mini ui-button_blue wg-select-location__button">
-            <i class="fa fa-map-marker" aria-hidden="true"></i>
-        </div>
-        <ui-blind :show="showModal" @onHide="showModal=false" :centering="true" animate="opacity">
-            <div class="container">
-                <div class="row">
-                    <div class="col_4 col_offset-4 col-phone_6 col-phone_offset-0">
+			{{dCaption}}
+		</span>
+		<div class="wg-select-location__container">
+			<ui-chips v-if="country!=undefined"
+			          name="country"
+			          :value="dSelCountry"
+			          :caption="country.name">
+			</ui-chips>
+			<ui-chips v-if="subject!=undefined"
+			          name="subject"
+			          :value="dSelSubject"
+			          :caption="subject.name">
+			</ui-chips>
+			<ui-chips v-if="settlement!=undefined"
+			          name="settlement"
+			          :value="dSelSettlement"
+			          :caption="settlement.name">
+			</ui-chips>
+		</div>
+		<div @click="showModal=true"
+		     class="ui-button  ui-button_circle ui-button_circle_mini ui-button_blue wg-select-location__button">
+			<i class="fa fa-map-marker"
+			   aria-hidden="true"></i>
+		</div>
+		<ui-blind :show="showModal"
+		          @onHide="showModal=false"
+		          :centering="true"
+		          animate="opacity">
+			<div class="container">
+				<div class="row">
+					<div class="col_4 col_offset-4 col-phone_6 col-phone_offset-0">
 
-                        <!--модальное окно-->
-                        <div class="ui-modal-window">
-                            <div class="ui-modal-window__header">
-                                <div @click="showModal=false" class="ui-button ui-button_circle ui-button_circle_mini 
+						<!--модальное окно-->
+						<div class="ui-modal-window">
+							<div class="ui-modal-window__header">
+								<div @click="showModal=false"
+								     class="ui-button ui-button_circle ui-button_circle_mini 
                                        ui-button_flat ui-modal-window__header__button">
-                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                </div>
-                                Местоположение
-                            </div>
-                            <div class="ui-modal-window__content">
-                                <div class="row">
-                                    <div class="col_12">
-                                        <ui-select name="country" caption="Страна" :menu="menuCountry" @onSelect="isSelCountry">
-                                        </ui-select>
-                                        <ui-select :disabled="dSelCountry==undefined" name="subject" caption="Субъект" :menu="menuSubjects" @onSelect="isSelSubject">
-                                        </ui-select>
-                                        <ui-select :disabled="(dSelCountry==undefined && dSelSubject==undefined)" name="settlement" caption="Город" :menu="menuSettlements" @onSelect="isSelSettlement">
-                                        </ui-select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ui-modal-window__footer">
-                                <div @click="showModal=false" class="ui-button ui-button_blue">
-                                    OK
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ui-blind>
-    </div>
+									<i class="fa fa-times"
+									   aria-hidden="true"></i>
+								</div>
+								Местоположение
+							</div>
+							<div class="ui-modal-window__content">
+								<div class="row">
+									<div class="col_12">
+										<ui-select name="country"
+										           caption="Страна"
+										           :menu="menuCountry"
+										           @onSelect="isSelCountry">
+										</ui-select>
+										<ui-select :disabled="dSelCountry==undefined"
+										           name="subject"
+										           caption="Субъект"
+										           :menu="menuSubjects"
+										           @onSelect="isSelSubject">
+										</ui-select>
+										<ui-select :disabled="(dSelCountry==undefined && dSelSubject==undefined)"
+										           name="settlement"
+										           caption="Город"
+										           :menu="menuSettlements"
+										           @onSelect="isSelSettlement">
+										</ui-select>
+									</div>
+								</div>
+							</div>
+							<div class="ui-modal-window__footer">
+								<div @click="showModal=false"
+								     class="ui-button ui-button_blue">
+									OK
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</ui-blind>
+	</div>
 </template>
 <script>
 export default {

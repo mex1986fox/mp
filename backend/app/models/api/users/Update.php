@@ -20,7 +20,7 @@ class Update
             // передаем параметры в переменные
             $p = $this->request->getQueryParams();
             $exceptions = [];
-            $user_id=$_SESSION["user_id"];
+            $user_id = $_SESSION["user_id"];
             $login = $p["login"];
             $name = $p["name"];
             $surname = $p["surname"];
@@ -62,14 +62,11 @@ class Update
             $qSet = $qSet . (empty($phone) ? "" : " phone='{$phone}',");
             $qSet = $qSet . (empty($email) ? "" : " email='{$email}',");
             $qSet = (empty($qSet) ? "" : substr($qSet, 0, -1));
-            $q = "update users set {$qSet} where id={$user_id} RETURNING login, name, surname, birthdate, settlement_id, phone, email;";
+            $q = "update users set {$qSet} where id={$user_id} RETURNING id, login, name, surname, birthdate, settlement_id, phone, email;";
             $db = $this->container['db'];
             $user = $db->query($q, \PDO::FETCH_ASSOC)->fetch();
             return ["user" => $user, "massege" => "данные изменены успешно"];
         } catch (RuntimeException | \Exception $e) {
-            if ($e->getCode() == 23505) {
-                $exceptions["login"] = "Этот логин занят";
-            }
             $exceptions['massege'] = $e->getMessage();
             return ["exceptions" => $exceptions];
         }

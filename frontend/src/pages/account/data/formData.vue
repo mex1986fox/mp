@@ -21,8 +21,7 @@
 						<div class="row">
 							<div class="col_12">
 								<wg-select-location caption="Страна, регион, город"
-								:selectedSettlement="user.settlement_id"
-								>
+								                    :selectedSettlement="user.settlement_id">
 
 								</wg-select-location>
 							</div>
@@ -32,7 +31,7 @@
 							Личные данные
 						</div>
 						<div class="row">
-							<div class="col_5">
+							<div class="col_5 col-phone_6">
 								<ui-text name="login"
 								         caption="Логин"
 								         :value="user.login">
@@ -40,15 +39,13 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col_5">
+							<div class="col_5 col-phone_6">
 								<ui-text name="name"
 								         caption="Имя"
 								         :value="user.name">
 								</ui-text>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col_5">
+							<div class="col_6 col_offset-1 col-phone_6 col-phone_offset-0">
 								<ui-text name="surname"
 								         caption="Фамилия"
 								         :value="user.surname">
@@ -56,7 +53,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col_3">
+							<div class="col_3 col-phone_6">
 								<ui-datepicker name="birthdate"
 								               caption="Дата рождения"
 								               :value="user.birthdate">
@@ -67,13 +64,13 @@
 							Связь
 						</div>
 						<div class="row">
-							<div class="col_4">
+							<div class="col_4 col-phone_6">
 								<ui-phone name="phone"
 								          :value="user.phone"
 								          caption="Телефон">
 								</ui-phone>
 							</div>
-							<div class="col_6 col_offset-2">
+							<div class="col_6 col_offset-2 col-phone_6 col-phone_offset-0">
 								<ui-text name="email"
 								         :value="user.email"
 								         caption="Email">
@@ -108,11 +105,6 @@ export default {
   name: "pg-account-data-form",
   data() {
     return {
-      selectedCountry: 1,
-      selectedRegion: this.$store.getters["locations/getSettlement"](
-        this.$store.state.user.settlement_id
-      ).subject_id,
-      selectedSettlement: this.$store.state.user.settlement_id,
       showSnackbar: false,
       descSnackbar: ""
     };
@@ -121,21 +113,16 @@ export default {
     isClose() {
       this.$emit("onHide");
     },
-    isSelectedRegion(region) {
-      this.selectedRegion = region[0].value;
-      this.selectedSettlement = undefined;
-    },
-    isSelectedSettlements(settlement) {
-      this.selectedSettlement = settlement[0].value;
-    },
     update(event) {
       let body = new FormData(event.target);
       this.$http.post("/api/update/users", body).then(
         response => {
           this.$store.commit("user/update", response.body.user);
+          this.isClose();
         },
         error => {
-          console.log(error);
+          this.descSnackbar = error.body.exceptions.massege;
+          this.showSnackbar = true;
         }
       );
     }
@@ -147,21 +134,6 @@ export default {
         return this.$store.state.user;
       }
       return undefined;
-    },
-    menuSubjects() {
-      return this.$store.getters["locations/getMenuSubjects"](1, [
-        this.selectedRegion
-      ]);
-    },
-    menuSettlements() {
-      if (this.selectedRegion != undefined) {
-        return this.$store.getters["locations/getMenuSettlements"](
-          this.selectedRegion,
-          [this.selectedSettlement]
-        );
-      } else {
-        return [];
-      }
     }
   }
 };

@@ -2663,7 +2663,8 @@ select::-ms-expand {
   .wg-form-add__buttons {
     padding: 50px 26px 20px 26px;
     overflow: hidden;
-    float: left; }
+    float: right;
+    margin-right: -33px; }
 
 .wg-captcha {
   margin-top: 16px; }
