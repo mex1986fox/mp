@@ -36,7 +36,12 @@ export default {
       if (this.dDisabled == false) {
         this.dChecked = !this.dChecked;
       }
-      this.$emit("onClick", this.dChecked);
+      let chekBox = {
+        name: this.dName,
+        value: this.dValue,
+        cheked: this.dChecked
+      };
+      this.$emit("onClick", chekBox);
     }
   },
 

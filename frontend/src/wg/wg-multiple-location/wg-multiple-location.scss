@@ -1,23 +1,26 @@
 .wg-multiple-location {
-    margin: 40px 0 10px 0;
-    &__container {
-        overflow: hidden;
-        border-bottom: 1px solid $color-disabled;
-        min-height: 40px;
-        padding-top: 10px;
-    }
-    &__button {
-        position: absolute;
-        right: 0;
-        left: auto;
-        bottom: 0px;
-    }
-    &__caption{
-        top:20px;
-     
-    }
-    &__border{
-        position: relative;
-        top: -1px;
-    }
+  margin: 40px 0 10px 0;
+  &__container {
+    overflow: hidden;
+    border-bottom: 1px solid $color-disabled;
+    min-height: 40px;
+    padding-top: 10px;
+  }
+  &__button {
+    position: absolute;
+    right: 0;
+    left: auto;
+    bottom: 0px;
+  }
+  &__caption {
+    top: 20px;
+  }
+  &__border {
+    position: relative;
+    top: -1px;
+  }
+  &__menu {
+    overflow: hidden;
+    padding: 6px 17px;
+  }
 }

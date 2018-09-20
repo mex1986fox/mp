@@ -1,44 +1,49 @@
 .ui-search {
-    background: #fff;
-    max-width: 680px;
-    margin: 0 auto;
+  background: #fff;
+  max-width: 680px;
+  margin: 0 auto;
+  height: 42px;
+  margin-top: 11px;
+  border-radius: 2px;
+  box-shadow: $color-shadow-active;
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 0;
+  &__icon {
+    height: 100%;
+    line-height: 42px;
+    float: left;
+    width: 52px;
+    text-align: center;
+    color: $color-input;
+    &_active {
+      color: $color-input-active;
+    }
+  }
+  &__input {
     height: 42px;
-    margin-top: 11px;
-    border-radius: 2px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+    background: transparent;
+    width: calc(100% - 52px);
+    outline: none;
+    padding-right: 32px;
+    font-size: 16px;
+    color: $color-text;
+    font-weight: 400;
+  }
+  &__menu {
+    background-color: $color-fon;
     box-shadow: $color-shadow-active;
-    position: relative;
-    left: 0;
-    right: 0;
-    top: 0;
-    &__icon {
-        height: 100%;
-        line-height: 42px;
-        float: left;
-        width: 52px;
-        text-align: center;
-        color: $color-input;
-        &_active{
-            color: $color-input-active;
-        }
-    }
-    &__input {
-        height: 42px;
-        padding: 0;
-            margin: 0;
-        border: 0;
-        box-sizing: border-box;
-        background: transparent;
-        width: calc(100% - 52px);
-        outline: none;
-        padding-right: 32px;
-        font-size: 16px;
-        color: $color-text;
-        font-weight: 400;
-        font-family: 'Roboto', sans-serif;
-    }
-    &__menu{
-        overflow: hidden;
-        overflow-y: auto;
-        max-height: 250px;
-    }
+    overflow: hidden;
+    overflow-y: hidden;
+    overflow-y: auto;
+    max-height: 250px;
+    position: absolute;
+    width: 100%;
+    top: 54px;
+  }
 }
