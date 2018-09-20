@@ -1,19 +1,21 @@
 //убираем стили по умолчанию
 select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 select::-ms-expand {
-  display: none;
+    display: none;
 }
+
 *:active,
 *:focus {
-  outline: none;
+    outline: none;
 }
+
 *::-moz-focus-inner {
-  outline: none;
-  border: 0;
+    outline: none;
+    border: 0;
 }
 
 //глобальные переменные
@@ -23,6 +25,9 @@ $color-fon: #ffffff;
 // $color-links: #29a9e9;
 $color-links: #2495ce;
 $color-disabled: #bebebe;
+$color-input: #646464;
+$color-input-active: #2495ce;
+$color-input-disabled :#bebebe;
 // $color-text: #5c5c5c;
 $color-description: #525252;
 $color-text: rgb(43, 43, 43);

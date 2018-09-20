@@ -1,35 +1,20 @@
 <template>
-	<div class="ui-text"
-	     @click="isClick()">
-		<span class="ui-text__caption"
-		      :class="{'ui-text__caption_active':modFocus, 
-                   'ui-text__caption_completed':modCompleted,
-                   'ui-text__caption_disabled':dDisabled}"
-		      @click="isClick()">
-			{{dCaption}}
-		</span>
-		<input class="ui-text__input"
-		       :class="{'ui-text__input_active':modFocus,
-                   'ui-text__input_disabled':dDisabled}"
-		       ref="input"
-		       @focus="isFocus()"
-		       @blur="isBlur()"
-		       @input="isInputText()"
-		       :name="dName"
-		       :value="dValue"
-		       :readonly="dReadonly"
-		       :disabled="dDisabled"
-		       :maxlength="maxlength" />
-		<hr class="ui-text__border"
-		    :class="{'ui-text__border_active':modFocus,
+  <div class="ui-text" @click="isClick()">
+    <span class="ui-text__caption" :class="{'ui-text__caption_completed':modCompleted,
+            'ui-text__caption_active':modFocus, 
+                   
+                   'ui-text__caption_disabled':dDisabled}" @click="isClick()">
+      {{dCaption}}
+    </span>
+    <input class="ui-text__input" :class="{'ui-text__input_active':modFocus,
+                   'ui-text__input_disabled':dDisabled}" ref="input" @focus="isFocus()" @blur="isBlur()" @input="isInputText()" :name="dName" :value="dValue" :readonly="dReadonly" :disabled="dDisabled" :maxlength="maxlength" />
+    <hr class="ui-text__border" :class="{'ui-text__border_active':modFocus,
                   'ui-text__border_disabled':dDisabled}">
-		<span class="ui-text__help"
-		      :class="{'ui-text__help_active':help,
-                    'ui-text__help_disabled':dDisabled}"
-		      @click="isClick()">
-			{{help}}
-		</span>
-	</div>
+    <span class="ui-text__help" :class="{'ui-text__help_active':help,
+                    'ui-text__help_disabled':dDisabled}" @click="isClick()">
+      {{help}}
+    </span>
+  </div>
 </template>
 
 <script>

@@ -60,8 +60,8 @@ Vue.component("ui-chips", UiChips);
 // Vue.component('ui-link', UiLink);
 // import UiLoader from './ui-loader/ui-loader.vue'
 // Vue.component('ui-loader', UiLoader);
-// import UiSearch from './ui-search/ui-search.vue'
-// Vue.component('ui-search', UiSearch);
+import UiSearch from './ui-search/ui-search.vue'
+Vue.component('ui-search', UiSearch);
 // import UiAccordion from './ui-accordion/ui-accordion.vue'
 // Vue.component('ui-accordion', UiAccordion);
 // import UiContentFrame from './ui-content-frame/ui-content-frame.vue'

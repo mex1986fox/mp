@@ -1,22 +1,23 @@
 <template>
-  <div class="wg-select-location">
-    <span class="ui-text__caption wg-select-location__caption" :class="{ 'ui-text__caption_completed':modCompleted,
+  <div class="wg-multiple-location">
+    <span class="ui-text__caption wg-multiple-location__caption" :class="{ 'ui-text__caption_completed':modCompleted,
             'ui-text__caption_active':showModal, 
                   
                    'ui-text__caption_disabled':dDisabled}">
       {{dCaption}}
     </span>
-    <div class="wg-select-location__container">
+    <div class="wg-multiple-location__container">
       <ui-chips v-if="country!=undefined" name="country" :value="dSelCountry" :caption="country.name">
       </ui-chips>
       <ui-chips v-if="subject!=undefined" name="subject" :value="dSelSubject" :caption="subject.name">
       </ui-chips>
       <ui-chips v-if="settlement!=undefined" name="settlement" :value="dSelSettlement" :caption="settlement.name">
       </ui-chips>
+
     </div>
-    <hr class="ui-text__border wg-select-location__border" :class="{'ui-text__border_active':showModal,
+    <hr class="ui-text__border wg-multiple-location__border" :class="{'ui-text__border_active':showModal,
                   'ui-text__border_disabled':dDisabled}">
-    <div @click="showModal=true" class="ui-button  ui-button_circle ui-button_circle_mini ui-button_blue wg-select-location__button">
+    <div @click="showModal=true" class="ui-button  ui-button_circle ui-button_circle_mini ui-button_blue wg-multiple-location__button">
       <i class="fa fa-map-marker" aria-hidden="true"></i>
     </div>
     <ui-blind :show="showModal" @onHide="showModal=false" :centering="true" animate="opacity">
@@ -36,12 +37,16 @@
               <div class="ui-modal-window__content">
                 <div class="row">
                   <div class="col_12">
-                    <ui-select name="country" caption="Страна" :menu="menuCountry" @onSelect="isSelCountry">
-                    </ui-select>
-                    <ui-select :disabled="dSelCountry==undefined" name="subject" caption="Субъект" :menu="menuSubjects" @onSelect="isSelSubject">
-                    </ui-select>
-                    <ui-select :disabled="(dSelCountry==undefined && dSelSubject==undefined)" name="settlement" caption="Город" :menu="menuSettlements" @onSelect="isSelSettlement">
-                    </ui-select>
+                    <ui-search @onInput="isSearch"></ui-search>
+                  </div>
+                </div>
+                <div class="row" v-if="menuSearch!=undefined">
+                  <div class="col_12">
+                    <div class="ui-search__menu">
+                      <ui-check-box v-for="(val, key) in menuSearch" :key="key" name="country" :value="val.id">
+                        {{val.name}}
+                      </ui-check-box>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -61,6 +66,7 @@
 export default {
   data() {
     return {
+      dSearth: "",
       dCaption: this.caption,
       showModal: false,
       dDisabled: false,
@@ -99,6 +105,9 @@ export default {
     }
   },
   methods: {
+    isSearch(search) {
+      this.dSearth = search;
+    },
     isSelCountry(country) {
       if (Array.isArray(country)) {
         country = country[0].value;
@@ -179,18 +188,6 @@ export default {
       }
       return undefined;
     },
-    menuCountry() {
-      let countries = this.$store.state.locations.countries;
-      let menu = countries.map(country => {
-        return {
-          value: country.id,
-          option: country.name,
-          group: country.name[0],
-          selected: country.id == this.dSelCountry ? true : false
-        };
-      });
-      return menu;
-    },
     menuSubjects() {
       if (this.dSelCountry != undefined) {
         let subjects = this.$store.state.locations.subjects;
@@ -209,21 +206,23 @@ export default {
       }
       return undefined;
     },
-    menuSettlements() {
-      if (this.dSelCountry != undefined && this.dSelSubject != undefined) {
+    menuSearch() {
+      if (this.dSearth != "" && this.dSearth != undefined) {
+        let regexp = new RegExp("^"+this.dSearth, "i");
+
+        let countries = this.$store.state.locations.countries;
+        let menuCount = countries.filter(countre => {
+          return -1 != countre.name.search(regexp);
+        });
+        let subjects = this.$store.state.locations.subjects;
+        let menuSubj = subjects.filter(subject => {
+          return -1 != subject.name.search(regexp);
+        });
         let settlements = this.$store.state.locations.settlements;
-        settlements = settlements.filter(settlement => {
-          return settlement.subject_id == this.dSelSubject;
+        let menuSettl = settlements.filter(settlement => {
+          return -1 != settlement.name.search(regexp);
         });
-        let menu = settlements.map(settlement => {
-          return {
-            value: settlement.id,
-            option: settlement.name,
-            group: settlement.name[0],
-            selected: settlement.id == this.dSelSettlement ? true : false
-          };
-        });
-        return menu;
+        return Array.concat(menuCount, menuSubj, menuSettl);
       }
       return undefined;
     }
