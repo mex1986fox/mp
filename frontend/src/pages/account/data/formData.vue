@@ -26,7 +26,7 @@
 						</div>
 						<div class="row">
 							<div class="col_12">
-								<wg-multiple-location caption="Страна, регион, город" :selectedSettlement="user.settlement_id">
+								<wg-multiple-location caption="Страна, регион, город" >
 
 								</wg-multiple-location>
 							</div>

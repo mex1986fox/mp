@@ -1861,7 +1861,8 @@ body {
     max-height: 250px;
     position: absolute;
     width: 100%;
-    top: 54px; }
+    top: 54px;
+    z-index: 100; }
 
 .ui-avatar-block {
   height: 60px;
@@ -2729,7 +2730,8 @@ select::-ms-expand {
     overflow: hidden;
     border-bottom: 1px solid #bebebe;
     min-height: 40px;
-    padding-top: 10px; }
+    padding-top: 10px;
+    margin-top: 56px; }
   .wg-select-location__button {
     position: absolute;
     right: 0;
@@ -2747,7 +2749,10 @@ select::-ms-expand {
     overflow: hidden;
     border-bottom: 1px solid #bebebe;
     min-height: 40px;
-    padding-top: 10px; }
+    padding-top: 10px;
+    max-height: 250px;
+    overflow-y: auto;
+    margin-top: 56px; }
   .wg-multiple-location__button {
     position: absolute;
     right: 0;
@@ -2761,6 +2766,11 @@ select::-ms-expand {
   .wg-multiple-location__menu {
     overflow: hidden;
     padding: 6px 17px; }
+  .wg-multiple-location__chips-container {
+    height: 160px;
+    overflow: hidden;
+    overflow-y: auto;
+    margin-top: 38px; }
 
 select {
   -webkit-appearance: none;

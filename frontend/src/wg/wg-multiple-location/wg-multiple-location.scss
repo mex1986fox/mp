@@ -5,6 +5,9 @@
     border-bottom: 1px solid $color-disabled;
     min-height: 40px;
     padding-top: 10px;
+    max-height: 250px;
+    overflow-y: auto;
+    margin-top: 56px;
   }
   &__button {
     position: absolute;
@@ -22,5 +25,11 @@
   &__menu {
     overflow: hidden;
     padding: 6px 17px;
+  }
+  &__chips-container{
+    height: 160px;
+    overflow: hidden;
+    overflow-y: auto;
+    margin-top: 38px;
   }
 }

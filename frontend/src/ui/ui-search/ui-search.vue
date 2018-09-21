@@ -1,31 +1,18 @@
 <template>
-	<div class="ui-search"
-	     @click="isClick">
-		<input ref="input"
-		       type="text"
-		       class="ui-search__input"
-		       @blur="isBlur"
-		       @input="isInput" />
-		<div v-if="!dValue"
-		     class="ui-search__icon"
-		     :class="{'ui-search__icon_active': dActive}">
-			<i class="fa fa-search"
-			   aria-hidden="true"></i>
-		</div>
-		<div v-if="dValue"
-		     class="ui-search__icon ui-search__icon_active">
-			<i aria-hidden="true"
-			   class="fa fa-times"
-			   @click="isClean"></i>
-		</div>
-		<div ref="menu"
-		     v-show="dShowMenu"
-		     class="ui-search__menu">
-			<slot>
+  <div class="ui-search" @click="isClick">
+    <input :placeholder="placeholder" ref="input" type="text" class="ui-search__input" :value="dValue" @blur="isBlur" @input="isInput" />
+    <div v-if="!dActive && !dShowMenu" class="ui-search__icon">
+      <i class="fa fa-search" aria-hidden="true"></i>
+    </div>
+    <div v-if="dActive || dShowMenu" @click="isClean" class="ui-search__icon ui-search__icon_active">
+      <i aria-hidden="true" class="fa fa-times"></i>
+    </div>
+    <div ref="menu" v-show="dShowMenu" class="ui-search__menu">
+      <slot>
 
-			</slot>
-		</div>
-	</div>
+      </slot>
+    </div>
+  </div>
 </template>
 <script>
 export default {
@@ -40,6 +27,10 @@ export default {
     showMenu: {
       type: Boolean,
       default: false
+    },
+    placeholder:{
+      type: String,
+      default: ""
     }
   },
   watch: {
@@ -59,7 +50,9 @@ export default {
       this.$refs.input.focus();
     },
     isBlur() {
-      this.dActive = false;
+      if (this.dValue == "") {
+        this.dActive = false;
+      }
     },
     isInput() {
       this.dValue = this.$refs.input.value;

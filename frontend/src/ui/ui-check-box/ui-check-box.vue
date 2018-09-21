@@ -39,7 +39,7 @@ export default {
       let chekBox = {
         name: this.dName,
         value: this.dValue,
-        cheked: this.dChecked
+        checked: this.dChecked
       };
       this.$emit("onClick", chekBox);
     }

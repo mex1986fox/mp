@@ -1,5 +1,5 @@
 <template>
-  <div class="ui-chips" v-if="dSelected" @click="isClick">
+  <div class="ui-chips"  @click="isClick">
     <input class="ui-chips__input" type="checkbox" :name="dName" :checked="dSelected" :value="dValue">
     <div class="ui-chips__icon" v-if="dSrc">
       <img class="ui-chips__img" :class="{'ui-chips__img_disabled':dDisabled}" :src="dSrc" alt="">
@@ -31,7 +31,12 @@ export default {
     isDeleted() {
       if (!this.dDisabled) {
         this.dSelected = false;
-        this.$emit("onDeleted");
+        let chips = {
+          name: this.dName,
+          value: this.dValue,
+          checked: this.dSelected
+        };
+        this.$emit("onDeleted", chips);
       }
     },
     isClick() {
@@ -67,6 +72,9 @@ export default {
     }
   },
   watch: {
+    name(newQ) {
+      this.dName = newQ;
+    },
     value(newQ) {
       this.dValue = newQ;
     },
