@@ -8,33 +8,6 @@
 			{{dCaption}}
 		</span>
 		<div class="wg-multiple-location__container">
-			<ui-chips class="wg-multiple-location__chips__red"
-			          @onDeleted="isClickCheckbox"
-			          v-for="(val, key) in countries"
-			          :key="val.type+'ch'+key"
-			          :name="val.type+'[]'"
-			          :value="val.id"
-			          :caption="val.name"
-			          deleted>
-			</ui-chips>
-			<ui-chips class="wg-multiple-location__chips__blue"
-			          @onDeleted="isClickCheckbox"
-			          v-for="(val, key) in subjects"
-			          :key="val.type+'ch'+key"
-			          :name="val.type+'[]'"
-			          :value="val.id"
-			          :caption="val.name"
-			          deleted>
-			</ui-chips>
-			<ui-chips class="wg-multiple-location__chips__green"
-			          @onDeleted="isClickCheckbox"
-			          v-for="(val, key) in settlements"
-			          :key="val.type+'ch'+key"
-			          :name="val.type+'[]'"
-			          :value="val.id"
-			          :caption="val.name"
-			          deleted>
-			</ui-chips>
 		</div>
 		<hr class="ui-text__border wg-multiple-location__border"
 		    :class="{'ui-text__border_active':showModal,
@@ -67,44 +40,15 @@
 								<div class="row">
 									<div class="col_12">
 										<ui-search :placeholder="'Страна, Регион, Город'"
-										           :showMenu="menuSearch.length>0"
+										           :showMenu="true"
 										           @onInput="isSearch">
 											<div class="wg-multiple-location__menu">
-												<ui-check-box @onClick="isClickCheckbox"
-												              v-for="(val, key) in menuSearch"
-												              :key="val.type+key"
-												              :checked="val.checked"
-												              :name="val.type+'[]'"
-												              :value="val.id">
-													{{val.name}}
+												<ui-check-box>
 												</ui-check-box>
 											</div>
 										</ui-search>
 										<div class="wg-multiple-location__chips-container">
-											<ui-chips @onDeleted="isClickCheckbox"
-											          v-for="(val, key) in countries"
-											          :key="val.type+key"
-											          :name="val.type+'[]'"
-											          :value="val.id"
-											          :caption="val.name"
-											          deleted>
-											</ui-chips>
-											<ui-chips @onDeleted="isClickCheckbox"
-											          v-for="(val, key) in subjects"
-											          :key="val.type+key"
-											          :name="val.type+'[]'"
-											          :value="val.id"
-											          :caption="val.name"
-											          deleted>
-											</ui-chips>
-											<ui-chips @onDeleted="isClickCheckbox"
-											          v-for="(val, key) in settlements"
-											          :key="val.type+key"
-											          :name="val.type+'[]'"
-											          :value="val.id"
-											          :caption="val.name"
-											          deleted>
-											</ui-chips>
+
 										</div>
 									</div>
 								</div>
@@ -130,9 +74,7 @@ export default {
       dCaption: this.caption,
       showModal: false,
       dDisabled: false,
-      dSelCountry: this.selectedCountry,
-      dSelSubject: this.selectedSubject,
-      dSelSettlement: this.selectedSettlement
+      modCompleted: false
     };
   },
   props: {
@@ -140,214 +82,69 @@ export default {
       type: String,
       default: ""
     },
-    selectedCountry: {
+    pСountry: {
       type: Array,
       default: () => []
     },
-    selectedSubject: {
+    pSubject: {
       type: Array,
       default: () => []
     },
-    selectedSettlement: {
+    pSttlement: {
       type: Array,
       default: () => []
     }
   },
   watch: {
-    selectedCountry(newQ) {
+    pCountry(newQ) {
       this.dSelCountry = newQ;
     },
-    selectedSubject(newQ) {
+    pSubject(newQ) {
       this.dSelSubject = newQ;
     },
-    selectedSettlement(newQ) {
+    pSettlement(newQ) {
       this.dSelSettlement = newQ;
     }
   },
 
   methods: {
-    isSearch(search) {
-      this.dSearth = search;
-    },
-    desSettlements(idSubj) {
-      this.dSelSettlement = this.dSelSettlement.filter(id_settl => {
-        return (
-          this.$store.getters["locations/getSettlement"](id_settl).subject_id ==
-          idSubj
-        );
-      });
-    },
-    desSubjects(idSubj) {
-      this.dSelSettlement = this.dSelSettlement.filter(id_settl => {
-        return (
-          this.$store.getters["locations/getSettlement"](id_settl).subject_id !=
-          idSubj
-        );
-      });
-      let idCountr = this.$store.getters["locations/getSubject"](idSubj)
-        .country_id;
-      if (
-        this.getSubjects(idCountr).length == 3
-        // this.$store.getters["locations/getSubjects"](idCountr).length
-      ) {
-        this.dSelCountry.push(idCountr);
-
-        this.dSelSubject = this.dSelSubject.filter(id_subj => {
-          return (
-            this.$store.getters["locations/getSubject"](id_subj).country_id !=
-            idCountr
-          );
-        });
-      } else {
-        this.dSelSubject.push(idSubj);
-      }
-      let search = this.dSearth;
-      this.dSearth = "";
-      setTimeout(() => {
-        this.dSearth = search;
-      }, 4);
-    },
-    desCountry(idCountr) {
-      this.dSelSubject = this.dSelSubject.filter(id_subj => {
-        return (
-          this.$store.getters["locations/getSubject"](id_subj).country_id !=
-          idCountr
-        );
-      });
-      this.dSelSettlement = this.dSelSettlement.filter(id_settl => {
-        return (
-          this.$store.getters["locations/getSettlement"](id_settl).country_id !=
-          idCountr
-        );
-      });
-    },
-    isClickCheckbox(checkbox) {
-      if (checkbox.name == "countries[]") {
-        this.dSelCountry = this.dSelCountry.filter(element => {
-          return element != checkbox.value;
-        });
-        if (checkbox.checked == true) {
-          this.dSelCountry.push(checkbox.value);
-          this.desCountry(checkbox.checked);
-        }
-      }
-      if (checkbox.name == "subjects[]") {
-        this.dSelSubject = this.dSelSubject.filter(element => {
-          return element != checkbox.value;
-        });
-        if (checkbox.checked == true) {
-          this.desSubjects(checkbox.value);
-        }
-      }
-      if (checkbox.name == "settlements[]") {
-        this.dSelSettlement = this.dSelSettlement.filter(element => {
-          return element != checkbox.value;
-        });
-        if (checkbox.checked == true) {
-          this.dSelSettlement.push(checkbox.value);
-          //если все отмечены убрать отметку у settlements
-          //и присвоить отметку subjects
-          //если все subjects отмечены убрать отметку у subjects
-          //и присвоить отметку country
-        }
-      }
-    },
-    getSettlements(id_subj) {
-      return this.desSettlements.filter(id_settl => {
-        return (
-          this.$store.getters["locations/getSettlement"](id_settl).subject_id ==
-          id_subj
-        );
-      });
-    },
-    getSubjects(id_count) {
-      return this.dSelSubject.filter(id_subj => {
-        return (
-          this.$store.getters["locations/getSubject"](id_subj).country_id ==
-          id_count
-        );
-      });
-    }
+    isSearch() {}
   },
   computed: {
-    modCompleted() {
-      if (
-        this.dSelCountry.length > 0 ||
-        this.dSelSubject.length > 0 ||
-        this.dSelSettlement.length > 0
-      ) {
-        return true;
-      }
-      return false;
-    },
     countries() {
-      let countries = this.$store.state.locations.countries;
-      let menu = countries.filter(country => {
-        return this.dSelCountry.some(param => {
-          return param == country.id;
-        });
+      return this.$store.state.locations.countries.map(country => {
+        return {
+          id: country.id,
+          name: country.name,
+          check: false,
+          subjects: this.$store.state.locations.subjects
+            .map(subject => {
+              if (subject.country_id == country.id) {
+                return {
+                  id: subject.id,
+                  name: subject.name,
+                  check: false,
+                  settlements: this.$store.state.locations.settlements
+                    .map(settlement => {
+                      if (settlement.subject_id == subject.id) {
+                        return {
+                          id: settlement.id,
+                          name: settlement.name,
+                          check: false
+                        };
+                      }
+                    })
+                    .filter(function(x) {
+                      return typeof x !== "undefined";
+                    })
+                };
+              }
+            })
+            .filter(function(x) {
+              return typeof x !== "undefined";
+            })
+        };
       });
-      return menu;
-    },
-    subjects() {
-      let subjects = this.$store.state.locations.subjects;
-      let menu = subjects.filter(subject => {
-        return this.dSelSubject.some(param => {
-          return param == subject.id;
-        });
-      });
-
-      return menu;
-    },
-    settlements() {
-      let settlements = this.$store.state.locations.settlements;
-      let menu = settlements.filter(settlement => {
-        return this.dSelSettlement.some(param => {
-          return param == settlement.id;
-        });
-      });
-
-      return menu;
-    },
-    menuSearch() {
-      if (this.dSearth != "" && this.dSearth != undefined) {
-        let regexp = new RegExp("^" + this.dSearth, "i");
-        let countries = this.$store.state.locations.countries;
-        let menuCount = countries.filter(countre => {
-          return -1 != countre.name.search(regexp);
-        });
-        menuCount = menuCount.map(country => {
-          country.type = "countries";
-          country.checked = this.dSelCountry.some(param => {
-            return param == country.id;
-          });
-          return country;
-        });
-        let subjects = this.$store.state.locations.subjects;
-        let menuSubj = subjects.filter(subject => {
-          return -1 != subject.name.search(regexp);
-        });
-        menuSubj = menuSubj.map(subject => {
-          subject.type = "subjects";
-          subject.checked = this.dSelSubject.some(param => {
-            return param == subject.id;
-          });
-          return subject;
-        });
-        let settlements = this.$store.state.locations.settlements;
-        let menuSettl = settlements.filter(settlement => {
-          return -1 != settlement.name.search(regexp);
-        });
-        menuSettl = menuSettl.map(settlement => {
-          settlement.type = "settlements";
-          settlement.checked = this.dSelSettlement.some(param => {
-            return param == settlement.id;
-          });
-          return settlement;
-        });
-        return Array.concat(menuCount, menuSubj, menuSettl);
-      }
-      return [];
     }
   }
 };
