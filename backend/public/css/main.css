@@ -2771,6 +2771,12 @@ select::-ms-expand {
     overflow: hidden;
     overflow-y: auto;
     margin-top: 38px; }
+  .wg-multiple-location__chips__red {
+    background-color: #ff00004d; }
+  .wg-multiple-location__chips__green {
+    background-color: #0080004d; }
+  .wg-multiple-location__chips__blue {
+    background-color: #0000ff4d; }
 
 select {
   -webkit-appearance: none;

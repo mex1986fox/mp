@@ -7,11 +7,11 @@
       {{dCaption}}
     </span>
     <div class="wg-multiple-location__container">
-      <ui-chips @onDeleted="isClickCheckbox" v-for="(val, key) in countries" :key="val.type+key" :name="val.type+'[]'" :value="val.id" :caption="val.name" deleted>
+      <ui-chips class="wg-multiple-location__chips__red" @onDeleted="isClickCheckbox" v-for="(val, key) in countries" :key="val.type+'ch'+key" :name="val.type+'[]'" :value="val.id" :caption="val.name" deleted>
       </ui-chips>
-      <ui-chips @onDeleted="isClickCheckbox" v-for="(val, key) in subjects" :key="val.type+key" :name="val.type+'[]'" :value="val.id" :caption="val.name" deleted>
+      <ui-chips class="wg-multiple-location__chips__blue" @onDeleted="isClickCheckbox" v-for="(val, key) in subjects" :key="val.type+'ch'+key" :name="val.type+'[]'" :value="val.id" :caption="val.name" deleted>
       </ui-chips>
-      <ui-chips @onDeleted="isClickCheckbox" v-for="(val, key) in settlements" :key="val.type+key" :name="val.type+'[]'" :value="val.id" :caption="val.name" deleted>
+      <ui-chips class="wg-multiple-location__chips__green" @onDeleted="isClickCheckbox" v-for="(val, key) in settlements" :key="val.type+'ch'+key" :name="val.type+'[]'" :value="val.id" :caption="val.name" deleted>
       </ui-chips>
     </div>
     <hr class="ui-text__border wg-multiple-location__border" :class="{'ui-text__border_active':showModal,
@@ -86,21 +86,15 @@ export default {
     },
     selectedCountry: {
       type: Array,
-      default: () => {
-        return [];
-      }
+      default: () => []
     },
     selectedSubject: {
       type: Array,
-      default: () => {
-        return [];
-      }
+      default: () => []
     },
     selectedSettlement: {
       type: Array,
-      default: () => {
-        return [];
-      }
+      default: () => []
     }
   },
   watch: {
@@ -114,9 +108,26 @@ export default {
       this.dSelSettlement = newQ;
     }
   },
+
   methods: {
     isSearch(search) {
       this.dSearth = search;
+    },
+    desSettlements(idSubj) {
+      this.dSelSettlement = this.dSelSettlement.filter(id_settl => {
+        return (
+          this.$store.getters["locations/getSettlement"](id_settl).subject_id ==
+          idSubj
+        );
+      });
+    },
+    desSubjects(idCountr) {
+      this.dSelSubject = this.dSelSubject.filter(id_subj => {
+        return (
+          this.$store.getters["locations/getSubject"](id_subj).counry_id ==
+          idCountr
+        );
+      });
     },
     isClickCheckbox(checkbox) {
       if (checkbox.name == "countries[]") {
@@ -125,6 +136,16 @@ export default {
         });
         if (checkbox.checked == true) {
           this.dSelCountry.push(checkbox.value);
+          //убрать у всех отметку
+          this.dSelSubject.forEach(elem => {
+            if (
+              this.$store.getters["locations/getSubject"](elem).country_id ==
+              checkbox.value
+            ) {
+              this.desSettlements(elem);
+            }
+          });
+          this.desSubjects(checkbox.value);
         }
       }
       if (checkbox.name == "subjects[]") {
@@ -133,6 +154,17 @@ export default {
         });
         if (checkbox.checked == true) {
           this.dSelSubject.push(checkbox.value);
+          //убрать отметку у Settlements
+          this.desSettlements(checkbox.value);
+          //если все отмечены убрать отметку у subjects
+          if(this.getSubjects.every(id_subj=>{
+            return this.dSelSubject.some(elem=>{
+              return elem==id_subj;
+            })
+          })){
+
+          }
+          //и присвоить отметку country
         }
       }
       if (checkbox.name == "settlements[]") {
@@ -141,11 +173,31 @@ export default {
         });
         if (checkbox.checked == true) {
           this.dSelSettlement.push(checkbox.value);
+          //если все отмечены убрать отметку у settlements
+          //и присвоить отметку subjects
+          //если все subjects отмечены убрать отметку у subjects
+          //и присвоить отметку country
         }
       }
     }
   },
   computed: {
+    getSettlements(id_subj) {
+      return this.desSettlements.filter(id_settl => {
+        return (
+          this.$store.getters["location/getSettlement"](id_settl).subject_id ==
+          id_subj
+        );
+      });
+    },
+    getSubjects(id_count) {
+      return this.dSelSubject.filter(id_subj => {
+        return (
+          this.$store.getters["location/getSubject"](id_subj).countr_id ==
+          id_count
+        );
+      });
+    },
     modCompleted() {
       if (
         this.dSelCountry.length > 0 ||
@@ -172,6 +224,7 @@ export default {
           return param == subject.id;
         });
       });
+
       return menu;
     },
     settlements() {
@@ -181,6 +234,7 @@ export default {
           return param == settlement.id;
         });
       });
+
       return menu;
     },
     menuSearch() {

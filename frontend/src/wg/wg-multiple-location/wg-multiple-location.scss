@@ -32,4 +32,13 @@
     overflow-y: auto;
     margin-top: 38px;
   }
+  &__chips__red{
+    background-color: #ff00004d;
+  }
+  &__chips__green{
+    background-color: #0080004d;
+  }
+  &__chips__blue{
+    background-color: #0000ff4d;
+  }
 }
