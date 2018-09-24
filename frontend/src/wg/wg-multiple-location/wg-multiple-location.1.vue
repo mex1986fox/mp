@@ -8,33 +8,6 @@
 			{{dCaption}}
 		</span>
 		<div class="wg-multiple-location__container">
-			<ui-chips class="wg-multiple-location__chips__red"
-			          @onDeleted="isClickCheckbox"
-			          v-for="(val, key) in countries"
-			          :key="val.type+'ch'+key"
-			          :name="val.type+'[]'"
-			          :value="val.id"
-			          :caption="val.name"
-			          deleted>
-			</ui-chips>
-			<ui-chips class="wg-multiple-location__chips__blue"
-			          @onDeleted="isClickCheckbox"
-			          v-for="(val, key) in subjects"
-			          :key="val.type+'ch'+key"
-			          :name="val.type+'[]'"
-			          :value="val.id"
-			          :caption="val.name"
-			          deleted>
-			</ui-chips>
-			<ui-chips class="wg-multiple-location__chips__green"
-			          @onDeleted="isClickCheckbox"
-			          v-for="(val, key) in settlements"
-			          :key="val.type+'ch'+key"
-			          :name="val.type+'[]'"
-			          :value="val.id"
-			          :caption="val.name"
-			          deleted>
-			</ui-chips>
 		</div>
 		<hr class="ui-text__border wg-multiple-location__border"
 		    :class="{'ui-text__border_active':showModal,
@@ -81,30 +54,7 @@
 											</div>
 										</ui-search>
 										<div class="wg-multiple-location__chips-container">
-											<ui-chips @onDeleted="isClickCheckbox"
-											          v-for="(val, key) in countries"
-											          :key="val.type+key"
-											          :name="val.type+'[]'"
-											          :value="val.id"
-											          :caption="val.name"
-											          deleted>
-											</ui-chips>
-											<ui-chips @onDeleted="isClickCheckbox"
-											          v-for="(val, key) in subjects"
-											          :key="val.type+key"
-											          :name="val.type+'[]'"
-											          :value="val.id"
-											          :caption="val.name"
-											          deleted>
-											</ui-chips>
-											<ui-chips @onDeleted="isClickCheckbox"
-											          v-for="(val, key) in settlements"
-											          :key="val.type+key"
-											          :name="val.type+'[]'"
-											          :value="val.id"
-											          :caption="val.name"
-											          deleted>
-											</ui-chips>
+
 										</div>
 									</div>
 								</div>

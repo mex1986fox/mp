@@ -20,9 +20,9 @@ class Show
             // читаем базу
             $db = $this->container['db'];
             $qcountries = "select * from locations_countries;";
-            $qsettlements = "select * from locations_settlements;";
-            $qsubjects = "select * from locations_subjects;";
-
+            $qsubjects = "select * from locations_subjects ;";
+            $qsettlements = "select settl.*, subj.country_id as country_id from locations_settlements as settl
+                                join locations_subjects as subj on settl.subject_id = subj.id;";
             $countries = $db->query($qcountries, \PDO::FETCH_ASSOC)->fetchAll();
             $settlements = $db->query($qsettlements, \PDO::FETCH_ASSOC)->fetchAll();
             $subjects = $db->query($qsubjects, \PDO::FETCH_ASSOC)->fetchAll();

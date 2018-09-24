@@ -30,6 +30,19 @@ const locations = {
         }
       }
       return undefined;
+    },
+    getSettlements: (state, getters, rootState, rootGetters) => idSubj => {
+      for (let settlement of state.settlements) {
+        if (idSubj == settlement.subject_id) {
+          return settlement;
+        }
+      }
+      return undefined;
+    },
+    getSubjects: (state, getters, rootState, rootGetters) => idCont => {
+      return state.subjects.filter(subj => {
+        return subj.country_id == idCont;
+      });
     }
   },
   mutations: {
