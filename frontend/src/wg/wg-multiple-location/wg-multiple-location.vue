@@ -40,10 +40,16 @@
 								<div class="row">
 									<div class="col_12">
 										<ui-search :placeholder="'Страна, Регион, Город'"
-										           :showMenu="true"
+										           :showMenu="menuSearch.length>0"
 										           @onInput="isSearch">
 											<div class="wg-multiple-location__menu">
-												<ui-check-box>
+												<ui-check-box @onClick="isClickCheckbox"
+												              v-for="(val, key) in menuSearch"
+												              :key="val.type+key"
+												              :checked="val.checked"
+												              :name="val.type+'[]'"
+												              :value="val.id">
+													{{val.name}}
 												</ui-check-box>
 											</div>
 										</ui-search>
@@ -71,48 +77,7 @@ export default {
   data() {
     return {
       dSearth: "",
-      dCaption: this.caption,
-      showModal: false,
-      dDisabled: false,
-      modCompleted: false
-    };
-  },
-  props: {
-    caption: {
-      type: String,
-      default: ""
-    },
-    pСountry: {
-      type: Array,
-      default: () => []
-    },
-    pSubject: {
-      type: Array,
-      default: () => []
-    },
-    pSttlement: {
-      type: Array,
-      default: () => []
-    }
-  },
-  watch: {
-    pCountry(newQ) {
-      this.dSelCountry = newQ;
-    },
-    pSubject(newQ) {
-      this.dSelSubject = newQ;
-    },
-    pSettlement(newQ) {
-      this.dSelSettlement = newQ;
-    }
-  },
-
-  methods: {
-    isSearch() {}
-  },
-  computed: {
-    countries() {
-      return this.$store.state.locations.countries.map(country => {
+      countries: this.$store.state.locations.countries.map(country => {
         return {
           id: country.id,
           name: country.name,
@@ -144,7 +109,96 @@ export default {
               return typeof x !== "undefined";
             })
         };
-      });
+      }),
+      dCaption: this.caption,
+      showModal: false,
+      dDisabled: false,
+      modCompleted: false
+    };
+  },
+  props: {
+    caption: {
+      type: String,
+      default: ""
+    },
+    pCountry: {
+      type: Array,
+      default: () => []
+    },
+    pSubject: {
+      type: Array,
+      default: () => []
+    },
+    pSettlement: {
+      type: Array,
+      default: () => []
+    }
+  },
+  watch: {
+    pCountry(newQ) {
+      this.pCountry = newQ;
+    },
+    pSubject(newQ) {
+      this.pSubject = newQ;
+    },
+    pSettlement(newQ) {
+      this.pSettlement = newQ;
+    }
+  },
+
+  methods: {
+    isSearch(search) {
+      this.dSearth = search;
+    },
+    isClickCheckbox() {
+      if (checkbox.name == "countries[]") {
+      }
+      if (checkbox.name == "subjects[]") {
+      }
+      if (checkbox.name == "settlements[]") {
+      }
+    }
+  },
+  computed: {
+    menuSearch() {
+      if (this.dSearth != "" && this.dSearth != undefined) {
+        let regexp = new RegExp("^" + this.dSearth, "i");
+        let countries = this.$store.state.locations.countries;
+        let menuCount = countries.filter(countre => {
+          return -1 != countre.name.search(regexp);
+        });
+        menuCount = menuCount.map(country => {
+          country.type = "countries";
+          country.checked = this.pCountry.some(param => {
+            return param == country.id;
+          });
+          return country;
+        });
+        let subjects = this.$store.state.locations.subjects;
+        let menuSubj = subjects.filter(subject => {
+          return -1 != subject.name.search(regexp);
+        });
+        menuSubj = menuSubj.map(subject => {
+          subject.type = "subjects";
+          subject.checked = this.pSubject.some(param => {
+            return param == subject.id;
+          });
+          return subject;
+        });
+        let settlements = this.$store.state.locations.settlements;
+        let menuSettl = settlements.filter(settlement => {
+          return -1 != settlement.name.search(regexp);
+        });
+        menuSettl = menuSettl.map(settlement => {
+          settlement.type = "settlements";
+          settlement.checked = this.pSettlement.some(param => {
+            return param == settlement.id;
+          });
+          return settlement;
+        });
+        return Array.concat(menuCount, menuSubj, menuSettl);
+      }
+      return [];
     }
   }
 };
