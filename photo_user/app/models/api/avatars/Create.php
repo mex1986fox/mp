@@ -28,16 +28,12 @@ class Create
             if (!isset($p["user_id"])) {
                 $exceptions["user_id"] = "Не указан";
             }
-            if (!isset($p["add_id"])) {
-                $exceptions["add_id"] = "Не указан";
-            }
             if (!empty($exceptions)) {
                 throw new \Exception("Не верные параметры");
             }
             //устанавливаем параметры
             $sessionID = $p["session_id"];
             $userID = $p["user_id"];
-            $addID = $p["add_id"];
             // проверить аутентификацию пользователя
             $auths = $this->container['auths'];
             $authedUser = $auths->AuthUser->Authed($sessionID, $userID);
@@ -55,21 +51,21 @@ class Create
 
             foreach ($_FILES["files"]["name"] as $key => $name) {
                 if ($_FILES['files']['error'][$key] == 0) {
-                    $path = MP_PRODIR . "/public/photos/$userID/$addID";
-                    $links = $thisHost . "/public/photos/$userID/$addID";
+                    $path = MP_PRODIR . "/public/photos/avatars/$userID";
+                    $links = $thisHost . "/public/photos/avatars/$userID";
                     file_exists($path . "/");
                     if (!file_exists($path)) {
                         mkdir($path, 0777, true);
-                        $qInsert = "insert into lincks (ads_id, lincks) values ($addID, '{\"lincks\":[]}');";
+                        $qInsert = "insert into lincks_avatars (user_id, lincks) values ($userID, '{\"lincks\":[]}');";
                         $db->query($qInsert, \PDO::FETCH_ASSOC)->fetch();
                     }
                     //проверить наличие подобного файла
                     if (!file_exists($path . "/" . $name)) {
                         //сохраняем если нет такого файла
                         move_uploaded_file($_FILES['files']['tmp_name'][$key], $path . "/" . $name);
-                        $qUpdate = "update lincks
+                        $qUpdate = "update lincks_avatars
                                         set lincks = jsonb_set(lincks, '{lincks}', lincks->'lincks'||'\"{$links}/{$name}\"')
-                                        where ads_id={$addID};";
+                                        where user_id={$userID};";
                         $db->query($qUpdate, \PDO::FETCH_ASSOC)->fetch();
                     }
 

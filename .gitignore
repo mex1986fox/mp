@@ -2,3 +2,5 @@ frontend/node_modules
 backend/vendor
 photo_add/vendor
 photo_add/public/photos
+photo_user/vendor
+photo_user/public/photos

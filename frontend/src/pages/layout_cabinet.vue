@@ -96,7 +96,7 @@
 							<ui-navigation-list :show="true">
 								<div slot="header">
 									<div class="ui-navigation__unit__header">
-										Лента
+										Cтраници
 									</div>
 								</div>
 								<div slot="content">
@@ -122,7 +122,7 @@
 </template>
 <script>
 export default {
-  name: "layout",
+  name: "layout-cabinet",
   data() {
     return { showNavigation: false };
   },

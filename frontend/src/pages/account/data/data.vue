@@ -3,7 +3,7 @@
 		<div class="container"
 		     v-if="user!=undefined && city!=undefined">
 			<div class="row">
-				<div class="col_6 col_offset-3 col-phone_6 col-phone_offset-0">
+				<div class="col_8 col_offset-2 col-phone_6 col-phone_offset-0">
 					<div class="row">
 						<div class="col_12">
 							<div class="ui-avatar-block  pg-account-data__avatar-block">
@@ -24,7 +24,7 @@
 							         position="left-bottom">
 								<ul class="wg-card-ad__menu">
 									<li class="wg-card-ad__menu-li"
-									 @click="(showFormAvatar=true, showMenu=false)">Сменить аватар</li>
+									    @click="(showFormAvatar=true, showMenu=false)">Сменить аватар</li>
 									<li class="wg-card-ad__menu-li"
 									    @click="(showFormData=true, showMenu=false)">Изменить данные</li>
 								</ul>
@@ -136,13 +136,13 @@ export default {
   data() {
     return {
       showMenu: false,
-			showFormData: false,
-			showFormAvatar: false
+      showFormData: false,
+      showFormAvatar: false
     };
   },
   components: {
-		"pg-account-data-form": dataForm,
-		"pg-account-avatar-form": avatarForm
+    "pg-account-data-form": dataForm,
+    "pg-account-avatar-form": avatarForm
   },
   computed: {
     user() {
