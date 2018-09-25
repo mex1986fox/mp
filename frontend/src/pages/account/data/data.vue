@@ -1,7 +1,7 @@
 <template>
 	<layout>
 		<div class="container"
-		     v-if="user!=undefined">
+		     v-if="user!=undefined && city!=undefined">
 			<div class="row">
 				<div class="col_6 col_offset-3 col-phone_6 col-phone_offset-0">
 					<div class="row">
@@ -23,9 +23,10 @@
 							         @onHide="showMenu=false"
 							         position="left-bottom">
 								<ul class="wg-card-ad__menu">
-									<li class="wg-card-ad__menu-li">Сменить аватар</li>
 									<li class="wg-card-ad__menu-li"
-									    @click="(showFormAdd=true, showMenu=false)">Изменить данные</li>
+									 @click="(showFormAvatar=true, showMenu=false)">Сменить аватар</li>
+									<li class="wg-card-ad__menu-li"
+									    @click="(showFormData=true, showMenu=false)">Изменить данные</li>
 								</ul>
 							</ui-menu>
 						</div>
@@ -87,15 +88,33 @@
 					<div class="row">
 						<div class="col_12">
 
-							<ui-blind :show="showFormAdd"
-							          @onHide="showFormAdd=false"
+							<ui-blind :show="showFormData"
+							          @onHide="showFormData=false"
 							          animate="bottom"
 							          style="background-color: rgba(255, 255, 255, 0);">
 								<div class="container">
 									<div class="row">
 										<div class="col_6 col_offset-3 col-tablet_8 col-tablet_offset-2 col-phone_6 col-phone_offset-0">
-											<pg-account-data-form @onHide="showFormAdd=false">
+											<pg-account-data-form @onHide="showFormData=false">
 											</pg-account-data-form>
+										</div>
+									</div>
+								</div>
+							</ui-blind>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col_12">
+
+							<ui-blind :show="showFormAvatar"
+							          @onHide="showFormAvatar=false"
+							          animate="bottom"
+							          style="background-color: rgba(255, 255, 255, 0);">
+								<div class="container">
+									<div class="row">
+										<div class="col_6 col_offset-3 col-tablet_8 col-tablet_offset-2 col-phone_6 col-phone_offset-0">
+											<pg-account-avatar-form @onHide="showFormAvatar=false">
+											</pg-account-avatar-form>
 										</div>
 									</div>
 								</div>
@@ -111,16 +130,19 @@
 
 <script>
 import dataForm from "./formData.vue";
+import avatarForm from "./formAvatar.vue";
 export default {
   name: "pg-account-data",
   data() {
     return {
       showMenu: false,
-      showFormAdd: true
+			showFormData: false,
+			showFormAvatar: false
     };
   },
   components: {
-    "pg-account-data-form": dataForm
+		"pg-account-data-form": dataForm,
+		"pg-account-avatar-form": avatarForm
   },
   computed: {
     user() {

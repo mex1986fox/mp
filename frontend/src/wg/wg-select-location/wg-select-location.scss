@@ -13,9 +13,16 @@
         left: auto;
         bottom: 0px;
     }
-    &__caption{
-        top:20px;
-     
+    &__caption {
+        top: 45px;
+        &_active {
+            font-size: 16px;
+            line-height: 90px;
+        }
+        &_completed {
+            font-size: 13px !important;
+            line-height: 25px;
+        }
     }
     &__border{
         position: relative;

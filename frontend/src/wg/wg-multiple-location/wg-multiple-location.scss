@@ -1,44 +1,52 @@
 .wg-multiple-location {
-  margin: 40px 0 10px 0;
-  &__container {
-    overflow: hidden;
-    border-bottom: 1px solid $color-disabled;
-    min-height: 40px;
-    padding-top: 10px;
-    max-height: 250px;
-    overflow-y: auto;
-    margin-top: 56px;
-  }
-  &__button {
-    position: absolute;
-    right: 0;
-    left: auto;
-    bottom: 0px;
-  }
-  &__caption {
-    top: 20px;
-  }
-  &__border {
-    position: relative;
-    top: -1px;
-  }
-  &__menu {
-    overflow: hidden;
-    padding: 6px 17px;
-  }
-  &__chips-container{
-    height: 160px;
-    overflow: hidden;
-    overflow-y: auto;
-    margin-top: 38px;
-  }
-  &__chips__red{
-    background-color: #ff00004d;
-  }
-  &__chips__green{
-    background-color: #0080004d;
-  }
-  &__chips__blue{
-    background-color: #0000ff4d;
-  }
+    margin: 40px 0 10px 0;
+    &__container {
+        overflow: hidden;
+        border-bottom: 1px solid $color-disabled;
+        min-height: 40px;
+        padding-top: 10px;
+        max-height: 250px;
+        overflow-y: auto;
+        margin-top: 56px;
+    }
+    &__button {
+        position: absolute;
+        right: 0;
+        left: auto;
+        bottom: 0px;
+    }
+    &__caption {
+        top: 45px;
+        &_active {
+            font-size: 16px;
+            line-height: 90px;
+        }
+        &_completed {
+            font-size: 13px !important;
+            line-height: 25px;
+        }
+    }
+    &__border {
+        position: relative;
+        top: -1px;
+    }
+    &__menu {
+        overflow: hidden;
+        padding: 6px 17px;
+    }
+    &__chips-container {
+        max-height: 160px;
+        overflow: hidden;
+        overflow-y: auto;
+        margin-top: 38px;
+    }
+    &__chips__red {
+        background-color: #ff00004d;
+    }
+    &__chips__green {
+        background-color: #0080004d;
+    }
+    &__chips__blue {
+        background-color: #0000ff4d;
+    }
 }

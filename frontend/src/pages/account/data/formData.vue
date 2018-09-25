@@ -24,13 +24,12 @@
 								</wg-select-location>
 							</div>
 						</div>
-						<div class="row">
+						<!-- <div class="row">
 							<div class="col_12">
-								<wg-multiple-location caption="Страна, регион, город" >
-
+								<wg-multiple-location caption="Страна, регион, город" :pSettlement="[user.settlement_id]">
 								</wg-multiple-location>
 							</div>
-						</div>
+						</div> -->
 						<div class="wg-form-add__hr">
 							Личные данные
 						</div>

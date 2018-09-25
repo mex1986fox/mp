@@ -2738,7 +2738,13 @@ select::-ms-expand {
     left: auto;
     bottom: 0px; }
   .wg-select-location__caption {
-    top: 20px; }
+    top: 45px; }
+    .wg-select-location__caption_active {
+      font-size: 16px;
+      line-height: 90px; }
+    .wg-select-location__caption_completed {
+      font-size: 13px !important;
+      line-height: 25px; }
   .wg-select-location__border {
     position: relative;
     top: -1px; }
@@ -2759,7 +2765,13 @@ select::-ms-expand {
     left: auto;
     bottom: 0px; }
   .wg-multiple-location__caption {
-    top: 20px; }
+    top: 45px; }
+    .wg-multiple-location__caption_active {
+      font-size: 16px;
+      line-height: 90px; }
+    .wg-multiple-location__caption_completed {
+      font-size: 13px !important;
+      line-height: 25px; }
   .wg-multiple-location__border {
     position: relative;
     top: -1px; }
@@ -2767,7 +2779,7 @@ select::-ms-expand {
     overflow: hidden;
     padding: 6px 17px; }
   .wg-multiple-location__chips-container {
-    height: 160px;
+    max-height: 160px;
     overflow: hidden;
     overflow-y: auto;
     margin-top: 38px; }

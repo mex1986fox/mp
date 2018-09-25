@@ -1,17 +1,17 @@
 <template>
   <div class="wg-select-location">
-    <span class="ui-text__caption wg-select-location__caption" :class="{ 'ui-text__caption_completed':modCompleted,
-            'ui-text__caption_active':showModal, 
+    <span class="ui-text__caption wg-select-location__caption" :class="{ 'ui-text__caption_completed wg-select-location__caption_completed':modCompleted,
+            'ui-text__caption_active wg-select-location__caption_active':showModal, 
                   
                    'ui-text__caption_disabled':dDisabled}">
       {{dCaption}}
     </span>
     <div class="wg-select-location__container">
-      <ui-chips v-if="country!=undefined" name="country" :value="dSelCountry" :caption="country.name">
+      <ui-chips class="wg-multiple-location__chips__red" v-if="country!=undefined" name="country" :value="dSelCountry" :caption="country.name">
       </ui-chips>
-      <ui-chips v-if="subject!=undefined" name="subject" :value="dSelSubject" :caption="subject.name">
+      <ui-chips class="wg-multiple-location__chips__blue" v-if="subject!=undefined" name="subject" :value="dSelSubject" :caption="subject.name">
       </ui-chips>
-      <ui-chips v-if="settlement!=undefined" name="settlement" :value="dSelSettlement" :caption="settlement.name">
+      <ui-chips class="wg-multiple-location__chips__green" v-if="settlement!=undefined" name="settlement" :value="dSelSettlement" :caption="settlement.name">
       </ui-chips>
     </div>
     <hr class="ui-text__border wg-select-location__border" :class="{'ui-text__border_active':showModal,
