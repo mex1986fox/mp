@@ -40,11 +40,11 @@ class Create
             if (!$authedUser) {
                 throw new \Exception("Не прошел аутентификацию");
             }
-            // проверить есть ли у юзера такое объявление
-            $authedAdd = $auths->AuthAdd->Authed($userID, $addID);
-            if (!$authedAdd) {
-                throw new \Exception("У пользователя нет такого объявления");
-            }
+            // // проверить есть ли у юзера такое объявление
+            // $authedAdd = $auths->AuthAdd->Authed($userID, $addID);
+            // if (!$authedAdd) {
+            //     throw new \Exception("У пользователя нет такого объявления");
+            // }
 
             // сохраняем файл на сервер
             $db = $this->container['db'];
@@ -56,14 +56,14 @@ class Create
                     file_exists($path . "/");
                     if (!file_exists($path)) {
                         mkdir($path, 0777, true);
-                        $qInsert = "insert into lincks_avatars (user_id, lincks) values ($userID, '{\"lincks\":[]}');";
+                        $qInsert = "insert into avatars (user_id, lincks) values ($userID, '{\"lincks\":[]}');";
                         $db->query($qInsert, \PDO::FETCH_ASSOC)->fetch();
                     }
                     //проверить наличие подобного файла
                     if (!file_exists($path . "/" . $name)) {
                         //сохраняем если нет такого файла
                         move_uploaded_file($_FILES['files']['tmp_name'][$key], $path . "/" . $name);
-                        $qUpdate = "update lincks_avatars
+                        $qUpdate = "update avatars
                                         set lincks = jsonb_set(lincks, '{lincks}', lincks->'lincks'||'\"{$links}/{$name}\"')
                                         where user_id={$userID};";
                         $db->query($qUpdate, \PDO::FETCH_ASSOC)->fetch();
@@ -72,9 +72,7 @@ class Create
                 }
             }
             // пишем в базу
-
-            // $login = $p["login"];
-            // return ["recovery_key" => $recoveryKey, "massege" => "Регистрация прошла успешно"];
+            return ["massege" => "Аватар добавлен"];
         } catch (RuntimeException | \Exception $e) {
             $exceptions['massege'] = $e->getMessage();
             return ["exceptions" => $exceptions];

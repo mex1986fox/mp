@@ -15,7 +15,7 @@ class AvatarsController extends MainController
         if (isset($answer['exceptions'])) {
             $response = $response->withJson($answer, 400);
         }
-        if (isset($answer['ads'])) {
+        if (isset($answer['avatars'])) {
             $response = $response->withJson($answer, 200);
         }
         return $response;
@@ -29,7 +29,7 @@ class AvatarsController extends MainController
         if (isset($answer['exceptions'])) {
             $response = $response->withJson($answer, 400);
         }
-        if (isset($answer['recovery_key'])) {
+        if (isset($answer['avatar'])) {
             $response = $response->withJson($answer, 200);
         }
         return $response;

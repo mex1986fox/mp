@@ -8,11 +8,11 @@ $config = [
             'port' => '5432',
             'user' => "drovito",
             'pass' => "drovito",
-            'dbname' => "photos_ads",
+            'dbname' => "photos_users",
         ],
     ],
     'hosts' => [
-        'this' => 'http://photos-ads.ru',
+        'this' => 'http://photos-users.ru',
         'auth' => 'http://drovito.ru',
     ],
 ];

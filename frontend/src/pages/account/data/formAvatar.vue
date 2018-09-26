@@ -17,8 +17,8 @@
 							<!-- <i class="fa fa-map-marker" aria-hidden="true"></i> -->
 							Аватарка
 						</div>
-						<form id="formLoadPhotos" enctype="multipart/form-data" @submit.prevent="loadPhotos">
-							<ui-file v-if="!rirendLoader" caption="Выберите фотографии" captionCompleted="Выбранные фотографии" :autoresize="300" accept="image/*" :percent="percentFL">
+						<form enctype="multipart/form-data" @submit.prevent="loadAvatars">
+							<ui-file v-if="!rirendLoader" caption="Выберите картинку для аватара" captionCompleted="Выбранные файлы" :autoresize="300" accept="image/*" :percent="percentFL">
 							</ui-file>
 						</form>
 						<div class="wg-form-add__buttons">
@@ -54,18 +54,25 @@ export default {
     isClose() {
       this.$emit("onHide");
     },
-    update(event) {
+    loadAvatars() {
+      this.numberFL = 1;
       let body = new FormData(event.target);
-      this.$http.post("/api/update/users", body).then(
-        response => {
-          this.$store.commit("user/update", response.body.user);
-          this.isClose();
-        },
-        error => {
-          this.descSnackbar = error.body.exceptions.massege;
-          this.showSnackbar = true;
-        }
-      );
+      body.set("session_id", this.$cookie.get("PHPSESSID"));
+      body.set("user_id", this.$cookie.get("user_id"));
+       this.$http
+        .post(this.$hosts.photosAds + "/api/create/photos", body, {
+          progress: function(e) {
+            if (e.lengthComputable) {
+              this.percentFL = e.loaded / e.total * 100;
+            }
+          }.bind(this)
+        })
+        .then(
+          response => {
+            this.updatePhotoLincks();
+          },
+          error => {}
+        );
     }
   },
 
