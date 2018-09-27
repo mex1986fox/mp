@@ -59,15 +59,19 @@ class Create
                         $qInsert = "insert into avatars (user_id, lincks) values ($userID, '{\"lincks\":[]}');";
                         $db->query($qInsert, \PDO::FETCH_ASSOC)->fetch();
                     }
-                    //проверить наличие подобного файла
-                    if (!file_exists($path . "/" . $name)) {
-                        //сохраняем если нет такого файла
-                        move_uploaded_file($_FILES['files']['tmp_name'][$key], $path . "/" . $name);
-                        $qUpdate = "update avatars
-                                        set lincks = jsonb_set(lincks, '{lincks}', lincks->'lincks'||'\"{$links}/{$name}\"')
-                                        where user_id={$userID};";
-                        $db->query($qUpdate, \PDO::FETCH_ASSOC)->fetch();
+
+                    //убиваем все файлы в дерриктории
+                    $files = new \RecursiveDirectoryIterator($path);
+                    foreach ($files as $file) {
+                        unlink($file->getRealPath());
                     }
+
+                    //сохраняем
+                    move_uploaded_file($_FILES['files']['tmp_name'][$key], $path . "/" . $name);
+                    echo $qUpdate = "update avatars
+                                        set lincks =  '{\"lincks\":[\"{$links}/{$name}\"]}'
+                                        where user_id={$userID};";
+                    $db->query($qUpdate, \PDO::FETCH_ASSOC)->fetch();
 
                 }
             }

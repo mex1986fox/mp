@@ -1732,7 +1732,9 @@ body {
   background-color: #bebebe;
   line-height: 49px;
   float: left;
-  margin: 5px; }
+  margin: 5px;
+  display: flex;
+  justify-content: center; }
   .ui-avatar > img {
     height: 100%;
     width: auto; }
@@ -2961,6 +2963,20 @@ select::-ms-expand {
 .pg-account-data__td_right {
   text-align: right;
   border-bottom: none; }
+
+.pg-account-data__favatar {
+  height: 250px;
+  width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  float: none;
+  border: 5px solid #419ecc; }
+
+.pg-account-data__favatar-block {
+  overflow: hidden;
+  height: auto;
+  width: 100%;
+  text-align: center; }
 
 
 /*# sourceMappingURL=main.css.map*/

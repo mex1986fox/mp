@@ -9,10 +9,14 @@ const user = {
     birthdate: undefined,
     settlement_id: undefined,
     phone: undefined,
-    email: undefined
+    email: undefined,
+    avatar: undefined
   },
   getters: {},
   mutations: {
+    updateAvatar(state, src) {
+      state.avatar = src;
+    },
     update(state, user) {
       state.id = user.id;
       state.name = user.name;
@@ -23,7 +27,7 @@ const user = {
       state.phone = user.phone;
       state.email = user.email;
     },
-    drop(state, user) {
+    drop(state) {
       state.id = undefined;
       state.name = undefined;
       state.surname = undefined;
@@ -32,6 +36,7 @@ const user = {
       state.settlement_id = undefined;
       state.phone = undefined;
       state.email = undefined;
+      state.avatar = undefined;
     }
   },
   actions: {
@@ -70,10 +75,23 @@ const user = {
         Vue.http.post("/api/show/users", body).then(
           response => {
             context.commit("update", response.body.users[0]);
+            context.dispatch("setAvatar");
           },
           error => { }
         );
       }
+    },
+    setAvatar(context) {
+      let params = { user_id: Vue.cookie.get("user_id") };
+      let headers = { "Content-Type": "multipart/form-data" };
+      Vue.http
+        .post(Vue.prototype.$hosts.photosUsers + "/api/show/avatars", params, headers)
+        .then(
+          response => {
+            context.commit("updateAvatar", response.body.avatars[0].lincks[0]);
+          },
+          error => { }
+        );
     }
   }
 };

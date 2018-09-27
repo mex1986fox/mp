@@ -19,25 +19,26 @@ class Show
             $p = $this->request->getQueryParams();
             $db = $this->container['db'];
             $qWhere = "";
-            $qWhere = $qWhere . (empty($p["add_id"]) || !empty($p["ads_id"]) ? "" : "ads_id=" . $p["add_id"]);
+            $qWhere = $qWhere . (empty($p["user_id"]) || !empty($p["users_id"]) ? "" : "users_id=" . $p["user_id"]);
             // var_dump($p);
-            if (!empty($p["ads_id"])) {
+            if (!empty($p["users_id"])) {
                 $inAds = "";
-                foreach ($p["ads_id"] as $key => $value) {
+                foreach ($p["users_id"] as $key => $value) {
                     $inAds = $inAds == "" ? $value : $inAds . ", " . $value;
                 }
-                $qWhere = "ads_id IN (" . $inAds . ") ";
+                $qWhere = "user_id IN (" . $inAds . ") ";
             }
 
             $qWhere = (empty($qWhere) ? "" : " where ") . $qWhere;
 
-            $q = "select ads_id as id, lincks from lincks" . $qWhere;
+            $q = "select user_id, lincks from avatars" . $qWhere;
+            // $q = "select user_id, lincks from avatars where user_id = ".$p["user_id"];
             $ans = $db->query($q, \PDO::FETCH_ASSOC)->fetchAll();
             foreach ($ans as $key => $value) {
                 // var_dump(json_decode($value["lincks"]));
-                $ads[$key] = ["id" => $value["id"], "lincks" => json_decode($value["lincks"])->lincks];
+                $avatars[$key] = ["user_id" => $value["user_id"], "lincks" => json_decode($value["lincks"])->lincks];
             }
-            return ["ads" => $ads];
+            return ["avatars" => $avatars];
         } catch (RuntimeException | \Exception $e) {
             $exceptions = ['exceptions' => ['massege' => $e->getMessage()]];
             return $exceptions;

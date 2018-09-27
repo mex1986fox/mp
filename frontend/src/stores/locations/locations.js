@@ -24,9 +24,11 @@ const locations = {
       return undefined;
     },
     getSubject: (state, getters, rootState, rootGetters) => id => {
-      for (let subject of state.subjects) {
-        if (id == subject.id) {
-          return subject;
+      if (state.subjects != undefined) {
+        for (let subject of state.subjects) {
+          if (id == subject.id) {
+            return subject;
+          }
         }
       }
       return undefined;
@@ -65,7 +67,7 @@ const locations = {
             let locations = response.body;
             context.commit("updateLocations", locations);
           },
-          error => {}
+          error => { }
         );
       }
     }

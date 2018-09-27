@@ -8,7 +8,7 @@
 						<div class="col_12">
 							<div class="ui-avatar-block  pg-account-data__avatar-block">
 								<div class="ui-avatar pg-account-data__avatar">
-									<img src="/public/img/avatar.png"
+									<img :src="user.avatar"
 									     alt="">
 								</div>
 								<span class="ui-avatar-block__link pg-account-data__avatar-linck">Drovito</span>

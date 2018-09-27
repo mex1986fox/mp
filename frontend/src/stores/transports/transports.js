@@ -13,7 +13,7 @@ const transports = {
   },
   getters: {
     getBrand: (state, getters, rootState, rootGetters) => id => {
-      if (state.brands) {
+      if (state.brands!=undefined) {
         for (let brand of state.brands) {
           if (id == brand.id) {
             return brand;
