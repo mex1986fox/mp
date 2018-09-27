@@ -1,11 +1,15 @@
 <template>
-  <ui-blind :show="dShow" @onHide="isHide" class="ui-blind_flat" animate="opacity">
-    <div ref="menu" class="ui-menu">
-      <slot>
+	<ui-blind :show="dShow"
+	          @onHide="isHide"
+	          class="ui-blind_flat"
+	          animate="opacity">
+		<div ref="menu"
+		     class="ui-menu">
+			<slot>
 
-      </slot>
-    </div>
-  </ui-blind>
+			</slot>
+		</div>
+	</ui-blind>
 
 </template>
 <script>
@@ -49,6 +53,9 @@ export default {
   watch: {
     show(newQ) {
       this.dShow = newQ;
+      if (newQ == false) {
+        this.isHide();
+      }
     }
   },
   mounted() {
@@ -59,7 +66,7 @@ export default {
   },
   updated() {
     if (this.dShow == true) {
-       this.disableScrolling();
+      this.disableScrolling();
       let top, left;
       switch (this.dPosition) {
         case "left-bottom":

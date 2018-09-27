@@ -19,7 +19,7 @@ class Show
             $p = $this->request->getQueryParams();
             $db = $this->container['db'];
             $qWhere = "";
-            $qWhere = $qWhere . (empty($p["user_id"]) || !empty($p["users_id"]) ? "" : "users_id=" . $p["user_id"]);
+            $qWhere = $qWhere . (empty($p["user_id"]) || !empty($p["users_id"]) ? "" : "user_id=" . $p["user_id"]);
             // var_dump($p);
             if (!empty($p["users_id"])) {
                 $inAds = "";

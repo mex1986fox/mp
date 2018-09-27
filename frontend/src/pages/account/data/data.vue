@@ -11,120 +11,120 @@
 									<img :src="user.avatar"
 									     alt="">
 								</div>
-								<span class="ui-avatar-block__link pg-account-data__avatar-linck">Drovito</span>
-								<span class="ui-avatar-block__title  pg-account-data__avatar-title">Максим Сыманович</span>
-							</div>
-							<button @click="showMenu=true"
-							        class="ui-button ui-button_flat ui-button_circle ui-button_circle_mini pg-account-data__avatar-button">
-								<i class="fa fa-ellipsis-v"
-								   aria-hidden="true"></i>
-							</button>
-							<ui-menu :show="showMenu"
-							         @onHide="showMenu=false"
-							         position="left-bottom">
-								<ul class="wg-card-ad__menu">
-									<li class="wg-card-ad__menu-li"
-									    @click="(showFormAvatar=true, showMenu=false)">Сменить аватар</li>
-									<li class="wg-card-ad__menu-li"
-									    @click="(showFormData=true, showMenu=false)">Изменить данные</li>
-								</ul>
-							</ui-menu>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col_12">
-							<div class="wg-content-frame">
-								<ui-table>
-									<template slot="body">
-										<tr class="ui-table__tr">
-											<td class="ui-table__td pg-account-data__td_left">Логин</td>
-											<td class="ui-table__td pg-account-data__td_right">
-												{{user.login}}
-											</td>
-										</tr>
-										<tr class="ui-table__tr">
-											<td class="ui-table__td pg-account-data__td_left">Имя</td>
-											<td class="ui-table__td pg-account-data__td_right">
-												{{user.name}}
-											</td>
-										</tr>
-										<tr class="ui-table__tr">
-											<td class="ui-table__td pg-account-data__td_left">Фамилия</td>
-											<td class="ui-table__td pg-account-data__td_right">
-												{{user.surname}}
-											</td>
-										</tr>
-										<tr class="ui-table__tr">
-											<td class="ui-table__td pg-account-data__td_left">Дата рождения</td>
-											<td class="ui-table__td pg-account-data__td_right">
-												{{user.birthdate}}
-											</td>
-										</tr>
-										<tr class="ui-table__tr">
-											<td class="ui-table__td pg-account-data__td_left">Место проживания</td>
-											<td class="ui-table__td pg-account-data__td_right">
-												{{city.name+" "+ region.name}}
-											</td>
-										</tr>
-
-										<tr class="ui-table__tr">
-											<td class="ui-table__td pg-account-data__td_left">Телефон</td>
-											<td class="ui-table__td pg-account-data__td_right">
-												{{user.phone}}
-											</td>
-										</tr>
-										<tr class="ui-table__tr">
-											<td class="ui-table__td pg-account-data__td_left">Email</td>
-											<td class="ui-table__td pg-account-data__td_right">
-												{{user.email}}
-											</td>
-										</tr>
-									</template>
-								</ui-table>
+									<span class="ui-avatar-block__link pg-account-data__avatar-linck">Drovito</span>
+									<span class="ui-avatar-block__title  pg-account-data__avatar-title">Максим Сыманович</span>
+								</div>
+								<button @click="showMenu=true"
+								        class="ui-button ui-button_flat ui-button_circle ui-button_circle_mini pg-account-data__avatar-button">
+									<i class="fa fa-ellipsis-v"
+									   aria-hidden="true"></i>
+								</button>
+								<ui-menu :show="showMenu"
+								         @onHide="showMenu=false"
+								         position="left-bottom">
+									<ul class="wg-card-ad__menu">
+										<li class="wg-card-ad__menu-li"
+										    @click="isShowFormAvatar">Сменить аватар</li>
+										<li class="wg-card-ad__menu-li"
+										    @click="isShowFormData">Изменить данные</li>
+									</ul>
+								</ui-menu>
 							</div>
 						</div>
-					</div>
+						<div class="row">
+							<div class="col_12">
+								<div class="wg-content-frame">
+									<ui-table>
+										<template slot="body">
+											<tr class="ui-table__tr">
+												<td class="ui-table__td pg-account-data__td_left">Логин</td>
+												<td class="ui-table__td pg-account-data__td_right">
+													{{user.login}}
+												</td>
+											</tr>
+											<tr class="ui-table__tr">
+												<td class="ui-table__td pg-account-data__td_left">Имя</td>
+												<td class="ui-table__td pg-account-data__td_right">
+													{{user.name}}
+												</td>
+											</tr>
+											<tr class="ui-table__tr">
+												<td class="ui-table__td pg-account-data__td_left">Фамилия</td>
+												<td class="ui-table__td pg-account-data__td_right">
+													{{user.surname}}
+												</td>
+											</tr>
+											<tr class="ui-table__tr">
+												<td class="ui-table__td pg-account-data__td_left">Дата рождения</td>
+												<td class="ui-table__td pg-account-data__td_right">
+													{{user.birthdate}}
+												</td>
+											</tr>
+											<tr class="ui-table__tr">
+												<td class="ui-table__td pg-account-data__td_left">Место проживания</td>
+												<td class="ui-table__td pg-account-data__td_right">
+													{{city.name+" "+ region.name}}
+												</td>
+											</tr>
 
-					<div class="row">
-						<div class="col_12">
-
-							<ui-blind :show="showFormData"
-							          @onHide="showFormData=false"
-							          animate="bottom"
-							          style="background-color: rgba(255, 255, 255, 0);">
-								<div class="container">
-									<div class="row">
-										<div class="col_6 col_offset-3 col-tablet_8 col-tablet_offset-2 col-phone_6 col-phone_offset-0">
-											<pg-account-data-form @onHide="showFormData=false">
-											</pg-account-data-form>
-										</div>
-									</div>
+											<tr class="ui-table__tr">
+												<td class="ui-table__td pg-account-data__td_left">Телефон</td>
+												<td class="ui-table__td pg-account-data__td_right">
+													{{user.phone}}
+												</td>
+											</tr>
+											<tr class="ui-table__tr">
+												<td class="ui-table__td pg-account-data__td_left">Email</td>
+												<td class="ui-table__td pg-account-data__td_right">
+													{{user.email}}
+												</td>
+											</tr>
+										</template>
+									</ui-table>
 								</div>
-							</ui-blind>
+							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col_12">
 
-							<ui-blind :show="showFormAvatar"
-							          @onHide="showFormAvatar=false"
-							          animate="bottom"
-							          style="background-color: rgba(255, 255, 255, 0);">
-								<div class="container">
-									<div class="row">
-										<div class="col_6 col_offset-3 col-tablet_8 col-tablet_offset-2 col-phone_6 col-phone_offset-0">
-											<pg-account-avatar-form @onHide="showFormAvatar=false">
-											</pg-account-avatar-form>
+						<div class="row">
+							<div class="col_12">
+
+								<ui-blind :show="showFormData"
+								          @onHide="showFormData=false"
+								          animate="bottom"
+								          style="background-color: rgba(255, 255, 255, 0);">
+									<div class="container">
+										<div class="row">
+											<div class="col_6 col_offset-3 col-tablet_8 col-tablet_offset-2 col-phone_6 col-phone_offset-0">
+												<pg-account-data-form @onHide="showFormData=false">
+												</pg-account-data-form>
+											</div>
 										</div>
 									</div>
-								</div>
-							</ui-blind>
+								</ui-blind>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col_12">
+
+								<ui-blind :show="showFormAvatar"
+								          @onHide="showFormAvatar=false"
+								          animate="bottom"
+								          style="background-color: rgba(255, 255, 255, 0);">
+									<div class="container">
+										<div class="row">
+											<div class="col_6 col_offset-3 col-tablet_8 col-tablet_offset-2 col-phone_6 col-phone_offset-0">
+												<pg-account-avatar-form @onHide="showFormAvatar=false">
+												</pg-account-avatar-form>
+											</div>
+										</div>
+									</div>
+								</ui-blind>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-		</div>
+			</div>
 	</layout>
 </template>
 
@@ -143,6 +143,16 @@ export default {
   components: {
     "pg-account-data-form": dataForm,
     "pg-account-avatar-form": avatarForm
+  },
+  methods: {
+    isShowFormAvatar() {
+      this.showMenu = false;
+      this.showFormAvatar = true;
+    },
+    isShowFormData() {
+      this.showMenu = false;
+      this.showFormData = true;
+    }
   },
   computed: {
     user() {
