@@ -12,8 +12,14 @@
     margin: 5px;
     display: flex;
     justify-content: center;
+    &__simbol {
+        position: absolute;
+        text-transform: capitalize;
+        z-index: 1;
+    }
     &>img {
         height: 100%;
         width: auto;
+        z-index: 2;
     }
 }

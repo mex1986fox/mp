@@ -13,8 +13,10 @@
 							</button>
 							<div v-if="user!=undefined"
 							     class="ui-app-bar__user">
-								<div class="ui-avatar ui-app-bar__user-avatar"><img :src="user.avatar"
-									     alt=""></div>
+								 
+								<ui-avatar class="ui-app-bar__user-avatar" :lable="user.login">
+									<img :src="user.avatar" alt="">
+								</ui-avatar>
 								<div @click="logout"
 								     class="ui-button ui-button_circle ui-button_flat ui-button_circle_mini ui-app-bar__user-exit">
 									<i class="fa fa-sign-out"

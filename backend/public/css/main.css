@@ -1630,7 +1630,9 @@ body {
     right: 0; }
     .ui-app-bar__user-avatar {
       height: 40px !important;
-      width: 40px !important; }
+      width: 40px !important;
+      line-height: 38px !important;
+      font-size: 25px !important; }
     .ui-app-bar__user-exit {
       margin-top: 6px;
       color: #2b2b2b !important; }
@@ -1735,9 +1737,14 @@ body {
   margin: 5px;
   display: flex;
   justify-content: center; }
+  .ui-avatar__simbol {
+    position: absolute;
+    text-transform: capitalize;
+    z-index: 1; }
   .ui-avatar > img {
     height: 100%;
-    width: auto; }
+    width: auto;
+    z-index: 2; }
 
 .ui-chips {
   background-color: rgba(214, 214, 214, 0.3);
@@ -2935,7 +2942,8 @@ select::-ms-expand {
 
 .pg-account-data__avatar {
   height: 70px;
-  width: 70px; }
+  width: 70px;
+  line-height: 64px !important; }
 
 .pg-account-data__avatar-linck {
   color: #2b2b2b !important;

@@ -90,7 +90,7 @@ const user = {
           response => {
             context.commit("updateAvatar", response.body.avatars[0].lincks[0]);
           },
-          error => { }
+          error => {  }
         );
     }
   }

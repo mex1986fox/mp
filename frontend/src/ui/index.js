@@ -66,8 +66,8 @@ Vue.component('ui-search', UiSearch);
 // Vue.component('ui-accordion', UiAccordion);
 // import UiContentFrame from './ui-content-frame/ui-content-frame.vue'
 // Vue.component('ui-content-frame', UiContentFrame);
-// import UiAvatar from './ui-avatar/ui-avatar.vue'
-// Vue.component('ui-avatar', UiAvatar);
+import UiAvatar from './ui-avatar/ui-avatar.vue'
+Vue.component('ui-avatar', UiAvatar);
 // import UiAvatarBlock from './ui-avatar-block/ui-avatar-block.vue'
 // Vue.component('ui-avatar-block', UiAvatarBlock);
 // import UiBlackout from './ui-blackout/ui-blackout.vue'

@@ -4,10 +4,10 @@
 
 			<div v-if="dObj.user"
 			     class="ui-avatar-block wg-card-ad__avatar-block">
-				<div class="ui-avatar">
+				<ui-avatar :lable="dObj.user.login">
 					<img  :src="dObj.user.avatar"
 					    alt="">
-				</div>
+				</ui-avatar>
 					<a class="ui-link ui-avatar-block__link">
 						{{dObj.user.name+" "+dObj.user.surname}}
 					</a>
@@ -59,7 +59,7 @@
 						<span class="wg-card-ad__info-param">
 							<span class="wg-card-ad__info-title">Двигатель</span>
 							<span class="wg-card-ad__info-value">
-								{{(fuel.name!=undefined?fuel.name:"") + (dObj.engin_volume!=undefined?" "+dObj.engin_volume+" л.":"") +(dObj.engin_power!=undefined?" "+dObj.engin_power+" л.c.":"")}}
+								{{(fuel!=undefined?fuel.name:"--") + (dObj.engin_volume!=undefined?" "+dObj.engin_volume+" л.":"") +(dObj.engin_power!=undefined?" "+dObj.engin_power+" л.c.":"")}}
 							</span>
 						</span>
 						<span class="wg-card-ad__info-param">
@@ -69,11 +69,11 @@
 
 						<span class="wg-card-ad__info-param">
 							<span class="wg-card-ad__info-title">Коробка</span>
-							<span class="wg-card-ad__info-value">{{transmission.name!=undefined?transmission.name:"--"}}</span>
+							<span class="wg-card-ad__info-value">{{transmission!=undefined?transmission.name:"--"}}</span>
 						</span>
 						<span class="wg-card-ad__info-param">
 							<span class="wg-card-ad__info-title">Привод</span>
-							<span class="wg-card-ad__info-value">{{drive.name!=undefined?drive.name:"--"}}</span>
+							<span class="wg-card-ad__info-value">{{drive!=undefined?drive.name:"--"}}</span>
 						</span>
 					</div>
 				</div>

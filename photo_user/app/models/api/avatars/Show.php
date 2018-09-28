@@ -38,6 +38,9 @@ class Show
                 // var_dump(json_decode($value["lincks"]));
                 $avatars[$key] = ["user_id" => $value["user_id"], "lincks" => json_decode($value["lincks"])->lincks];
             }
+            if(empty($avatars)){
+                throw new \Exception("Аватары не найдены");
+            }
             return ["avatars" => $avatars];
         } catch (RuntimeException | \Exception $e) {
             $exceptions = ['exceptions' => ['massege' => $e->getMessage()]];

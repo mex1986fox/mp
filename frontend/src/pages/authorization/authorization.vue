@@ -37,7 +37,9 @@
 							Вы авторизованны как:
 						</div>
 						<div class="ui-avatar-block">
-							<div class="ui-avatar"><img :src="user.avatar" alt=""></div>
+							<ui-avatar  :lable="user.login">
+								<img :src="user.avatar" alt="">
+							</ui-avatar>
 							<a class="ui-link ui-avatar-block__link">
 								{{user.login}}
 							</a>
