@@ -97,33 +97,34 @@ export default {
         error => {}
       );
     },
-    updatePhotoLincks() {
-      let ads_id = [];
+    updateUsers() {
+      let users_id = [];
       this.ads.forEach(element => {
-        ads_id.push(element.id);
+        users_id.push(element.user_id);
       });
-      let params = { ads_id: ads_id };
+      let params = {
+        users_id: users_id.filter((e, i, a) => a.indexOf(e) == i)
+      };
       let headers = { "Content-Type": "multipart/form-data" };
 
-      this.$http
-        .post(this.$hosts.photosAds + "/api/show/photos", params, headers)
-        .then(
-          response => {
-            let lincks = response.body.ads;
-            lincks.forEach(linck => {
-              this.ads = this.ads.map((ad, key) => {
-                if (ad.id == linck.id) {
-                  ad.slide = linck.lincks.map(src => {
-                    return { src: src };
-                  });
-                }
-                return ad;
-              });
+      this.$http.post("/api/show/users", params, headers).then(
+        response => {
+          let users = response.body.users;
+          users.forEach(user => {
+            this.ads = this.ads.map((ad, key, arr) => {
+              if (ad.user_id == user.id) {
+                arr[key].user = user;
+              }
+              return ad;
             });
-          },
-          error => {}
-        );
+          });
+
+          this.updatePhotoAvatars();
+        },
+        error => {}
+      );
     },
+
     updatePhotoAvatars() {
       let users_id = [];
       this.ads.forEach(element => {
@@ -153,32 +154,59 @@ export default {
           error => {}
         );
     },
-    updateUsers() {
-      let users_id = [];
+    updatePhotoLincks() {
+      let ads_id = [];
       this.ads.forEach(element => {
-        users_id.push(element.user_id);
+        ads_id.push(element.id);
       });
-      let params = {
-        users_id: users_id.filter((e, i, a) => a.indexOf(e) == i)
-      };
+      let params = { ads_id: ads_id };
       let headers = { "Content-Type": "multipart/form-data" };
 
-      this.$http.post("/api/show/users", params, headers).then(
-        response => {
-          let users = response.body.users;
-          users.forEach(user => {
-            this.ads = this.ads.map((ad, key, arr) => {
-              if (ad.user_id == user.id) {
-                arr[key].user = user;
-              }
-              return ad;
+      this.$http
+        .post(this.$hosts.photosAds + "/api/show/photos", params, headers)
+        .then(
+          response => {
+            let lincks = response.body.ads;
+            lincks.forEach(linck => {
+              this.ads = this.ads.map((ad, key) => {
+                if (ad.id == linck.id) {
+                  ad.slide = linck.lincks.map(src => {
+                    return { src: src };
+                  });
+                }
+                return ad;
+              });
             });
-          });
+            this.updateLikes();
+          },
+          error => {}
+        );
+    },
+    updateLikes() {
+      let ads_id = [];
+      this.ads.forEach(element => {
+        ads_id.push(element.id);
+      });
+      let params = { ads_id: ads_id };
+      let headers = { "Content-Type": "multipart/form-data" };
 
-          this.updatePhotoAvatars();
-        },
-        error => {}
-      );
+      this.$http
+        .post(this.$hosts.likes + "/api/show/ads", params, headers)
+        .then(
+          response => {
+            let likes = response.body.likes;
+            likes.forEach(like => {
+              this.ads = this.ads.map((ad, key) => {
+                if (ad.id == like.ads_id) {
+                  ad.likes = like.likes;
+                  ad.dislikes = like.dislikes;
+                }
+                return ad;
+              });
+            });
+          },
+          error => {}
+        );
     }
   },
 

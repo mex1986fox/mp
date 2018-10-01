@@ -2734,20 +2734,19 @@ select::-ms-expand {
       height: 100%; }
 
 .wg-select-location {
-  margin: 40px 0 10px 0; }
+  margin: 23px 0 10px 0; }
   .wg-select-location__container {
     overflow: hidden;
     border-bottom: 1px solid #bebebe;
     min-height: 40px;
-    padding-top: 10px;
-    margin-top: 56px; }
+    padding-top: 10px; }
   .wg-select-location__button {
     position: absolute;
     right: 0;
     left: auto;
     bottom: 0px; }
   .wg-select-location__caption {
-    top: 45px; }
+    top: 11px; }
     .wg-select-location__caption_active {
       font-size: 16px;
       line-height: 90px; }
@@ -2759,22 +2758,21 @@ select::-ms-expand {
     top: -1px; }
 
 .wg-multiple-location {
-  margin: 40px 0 10px 0; }
+  margin: 23px 0 10px 0; }
   .wg-multiple-location__container {
     overflow: hidden;
     border-bottom: 1px solid #bebebe;
     min-height: 40px;
     padding-top: 10px;
     max-height: 250px;
-    overflow-y: auto;
-    margin-top: 56px; }
+    overflow-y: auto; }
   .wg-multiple-location__button {
     position: absolute;
     right: 0;
     left: auto;
     bottom: 0px; }
   .wg-multiple-location__caption {
-    top: 45px; }
+    top: 11px; }
     .wg-multiple-location__caption_active {
       font-size: 16px;
       line-height: 90px; }

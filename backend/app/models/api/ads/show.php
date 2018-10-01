@@ -17,12 +17,15 @@ class Show
     {
         try {
             $p = $this->request->getQueryParams();
+            if (!empty($p["id"])) {
+                $id = $p["id"];
+            }
             $qWhere = "";
-            $qWhere = $qWhere . (empty($p["add_id"]) ? "" : "id=" . $p["add_id"]);
+            $qWhere = $qWhere . (empty($id) ? "" : "id=" . $id);
             $qWhere = (empty($qWhere) ? "" : "where ") . $qWhere;
 
             $db = $this->container['db'];
-            $q = "select * from ads " . $qWhere;
+            $q = "select *, price::numeric(10,0) from ads " . $qWhere;
             $ads = $db->query($q, \PDO::FETCH_ASSOC)->fetchAll();
             return ["ads" => $ads];
         } catch (RuntimeException | \Exception $e) {
