@@ -5,3 +5,4 @@ photo_add/public/photos
 photo_user/vendor
 photo_user/public/photos
 likes/vendor
+comments/vendor
