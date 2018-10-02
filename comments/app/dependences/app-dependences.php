@@ -2,9 +2,10 @@
 
 //добавляем в контейнер зависимостей PDO
 $container['mongodb'] = function ($c) {
-    $dbc = $c['settings']['mongodb'];
-    $mongo = new \MongoDB\Client("mongodb://{$dbc['host']}:{$dbc['port']}");
-    return $mongo;
+    $mdbs = $c['settings']['mongodb'];
+    $mongo = new \MongoDB\Client("mongodb://{$mdbs['host']}:{$mdbs['port']}");
+    $db=$mdbs['dbname'];
+    return $mongo->$db;
 };
 
 //добавляем в контейнер зависимостей фильтры

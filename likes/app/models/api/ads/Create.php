@@ -38,6 +38,7 @@ class Create
             if (!empty($exceptions)) {
                 throw new \Exception("Не верные параметры");
             }
+           
             //устанавливаем параметры
             $like = $p["like"];
 
@@ -69,11 +70,11 @@ class Create
                     throw new \Exception("Нет такого объявления");
                 }
                 //создать лайки для объявления
-                $qNewLike = "INSERT INTO ads (ads_id, likes, dislikes, users) values ({$AdID}, {$qLike}, {$qDislike}, '{{$userID}}'::integer[])";
+                 $qNewLike = "INSERT INTO ads (ads_id, likes, dislikes, users) values ({$AdID}, {$qLike}, {$qDislike}, '{{$userID}}'::integer[])";
                 $feth = $db->query($qNewLike, \PDO::FETCH_ASSOC)->fetch();
             } else {
                 //проверить голосовал ли пользователь
-                $qUser = "SELECT ads_id from ads where ads_id={$AdID} and users @>'{{$userID}}'::integer[]";
+               $qUser = "SELECT ads_id from ads where ads_id={$AdID} and users @>'{{$userID}}'::integer[]";
                 $feth = $db->query($qUser, \PDO::FETCH_ASSOC)->fetch();
                 //если не голосовал
                 if (empty($feth["ads_id"])) {

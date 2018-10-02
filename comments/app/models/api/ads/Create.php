@@ -41,8 +41,8 @@ class Create
                 throw new \Exception("Не верные параметры");
             }
             //устанавливаем параметры
-            $like = $p["like"];
-            $AdID = $p["ad_id"];
+            $adID = $p["ad_id"];
+            $description = $exceptions["description"];
             $sessionID = $p["session_id"];
             $userID = $p["user_id"];
             // проверить аутентификацию пользователя
@@ -51,28 +51,52 @@ class Create
             if (!$authedUser) {
                 throw new \Exception("Не прошел аутентификацию");
             }
-            // проверить есть ли у юзера такое объявление
-            $authedAdd = $auths->AuthAdd->Authed($userID, $addID);
-            if (!$authedAdd) {
-                throw new \Exception("У пользователя нет такого объявления");
+            // проверить есть ли объект сервиса по id
+            $mdb = $this->container['mongodb'];
+            $find = $mdb->ads->findOne(["_id" => $adID]);
+            // если нет
+            if (empty($find["_id"])) {
+                $authedAds = $auths->AuthAds->Authed($AdID);
+                if (!$authedAds) {
+                    throw new \Exception("Нет такого объявления");
+                }
+                //создать новый объект объявления и коментарий
+                $ad = [
+                    "_id" => $adID,
+                    "comments" => [
+                        "id" => 1,
+                        "user_id" => $userID,
+                        "date_create" => date("Y-m-d H:i:s"),
+                        "likes" => 0,
+                        "dislikes" => 0,
+                        "description" => $description,
+                        "comments_id" => [],
+                    ]
+                ];
+                $mdb->ads->save($ad);
+
+            } else {
+                //обновить объект объявления и добавить комментарий
+                $comment = [
+                    "id" => 1,
+                    "user_id" => $userID,
+                    "date_create" => date("Y-m-d H:i:s"),
+                    "likes" => 0,
+                    "dislikes" => 0,
+                    "description" => $description,
+                    "comments_id" => [],
+                ];
+
+                $mdb->ads->save($find, ['$push' => ["comments" => $comment], '$inc' => ['commentsLength' => 1]]);
+                // получить номер комментария
+                // и добавить его к массиву ответов если это нужно
             }
-
             // сохраняем файл на сервер
-            $db = $this->container['mongodb'];
 
-            // $ad = [
-            //     "_id" => 132,
-            //     "user_id" => 1,
-            //     "date_create" => "2018.06.28",
-            //           // "likes" => 2,
-            //         // "dislikes" => 5,
-            //     "description" => "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque vel repudiandae consequatur quaerat",
-            //     "comments" => [2, 3, 6],
-            // ];
-            // $collection = $db->ads->ads;
-            // $collection->insertOne($ad);
+            $collAds = $mc->comments->ads;
+            $collAds->insertOne($ad);
             echo "<pre>";
-            print_r($db->ads->ads->findOne(["_id" => 132]));
+            print_r($mc->comments->ads->findOne(["_id" => 132]));
             echo "</pre>";
             // $login = $p["login"];
             // return ["recovery_key" => $recoveryKey, "massege" => "Регистрация прошла успешно"];

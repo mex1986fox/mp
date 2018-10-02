@@ -9,6 +9,6 @@ create table "ads"(
     ads_id bigint UNIQUE,
     likes integer,
     dislikes integer,
-    users jsonb,
+    users integer[],
     PRIMARY KEY (ads_id)
 );
