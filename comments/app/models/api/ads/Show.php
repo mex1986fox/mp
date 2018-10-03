@@ -1,5 +1,5 @@
 <?php
-namespace App\Models\Api\Photos;
+namespace App\Models\Api\Ads;
 
 use \Zend\Validator\Exception\RuntimeException as RuntimeException;
 
@@ -17,27 +17,19 @@ class Show
     {
         try {
             $p = $this->request->getQueryParams();
-            $db = $this->container['db'];
-            $qWhere = "";
-            $qWhere = $qWhere . (empty($p["add_id"]) || !empty($p["ads_id"]) ? "" : "ads_id=" . $p["add_id"]);
-            // var_dump($p);
-            if (!empty($p["ads_id"])) {
-                $inAds = "";
-                foreach ($p["ads_id"] as $key => $value) {
-                    $inAds = $inAds == "" ? $value : $inAds . ", " . $value;
-                }
-                $qWhere = "ads_id IN (" . $inAds . ") ";
+            $adID = $p["ad_id"];
+            if (!empty($p["comment_id"])) {
+                $commentID = $p["comment_id"];
             }
-
-            $qWhere = (empty($qWhere) ? "" : " where ") . $qWhere;
-
-            $q = "select ads_id as id, lincks from lincks" . $qWhere;
-            $ans = $db->query($q, \PDO::FETCH_ASSOC)->fetchAll();
-            foreach ($ans as $key => $value) {
-                // var_dump(json_decode($value["lincks"]));
-                $ads[$key] = ["id" => $value["id"], "lincks" => json_decode($value["lincks"])->lincks];
+            $mdb = $this->container['mongodb'];
+            if (empty($commentID)) {
+                $commentsID = $mdb->ads->findOne(["_id" => $adID])["comments_id"];
+            }else{
+                $commentsID = $mdb->ads->findOne(["_id" => $adID, "comments.id" => $commentID])["comments_id"];
             }
-            return ["ads" => $ads];
+            $ads = $mdb->ads->findOne(["_id" => 8, "comments.id" => ['$in' => [1]]]);
+
+            return ["comments" => $ads["comments"]];
         } catch (RuntimeException | \Exception $e) {
             $exceptions = ['exceptions' => ['massege' => $e->getMessage()]];
             return $exceptions;

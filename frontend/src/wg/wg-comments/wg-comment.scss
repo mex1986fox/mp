@@ -1,6 +1,6 @@
 .wg-comment {
   &__avatar {
-    margin: 0px 20px 0px 10px;
+    margin: 0px 20px 0px 0px;
     &_mini {
       height: 25px;
       width: 25px;
@@ -32,5 +32,11 @@
     width: 100%;
     height: auto;
     overflow: hidden;
+  }
+  &__comment{
+    padding: 0px;
+  }
+  &__form{
+    
   }
 }

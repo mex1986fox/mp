@@ -12,7 +12,7 @@
         </div>
 
         <div class="wg-form-add__content">
-          <form @submit.prevent="update">
+          
             <div class="wg-form-add__hr">
               <!-- <i class="fa fa-map-marker" aria-hidden="true"></i> -->
               Аватарка
@@ -27,8 +27,7 @@
                 <ui-file v-if="!rirendLoader" caption="Выберите картинку для аватара" captionCompleted="Выбранные файлы" :autoresize="300" accept="image/*" :percent="percentFL">
                 </ui-file>
               </form>
-              
-          </form>
+         
         </div>
       </div>
     </div>
@@ -62,7 +61,7 @@ export default {
     isSelectPhoto(nPhoto) {
       this.selectPhoto = nPhoto;
     },
-    loadAvatars() {
+    loadAvatars(event) {
       this.numberFL = 1;
       let body = new FormData(event.target);
       body.set("session_id", this.$cookie.get("PHPSESSID"));

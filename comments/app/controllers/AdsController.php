@@ -15,7 +15,7 @@ class AdsController extends MainController
         if (isset($answer['exceptions'])) {
             $response = $response->withJson($answer, 400);
         }
-        if (isset($answer['ads'])) {
+        if (isset($answer['comments'])) {
             $response = $response->withJson($answer, 200);
         }
         return $response;
@@ -29,7 +29,7 @@ class AdsController extends MainController
         if (isset($answer['exceptions'])) {
             $response = $response->withJson($answer, 400);
         }
-        if (isset($answer['recovery_key'])) {
+        if (isset($answer['massege'])) {
             $response = $response->withJson($answer, 200);
         }
         return $response;

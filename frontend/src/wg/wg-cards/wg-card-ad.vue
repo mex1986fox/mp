@@ -136,11 +136,11 @@
 				<div class="row">
 					<div class="col_8 col_offset-2">
 						<button @click="commentShow=false"
-						        class="ui-button ui-button_circle ui-button_circle_big ui-button_flat wg-card-ad__comments-close">
+						        class="ui-button ui-button_circle ui-button_circle_big ui-button_circle_mini wg-card-ad__comments-close">
 							<i aria-hidden="true"
 							   class="fa fa-times"></i>
 						</button>
-						<wg-comments>
+						<wg-comments :service_id="dObj.id" :service_type="'ads'">
 
 						</wg-comments>
 					</div>

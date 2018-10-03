@@ -1,18 +1,18 @@
 <?php
 namespace App\Services\Auth;
 
-class AuthAdd
+class AuthAds
 {
     protected $container;
     public function __construct($container)
     {
         $this->container = $container;
     }
-    public function Authed($user_id, $add_id)
+    public function Authed($ad_id)
     {
-        $authHost = $this->container["hosts"]["auth"];
+        $authHost = $this->container["hosts"]["ads"];
         $jsonDatas = array(
-            'add_id' => $add_id,
+            'id' => $ad_id,
         );
         $jsonDataEncoded = json_encode($jsonDatas);
         $ch = curl_init();
@@ -27,7 +27,7 @@ class AuthAdd
         curl_close($ch);
         $dj = json_decode($output);
         if ($rCode == 200 && !isset($dj->exceptions)) {
-            if (count($dj->ads) != 0 && $dj->ads[0]->user_id == $user_id) {
+            if (count($dj->ads) != 0 && $dj->ads[0]->id == $ad_id) {
                 return true;
             }
         };

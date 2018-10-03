@@ -86,7 +86,7 @@ class Create
                 }
 
             };
-            // пишем в базу
+           
             return ["massege" => "Голос принят"];
         } catch (RuntimeException | \Exception $e) {
             $exceptions['massege'] = $e->getMessage();

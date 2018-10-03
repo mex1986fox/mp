@@ -2204,10 +2204,11 @@ select::-ms-expand {
     float: left;
     color: #bebebe; }
   .wg-card-ad__comments-close {
-    position: fixed;
-    right: 58px;
+    position: absolute;
     left: auto;
-    background-color: rgba(255, 255, 255, 0.1); }
+    z-index: 20;
+    right: -45px;
+    top: -13px; }
 
 @media (max-width: 770px) {
   .wg-card-ad__info {
@@ -2491,19 +2492,26 @@ select::-ms-expand {
   overflow: hidden;
   overflow-x: auto;
   background-color: #ffffff;
-  padding: 10px 5px; }
+  margin: -30px auto;
+  padding: 0 30px; }
+  .wg-comments__close {
+    position: absolute;
+    left: auto;
+    z-index: 20;
+    right: -27px; }
   .wg-comments__form {
-    position: relative;
-    margin: 10px 10px 10px 0px;
-    overflow: hidden; }
-    .wg-comments__form-avatar {
-      margin: 0px 20px 0px 10px;
-      margin-top: 34px; }
+    position: absolute;
+    bottom: -20px;
+    background-color: #ffffff;
+    overflow: hidden;
+    min-height: 120px;
+    width: 100%;
+    z-index: 20; }
     .wg-comments__form-button {
       left: auto;
       float: right;
-      right: 0px;
-      margin-top: 0px; }
+      margin-right: 0px;
+      margin-top: -13px; }
   .wg-comments__avatar {
     margin: 0px 20px 0px 10px; }
     .wg-comments__avatar_mini {
@@ -2526,9 +2534,16 @@ select::-ms-expand {
     position: relative;
     margin: 10px 10px 10px 0px;
     overflow: hidden; }
+  .wg-comments__container {
+    position: relative;
+    overflow: hidden;
+    overflow-y: auto;
+    display: block;
+    max-height: 100%;
+    margin-top: 30px; }
 
 .wg-comment__avatar {
-  margin: 0px 20px 0px 10px; }
+  margin: 0px 20px 0px 0px; }
   .wg-comment__avatar_mini {
     height: 25px;
     width: 25px;
@@ -2558,6 +2573,9 @@ select::-ms-expand {
   width: 100%;
   height: auto;
   overflow: hidden; }
+
+.wg-comment__comment {
+  padding: 0px; }
 
 .wg-answer__avatar {
   margin: 4px 20px 0px 10px;
