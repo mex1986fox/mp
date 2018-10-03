@@ -95,6 +95,7 @@ class Create
                 $mdb->ads->updateOne(["_id" => $adID], ['$push' => ["comments" => $comment], '$inc' => ['commentsLength' => 1]]);
                 // получить номер комментария
                 // и добавить его к массиву ответов если это нужно
+                // db.ads.find({'_id': 8, "comments":{$elemMatch: { "id" : 1 }}},{"comments.id":1, "comments":{$elemMatch: { "id" : 1 }}})
                 if (!empty($commentID)) {
                     $mdb->ads->updateOne(["_id" => $adID, "comments.id" => (int) $commentID], ['$push' => ["comments.$.comments_id" => $comLeng]]);
                 }else{
