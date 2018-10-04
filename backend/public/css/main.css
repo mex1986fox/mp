@@ -2577,36 +2577,17 @@ select::-ms-expand {
 .wg-comment__comment {
   padding: 0px; }
 
+.wg-comment__ansvers {
+  padding-left: 30px; }
+
+.wg-comment__form {
+  margin-top: -36px; }
+
 .wg-answer__avatar {
   margin: 4px 20px 0px 10px;
   height: 25px;
   width: 25px;
   line-height: 23px; }
-
-.wg-answer__login {
-  float: left;
-  display: block;
-  line-height: 29px;
-  margin-right: 20px;
-  color: #333;
-  font-weight: 600; }
-
-.wg-answer__date {
-  display: block;
-  line-height: 30px;
-  margin-right: 20px;
-  color: #bebebe; }
-
-.wg-answer__description {
-  position: relative;
-  margin: 10px 10px 10px 0px;
-  overflow: hidden; }
-
-.wg-answer__buttons {
-  position: relative;
-  width: 100%;
-  height: auto;
-  overflow: hidden; }
 
 .wg-filter-add {
   height: 100%;

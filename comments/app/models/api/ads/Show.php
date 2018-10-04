@@ -17,19 +17,34 @@ class Show
     {
         try {
             $p = $this->request->getQueryParams();
-            $adID = $p["ad_id"];
+            $adID = (int) $p["ad_id"];
             if (!empty($p["comment_id"])) {
-                $commentID = $p["comment_id"];
+                $commentID = (int) $p["comment_id"];
             }
             $mdb = $this->container['mongodb'];
+            // db.ads.find({'_id': 8, "comments":{$elemMatch: { "id" : 1 }}},{"comments.id":1, "comments":{$elemMatch: { "id" : 1 }}})
             if (empty($commentID)) {
                 $commentsID = $mdb->ads->findOne(["_id" => $adID])["comments_id"];
-            }else{
-                $commentsID = $mdb->ads->findOne(["_id" => $adID, "comments.id" => $commentID])["comments_id"];
+            } else {
+                $aggreg = iterator_to_array($mdb->ads->aggregate([
+                    ['$match' => ['_id' => $adID]],
+                    ['$unwind' => '$comments'],
+                    ['$match' => ['comments.id' => $commentID]],
+                ]), false);
+                $commentsID = $aggreg[0]['comments']['comments_id'];
             }
-            $ads = $mdb->ads->findOne(["_id" => 8, "comments.id" => ['$in' => [1]]]);
+            $aggreg = $mdb->ads->aggregate([
+                ['$match' => ['_id' => $adID]],
+                ['$unwind' => '$comments'],
+                ['$match' => ['comments.id' => ['$in' => $commentsID]]],
+            ]);
+            $ads = array_map(function ($ad) {
+                return $ad["comments"];
+            }, iterator_to_array($aggreg, false));
+            // var_dump($ads);
+            // $ads = $mdb->ads->findOne(["_id" => 8, "comments.id" => ['$in' => [1]]]);
 
-            return ["comments" => $ads["comments"]];
+            return ["comments" => $ads];
         } catch (RuntimeException | \Exception $e) {
             $exceptions = ['exceptions' => ['massege' => $e->getMessage()]];
             return $exceptions;

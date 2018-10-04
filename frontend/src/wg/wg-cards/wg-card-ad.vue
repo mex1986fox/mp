@@ -93,7 +93,7 @@
 
 			</button>
 			<span class="wg-card-ad__counter">
-				{{dObj.likes!=undefined?dObj.likes:""}}
+				{{dObj.likes!=undefined?dObj.likes:"0"}}
 			</span>
 
 			<button @click="createLike('-1')"
@@ -102,7 +102,7 @@
 				   aria-hidden="true"></i>
 			</button>
 			<span class="wg-card-ad__counter">
-				{{dObj.dislikes!=undefined?dObj.dislikes:""}}
+				{{dObj.dislikes!=undefined?dObj.dislikes:"0"}}
 			</span>
 			<button @click="commentShow=true"
 			        class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat">
@@ -110,7 +110,7 @@
 				   aria-hidden="true"></i>
 			</button>
 			<span class="wg-card-ad__counter">
-				12 300
+				{{dObj.commentsLength!=undefined?dObj.commentsLength:"0"}}
 			</span>
 			<button class="ui-button ui-button_circle ui-button_flat ui-button_circle_mini wg-card-ad__angel"
 			        :class="{'wg-card-ad__angel_transit':descActive}"
@@ -247,7 +247,7 @@ export default {
             });
           });
 
-          this.updatePhotoAvatars();
+          // this.updatePhotoAvatars();
         },
         error => {}
       );
