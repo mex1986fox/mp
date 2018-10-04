@@ -33,13 +33,37 @@
     height: auto;
     overflow: hidden;
   }
-  &__comment{
+  &__comment {
     padding: 0px;
   }
-  &__ansvers{
+  &__ansvers {
     padding-left: 30px;
   }
-  &__form{
+  &__form {
     margin-top: -36px;
+  }
+}
+@media (max-width: 770px) {
+  .wg-comment {
+    &__avatar {
+      height: 30px;
+      width: 30px;
+    }
+    &__login {
+      line-height: 13px;
+      & > .ui-link {
+        font-size: 12px;
+      }
+    }
+    &__date {
+      line-height: 23px;
+      width: 100%;
+      overflow: hidden;
+      font-size: 12px;
+    }
+
+    &__ansvers {
+      padding-left: 10px;
+    }
   }
 }

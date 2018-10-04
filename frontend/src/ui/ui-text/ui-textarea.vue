@@ -1,36 +1,36 @@
 <template>
-  <div class="ui-textarea"
-    @click="isClick()">
-    <span class="ui-textarea__caption"
-      :class="{'ui-textarea__caption_active':modFocus, 
+	<div class="ui-textarea"
+	     @click="isClick()">
+		<span class="ui-textarea__caption"
+		      :class="{'ui-textarea__caption_active':modFocus, 
                    'ui-textarea__caption_completed':modCompleted,
                    'ui-textarea__caption_disabled':dDisabled}"
-      @click="isClick()">
-      {{dCaption}}
-    </span>
-    <textarea class="ui-textarea__input"
-      :class="{'ui-textarea__input_active':modFocus,
+		      @click="isClick()">
+			{{dCaption}}
+		</span>
+		<textarea class="ui-textarea__input"
+		          :class="{'ui-textarea__input_active':modFocus,
                    'ui-textarea__input_disabled':dDisabled}"
-      ref="textarea"
-      @focus="isFocus()"
-      @blur="isBlur()"
-      @input="isInputText()"
-      :name="dName"
-      :value="dValue"
-      :readonly="dReadonly"
-      :disabled="dDisabled">
+		          ref="textarea"
+		          @focus="isFocus()"
+		          @blur="isBlur()"
+		          @input="isInputText()"
+		          :name="dName"
+		          :value="dValue"
+		          :readonly="dReadonly"
+		          :disabled="dDisabled">
 
     </textarea>
-    <hr class="ui-textarea__border"
+		<hr class="ui-textarea__border"
       :class="{'ui-textarea__border_active':modFocus,
                   'ui-textarea__border_disabled':dDisabled}">
-    <span class="ui-textarea__help"
-      :class="{'ui-textarea__help_active':dHelp,
+		<span class="ui-textarea__help"
+		      :class="{'ui-textarea__help_active':dHelp,
                     'ui-textarea__help_disabled':dDisabled}"
-      @click="isClick()">
-      {{dHelp}}
-    </span>
-  </div>
+		      @click="isClick()">
+			{{dHelp}}
+		</span>
+	</div>
 </template>
 
 <script>
@@ -89,6 +89,10 @@ export default {
     height: {
       type: Number,
       default: undefined
+    },
+    focus: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -117,9 +121,7 @@ export default {
         let scrollHeigth = this.$refs.textarea.scrollHeight;
         this.$refs.textarea.style.height = scrollHeigth + "px";
       }
-      if (
-        this.$refs.textarea.clientHeight < this.height
-      ) {
+      if (this.$refs.textarea.clientHeight < this.height) {
         this.$refs.textarea.style.height = this.height + "px";
       }
     }
@@ -139,6 +141,11 @@ export default {
     }
   },
   mounted() {
+    if (this.focus == true) {
+      this.modFocus = true;
+      let ctrl = this.$refs.textarea;
+      ctrl.focus();
+    }
     this.$refs.textarea.style.resize = this.resize;
     this.isAutoresize();
   }

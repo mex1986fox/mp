@@ -1,22 +1,25 @@
 <template>
-  <div class='wg-comment__comment'>
-    <div v-if="comment.user!=undefined">
-      <ui-avatar :class="{'wg-comment__avatar':!ansver,'wg-answer__avatar':ansver,}" :lable="comment.user.login">
-        <img :src="comment.user.avatar" alt="">
+	<div class='wg-comment__comment'>
+		<div v-if="comment.user!=undefined">
+			<ui-avatar :class="{'wg-comment__avatar':!ansver,'wg-answer__avatar':ansver,}"
+			           :lable="comment.user.login">
+				<img :src="comment.user.avatar" alt="">
 			</ui-avatar>
-    </div>
-    <div class="wg-comment__description">
-      <div class="wg-comment__login" v-if="comment.user!=undefined">
-        <a class="ui-link" href="">{{comment.user.name+" "+comment.user.surname}}</a>
-      </div>
-      <div class="wg-comment__date">
-        {{comment.date_create}}
-      </div>
-      <div class="ui-description ui-description_mini">
-        {{comment.description}}
-      </div>
-      <div class="wg-comment__buttons">
-        <!-- <button class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat">
+		</div>
+		<div class="wg-comment__description">
+			<div class="wg-comment__login"
+			     v-if="comment.user!=undefined">
+				<a class="ui-link"
+				   href="">{{comment.user.name+" "+comment.user.surname}}</a>
+			</div>
+			<div class="wg-comment__date">
+				{{comment.date_create}}
+			</div>
+			<div class="ui-description ui-description_mini">
+				{{comment.description}}
+			</div>
+			<div class="wg-comment__buttons">
+				<!-- <button class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat">
           <i aria-hidden="true" class="fa fa-thumbs-o-up"></i>
         </button>
         <div class="ui-counter">
@@ -28,32 +31,54 @@
         <div class="ui-counter">
           {{comment.dislikes}}
         </div> -->
-        <button @click="showForm=true" class="ui-button ui-button_mini ui-button_flat" style="margin-top: 10px;">
-          Ответить
-        </button>
-        <div v-if="comment.ansversLength!=undefined">
-          <button @click="isShowComments" class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat">
-            <i aria-hidden="true" class="fa fa-comments-o"></i>
-          </button>
-          <div class="ui-counter">
-            {{comment.ansversLength}}
-          </div>
-        </div>
+				<button @click="showForm=true"
+				        class="ui-button ui-button_mini ui-button_flat"
+				        style="margin-top: 10px;">
+					Ответить
+				</button>
+				<div v-if="comment.ansversLength!=undefined">
+					<button @click="isShowComments"
+					        class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat">
+						<i v-if="!dShowComments"
+						   aria-hidden="true"
+						   class="fa fa-comments-o"></i>
+						<i v-if="dShowComments"
+						   aria-hidden="true"
+						   class="fa fa-angle-up"></i>
+					</button>
+					<div class="ui-counter">
+						{{comment.ansversLength}}
+					</div>
+				</div>
 
-      </div>
-      <div v-if="showForm" class="wg-comment__form">
-        <ui-textarea @onBlur="isBlurComment" @onInput="isInputComment" caption="Ваш ответ" :autoresize="100">
-        </ui-textarea>
-        <button v-show="description!=undefined" @click="createComment" class="ui-button ui-button_blue ui-button_mini wg-comments__form-button">
-          Ответить
-        </button>
-      </div>
-    </div>
-    <div v-if="comments!=undefined" :class="{'wg-comment__ansvers':!ansver}">
-      <wg-comment :ansver="true" :service_type="service_type" :service_id="service_id" v-if="comments!=undefined" v-for="(val, key) in comments" :key="key" :comment="JSON.parse(JSON.stringify(val))">
-      </wg-comment>
-    </div>
-  </div>
+			</div>
+			<div v-if="showForm"
+			     class="wg-comment__form">
+				<ui-textarea @onBlur="isBlurComment"
+				             @onInput="isInputComment"
+				             caption="Ваш ответ"
+				             :autoresize="100"
+				             :focus="true">
+				</ui-textarea>
+				<button v-show="description!=undefined"
+				        @click="createComment"
+				        class="ui-button ui-button_blue ui-button_mini wg-comments__form-button">
+					Ответить
+				</button>
+			</div>
+		</div>
+		<div v-show="dShowComments!=false"
+		     :class="{'wg-comment__ansvers':!ansver}">
+			<wg-comment :ansver="true"
+			            :service_type="service_type"
+			            :service_id="service_id"
+			            v-if="comments!=undefined"
+			            v-for="(val, key) in comments"
+			            :key="key"
+			            :comment="JSON.parse(JSON.stringify(val))">
+			</wg-comment>
+		</div>
+	</div>
 </template>
 <script>
 export default {
@@ -61,6 +86,7 @@ export default {
   data() {
     return {
       comments: undefined,
+      dShowComments: false,
       showAnswers: false,
       showForm: false,
       description: undefined
@@ -111,24 +137,27 @@ export default {
       }
     },
     showComments() {
-      let headers = { "Content-Type": "multipart/form-data" };
-      let params = {
-        comment_id: this.comment.id,
-        ad_id: this.service_id
-      };
-      this.$http
-        .post(
-          this.$hosts.comments + "/api/show/" + this.service_type,
-          params,
-          headers
-        )
-        .then(
-          response => {
-            this.comments = response.body.comments;
-            this.updateUsers();
-          },
-          error => {}
-        );
+      if (this.comments == undefined) {
+        let headers = { "Content-Type": "multipart/form-data" };
+        let params = {
+          comment_id: this.comment.id,
+          ad_id: this.service_id
+        };
+        this.$http
+          .post(
+            this.$hosts.comments + "/api/show/" + this.service_type,
+            params,
+            headers
+          )
+          .then(
+            response => {
+              this.comments = response.body.comments;
+              this.updateUsers();
+            },
+            error => {}
+          );
+      }
+      this.dShowComments = !this.dShowComments;
     },
     updateUsers() {
       let users_id = [];

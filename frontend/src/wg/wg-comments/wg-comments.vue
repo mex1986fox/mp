@@ -1,26 +1,41 @@
 <template>
-	<div class="wg-comments" :style="{'height':heightComments+'px'}">
-		<div ref="form" class="wg-comments__form">
+	<div class="wg-comments"
+	     :style="{'height':heightComments+'px'}">
+		<div ref="form"
+		     class="wg-comments__form">
 			<!-- <div class="ui-avatar wg-comments__form-avatar">
 				<img src="/public/img/avatar.jpg"
 				     alt="">
 			</div> -->
 			<!-- <div class="wg-comments__description"> -->
-			<ui-textarea @onInput="isInputComment" caption="Ваш комментарий" :autoresize="100">
+			<ui-textarea @onInput="isInputComment"
+			             caption="Ваш комментарий"
+			             :autoresize="100"
+			             :focus="true">
 			</ui-textarea>
-			<button v-show="description!=undefined" @click="createComment" class="ui-button ui-button_blue ui-button_mini wg-comments__form-button">
+			<button v-show="description!=undefined"
+			        @click="createComment"
+			        class="ui-button ui-button_blue ui-button_mini wg-comments__form-button">
 				Комментировать
 			</button>
 			<!-- </div> -->
 		</div>
-		<div class="wg-comments__container" :style="{'height':heightComments-formHeight-40+'px'}">
-			<wg-comment :service_type="service_type" :service_id="service_id" v-if="comments!=undefined" v-for="(val, key) in comments" :key="key" :comment="JSON.parse(JSON.stringify(val))">
+		<div class="wg-comments__container"
+		     :style="{'height':heightComments-formHeight-40+'px'}">
+			<wg-comment :service_type="service_type"
+			            :service_id="service_id"
+			            v-if="comments!=undefined"
+			            v-for="(val, key) in comments"
+			            :key="key"
+			            :comment="JSON.parse(JSON.stringify(val))">
 			</wg-comment>
 		</div>
 
 		<div class="row">
 			<div class="col_12">
-				<ui-snackbar :show="showSnackbar" @onHide="showSnackbar=false" :time="20000">
+				<ui-snackbar :show="showSnackbar"
+				             @onHide="showSnackbar=false"
+				             :time="20000">
 					{{descSnackbar}}
 				</ui-snackbar>
 			</div>
@@ -75,7 +90,7 @@ export default {
           )
           .then(
             response => {
-               this.showComments();
+              this.showComments();
             },
             error => {}
           );

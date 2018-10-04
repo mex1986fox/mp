@@ -2493,12 +2493,14 @@ select::-ms-expand {
   overflow-x: auto;
   background-color: #ffffff;
   margin: -30px auto;
-  padding: 0 30px; }
+  padding: 0 30px;
+  margin-left: -30px; }
   .wg-comments__close {
     position: absolute;
     left: auto;
     z-index: 20;
-    right: -27px; }
+    right: -10px;
+    top: -12px; }
   .wg-comments__form {
     position: absolute;
     bottom: -20px;
@@ -2542,6 +2544,14 @@ select::-ms-expand {
     max-height: 100%;
     margin-top: 30px; }
 
+@media (max-width: 770px) {
+  .wg-comments {
+    margin: -30px -10px;
+    padding: 0px 10px; }
+    .wg-comments__close {
+      right: 5px;
+      top: -15px; } }
+
 .wg-comment__avatar {
   margin: 0px 20px 0px 0px; }
   .wg-comment__avatar_mini {
@@ -2582,6 +2592,22 @@ select::-ms-expand {
 
 .wg-comment__form {
   margin-top: -36px; }
+
+@media (max-width: 770px) {
+  .wg-comment__avatar {
+    height: 30px;
+    width: 30px; }
+  .wg-comment__login {
+    line-height: 13px; }
+    .wg-comment__login > .ui-link {
+      font-size: 12px; }
+  .wg-comment__date {
+    line-height: 23px;
+    width: 100%;
+    overflow: hidden;
+    font-size: 12px; }
+  .wg-comment__ansvers {
+    padding-left: 10px; } }
 
 .wg-answer__avatar {
   margin: 4px 20px 0px 10px;
@@ -2815,7 +2841,8 @@ select::-ms-expand {
   position: fixed;
   bottom: 0;
   left: auto !important;
-  right: 0px !important; }
+  right: 0px !important;
+  z-index: 2; }
 
 .pg-authorization__fon {
   position: fixed;
