@@ -8,7 +8,9 @@
 				     alt="">
 			</div> -->
 			<!-- <div class="wg-comments__description"> -->
-			<ui-textarea @onInput="isInputComment"
+			<ui-textarea 
+                   :value="description"
+                   @onInput="isInputComment"
 			             caption="Ваш комментарий"
 			             :autoresize="100"
 			             :focus="true">
@@ -82,6 +84,7 @@ export default {
           ad_id: this.service_id,
           description: this.description
         };
+        this.description=undefined;
         this.$http
           .post(
             this.$hosts.comments + "/api/create/" + this.service_type,

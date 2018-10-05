@@ -2585,10 +2585,26 @@ select::-ms-expand {
   overflow: hidden; }
 
 .wg-comment__comment {
-  padding: 0px; }
+  padding: 0px;
+  overflow: hidden;
+  width: 100%; }
 
 .wg-comment__ansvers {
   padding-left: 30px; }
+  .wg-comment__ansvers-enter-active {
+    opacity: 1;
+    max-height: 1000px;
+    transition: all 0.9s; }
+  .wg-comment__ansvers-leave-active {
+    opacity: 0;
+    max-height: 0px;
+    transition: all 0.7s; }
+  .wg-comment__ansvers-enter {
+    opacity: 0;
+    max-height: 0px; }
+  .wg-comment__ansvers-leave {
+    opacity: 1;
+    max-height: 1000px; }
 
 .wg-comment__form {
   margin-top: -36px; }
