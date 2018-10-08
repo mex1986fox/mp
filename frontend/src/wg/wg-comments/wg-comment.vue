@@ -109,7 +109,11 @@ export default {
           )
           .then(
             response => {
-              this.showComments();
+              this.comments = undefined;
+              setTimeout(() => {
+                this.showComments();
+              }, 100);
+              // this.showComments();
             },
             error => {}
           );

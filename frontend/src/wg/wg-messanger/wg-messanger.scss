@@ -1,0 +1,131 @@
+.wg-messanger {
+    height: 500px;
+    width: 100%;
+    background-color: $color-fon;
+    box-shadow: $color-shadow-active;
+    &__tabs {
+        & .ui-tabs__tab {
+            color: $color-fon;
+            &:after {
+                background-color: $color-fon;
+            }
+            &_active {
+                color: $color-fon;
+                &:after {
+                    background-color: $color-fon;
+                }
+            }
+        }
+        .ui-tabs__button {
+            color: $color-fon;
+        }
+    }
+    &__bar {
+        overflow: hidden;
+        position: relative;
+        background-color: #252020;
+        padding: 0;
+        margin: 0;
+        box-shadow: $color-shadow;
+        margin-bottom: 40px;
+        background-image: url(http://www.el-tony.com/wp-content/uploads/2014/10/Lamborghini-Huracan-Side-Abstract-Aerography-Car-2014-Pink-Colors-HD-Wallpapers-design-by-Tony-Kokhan-www.el-tony.com_-900x506.jpg);
+        background-position: center center;
+        opacity: 0.9;
+        &:before {
+            content: "";
+            background-color: rgba(3, 11, 15, 0.91);
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+        }
+    }
+    &__header {
+        color: #ffffff;
+        border: 31px solid transparent;
+        line-height: 28px;
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
+        border-right: 90px solid transparent;
+    }
+    &__avatar-block {
+        padding: 0 20px;
+        overflow: hidden;
+        margin: 20px 0;
+        &>.ui-avatar-block__link {
+            left: 95px;
+        }
+        &>.ui-avatar-block__title {
+            left: 95px;
+        }
+    }
+    &__avatar-block-button {
+        left: auto;
+        right: 14px;
+        position: absolute;
+    }
+    &__message-block {
+        padding: 0 20px;
+        &::after {
+            content: "";
+            clear: both;
+            float: left;
+        }
+    }
+    &__message-apponent {
+        background-color: #2bd1324d;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 7px;
+        position: relative;
+        left: 0px;
+        width: calc(100% - 101px);
+        float: left;
+        &::before {
+            content: '';
+            border: 8px solid transparent;
+            border-right: 8px solid #2bd1324d;
+            position: absolute;
+            left: -16px;
+        }
+    }
+    &__message {
+        background-color: #2b6dd14d;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 7px;
+        position: relative;
+        left: 0px;
+        width: calc(100% - 107px);
+        float: left;
+        &::before {
+            content: '';
+            border: 8px solid transparent;
+            border-left: 8px solid #2b6dd14d;
+            position: absolute;
+            right: -16px;
+        }
+    }
+    &__button-contacts {
+        position: absolute;
+        left: 21px;
+        float: right;
+        top: 60px;
+        z-index: 5;
+    }
+    &__contacts {
+        position: absolute;
+        height: calc(100% - 90px);
+        width: 75%;
+        overflow: hidden;
+        background-color: #050505e6;
+        z-index: 4;
+        margin-top: -40px;
+        &::before {
+            content: '';
+            height: 60px;
+            width: 100%;
+        }
+    }
+}

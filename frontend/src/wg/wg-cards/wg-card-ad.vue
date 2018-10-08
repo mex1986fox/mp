@@ -2,48 +2,40 @@
 	<div class="wg-card-ad">
 		<div class="wg-card-ad__header">
 
-			<div v-if="dObj.user"
-			     class="ui-avatar-block wg-card-ad__avatar-block">
+			<div v-if="dObj.user" class="ui-avatar-block wg-card-ad__avatar-block">
 				<ui-avatar :lable="dObj.user.login">
-					<img  :src="dObj.user.avatar"
-					    alt="">
+					<img :src="dObj.user.avatar" alt="">
 				</ui-avatar>
-					<a class="ui-link ui-avatar-block__link">
-						{{dObj.user.name+" "+dObj.user.surname}}
-					</a>
-					<div class="ui-avatar-block__title">
-						{{parseDate(dObj.date_create)}}
-					</div>
+				<a class="ui-link ui-avatar-block__link">
+					{{dObj.user.name+" "+dObj.user.surname}}
+				</a>
+				<div class="ui-avatar-block__title">
+					{{parseDate(dObj.date_create)}}
+				</div>
 
 			</div>
 
-			<button @click="showMenu=true"
-			        class="ui-button ui-button_flat ui-button_circle ui-button_circle_mini wg-card-ad__header-button">
-				<i class="fa fa-ellipsis-v"
-				   aria-hidden="true"></i>
+			<button @click="showMenu=true" class="ui-button ui-button_flat ui-button_circle ui-button_circle_mini wg-card-ad__header-button">
+				<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
 			</button>
-			<ui-menu :show="showMenu"
-			         @onHide="showMenu=false"
-			         position="left-bottom">
+			<ui-menu :show="showMenu" @onHide="showMenu=false" position="left-bottom">
 				<ul class="wg-card-ad__menu">
-					<li class="wg-card-ad__menu-li">Комментарии</li>
-					<li class="wg-card-ad__menu-li">Пожаловаться</li>
-					<li class="wg-card-ad__menu-li">Авто продан</li>
+					<li @click="(showMenu=false, showContacts=true)" class="wg-card-ad__menu-li">
+						Показать контакты
+					</li>
+					<li  @click="(showMenu=false, showMessenger=true)" class="wg-card-ad__menu-li">
+						Написать сообщение
+					</li>
 				</ul>
 			</ui-menu>
 
 		</div>
-		<router-link class="ui-link wg-card-ad__link"
-		             to="/googlre">
+		<router-link class="ui-link wg-card-ad__link" to="/googlre">
 			{{brand.name+" "+model.name+" "+dObj.year+"г. "+city.name}}
 		</router-link>
 		<div class="row">
 			<div class="col_6 col-phone_6">
-				<wg-slider v-if="dObj.slide!=undefined"
-				           class="wg-card-ad__slider"
-				           :slide='dObj.slide'
-				           :select="1"
-				           @onZoom="showZoomSlider=true">
+				<wg-slider v-if="dObj.slide!=undefined" class="wg-card-ad__slider" :slide='dObj.slide' :select="1" @onZoom="showZoomSlider=true">
 				</wg-slider>
 			</div>
 			<div class="col_6 col-phone_6">
@@ -79,69 +71,47 @@
 
 		</div>
 		<transition name="wg-card-ad__description">
-			<span v-show="descActive"
-			      class="ui-description ui-description_mini wg-card-ad__description">
+			<span v-show="descActive" class="ui-description ui-description_mini wg-card-ad__description">
 				{{dObj.description}}
 			</span>
 		</transition>
 
 		<div class="wg-card-ad__buttons">
-			<button @click="createLike('1')"
-			        class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat">
-				<i class="fa fa-thumbs-o-up"
-				   aria-hidden="true"></i>
+			<button @click="createLike('1')" class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat">
+				<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
 
 			</button>
 			<span class="wg-card-ad__counter">
 				{{dObj.likes!=undefined?dObj.likes:"0"}}
 			</span>
 
-			<button @click="createLike('-1')"
-			        class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat">
-				<i class="fa fa-thumbs-o-down"
-				   aria-hidden="true"></i>
+			<button @click="createLike('-1')" class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat">
+				<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
 			</button>
 			<span class="wg-card-ad__counter">
 				{{dObj.dislikes!=undefined?dObj.dislikes:"0"}}
 			</span>
-			<button @click="commentShow=true"
-			        class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat">
-				<i class="fa fa-comments-o"
-				   aria-hidden="true"></i>
+			<button @click="commentShow=true" class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat">
+				<i class="fa fa-comments-o" aria-hidden="true"></i>
 			</button>
 			<span class="wg-card-ad__counter">
 				{{dObj.commentsLength!=undefined?dObj.commentsLength:"0"}}
 			</span>
-			<button class="ui-button ui-button_circle ui-button_flat ui-button_circle_mini wg-card-ad__angel"
-			        :class="{'wg-card-ad__angel_transit':descActive}"
-			        @click="isDascActive">
-				<i class="fa fa-angle-down"
-				   aria-hidden="true"></i>
+			<button class="ui-button ui-button_circle ui-button_flat ui-button_circle_mini wg-card-ad__angel" :class="{'wg-card-ad__angel_transit':descActive}" @click="isDascActive">
+				<i class="fa fa-angle-down" aria-hidden="true"></i>
 			</button>
 		</div>
-		<wg-slider-zoom v-if="showZoomSlider&&dObj.slide!=undefined"
-		                :slide='dObj.slide'
-		                :slideNavigation="dObj.slide"
-		                :select="1"
-		                :show="showZoomSlider"
-		                @onHide="showZoomSlider=false">
+		<wg-slider-zoom v-if="showZoomSlider&&dObj.slide!=undefined" :slide='dObj.slide' :slideNavigation="dObj.slide" :select="1" :show="showZoomSlider" @onHide="showZoomSlider=false">
 		</wg-slider-zoom>
-		<ui-blind ref="blind"
-		          :show="commentShow"
-		          @onHide="commentShow=false"
-		          :centering="true"
-		          animate="opacity">
+		<ui-blind ref="blind" :show="commentShow" @onHide="commentShow=false" :centering="true" animate="opacity">
 			<div class="container">
 
 				<div class="row">
 					<div class="col_8 col_offset-2 col-tablet_10 col-tablet_offset-1 col-phone_6 col-phone_offset-0">
-						<button @click="commentShow=false"
-						        class="ui-button ui-button_circle ui-button_circle_big ui-button_circle_mini wg-comments__close">
-							<i aria-hidden="true"
-							   class="fa fa-times"></i>
+						<button @click="commentShow=false" class="ui-button ui-button_circle ui-button_circle_big ui-button_circle_mini wg-comments__close">
+							<i aria-hidden="true" class="fa fa-times"></i>
 						</button>
-						<wg-comments :service_id="dObj.id"
-						             :service_type="'ads'">
+						<wg-comments :service_id="dObj.id" :service_type="'ads'">
 
 						</wg-comments>
 					</div>
@@ -150,6 +120,47 @@
 			</div>
 		</ui-blind>
 
+		<ui-blind @onHide="showContacts=!showContacts" :show="showContacts" animate="opacity" centering class="pg-authorization__blind">
+			<div class="container">
+				<div class="row">
+					<div class="col_6 col_offset-3 col-phone_6 col-phone_offset-0">
+						<div class="row">
+							<div class="col_12">
+
+								<div class="ui-modal-window">
+									<div class="ui-modal-window__header ">
+										<button @click="showContacts=false" class="ui-button ui-button_circle ui-button_circle_mini 
+                                       ui-button_flat ui-modal-window__header__button">
+											<i class="fa fa-times" aria-hidden="true"></i>
+										</button>
+										Контакты продавца
+									</div>
+									<div class="ui-modal-window__content">
+										<span>Телефон:</span>
+										{{dObj.user!=undefined?dObj.user.phone:""}}
+										<br/><br/>
+										<span>Email:</span>
+										{{dObj.user!=undefined?(dObj.user.email!=null?dObj.user.email:" не указан"):" не указан"}}
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</ui-blind>
+		<ui-blind @onHide="showMessenger=!showMessenger" :show="showMessenger" animate="opacity" centering class="pg-authorization__blind">
+			<div class="container">
+				<div class="row">
+					<div class="col_6 col_offset-3 col-phone_6 col-phone_offset-0">
+						<wg-messanger>
+
+						</wg-messanger>
+					</div>
+				</div>
+			</div>
+		</ui-blind>
 	</div>
 </template>
 <script>
@@ -158,6 +169,8 @@ export default {
   data() {
     return {
       showMenu: false,
+			showContacts: false,
+			showMessenger: false,
       descActive: false,
       showZoomSlider: false,
       commentShow: false,
