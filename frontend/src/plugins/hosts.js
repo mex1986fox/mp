@@ -5,7 +5,8 @@ const Hosts = {
       photosAds: "http://photos-ads.ru",
       photosUsers: "http://photos-users.ru",
       likes:"http://likes.ru",
-      comments:"http://comments.ru"
+      comments:"http://comments.ru",
+      messages:"http://messages.ru"
     };
   }
 };

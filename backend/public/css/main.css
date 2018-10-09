@@ -2885,6 +2885,11 @@ select::-ms-expand {
       left: 95px; }
     .wg-messanger__avatar-block > .ui-avatar-block__title {
       left: 95px; }
+    .wg-messanger__avatar-block:hover {
+      background-color: rgba(214, 214, 214, 0.35);
+      cursor: pointer; }
+    .wg-messanger__avatar-block:active {
+      background-color: rgba(214, 214, 214, 0.55); }
   .wg-messanger__avatar-block-button {
     left: auto;
     right: 14px;
@@ -2893,7 +2898,7 @@ select::-ms-expand {
     padding: 0 20px; }
     .wg-messanger__messages-form {
       position: absolute;
-      bottom: 5px;
+      bottom: 0px;
       background-color: #ffffff;
       overflow: hidden;
       width: calc(100% - 40px);
@@ -2903,6 +2908,10 @@ select::-ms-expand {
         position: absolute;
         bottom: 10px;
         right: 0px; }
+  .wg-messanger__messages-block {
+    overflow: hidden;
+    overflow-y: auto;
+    height: auto; }
   .wg-messanger__message-block::after {
     content: "";
     clear: both;
