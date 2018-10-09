@@ -6,3 +6,5 @@ photo_user/vendor
 photo_user/public/photos
 likes/vendor
 comments/vendor
+messages/vendor
+

@@ -16,7 +16,7 @@ class MessagesController extends MainController
         if (isset($answer['exceptions'])) {
             $response = $response->withJson($answer, 400);
         }
-        if (isset($answer['comments'])) {
+        if (isset($answer['messages'])) {
             $response = $response->withJson($answer, 200);
         }
         return $response;

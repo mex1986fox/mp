@@ -15,6 +15,7 @@
 		          @focus="isFocus()"
 		          @blur="isBlur()"
 		          @input="isInputText()"
+		          @keyup.delete="isInputText()"
 		          :name="dName"
 		          :value="dValue"
 		          :readonly="dReadonly"
@@ -22,7 +23,7 @@
 
     </textarea>
 		<hr class="ui-textarea__border"
-      :class="{'ui-textarea__border_active':modFocus,
+		    :class="{'ui-textarea__border_active':modFocus,
                   'ui-textarea__border_disabled':dDisabled}">
 		<span class="ui-textarea__help"
 		      :class="{'ui-textarea__help_active':dHelp,
@@ -99,14 +100,17 @@ export default {
     isFocus() {
       this.modFocus = true;
       this.$emit("onFocus");
+      this.isAutoresize();
     },
     isBlur() {
       this.modFocus = false;
       this.$emit("onBlur");
+      this.isAutoresize();
     },
     isClick() {
       this.$emit("onClick");
       this.$refs.textarea.focus();
+      this.isAutoresize();
     },
     isInputText() {
       this.dValue = this.$refs.textarea.value;
@@ -114,12 +118,15 @@ export default {
       this.$emit("onInput", this.dValue);
     },
     isAutoresize() {
-      if (
-        this.$refs.textarea.clientHeight != undefined &&
-        this.$refs.textarea.clientHeight < this.autoresize
-      ) {
+      if (this.$refs.textarea.clientHeight < this.autoresize) {
         let scrollHeigth = this.$refs.textarea.scrollHeight;
         this.$refs.textarea.style.height = scrollHeigth + "px";
+      }
+      if (this.$refs.textarea.clientHeight > this.autoresize) {
+        this.$refs.textarea.style.height = this.autoresize + "px";
+      }
+      if (this.autoresize != undefined && this.dValue == "") {
+        this.$refs.textarea.style.height = "30px";
       }
       if (this.$refs.textarea.clientHeight < this.height) {
         this.$refs.textarea.style.height = this.height + "px";
@@ -138,6 +145,10 @@ export default {
   watch: {
     value(newQ, oldQ) {
       this.dValue = newQ;
+    },
+    dValue() {
+      console.log(this.dValue);
+      this.isAutoresize();
     }
   },
   mounted() {
