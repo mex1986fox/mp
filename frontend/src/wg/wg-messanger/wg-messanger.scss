@@ -64,7 +64,7 @@
             cursor: pointer;
         }
         &:active {
-          background-color: $color-list-active;
+            background-color: $color-list-active;
         }
     }
     &__avatar-block-button {
@@ -89,10 +89,10 @@
             }
         }
     }
-    &__messages-block{
-      overflow: hidden;
-      overflow-y: auto;
-      height: auto;
+    &__messages-block {
+        overflow: hidden;
+        overflow-y: auto;
+        height: auto;
     }
     &__message-block {
         &::after {
@@ -108,7 +108,7 @@
         border-radius: 7px;
         position: relative;
         left: 0px;
-        width: calc(100% - 101px);
+        max-width: calc(100% - 202px);
         float: left;
         &::before {
             content: "";
@@ -118,6 +118,9 @@
             left: -16px;
         }
     }
+    &__avatar {
+        float: right;
+    }
     &__message {
         background-color: #2495ce40;
         padding: 10px;
@@ -125,8 +128,8 @@
         border-radius: 7px;
         position: relative;
         left: 0px;
-        width: calc(100% - 107px);
-        float: left;
+        max-width: calc(100% - 214px);
+        float: right;
         &::before {
             content: "";
             border: 8px solid transparent;

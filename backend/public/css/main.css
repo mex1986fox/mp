@@ -2923,7 +2923,7 @@ select::-ms-expand {
     border-radius: 7px;
     position: relative;
     left: 0px;
-    width: calc(100% - 101px);
+    max-width: calc(100% - 202px);
     float: left; }
     .wg-messanger__message-apponent::before {
       content: "";
@@ -2931,6 +2931,8 @@ select::-ms-expand {
       border-right: 8px solid #2bd13240;
       position: absolute;
       left: -16px; }
+  .wg-messanger__avatar {
+    float: right; }
   .wg-messanger__message {
     background-color: #2495ce40;
     padding: 10px;
@@ -2938,8 +2940,8 @@ select::-ms-expand {
     border-radius: 7px;
     position: relative;
     left: 0px;
-    width: calc(100% - 107px);
-    float: left; }
+    max-width: calc(100% - 214px);
+    float: right; }
     .wg-messanger__message::before {
       content: "";
       border: 8px solid transparent;

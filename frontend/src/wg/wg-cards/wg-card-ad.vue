@@ -192,7 +192,7 @@
 				</div>
 			</div>
 		</ui-blind>
-		<ui-blind @onHide="showMessenger=!showMessenger"
+		<ui-blind v-if="dObj.user!=undefined" @onHide="showMessenger=!showMessenger"
 		          :show="showMessenger"
 		          animate="opacity"
 		          centering
@@ -200,7 +200,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col_10 col_offset-1 col-nbook_11 col-nbook_offset-1 col-tablet_12 col-tablet_offset-0 col-phone_6 col-phone_offset-0">
-						<wg-messanger>
+						<wg-messanger :apponent="dObj.user.id">
 
 						</wg-messanger>
 					</div>
