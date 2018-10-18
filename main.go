@@ -2,57 +2,58 @@ package main
 
 import (
 	"fmt"
-	"io"
-	"net"
 	"net/http"
-	"os"
+
+	"github.com/gorilla/websocket"
 )
 
-// //массив (карта) соединений
-// //ключом является id юзера
-// var connects map[string]*websocket.Conn
+//массив (карта) соединений
+//ключом является id юзера
+var connects = make(map[string]*websocket.Conn)
 
-// //  сходить на сервер забрать id юзера по номеру сессии
-
-// var upgrader = websocket.Upgrader{
-// 	ReadBufferSize:  1024,
-// 	WriteBufferSize: 1024,
-// 	CheckOrigin: func(r *http.Request) bool {
-// 		return true
-// 	},
-// }
+var upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
+}
 
 func addConnection(response http.ResponseWriter, request *http.Request) {
 	// sessionID := request.URL.Query().Get("session_id")
 	// userID := request.URL.Query().Get("user_id")
-	//  сходить на сервер забрать id юзера по номеру сессии
-	fmt.Println("Начали запрос на http://drovito.ru/api/authentication для авторизации ...")
-	//подготавливаем запрос
-	httpRequest := "GET/HTTP/1.1\n" +
-		"Host: golang.org\n\n" +
-		"Content-Type: application/json\n\n" +
-		"Cookie: PHPSESSID=0dhr76vie4b8t51989efp1gt13; user_id=1\n\n"
-	// отправляем пакет
-	conn, err := net.Dial("tcp", "drovito.ru/api/authentication/users")
+	sessionID := "sm2h4m1t0tlekjbeos7bsc569m"
+	userID := "1"
+	//  сходить на сервер проверить авторизацию и аутентификацию по номеру сессии
+	client := &http.Client{}
+	req, err := http.NewRequest(
+		"GET", "http://drovito.ru/api/authentication/users?user_id="+userID, nil,
+	)
+	// добавляем заголовки
+	req.Header.Add("Accept", "text/html")
+	req.Header.Add("User-Agent", "MSIE/15.0")
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Cookie", "PHPSESSID="+sessionID+";")
+	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
+	defer resp.Body.Close()
 
-	if _, err = conn.Write([]byte(httpRequest)); err != nil {
-		fmt.Println(err)
+	// если статус ответа 200 т.е. пользователь авторизован и аутентифицирован
+	// создаем новое подключение к сокету
+	if int16(resp.StatusCode) == 200 {
+		fmt.Println("USER AUTENTIFICATION")
+		connection, err := upgrader.Upgrade(response, request, nil)
+		if err != nil {
+			fmt.Println(err)
+		}
+		connects[userID] = connection
+		fmt.Println("New connection: ", connects)
 	}
-	//читаем ответ
-	io.Copy(os.Stdout, conn)
-	conn.Close()
 	fmt.Println("Запрос закончен")
 
-	// connection, err := upgrader.Upgrade(response, request, nil)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-	// connects[string(sessionID)] = connection
-
-	// fmt.Println("New connection: ", connection)
 	// for {
 	// 	conn := connect.conn
 	// 	messageType, message, err := conn.ReadMessage()
