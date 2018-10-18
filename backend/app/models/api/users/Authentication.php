@@ -33,7 +33,7 @@ class Authentication
                 throw new \Exception("Пользователь не авторизован");
             }
 
-            return ["massege" => "Пользователь авторизован"];
+            return ["massege" => "Пользователь аутентифицирован авторизован"];
         } catch (RuntimeException | \Exception $e) {
             $exceptions['massege'] = $e->getMessage();
             return ["exceptions" => $exceptions];
