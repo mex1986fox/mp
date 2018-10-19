@@ -102,6 +102,7 @@ class Create
                 "message" => $message,
                 "user_id" => $userID,
                 "date_created" => date("Y-m-d H:i:s"),
+                "status_read"=>false
             ];
             $mdb->messages->updateOne(["_id" => $dialogId], ['$push' => ['messages' => $upMessage]], ["upsert" => true]);
 
