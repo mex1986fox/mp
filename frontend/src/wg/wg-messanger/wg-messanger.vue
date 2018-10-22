@@ -1,5 +1,6 @@
 <template>
-	<div class="wg-messanger" :style="{'height':heightMessanger+'px'}">
+	<div class="wg-messanger"
+	     :style="{'height':heightMessanger+'px'}">
 
 		<div class="wg-messanger__bar">
 			<div class="ui-header ui-header_2 wg-messanger__header">
@@ -17,24 +18,32 @@
 
 		</div>
 		<transition name="wg-messanger__button-contacts">
-			<div v-if="!showContacts" @click="showContacts=true" class="ui-button ui-button_circle wg-messanger__button-contacts">
-				<i class="fa fa-users" aria-hidden="true"></i>
+			<div v-if="!showContacts"
+			     @click="showContacts=true"
+			     class="ui-button ui-button_circle wg-messanger__button-contacts">
+				<i class="fa fa-users"
+				   aria-hidden="true"></i>
 			</div>
 		</transition>
 		<transition name="wg-messanger__button-contacts">
-			<div v-if="showContacts" @click="showContacts=false" class="ui-button ui-button_circle  wg-messanger__button-contacts wg-messanger__button-contacts_right">
-				<i aria-hidden="true" class="fa fa-angle-left"></i>
+			<div v-if="showContacts"
+			     @click="showContacts=false"
+			     class="ui-button ui-button_circle  wg-messanger__button-contacts wg-messanger__button-contacts_right">
+				<i aria-hidden="true"
+				   class="fa fa-angle-left"></i>
 			</div>
 		</transition>
 		<transition name="wg-messanger__contacts">
-			<div class="wg-messanger__contacts" v-show="showContacts">
+			<div class="wg-messanger__contacts"
+			     v-show="showContacts">
 				<div class="wg-messanger__contacts-menu">
 					<div class="ui-avatar-block wg-messanger__avatar-block">
 						<div class="ui-avatar">
 							<span class="ui-avatar__simbol">
 								T
 							</span>
-							<img alt="" src="http://photos-users.ru/public/photos/avatars/1/25668.jpg">
+							<img alt=""
+							     src="http://photos-users.ru/public/photos/avatars/1/25668.jpg">
 						</div>
 						<a class="ui-link ui-avatar-block__link">
 							Толян Кузикин
@@ -52,7 +61,8 @@
 							<span class="ui-avatar__simbol">
 								T
 							</span>
-							<img alt="" src="http://photos-users.ru/public/photos/avatars/1/25668.jpg">
+							<img alt=""
+							     src="http://photos-users.ru/public/photos/avatars/1/25668.jpg">
 						</div>
 						<a class="ui-link ui-avatar-block__link">
 							Толян Кузикин
@@ -71,12 +81,18 @@
 		</transition>
 		<div class="wg-messanger__messages">
 
-			<div class="wg-messanger__messages-block" :style="{'height':heightMessanger-heightForm-130+'px'}">
+			<div class="wg-messanger__messages-block"
+			     :style="{'height':heightMessanger-heightForm-130+'px'}">
 
-				<div v-for="(val, key) in messages" :key="key" class="ui-avatar-block wg-messanger__message-block">
+				<div v-for="(val, key) in messages"
+				     :key="key"
+				     class="ui-avatar-block wg-messanger__message-block">
 					<div v-if="user_id==val.user_id">
-						<ui-avatar v-if="val.user" class="wg-messanger__avatar" :lable="val.user.login">
-							<img :src="val.user.avatar" alt="">
+						<ui-avatar v-if="val.user"
+						           class="wg-messanger__avatar"
+						           :lable="val.user.login">
+							<img :src="val.user.avatar"
+							     alt="">
 						</ui-avatar>
 						<div class="wg-messanger__message">
 							{{val.date_created}}
@@ -84,8 +100,11 @@
 						</div>
 					</div>
 					<div v-if="user_id!=val.user_id">
-						<ui-avatar v-if="val.user" class="wg-messanger__avatar-apponent" :lable="val.user.login">
-							<img :src="val.user.avatar" alt="">
+						<ui-avatar v-if="val.user"
+						           class="wg-messanger__avatar-apponent"
+						           :lable="val.user.login">
+							<img :src="val.user.avatar"
+							     alt="">
 						</ui-avatar>
 						<div class="wg-messanger__message-apponent">
 							{{val.date_created}}
@@ -97,11 +116,19 @@
 
 			</div>
 
-			<div ref="form" class="wg-messanger__messages-form">
-				<ui-textarea :value="message" @onInput="isInputMassage" caption="Ваше сообщение" :autoresize="60" :focus="true">
+			<div ref="form"
+			     class="wg-messanger__messages-form">
+				<ui-textarea :value="message"
+				             @onInput="isInputMassage"
+				             caption="Ваше сообщение"
+				             :autoresize="60"
+				             :focus="true">
 				</ui-textarea>
-				<button @click="createMessage" v-show="message!=undefined" class="ui-button ui-button_blue ui-button_circle ui-button_circle_mini wg-messanger__messages-form-button">
-					<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+				<button @click="createMessage"
+				        v-show="message!=undefined"
+				        class="ui-button ui-button_blue ui-button_circle ui-button_circle_mini wg-messanger__messages-form-button">
+					<i class="fa fa-paper-plane-o"
+					   aria-hidden="true"></i>
 				</button>
 			</div>
 		</div>
@@ -117,7 +144,8 @@ export default {
       heightForm: 105,
       message: undefined,
       messages: undefined,
-      apponent_id: this.apponent
+      apponent_id: this.apponent,
+      socket: undefined
     };
   },
   props: {
@@ -144,10 +172,43 @@ export default {
         .post(this.$hosts.messages + "/api/create/messages", params, headers)
         .then(
           response => {
-            console.log(response.body);
+            this.SetUnreadMessage();
           },
           error => {}
         );
+    },
+    createWebSocket() {
+      let user_id = this.$cookie.get("user_id");
+      let session_id = this.$cookie.get("PHPSESSID");
+      this.socket = new WebSocket(
+        this.$hosts.wsmessages +
+          "/ws?session_id=" +
+          session_id +
+          "&user_id=" +
+          user_id
+      );
+      this.socket.onopen = () => {
+        alert("Соединение установлено.");
+        this.GetUnreadMessages();
+      };
+      this.socket.onmessage = event => {
+        alert("Получены данные " + event.data);
+      };
+    },
+    GetUnreadMessages() {
+      let json = {
+        name: "GetUnreadMessages",
+        params: [{ name: "userId", val: String(this.$cookie.get("user_id")) }]
+      };
+      console.log(JSON.stringify(json));
+      this.socket.send(JSON.stringify(json));
+    },
+    SetUnreadMessage() {
+      let json = {
+        name: "SetUnreadMessage",
+        params: [{ name: "apponentID", val: String(this.apponent_id) }]
+      };
+      this.socket.send(JSON.stringify(json));
     },
     showMessages() {
       let headers = { "Content-Type": "multipart/form-data" };
@@ -223,6 +284,7 @@ export default {
     }
   },
   mounted() {
+    this.createWebSocket();
     this.showMessages();
   },
 

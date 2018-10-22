@@ -2912,10 +2912,14 @@ select::-ms-expand {
     overflow: hidden;
     overflow-y: auto;
     height: auto; }
-  .wg-messanger__message-block::after {
-    content: "";
-    clear: both;
-    float: left; }
+  .wg-messanger__message-block {
+    height: auto;
+    position: relative;
+    overflow: hidden; }
+    .wg-messanger__message-block::after {
+      content: "";
+      clear: both;
+      float: left; }
   .wg-messanger__message-apponent {
     background-color: #2bd13240;
     padding: 10px;
