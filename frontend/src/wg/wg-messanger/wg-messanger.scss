@@ -155,9 +155,37 @@
       opacity: 1;
       transition: all 0.6s;
     }
+<<<<<<< HEAD
     &-leave-active {
       opacity: 0;
       transition: all 0.6s;
+=======
+    &__button-contacts {
+        position: absolute;
+        left: 21px;
+        float: right;
+        top: 60px;
+        z-index: 5;
+        &_right {
+            left: auto;
+            right: 5px;
+            top: 95px;
+        }
+        &-enter-active {
+            opacity: 1;
+            transition: all 0.6s;
+        }
+        &-leave-active {
+            opacity: 0;
+            transition: all 0.6s;
+        }
+        &-enter {
+            opacity: 0;
+        }
+        &-leave {
+            opacity: 1;
+        }
+>>>>>>> 5df22ee7e8c267011cf9134190931c6d99f08bc3
     }
     &-enter {
       opacity: 0;
