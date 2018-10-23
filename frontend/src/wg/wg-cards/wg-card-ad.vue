@@ -143,7 +143,7 @@
 					<div class="col_8 col_offset-2 col-tablet_10 col-tablet_offset-1 col-phone_6 col-phone_offset-0">
 						<wg-comments :service_id="dObj.id"
 						             :service_type="'ads'"
-												 @onHide="commentShow=false">
+						             @onHide="commentShow=false">
 
 						</wg-comments>
 					</div>
@@ -191,16 +191,12 @@
 		<ui-blind v-if="dObj.user!=undefined"
 		          @onHide="showMessenger=!showMessenger"
 		          :show="showMessenger"
-<<<<<<< HEAD
-		          animate="opacity"
-		          centering>
-=======
 		          animate="opacity">
->>>>>>> 5df22ee7e8c267011cf9134190931c6d99f08bc3
 			<div class="container">
 				<div class="row">
 					<div class="col_8 col_offset-2 col-nbook_10 col-nbook_offset-1 col-tablet_10 col-tablet_offset-1 col-phone_6 col-phone_offset-0">
-						<wg-messanger :apponent="dObj.user.id" @onHide="showMessenger=false">
+						<wg-messanger :apponent="dObj.user.id"
+						              @onHide="showMessenger=false">
 
 						</wg-messanger>
 					</div>

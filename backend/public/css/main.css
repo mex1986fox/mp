@@ -2947,7 +2947,8 @@ select::-ms-expand {
     position: relative;
     left: 0px;
     max-width: calc(100% - 202px);
-    float: left; }
+    float: left;
+    white-space: pre-line; }
     .wg-messanger__message-apponent::before {
       content: "";
       border: 8px solid transparent;
@@ -2964,7 +2965,8 @@ select::-ms-expand {
     position: relative;
     left: 0px;
     max-width: calc(100% - 214px);
-    float: right; }
+    float: right;
+    white-space: pre-line; }
     .wg-messanger__message::before {
       content: "";
       border: 8px solid transparent;
@@ -2979,14 +2981,30 @@ select::-ms-expand {
     z-index: 5; }
     .wg-messanger__button-contacts_right {
       left: auto;
-      right: 5px;
-      top: 95px; }
+      right: 25px; }
     .wg-messanger__button-contacts-enter-active {
       opacity: 1;
       transition: all 0.6s; }
-    .wg-messanger__button-contacts-leave-active {
-      opacity: 0;
-      transition: all 0.6s; }
+    .wg-messanger__button-contacts__button-contacts {
+      position: absolute;
+      left: 21px;
+      float: right;
+      top: 60px;
+      z-index: 5; }
+      .wg-messanger__button-contacts__button-contacts_right {
+        left: auto;
+        right: 5px;
+        top: 95px; }
+      .wg-messanger__button-contacts__button-contacts-enter-active {
+        opacity: 1;
+        transition: all 0.6s; }
+      .wg-messanger__button-contacts__button-contacts-leave-active {
+        opacity: 0;
+        transition: all 0.6s; }
+      .wg-messanger__button-contacts__button-contacts-enter {
+        opacity: 0; }
+      .wg-messanger__button-contacts__button-contacts-leave {
+        opacity: 1; }
     .wg-messanger__button-contacts-enter {
       opacity: 0; }
     .wg-messanger__button-contacts-leave {

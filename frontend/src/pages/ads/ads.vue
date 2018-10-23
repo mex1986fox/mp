@@ -29,7 +29,7 @@
 					          animate="right">
 						<div class="container container_right">
 							<div class="row">
-								<div class="col_8 col_offset-4 col-nbook_9 col-nbook_offset-3 col-tablet_10 col-tablet_offset-2 col-phone_6 col-phone_offset-0">
+								<div class="col_7 col_offset-5 col-nbook_9 col-nbook_offset-3 col-tablet_10 col-tablet_offset-2 col-phone_6 col-phone_offset-0">
 									<wg-form-add @onHide="
 								     showFormAdd=false
 								     ">

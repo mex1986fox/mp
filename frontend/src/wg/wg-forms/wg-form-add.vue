@@ -1,5 +1,6 @@
 <template>
-	<div class="wg-form-add" :style="{'min-height': windowHeight+'px'} ">
+	<div class="wg-form-add"
+	     :style="{'min-height': windowHeight+'px'} ">
 		<div class="row">
 			<div class="col-12">
 				<div class="wg-form-add__bar">
@@ -83,13 +84,13 @@
 						             :autoresize="250">
 						</ui-textarea>
 						<div class="row">
-							<div class="col_2 ">
+							<div class="col_3 ">
 								<ui-select name="year"
 								           caption="Год выпуска"
 								           :menu='menuYear'>
 								</ui-select>
 							</div>
-												<div class="col_2 col_offset-1">
+							<div class="col_2 col_offset-1">
 								<ui-text name="mileage"
 								         caption="Пробег км."
 								         :masc="{use:mascNumber}"
@@ -310,8 +311,8 @@ export default {
       add_id: undefined,
       selectPhoto: 0,
       percentFL: undefined,
-			rirendLoader: false,
-			windowHeight: document.body.clientHeight
+      rirendLoader: false,
+      windowHeight: document.body.clientHeight
     };
   },
   methods: {
