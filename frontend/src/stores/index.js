@@ -4,6 +4,7 @@ Vue.use(Vuex);
 
 //импорт хранилищь vuex
 import User from "./user/user.js";
+import Users from "./users/users.js";
 import Locations from "./locations/locations.js";
 import Transports from "./transports/transports.js";
 import Form_add from "./forms/form-add.js";
@@ -13,6 +14,7 @@ const store = new Vuex.Store({
   strict: true,
   modules: {
     user: User,
+    users: Users,
     locations: Locations,
     transports: Transports,
     form_add: Form_add
