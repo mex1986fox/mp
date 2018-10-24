@@ -41,10 +41,10 @@ func addConnection(response http.ResponseWriter, request *http.Request) {
 	userID := request.URL.Query().Get("user_id")
 	conKey := string(userID) + string(sessionID)
 	fmt.Println(connects)
-	if connects[conKey] != nil {
-		go socketHandler(connects[conKey])
-		fmt.Println("OLD connection ...")
-	} else {
+	// if connects[conKey] != nil {
+	// 	go socketHandler(connects[conKey])
+	// 	fmt.Println("OLD connection ...")
+	// } else {
 
 		//  сходить на сервер проверить авторизацию и аутентификацию по номеру сессии
 		client := &http.Client{}
@@ -82,7 +82,7 @@ func addConnection(response http.ResponseWriter, request *http.Request) {
 			}
 			go socketHandler(connects[conKey])
 			fmt.Println("New connection ...")
-		}
+		// }
 	}
 	fmt.Println("Запрос закончен")
 
