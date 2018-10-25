@@ -1,17 +1,14 @@
 <template>
-	<div class="wg-messanger"
-	     :style="{'height':heightMessanger+'px'}">
+  <div class="wg-messanger" :style="{'height':heightMessanger+'px'}">
 
-		<div class="wg-messanger__bar">
-			<div class="ui-header ui-header_2 wg-messanger__header">
-				<span>Messanger</span>
-			</div>
-			<button class="ui-button ui-button_circle ui-button_flat wg-form-add__close"
-			        @click="isClose">
-				<i class="fa fa-times-thin"
-				   aria-hidden="true"></i>
-			</button>
-			<!-- <ui-tabs class="wg-messanger__tabs">
+    <div class="wg-messanger__bar">
+      <div class="ui-header ui-header_2 wg-messanger__header">
+        <span>Messanger</span>
+      </div>
+      <button class="ui-button ui-button_circle ui-button_flat wg-form-add__close" @click="isClose">
+        <i class="fa fa-times-thin" aria-hidden="true"></i>
+      </button>
+      <!-- <ui-tabs class="wg-messanger__tabs">
                 <ui-tabs-tab id="wg-messanger-contacts" :checked="tabs=='wg-messanger-contacts'" @onFocus="isTabs">
                     Контакты
                 </ui-tabs-tab>
@@ -20,109 +17,79 @@
                 </ui-tabs-tab>
             </ui-tabs> -->
 
-		</div>
-		<transition name="wg-messanger__button-contacts">
-			<div v-if="!showContacts"
-			     @click="showContacts=true"
-			     class="ui-button ui-button_circle wg-messanger__button-contacts">
-				<i class="fa fa-users"
-				   aria-hidden="true"></i>
-			</div>
-		</transition>
-		<transition name="wg-messanger__button-contacts">
-			<div v-if="showContacts"
-			     @click="showContacts=false"
-			     class="ui-button ui-button_circle  wg-messanger__button-contacts wg-messanger__button-contacts_right">
-				<i aria-hidden="true"
-				   class="fa fa-angle-left"></i>
-			</div>
-		</transition>
-		<div v-if="sumNewMessages!=undefined && !showContacts"
-		     class="ui-notific-mes wg-messanger__notific-mes">
-			{{sumNewMessages}}
-		</div>
-		<transition name="wg-messanger__contacts">
-			<div class="wg-messanger__contacts"
-			     v-show="showContacts">
-				<div class="wg-messanger__contacts-menu">
-					<div v-if="val.user"
-					     v-for="(val, key) in dialogs"
-					     :key="key"
-					     class="ui-avatar-block wg-messanger__avatar-block">
-						<ui-avatar class="ui-avatar"
-						           :lable="val.user.login">
-							<img :src="val.user.avatar"
-							     alt="">
-						</ui-avatar>
-						<a class="ui-link ui-avatar-block__link">
-							{{val.user.name+" "+val.user.surname}}
-						</a>
-						<div class="ui-avatar-block__title">
-							Здесь последнее сообщение
-						</div>
-						<!-- <button class="ui-button ui-button_flat ui-button_circle ui-button_circle_mini wg-messanger__avatar-block-button">
+    </div>
+    <transition name="wg-messanger__button-contacts">
+      <div v-if="!showContacts" @click="showContacts=true" class="ui-button ui-button_circle wg-messanger__button-contacts">
+        <i class="fa fa-users" aria-hidden="true"></i>
+      </div>
+    </transition>
+    <transition name="wg-messanger__button-contacts">
+      <div v-if="showContacts" @click="showContacts=false" class="ui-button ui-button_circle  wg-messanger__button-contacts wg-messanger__button-contacts_right">
+        <i aria-hidden="true" class="fa fa-angle-left"></i>
+      </div>
+    </transition>
+    <div v-if="sumNewMessages!=undefined && !showContacts" class="ui-notific-mes wg-messanger__notific-mes">
+      {{sumNewMessages}}
+    </div>
+    <transition name="wg-messanger__contacts">
+      <div class="wg-messanger__contacts" v-show="showContacts">
+        <div class="wg-messanger__contacts-menu">
+          <div v-if="val.user" v-for="(val, key) in dialogs" :key="key" class="ui-avatar-block wg-messanger__avatar-block" @click="isClickContact(val.apponent_id, val.dialog_id)">
+            <ui-avatar class="ui-avatar" :lable="val.user.login">
+              <img :src="val.user.avatar" alt="">
+            </ui-avatar>
+            <a class="ui-link ui-avatar-block__link">
+              {{val.user.name+" "+val.user.surname}}
+            </a>
+            <div class="ui-avatar-block__title">
+              Здесь последнее сообщение
+            </div>
+            <!-- <button class="ui-button ui-button_flat ui-button_circle ui-button_circle_mini wg-messanger__avatar-block-button">
 							<i aria-hidden="true"
 							   class="fa fa-ellipsis-v"></i>
 						</button> -->
-					</div>
+          </div>
 
-				</div>
+        </div>
 
-			</div>
-		</transition>
-		<div class="wg-messanger__messages">
+      </div>
+    </transition>
+    <div class="wg-messanger__messages">
 
-			<div class="wg-messanger__messages-block"
-			     :style="{'height':heightMessanger-heightForm-130+'px'}">
+      <div class="wg-messanger__messages-block" :style="{'height':heightMessanger-heightForm-130+'px'}">
 
-				<div v-for="(val, key) in messages"
-				     :key="key"
-				     class="ui-avatar-block wg-messanger__message-block">
-					<div v-if="user_id==val.user_id">
-						<ui-avatar v-if="val.user"
-						           class="wg-messanger__avatar"
-						           :lable="val.user.login">
-							<img :src="val.user.avatar"
-							     alt="">
-						</ui-avatar>
-						<div class="wg-messanger__message">{{val.date_created}}
-							{{val.message}}
-						</div>
-					</div>
-					<div v-if="user_id!=val.user_id">
-						<ui-avatar v-if="val.user"
-						           class="wg-messanger__avatar-apponent"
-						           :lable="val.user.login">
-							<img :src="val.user.avatar"
-							     alt="">
-						</ui-avatar>
-						<div class="wg-messanger__message-apponent">{{val.date_created}}
-							{{val.message}}
-						</div>
-					</div>
+        <div v-for="(val, key) in messages" :key="key" class="ui-avatar-block wg-messanger__message-block">
+          <div v-if="user_id==val.user_id">
+            <ui-avatar v-if="val.user" class="wg-messanger__avatar" :lable="val.user.login">
+              <img :src="val.user.avatar" alt="">
+            </ui-avatar>
+            <div class="wg-messanger__message">{{val.date_created}}
+              {{val.message}}
+            </div>
+          </div>
+          <div v-if="user_id!=val.user_id">
+            <ui-avatar v-if="val.user" class="wg-messanger__avatar-apponent" :lable="val.user.login">
+              <img :src="val.user.avatar" alt="">
+            </ui-avatar>
+            <div class="wg-messanger__message-apponent">{{val.date_created}}
+              {{val.message}}
+            </div>
+          </div>
 
-				</div>
+        </div>
 
-			</div>
+      </div>
 
-			<div ref="form"
-			     class="wg-messanger__messages-form">
-				<ui-textarea :value="message"
-				             @onInput="isInputMassage"
-				             caption="Ваше сообщение"
-				             :autoresize="60"
-				             :focus="true">
-				</ui-textarea>
-				<button @click="createMessage"
-				        v-show="message!=undefined"
-				        class="ui-button ui-button_blue ui-button_circle ui-button_circle_mini wg-messanger__messages-form-button">
-					<i class="fa fa-paper-plane-o"
-					   aria-hidden="true"></i>
-				</button>
-			</div>
-		</div>
+      <div ref="form" class="wg-messanger__messages-form">
+        <ui-textarea :value="message" @onInput="isInputMassage" caption="Ваше сообщение" :autoresize="60" :focus="true">
+        </ui-textarea>
+        <button @click="createMessage" v-show="message!=undefined" class="ui-button ui-button_blue ui-button_circle ui-button_circle_mini wg-messanger__messages-form-button">
+          <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
 
-	</div>
+  </div>
 </template>
 <script>
 export default {
@@ -150,6 +117,30 @@ export default {
     isClose() {
       this.$emit("onHide");
       this.socket.close();
+    },
+    isClickContact(apponent_id, dialog_id) {
+      this.showContacts = false;
+      this.apponent_id = apponent_id;
+      this.showMessages();
+      this.markReadMessage(dialog_id);
+    },
+    addUsersToMessages() {
+      let newMes = [];
+      this.messages.forEach(mes => {
+        mes.user = this.users[mes.user_id];
+        newMes.push(mes);
+      });
+      this.messages = [];
+      this.messages = newMes;
+    },
+    addUsersToDialogs() {
+      let newDial = [];
+      this.dialogs.forEach(dial => {
+        dial.user = this.users[dial.apponent_id];
+        newDial.push(dial);
+      });
+      this.dialogs = [];
+      this.dialogs = newDial;
     },
     isInputMassage(val) {
       this.heightForm = this.$refs.form.clientHeight;
@@ -188,7 +179,11 @@ export default {
         this.GetUnreadMessages();
       };
       this.socket.onmessage = event => {
-        this.newMessage = JSON.parse(event.data);
+        this.newMessage = undefined;
+        setTimeout(() => {
+          this.newMessage = JSON.parse(event.data);
+          console.log(this.newMessage);
+        }, 4);
       };
     },
     GetUnreadMessages() {
@@ -222,6 +217,7 @@ export default {
               users.push(mes.apponent_id);
             });
             this.$store.dispatch("users/add", users);
+            this.addUsersToDialogs();
           },
           error => {}
         );
@@ -244,8 +240,29 @@ export default {
               users.push(mes.user_id);
             });
             this.$store.dispatch("users/add", users);
+            this.addUsersToMessages();
           },
           error => {}
+        );
+    },
+    markReadMessage(dialog_id) {
+      let headers = { "Content-Type": "multipart/form-data" };
+      let params = {
+        user_id: this.$cookie.get("user_id"),
+        session_id: this.$cookie.get("PHPSESSID"),
+        dialog_id: dialog_id
+      };
+      this.description = undefined;
+      this.$http
+        .post(this.$hosts.messages + "/api/markRead/messages", params, headers)
+        .then(
+          response => {
+            this.message = response.body.message;
+            this.GetUnreadMessages();
+          },
+          error => {
+            console.log(error);
+          }
         );
     }
   },
@@ -257,21 +274,8 @@ export default {
   watch: {
     usersFUpdate(newQ, oldQ) {
       if (newQ != oldQ) {
-        let newMes = [];
-        this.messages.forEach(mes => {
-          mes.user = this.users[mes.user_id];
-          newMes.push(mes);
-        });
-        this.messages = [];
-        this.messages = newMes;
-
-        let newDial = [];
-        this.dialogs.forEach(dial => {
-          dial.user = this.users[dial.apponent_id];
-          newDial.push(dial);
-        });
-        this.dialogs = [];
-        this.dialogs = newDial;
+        this.addUsersToMessages();
+        this.addUsersToDialogs();
       }
     }
   },
