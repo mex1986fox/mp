@@ -28,7 +28,7 @@
         <i aria-hidden="true" class="fa fa-angle-left"></i>
       </div>
     </transition>
-    <div v-if="sumNewMessages!=undefined && !showContacts" class="ui-notific-mes wg-messanger__notific-mes">
+    <div v-if="sumNewMessages!=undefined && sumNewMessages!=0 && !showContacts" class="ui-notific-mes wg-messanger__notific-mes">
       {{sumNewMessages}}
     </div>
     <transition name="wg-messanger__contacts">
@@ -38,6 +38,9 @@
             <ui-avatar class="ui-avatar" :lable="val.user.login">
               <img :src="val.user.avatar" alt="">
             </ui-avatar>
+            <div v-if="newMessage[val.user.id]!=undefined && newMessage[val.user.id]!=0" class="ui-notific-mes wg-messanger__notific-mes-cont">
+              {{newMessage[val.user.id]}}
+            </div>
             <a class="ui-link ui-avatar-block__link">
               {{val.user.name+" "+val.user.surname}}
             </a>
@@ -56,9 +59,10 @@
     </transition>
     <div class="wg-messanger__messages">
 
-      <div class="wg-messanger__messages-block" :style="{'height':heightMessanger-heightForm-130+'px'}">
+      <div ref="messages" class="wg-messanger__messages-block" :style="{'height':heightMessanger-heightForm-130+'px'}">
 
-        <div v-for="(val, key) in messages" :key="key" class="ui-avatar-block wg-messanger__message-block">
+        <div v-for="(val, key) in messages" :key="key" class="ui-avatar-block wg-messanger__message-block " :class="{'wg-messanger__message-block_noread': !val.status_read}">
+          
           <div v-if="user_id==val.user_id">
             <ui-avatar v-if="val.user" class="wg-messanger__avatar" :lable="val.user.login">
               <img :src="val.user.avatar" alt="">
@@ -67,6 +71,7 @@
               {{val.message}}
             </div>
           </div>
+
           <div v-if="user_id!=val.user_id">
             <ui-avatar v-if="val.user" class="wg-messanger__avatar-apponent" :lable="val.user.login">
               <img :src="val.user.avatar" alt="">
@@ -121,8 +126,8 @@ export default {
     isClickContact(apponent_id, dialog_id) {
       this.showContacts = false;
       this.apponent_id = apponent_id;
+      this.dialog_id = dialog_id;
       this.showMessages();
-      this.markReadMessage(dialog_id);
     },
     addUsersToMessages() {
       let newMes = [];
@@ -159,7 +164,9 @@ export default {
         .post(this.$hosts.messages + "/api/create/messages", params, headers)
         .then(
           response => {
+            this.message = "";
             this.SetUnreadMessage();
+            this.showMessages();
           },
           error => {}
         );
@@ -182,7 +189,13 @@ export default {
         this.newMessage = undefined;
         setTimeout(() => {
           this.newMessage = JSON.parse(event.data);
-          console.log(this.newMessage);
+          for (var key in this.newMessage) {
+            if (key == this.apponent_id) {
+              this.showMessages();
+                            break;
+            }
+          }
+          // console.log(this.newMessage);
         }, 4);
       };
     },
@@ -214,6 +227,9 @@ export default {
             this.dialogs = response.body.dialogs;
             let users = [];
             this.dialogs.forEach(mes => {
+              if (mes.apponent_id == this.apponent_id) {
+                this.dialog_id = mes.dialog_id;
+              }
               users.push(mes.apponent_id);
             });
             this.$store.dispatch("users/add", users);
@@ -234,6 +250,8 @@ export default {
         .post(this.$hosts.messages + "/api/show/messages", params, headers)
         .then(
           response => {
+            this.messages = undefined;
+
             this.messages = response.body.messages;
             let users = [];
             this.messages.forEach(mes => {
@@ -241,24 +259,30 @@ export default {
             });
             this.$store.dispatch("users/add", users);
             this.addUsersToMessages();
+            this.markReadMessage();
+
+            setTimeout(() => {
+              this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+            }, 4);
           },
           error => {}
         );
     },
-    markReadMessage(dialog_id) {
+    markReadMessage() {
       let headers = { "Content-Type": "multipart/form-data" };
       let params = {
         user_id: this.$cookie.get("user_id"),
         session_id: this.$cookie.get("PHPSESSID"),
-        dialog_id: dialog_id
+        dialog_id: this.dialog_id
       };
       this.description = undefined;
       this.$http
         .post(this.$hosts.messages + "/api/markRead/messages", params, headers)
         .then(
           response => {
-            this.message = response.body.message;
+            // this.message = response.body.message;
             this.GetUnreadMessages();
+            
           },
           error => {
             console.log(error);

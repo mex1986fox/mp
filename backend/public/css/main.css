@@ -2070,6 +2070,7 @@ body {
   font-weight: bold;
   box-shadow: 0px 2px 4px rgba(100, 124, 137, 0.49); }
 
+@charset "UTF-8";
 .fa-times-thin:before {
   content: '\D7'; }
 
@@ -2951,6 +2952,16 @@ select::-ms-expand {
       content: "";
       clear: both;
       float: left; }
+    .wg-messanger__message-block_noread {
+      background-color: #c3c3c34d; }
+      .wg-messanger__message-block_noread::before {
+        content: "\41D\435   \43F\440\43E\447\438\442\430\43D\43D\43E";
+        display: block;
+        width: 100%;
+        text-align: center;
+        color: #919191;
+        font-size: 12px;
+        line-height: 45px; }
   .wg-messanger__message-apponent {
     background-color: #2bd13240;
     padding: 10px;
@@ -3050,6 +3061,10 @@ select::-ms-expand {
   .wg-messanger__notific-mes {
     left: 62px;
     top: 62px;
+    z-index: 25; }
+  .wg-messanger__notific-mes-cont {
+    left: 62px;
+    top: 1px;
     z-index: 25; }
 
 @media (max-width: 770px) {

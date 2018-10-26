@@ -2,22 +2,23 @@ import Vue from "vue/dist/vue.js";
 const users = {
     namespaced: true,
     state: {
-        buffer: [],
+        buffer: {},
         flagUpdate: 0
     },
     getters: {},
     mutations: {
         add(state, users) {
             users.forEach(user => {
-                state.buffer[user.id] = user;
-                
+                if (user.id != undefined) {
+                    state.buffer[String(user.id)] = user;
+                }
             });
-            
         },
         addAvatars(state, avatars) {
             avatars.forEach(avatar => {
-                state.buffer[avatar.user_id].avatar = avatar.lincks[0];
-                
+                if (avatar.user_id != undefined) {
+                    state.buffer[String(avatar.user_id)].avatar = avatar.lincks[0];
+                }
             });
             state.flagUpdate++;
         }
@@ -29,10 +30,11 @@ const users = {
                 //еслли когото нет тогда докачать
                 let newUse = []
                 users_id.forEach(id => {
-                    if (context.state.buffer[id] == undefined) {
+                    if (id!=null && context.state.buffer[id] == undefined) {
                         newUse.push(id)
                     }
                 });
+                newUse = Array.from(new Set(newUse))
                 if (newUse.length > 0) {
                     let body = { users_id: newUse };
                     Vue.http.post("/api/show/users", body).then(
@@ -50,7 +52,7 @@ const users = {
         },
         addAvatars(context, users_id) {
             if (users_id != undefined && users_id.length != undefined) {
-
+                users_id = Array.from(new Set(users_id))
                 let body = { users_id: users_id };
                 Vue.http.post(Vue.prototype.$hosts.photosUsers + "/api/show/avatars", body).then(
                     response => {
