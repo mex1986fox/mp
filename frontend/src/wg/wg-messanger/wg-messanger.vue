@@ -38,7 +38,7 @@
             <ui-avatar class="ui-avatar" :lable="val.user.login">
               <img :src="val.user.avatar" alt="">
             </ui-avatar>
-            <div v-if="newMessage[val.user.id]!=undefined && newMessage[val.user.id]!=0" class="ui-notific-mes wg-messanger__notific-mes-cont">
+            <div v-if="newMessage!=undefined && newMessage[val.user.id]!=undefined && newMessage[val.user.id]!=0" class="ui-notific-mes wg-messanger__notific-mes-cont">
               {{newMessage[val.user.id]}}
             </div>
             <a class="ui-link ui-avatar-block__link">
@@ -61,8 +61,8 @@
 
       <div ref="messages" class="wg-messanger__messages-block" :style="{'height':heightMessanger-heightForm-130+'px'}">
 
-        <div v-for="(val, key) in messages" :key="key" class="ui-avatar-block wg-messanger__message-block " :class="{'wg-messanger__message-block_noread': !val.status_read}">
-          
+        <div v-for="(val, key) in messages" :key="key" class="ui-avatar-block wg-messanger__message-block " :class="{'wg-messanger__message-block_noread': !val.status_read && user_id==val.user_id}">
+
           <div v-if="user_id==val.user_id">
             <ui-avatar v-if="val.user" class="wg-messanger__avatar" :lable="val.user.login">
               <img :src="val.user.avatar" alt="">
@@ -127,8 +127,12 @@ export default {
       this.showContacts = false;
       this.apponent_id = apponent_id;
       this.dialog_id = dialog_id;
-      this.showMessages();
+      if (this.markReadMessage() == false) {
+        this.showMessages();
+      }
     },
+
+    //добавляет юзеров в сообщения
     addUsersToMessages() {
       let newMes = [];
       this.messages.forEach(mes => {
@@ -138,6 +142,7 @@ export default {
       this.messages = [];
       this.messages = newMes;
     },
+    // добавляет юзеров в диалоги
     addUsersToDialogs() {
       let newDial = [];
       this.dialogs.forEach(dial => {
@@ -151,6 +156,8 @@ export default {
       this.heightForm = this.$refs.form.clientHeight;
       this.message = val != "" ? val : undefined;
     },
+    // отправляет новое сообщение
+    // для его создания
     createMessage() {
       let headers = { "Content-Type": "multipart/form-data" };
       let params = {
@@ -171,6 +178,9 @@ export default {
           error => {}
         );
     },
+    // создает соединение с сервером
+    // вебсоккетов
+    // который присылает уведомления о новых сообщениях
     createWebSocket() {
       let user_id = this.$cookie.get("user_id");
       let session_id = this.$cookie.get("PHPSESSID");
@@ -188,31 +198,41 @@ export default {
       this.socket.onmessage = event => {
         this.newMessage = undefined;
         setTimeout(() => {
+          // console.log(event.data);
           this.newMessage = JSON.parse(event.data);
-          for (var key in this.newMessage) {
-            if (key == this.apponent_id) {
-              this.showMessages();
-                            break;
-            }
+          // this.showMessages();
+          //отметит сообщение прочитанным
+          // если не отметит просто прочитает новые сообщения
+          if (this.markReadMessage() == false) {
+            this.showMessages();
           }
+
           // console.log(this.newMessage);
         }, 4);
       };
     },
+    // запрос к серверу вебсоккетов
+    // для получения новых сообщений
     GetUnreadMessages() {
+      console.log("запрашиваю изменения");
       let json = {
         name: "GetUnreadMessages",
         params: [{ name: "userId", val: String(this.$cookie.get("user_id")) }]
       };
       this.socket.send(JSON.stringify(json));
     },
+    // запрос к вебсокету
+    // что бы аппоненту пришло уведомление
+    // что есть непрочитанные сообщения для него
     SetUnreadMessage() {
+      console.log("устанавливаю что есть изменения");
       let json = {
         name: "SetUnreadMessage",
         params: [{ name: "apponentID", val: String(this.apponent_id) }]
       };
       this.socket.send(JSON.stringify(json));
     },
+    //скачает диалоги какие есть для юзера
     showDialogs() {
       let headers = { "Content-Type": "multipart/form-data" };
       let params = {
@@ -238,6 +258,7 @@ export default {
           error => {}
         );
     },
+    // покажет сообщения для юзера
     showMessages() {
       let headers = { "Content-Type": "multipart/form-data" };
       let params = {
@@ -259,41 +280,57 @@ export default {
             });
             this.$store.dispatch("users/add", users);
             this.addUsersToMessages();
-            this.markReadMessage();
-
             setTimeout(() => {
               this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+              if (this.fMoutn == true) {
+                this.isClickContact(this.apponent_id, this.dialog_id);
+                this.fMoutn = false;
+              }
             }, 4);
           },
           error => {}
         );
     },
+    // пометит сообщения прочитанными
     markReadMessage() {
-      let headers = { "Content-Type": "multipart/form-data" };
-      let params = {
-        user_id: this.$cookie.get("user_id"),
-        session_id: this.$cookie.get("PHPSESSID"),
-        dialog_id: this.dialog_id
-      };
-      this.description = undefined;
-      this.$http
-        .post(this.$hosts.messages + "/api/markRead/messages", params, headers)
-        .then(
-          response => {
-            // this.message = response.body.message;
-            this.GetUnreadMessages();
-            
-          },
-          error => {
-            console.log(error);
-          }
-        );
+      for (var key in this.newMessage) {
+        if (key == this.apponent_id) {
+          let headers = { "Content-Type": "multipart/form-data" };
+          let params = {
+            user_id: this.$cookie.get("user_id"),
+            session_id: this.$cookie.get("PHPSESSID"),
+            dialog_id: this.dialog_id
+          };
+          this.description = undefined;
+          this.$http
+            .post(
+              this.$hosts.messages + "/api/markRead/messages",
+              params,
+              headers
+            )
+            .then(
+              response => {
+                // this.message = response.body.message;
+                console.log("отметил чтопрочитал сообщение");
+                this.SetUnreadMessage();
+                this.GetUnreadMessages();
+                this.showMessages();
+              },
+              error => {
+                console.log(error);
+              }
+            );
+          return true;
+        }
+      }
+      return false;
     }
   },
   mounted() {
     this.createWebSocket();
     this.showDialogs();
     this.showMessages();
+    this.fMoutn = true;
   },
   watch: {
     usersFUpdate(newQ, oldQ) {
@@ -309,8 +346,9 @@ export default {
     },
     sumNewMessages() {
       if (this.newMessage != undefined) {
+        // console.log(this.newMessage)
         let i = 0;
-        for (var key in this.newMessage) {
+        for (let key in this.newMessage) {
           if (key != this.user_id) {
             i = i + this.newMessage[key];
           }

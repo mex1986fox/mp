@@ -53,6 +53,7 @@ class Show
                 ['$match' => ['_id' => $userID]],
                 ['$unwind' => '$dialogs'],
                 ['$match' => ['dialogs.apponent_id' => $apponentID]],
+                [ '$limit' => 5 ]
             ]);
             $arrDial = iterator_to_array($aggreg, false);
             $dialogId = (count($arrDial) > 0) ? $arrDial[0]["dialogs"]["dialog_id"] : null;

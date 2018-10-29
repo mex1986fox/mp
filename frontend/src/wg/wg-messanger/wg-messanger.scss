@@ -103,17 +103,16 @@
             clear: both;
             float: left;
         }
-        &_noread{
+        &_noread {
             background-color: #c3c3c34d;
-            &::before{
+            &::before {
                 content: "Не прочитанно";
                 display: block;
                 width: 100%;
                 text-align: center;
                 color: #919191;
-               font-size: 12px;
-               line-height: 45px;
-
+                font-size: 12px;
+                line-height: 45px;
             }
         }
     }
@@ -164,7 +163,8 @@
         z-index: 5;
         &_right {
             left: auto;
-            right: 25px;
+            right: 9px;
+            top: 99px;
         }
         &-enter-active {
             opacity: 1;

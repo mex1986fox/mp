@@ -3004,7 +3004,8 @@ select::-ms-expand {
     z-index: 5; }
     .wg-messanger__button-contacts_right {
       left: auto;
-      right: 25px; }
+      right: 9px;
+      top: 99px; }
     .wg-messanger__button-contacts-enter-active {
       opacity: 1;
       transition: all 0.6s; }
