@@ -58,7 +58,6 @@
       </div>
     </transition>
     <div class="wg-messanger__messages">
-
       <div ref="messages" class="wg-messanger__messages-block" :style="{'height':heightMessanger-heightForm-130+'px'}">
 
         <div v-for="(val, key) in messages" :key="key" class="ui-avatar-block wg-messanger__message-block " :class="{'wg-messanger__message-block_noread': !val.status_read && user_id==val.user_id}">
@@ -84,14 +83,23 @@
         </div>
 
       </div>
-
+      <ui-menu :show="showSmiles" @onHide="showSmiles=false" position="left-top">
+        <wg-smiles @onClick="isClickSmile"></wg-smiles>
+      </ui-menu>
       <div ref="form" class="wg-messanger__messages-form">
-        <ui-textarea :value="message" @onInput="isInputMassage" caption="Ваше сообщение" :autoresize="60" :focus="true">
-        </ui-textarea>
-        <button @click="createMessage" v-show="message!=undefined" class="ui-button ui-button_blue ui-button_circle ui-button_circle_mini wg-messanger__messages-form-button">
-          <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
-        </button>
+        <ui-contenteditable :value="message" @onInput="isInputMassage" caption="Ваше сообщение" :autoresize="60" :focus="true">
+        </ui-contenteditable>
+        <div class=" wg-messanger__messages-form-button">
+          <div @click="showSmiles=true" class="ui-button ui-button_circle ui-button_circle_mini">
+            <i class="fa fa-smile-o" aria-hidden="true"></i>
+          </div>
+          <button @click="createMessage" v-show="message!=undefined" class="ui-button ui-button_blue ui-button_circle ui-button_circle_mini">
+            <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+          </button>
+        </div>
+
       </div>
+
     </div>
 
   </div>
@@ -109,7 +117,8 @@ export default {
       dialogs: undefined,
       apponent_id: this.apponent,
       socket: undefined,
-      newMessage: undefined
+      newMessage: undefined,
+      showSmiles: false
     };
   },
   props: {
@@ -119,6 +128,14 @@ export default {
     }
   },
   methods: {
+    isClickSmile(sm) {
+        this.message =
+        (this.message ? this.message : "") +
+        "<img src='" +
+        sm[1] +
+        "' class='wg-smiles__smile'> ";
+      this.showSmiles = false;
+    },
     isClose() {
       this.$emit("onHide");
       this.socket.close();

@@ -28,3 +28,5 @@ import WgMultipleLocation from "./wg-multiple-location/wg-multiple-location.vue"
 Vue.component("wg-multiple-location", WgMultipleLocation);
 import WgMessanger from "./wg-messanger/wg-messanger.vue";
 Vue.component("wg-messanger", WgMessanger);
+import WgSmiles from "./wg-smiles/wg-smiles.vue";
+Vue.component("wg-smiles", WgSmiles);

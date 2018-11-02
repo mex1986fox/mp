@@ -1,0 +1,16 @@
+.wg-smiles {
+    &__smile {
+        padding: 10px;
+    }
+    &__container {
+        box-shadow: $color-shadow;
+        background-color: $color-fon;
+        z-index: 5;
+        max-width: 250px;
+        float: left;
+        overflow: hidden;
+        height: 400px;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+}

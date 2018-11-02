@@ -7,6 +7,9 @@ import UiTextArea from "./ui-text/ui-textarea.vue";
 Vue.component("ui-textarea", UiTextArea);
 import UiPassword from "./ui-text/ui-password.vue";
 Vue.component("ui-password", UiPassword);
+import UiContenteditable from "./ui-text/ui-contenteditable.vue";
+Vue.component("ui-contenteditable", UiContenteditable);
+
 import UiFile from "./ui-file/ui-file.vue";
 Vue.component("ui-file", UiFile);
 import UiPhone from "./ui-text/ui-phone.vue";
