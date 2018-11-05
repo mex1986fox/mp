@@ -10,7 +10,7 @@ class SQLFilter extends AbstractFilter
         //зашифровать кавычки
         //убить теги
 
-        $str = filter_var($str, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+        // $str = filter_var($str, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
         //$str=filter_var($str,FILTER_SANITIZE_SPECIAL_CHARS);
 
         //убить SQL выражения

@@ -35,6 +35,8 @@ class StandardFiltering
             $fTrim = $filters->StringTrim;
             // убирает HTML сущности
             $fTag = $filters->StripTags;
+            $fTag->setTagsAllowed(['img', 'br', 'div', 'video', 'iframe']);
+            $fTag->setAttributesAllowed(['src', 'style', 'class', 'controls', 'frameborder', 'allowfullscreen', 'allow']);
             // редактирует sql выражения
             $fSQL = $filters->SQLFilter;
             // организуем из фильтров цепь
@@ -43,8 +45,9 @@ class StandardFiltering
                 ['filter' => $fTrim,
                     'options' => ['charlist' => '\r\n\t'],
                 ],
-                ['filter' => $fTag],
                 ['filter' => $fSQL],
+
+                ['filter' => $fTag],
             ]);
             // применяем цепь фильтров ко всем параметрам
             foreach ($p as $key => $value) {

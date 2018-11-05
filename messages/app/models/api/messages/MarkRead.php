@@ -51,10 +51,17 @@ class MarkRead
 
             $mdb = $this->container['mongodb'];
             // находим диалог и помечаем все ссобщения аппонента прочитанными
-            $mdb->messages->updateMany(['_id' => $dialogID], ['$set'=>['messages.$[elem].status_read'=>true]],['arrayFilters'=>[['elem.user_id'=>['$ne'=>$userID]]]]);
-            
+            //$mdb->messages->updateMany(['_id' => $dialogID], ['$set'=>['messages.$[elem].status_read'=>true]],['arrayFilters'=>[['elem.user_id'=>['$ne'=>$userID]]]]);
+            $dialog = $mdb->messages->findOne(['_id' => $dialogID]);
+            $messages = iterator_to_array($dialog, true)['messages'];
+            foreach ($messages as $key => $value) {
+                if ($messages[$key]["user_id"] != $userID) {
+                    $messages[$key]["status_read"] = true;
+                }
+            }
+            $mdb->messages->updateOne(['_id' => $dialogID], ['$set' => ['messages' => $messages]]);
             // db.messages.updateMany({"_id":"U1A5"},{"$set":{"messages.$[elem].status_read":true}},{"arrayFilters":[{"elem.user_id":{$eq:5}}]})
-              return ["message" => "Отмечено прочитанными"];
+            return ["message" => "Отмечено прочитанными"];
         } catch (RuntimeException | \Exception $e) {
             $exceptions['message'] = $e->getMessage();
             return ["exceptions" => $exceptions];

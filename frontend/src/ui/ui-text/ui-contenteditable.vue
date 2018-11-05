@@ -1,30 +1,37 @@
 <template>
-  <div class="ui-contenteditable" @click="isClick()">
-    <span class="ui-contenteditable__caption" :class="{'ui-contenteditable__caption_active':modFocus, 
+	<div class="ui-contenteditable"
+	     @click="isClick()">
+		<span class="ui-contenteditable__caption"
+		      :class="{'ui-contenteditable__caption_active':modFocus, 
                    'ui-contenteditable__caption_completed':modCompleted,
-                   'ui-contenteditable__caption_disabled':dDisabled}" @click="isClick()">
-      {{dCaption}}
-    </span>
-    <div class="ui-contenteditable__input" :class="{'ui-contenteditable__input_active':modFocus,
-                   'ui-contenteditable__input_disabled':dDisabled}" 
-                   ref="textarea" 
-                   contenteditable="true" 
-                   @focus="isFocus()" 
-                   @blur="isBlur()" 
-                   @input="isInputText()" 
-                   @keyup.delete="isInputText()" 
-                   :name="dName" 
-                   :readonly="dReadonly" 
-                   :disabled="dDisabled">
+                   'ui-contenteditable__caption_disabled':dDisabled}"
+		      @click="isClick()">
+			{{dCaption}}
+		</span>
+		<div class="ui-contenteditable__input"
+		     :class="{'ui-contenteditable__input_active':modFocus,
+                   'ui-contenteditable__input_disabled':dDisabled}"
+		     ref="textarea"
+		     contenteditable="true"
+		     @focus="isFocus()"
+		     @blur="isBlur()"
+		     @input="isInputText()"
+		     @keyup.delete="isInputText()"
+		     :name="dName"
+		     :readonly="dReadonly"
+		     :disabled="dDisabled">
 
-    </div>
-    <hr class="ui-contenteditable__border" :class="{'ui-contenteditable__border_active':modFocus,
+		</div>
+		<hr class="ui-contenteditable__border"
+		    :class="{'ui-contenteditable__border_active':modFocus,
                   'ui-contenteditable__border_disabled':dDisabled}">
-    <span class="ui-contenteditable__help" :class="{'ui-contenteditable__help_active':dHelp,
-                    'ui-contenteditable__help_disabled':dDisabled}" @click="isClick()">
-      {{dHelp}}
-    </span>
-  </div>
+		<span class="ui-contenteditable__help"
+		      :class="{'ui-contenteditable__help_active':dHelp,
+                    'ui-contenteditable__help_disabled':dDisabled}"
+		      @click="isClick()">
+			{{dHelp}}
+		</span>
+	</div>
 </template>
 
 <script>
@@ -40,8 +47,10 @@ export default {
       dDisabled: this.disabled,
       dHelp: this.help,
       dReadonly: this.readonly,
-      aNode: undefined,
-      aOffset: undefined
+      anchorNode: undefined,
+      anchorOffset: undefined,
+      focusNode: undefined,
+      focusOffset: undefined
     };
   },
   props: {
@@ -96,6 +105,7 @@ export default {
       this.modFocus = true;
       this.$emit("onFocus");
       this.isAutoresize();
+      this.setSelection();
     },
     isBlur() {
       this.modFocus = false;
@@ -106,33 +116,30 @@ export default {
       this.$emit("onClick");
       this.$refs.textarea.focus();
       this.isAutoresize();
+      this.setSelection();
+    },
+    setSelection() {
+      let txt = undefined;
+      if ((txt = window.getSelection)) {
+        // Не IE, используем метод getSelection
+        txt = window.getSelection();
+      } else {
+        // IE, используем объект selection
+        txt = document.selection.createRange();
+      }
+
+      this.anchorNode = txt.anchorNode;
+      this.anchorOffset = txt.anchorOffset;
+      this.focusNode = txt.focusNode;
+      this.focusOffset = txt.focusOffset;
+    },
+    html_entity_decode(str) {
+      return str.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
     },
     isInputText() {
-      let rng = document.createRange();
-      this.endNode = rng.endContainer.activeElement;
-      this.endOffset = rng.endOffset;
-      rng.setStart(this.endNode, rng.endOffset+1);
-      rng.setEnd(this.endNode, rng.endOffset+1);
-      let sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(rng);
-
-      // let select = window.getSelection();
-      // // if (this.aNode != undefined) {
-      // //   select.extend(this.aNode, this.aOffset);
-      // //   // select.collapseToStart;
-      // // }
-      // select.collapseToEnd;
-      // this.aNode = select.anchorNode;
-      // this.aOffset = select.anchorOffset+1;
-      // console.log(this.aNode)
-      // console.log(this.aOffset)
-      // this.fNode =select.focusNode;
-      // this.fOffset = select.focusOffset;
-
-      // console.log(window.getSelection());
-      this.dValue = toString(this.$refs.textarea.innerHTML);
-
+      this.setSelection();
+      // console.log(this.$refs.textarea);
+      this.dValue = this.html_entity_decode(this.$refs.textarea.innerHTML);
       this.isAutoresize();
       this.$emit("onInput", this.dValue);
     },
@@ -173,11 +180,38 @@ export default {
   mounted() {
     if (this.focus == true) {
       this.modFocus = true;
-      let ctrl = this.$refs.textarea;
-      ctrl.focus();
+      this.$refs.textarea.focus();
     }
     this.$refs.textarea.style.resize = this.resize;
     this.isAutoresize();
+    this.$on("onAddNode", function(node) {
+      let wrapper = document.createElement("span");
+      wrapper.innerHTML = node;
+
+      let rng = document.createRange();
+      rng.setStart(this.anchorNode, this.anchorOffset);
+      rng.setEnd(this.focusNode, this.focusOffset);
+      wrapper.childNodes.forEach(element => {
+        rng.insertNode(element);
+      });
+      // console.log(this.focusOffset + wrapper.childNodes.length - 1);
+      var sel = window.getSelection();
+      rng.setStart(
+        this.focusNode,
+        this.focusOffset + wrapper.childNodes.length - 1
+      );
+      rng.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(rng);
+      // this.modFocus = true;
+      this.isInputText();
+    });
+    this.$on("onAddValue", function(node) {
+      this.$refs.textarea.innerHTML = node;
+      this.modFocus = true;
+      this.$refs.textarea.focus();
+      this.isInputText();
+    });
   }
 };
 </script>

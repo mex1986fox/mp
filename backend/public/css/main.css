@@ -614,6 +614,8 @@ body {
   cursor: pointer;
   float: left;
   margin: 22px auto 18px auto; }
+  .ui-contenteditable .wg-smiles__smile {
+    padding: 0 5px; }
   .ui-contenteditable__caption {
     width: 100%;
     height: 30px;
@@ -3044,9 +3046,19 @@ select::-ms-expand {
       clear: both;
       float: left; }
     .wg-messanger__message-block_noread {
-      background-color: #c3c3c34d; }
+      background-color: #2495ce1a; }
       .wg-messanger__message-block_noread::before {
         content: "\41D\435   \43F\440\43E\447\438\442\430\43D\43D\43E";
+        display: block;
+        width: 100%;
+        text-align: center;
+        color: #919191;
+        font-size: 12px;
+        line-height: 45px; }
+    .wg-messanger__message-block_newread {
+      background-color: #2bd1321a; }
+      .wg-messanger__message-block_newread::before {
+        content: "\41D\43E\432\43E\435   \441\43E\43E\431\449\435\43D\438\435";
         display: block;
         width: 100%;
         text-align: center;
@@ -3063,6 +3075,8 @@ select::-ms-expand {
     max-width: calc(100% - 202px);
     float: left;
     white-space: pre-line; }
+    .wg-messanger__message-apponent .wg-smiles__smile {
+      padding: 0 5px; }
     .wg-messanger__message-apponent::before {
       content: "";
       border: 8px solid transparent;
@@ -3081,6 +3095,8 @@ select::-ms-expand {
     max-width: calc(100% - 214px);
     float: right;
     white-space: pre-line; }
+    .wg-messanger__message .wg-smiles__smile {
+      padding: 0 5px; }
     .wg-messanger__message::before {
       content: "";
       border: 8px solid transparent;

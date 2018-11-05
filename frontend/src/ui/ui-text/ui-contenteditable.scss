@@ -7,6 +7,9 @@
   cursor: pointer;
   float: left;
   margin: 22px auto 18px auto;
+  & .wg-smiles__smile {
+    padding: 0 5px;
+  }
   &__caption {
     width: 100%;
     height: 30px;

@@ -25,7 +25,21 @@
 			<ui-menu :show="showMenu"
 			         @onHide="showMenu=false"
 			         position="left-bottom">
-				<ul class="wg-card-ad__menu">
+
+				<ul v-if="user_id!=undefined && user_id==dObj.user.id"
+				    class="wg-card-ad__menu">
+					<li class="wg-card-ad__menu-li">
+						Редактировать
+					</li>
+					<li class="wg-card-ad__menu-li">
+						Отметить проданным
+					</li>
+					<li class="wg-card-ad__menu-li">
+						Поднять
+					</li>
+				</ul>
+				<ul v-else
+				    class="wg-card-ad__menu">
 					<li @click="(showMenu=false, showContacts=true)"
 					    class="wg-card-ad__menu-li">
 						Показать контакты
@@ -210,6 +224,7 @@ export default {
   name: "wg-card-ad",
   data() {
     return {
+      user_id: this.$cookie.get("user_id"),
       showMenu: false,
       showContacts: false,
       showMessenger: false,
