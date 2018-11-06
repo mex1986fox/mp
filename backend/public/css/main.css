@@ -3103,6 +3103,16 @@ select::-ms-expand {
       border-left: 8px solid #2495ce40;
       position: absolute;
       right: -16px; }
+    .wg-messanger__message-date-create {
+      width: 100%;
+      margin: 4px 55px 16px 0px;
+      display: block;
+      font-size: 14px;
+      color: #525252; }
+    .wg-messanger__message-but-menu {
+      position: absolute;
+      left: auto;
+      top: 1px; }
   .wg-messanger__button-contacts {
     position: absolute;
     left: 21px;

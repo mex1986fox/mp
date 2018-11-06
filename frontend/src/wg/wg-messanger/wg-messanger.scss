@@ -1,309 +1,321 @@
 .wg-messanger {
-  width: 100%;
-  background-color: $color-fon;
-  box-shadow: $color-shadow-active;
-  overflow: hidden;
-  &__tabs {
-    & .ui-tabs__tab {
-      color: $color-fon;
-      &:after {
-        background-color: $color-fon;
-      }
-      &_active {
-        color: $color-fon;
-        &:after {
-          background-color: $color-fon;
-        }
-      }
-    }
-    .ui-tabs__button {
-      color: $color-fon;
-    }
-  }
-  &__bar {
-    overflow: hidden;
-    position: relative;
-    background-color: #252020;
-    padding: 0;
-    margin: 0;
-    box-shadow: $color-shadow;
-    margin-bottom: 40px;
-    background-image: url(http://www.el-tony.com/wp-content/uploads/2014/10/Lamborghini-Huracan-Side-Abstract-Aerography-Car-2014-Pink-Colors-HD-Wallpapers-design-by-Tony-Kokhan-www.el-tony.com_-900x506.jpg);
-    background-position: center center;
-    opacity: 0.9;
-    &:before {
-      content: "";
-      background-color: rgba(3, 11, 15, 0.91);
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      z-index: -1;
-    }
-  }
-  &__header {
-    color: #ffffff;
-    border: 31px solid transparent;
-    line-height: 28px;
-    margin: 0;
     width: 100%;
-    box-sizing: border-box;
-    border-right: 90px solid transparent;
-  }
-  &__avatar-block {
-    padding: 0 20px;
+    background-color: $color-fon;
+    box-shadow: $color-shadow-active;
     overflow: hidden;
-    margin: 20px 0;
-    & > .ui-avatar-block__link {
-      left: 95px;
+    &__tabs {
+        & .ui-tabs__tab {
+            color: $color-fon;
+            &:after {
+                background-color: $color-fon;
+            }
+            &_active {
+                color: $color-fon;
+                &:after {
+                    background-color: $color-fon;
+                }
+            }
+        }
+        .ui-tabs__button {
+            color: $color-fon;
+        }
     }
-    & > .ui-avatar-block__title {
-      left: 95px;
+    &__bar {
+        overflow: hidden;
+        position: relative;
+        background-color: #252020;
+        padding: 0;
+        margin: 0;
+        box-shadow: $color-shadow;
+        margin-bottom: 40px;
+        background-image: url(http://www.el-tony.com/wp-content/uploads/2014/10/Lamborghini-Huracan-Side-Abstract-Aerography-Car-2014-Pink-Colors-HD-Wallpapers-design-by-Tony-Kokhan-www.el-tony.com_-900x506.jpg);
+        background-position: center center;
+        opacity: 0.9;
+        &:before {
+            content: "";
+            background-color: rgba(3, 11, 15, 0.91);
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+        }
     }
-    &:hover {
-      background-color: $color-list-hover;
-      cursor: pointer;
+    &__header {
+        color: #ffffff;
+        border: 31px solid transparent;
+        line-height: 28px;
+        margin: 0;
+        width: 100%;
+        box-sizing: border-box;
+        border-right: 90px solid transparent;
     }
-    &:active {
-      background-color: $color-list-active;
+    &__avatar-block {
+        padding: 0 20px;
+        overflow: hidden;
+        margin: 20px 0;
+        &>.ui-avatar-block__link {
+            left: 95px;
+        }
+        &>.ui-avatar-block__title {
+            left: 95px;
+        }
+        &:hover {
+            background-color: $color-list-hover;
+            cursor: pointer;
+        }
+        &:active {
+            background-color: $color-list-active;
+        }
     }
-  }
-  &__avatar-block-button {
-    left: auto;
-    right: 14px;
-    position: absolute;
-  }
-  &__messages {
-    padding: 0 20px;
-    &-form {
-      position: absolute;
-      bottom: 0px;
-      background-color: #ffffff;
-      overflow: hidden;
-      width: calc(100% - 40px);
-      z-index: 3;
-      &-button {
+    &__avatar-block-button {
         left: auto;
+        right: 14px;
         position: absolute;
-        bottom: 10px;
-        right: 0px;
-      }
     }
-  }
-  &__messages-block {
-    overflow: hidden;
-    overflow-y: auto;
-    height: auto;
-  }
-  &__message-block {
-    height: auto;
-    position: relative;
-    overflow: hidden;
-    &::after {
-      content: "";
-      clear: both;
-      float: left;
+    &__messages {
+        padding: 0 20px;
+        &-form {
+            position: absolute;
+            bottom: 0px;
+            background-color: #ffffff;
+            overflow: hidden;
+            width: calc(100% - 40px);
+            z-index: 3;
+            &-button {
+                left: auto;
+                position: absolute;
+                bottom: 10px;
+                right: 0px;
+            }
+        }
     }
-    &_noread {
-      background-color: #2495ce1a;
-      &::before {
-        content: "Не прочитанно";
-        display: block;
-        width: 100%;
-        text-align: center;
-        color: #919191;
-        font-size: 12px;
-        line-height: 45px;
-      }
+    &__messages-block {
+        overflow: hidden;
+        overflow-y: auto;
+        height: auto;
     }
-    &_newread {
-      background-color: #2bd1321a;
-      &::before {
-        content: "Новое сообщение";
-        display: block;
-        width: 100%;
-        text-align: center;
-        color: #919191;
-        font-size: 12px;
-        line-height: 45px;
-      }
+    &__message-block {
+        height: auto;
+        position: relative;
+        overflow: hidden;
+        &::after {
+            content: "";
+            clear: both;
+            float: left;
+        }
+        &_noread {
+            background-color: #2495ce1a;
+            &::before {
+                content: "Не прочитанно";
+                display: block;
+                width: 100%;
+                text-align: center;
+                color: #919191;
+                font-size: 12px;
+                line-height: 45px;
+            }
+        }
+        &_newread {
+            background-color: #2bd1321a;
+            &::before {
+                content: "Новое сообщение";
+                display: block;
+                width: 100%;
+                text-align: center;
+                color: #919191;
+                font-size: 12px;
+                line-height: 45px;
+            }
+        }
     }
-  }
-  &__message-apponent {
-    & .wg-smiles__smile {
-      padding: 0 5px;
+    &__message-apponent {
+        & .wg-smiles__smile {
+            padding: 0 5px;
+        }
+        background-color: #2bd13240;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 7px;
+        position: relative;
+        left: 0px;
+        max-width: calc(100% - 202px);
+        float: left;
+        white-space: pre-line;
+        &::before {
+            content: "";
+            border: 8px solid transparent;
+            border-right: 8px solid #2bd13240;
+            position: absolute;
+            left: -16px;
+        }
     }
-    background-color: #2bd13240;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 7px;
-    position: relative;
-    left: 0px;
-    max-width: calc(100% - 202px);
-    float: left;
-    white-space: pre-line;
-    &::before {
-      content: "";
-      border: 8px solid transparent;
-      border-right: 8px solid #2bd13240;
-      position: absolute;
-      left: -16px;
+    &__avatar {
+        float: right;
     }
-  }
-  &__avatar {
-    float: right;
-  }
-  &__message {
-    & .wg-smiles__smile {
-      padding: 0 5px;
-    }
-    background-color: #2495ce40;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 7px;
-    position: relative;
-    left: 0px;
-    max-width: calc(100% - 214px);
-    float: right;
-    white-space: pre-line;
-    &::before {
-      content: "";
-      border: 8px solid transparent;
-      border-left: 8px solid #2495ce40;
-      position: absolute;
-      right: -16px;
-    }
-  }
-  &__button-contacts {
-    position: absolute;
-    left: 21px;
-    float: right;
-    top: 60px;
-    z-index: 5;
-    &_right {
-      left: auto;
-      right: 9px;
-      top: 99px;
-    }
-    &-enter-active {
-      opacity: 1;
-      transition: all 0.6s;
+    &__message {
+        & .wg-smiles__smile {
+            padding: 0 5px;
+        }
+        background-color: #2495ce40;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 7px;
+        position: relative;
+        left: 0px;
+        max-width: calc(100% - 214px);
+        float: right;
+        white-space: pre-line;
+        &::before {
+            content: "";
+            border: 8px solid transparent;
+            border-left: 8px solid #2495ce40;
+            position: absolute;
+            right: -16px;
+        }
+        &-date-create {
+          width: 100%;
+          margin: 4px 55px 16px 0px;
+          display: block;
+          font-size: 14px;
+            color: $color-description;
+        }
+        &-but-menu {
+            position: absolute;
+            left: auto;
+            top: 1px;
+        }
     }
     &__button-contacts {
-      position: absolute;
-      left: 21px;
-      float: right;
-      top: 60px;
-      z-index: 5;
-      &_right {
-        left: auto;
-        right: 5px;
-        top: 95px;
-      }
-      &-enter-active {
-        opacity: 1;
-        transition: all 0.6s;
-      }
-      &-leave-active {
-        opacity: 0;
-        transition: all 0.6s;
-      }
-      &-enter {
-        opacity: 0;
-      }
-      &-leave {
-        opacity: 1;
-      }
+        position: absolute;
+        left: 21px;
+        float: right;
+        top: 60px;
+        z-index: 5;
+        &_right {
+            left: auto;
+            right: 9px;
+            top: 99px;
+        }
+        &-enter-active {
+            opacity: 1;
+            transition: all 0.6s;
+        }
+        &__button-contacts {
+            position: absolute;
+            left: 21px;
+            float: right;
+            top: 60px;
+            z-index: 5;
+            &_right {
+                left: auto;
+                right: 5px;
+                top: 95px;
+            }
+            &-enter-active {
+                opacity: 1;
+                transition: all 0.6s;
+            }
+            &-leave-active {
+                opacity: 0;
+                transition: all 0.6s;
+            }
+            &-enter {
+                opacity: 0;
+            }
+            &-leave {
+                opacity: 1;
+            }
+        }
+        &-enter {
+            opacity: 0;
+        }
+        &-leave {
+            opacity: 1;
+        }
     }
-    &-enter {
-      opacity: 0;
+    &__contacts {
+        position: absolute;
+        height: calc(100% - 90px);
+        width: 100%;
+        overflow: hidden;
+        background-color: #0505059a;
+        z-index: 4;
+        margin-top: -40px;
+        &-menu {
+            height: 100%;
+            width: 300px;
+            background-color: $color-fon;
+            &::before {
+                content: "";
+                display: block;
+                padding-top: 20px;
+            }
+        }
+        &-enter-active {
+            //   opacity: 1;
+            width: 100%;
+            transition: all 0.6s;
+        }
+        &-leave-active {
+            //   opacity: 0;
+            width: 0px;
+            transition: all 0.6s;
+        }
+        &-enter {
+            //   opacity: 0;
+            width: 0px;
+        }
+        &-leave {
+            //   opacity: 1;
+            width: 100%;
+        }
     }
-    &-leave {
-      opacity: 1;
+    &__notific-mes {
+        left: 62px;
+        top: 62px;
+        z-index: 25;
     }
-  }
-  &__contacts {
-    position: absolute;
-    height: calc(100% - 90px);
-    width: 100%;
-    overflow: hidden;
-    background-color: #0505059a;
-    z-index: 4;
-    margin-top: -40px;
-    &-menu {
-      height: 100%;
-      width: 300px;
-      background-color: $color-fon;
-      &::before {
-        content: "";
-        display: block;
-        padding-top: 20px;
-      }
+    &__notific-mes-cont {
+        left: 62px;
+        top: 1px;
+        z-index: 25;
     }
-    &-enter-active {
-      //   opacity: 1;
-      width: 100%;
-      transition: all 0.6s;
-    }
-    &-leave-active {
-      //   opacity: 0;
-      width: 0px;
-      transition: all 0.6s;
-    }
-    &-enter {
-      //   opacity: 0;
-      width: 0px;
-    }
-    &-leave {
-      //   opacity: 1;
-      width: 100%;
-    }
-  }
-  &__notific-mes {
-    left: 62px;
-    top: 62px;
-    z-index: 25;
-  }
-  &__notific-mes-cont {
-    left: 62px;
-    top: 1px;
-    z-index: 25;
-  }
 }
 
 @media (max-width: 770px) {
-  .wg-messanger {
-    margin: -30px -10px;
-    width: calc(100% + 20px);
-    &__button-contacts {
-      right: 12px;
-      top: 26px;
+    .wg-messanger {
+        margin: -30px -10px;
+        width: calc(100% + 20px);
+        &__button-contacts {
+            right: 12px;
+            top: 26px;
+        }
+        &__messages-form {
+            bottom: -30px;
+            width: calc(100% - 20px);
+        }
+        &__contacts {
+            height: calc(100% - 30px);
+            width: calc(100% + 20px);
+            margin-top: -40px;
+            &-enter-active {
+                //   opacity: 1;
+                width: 100%;
+                transition: all 0.6s;
+            }
+            &-leave-active {
+                //   opacity: 0;
+                width: 0px;
+                transition: all 0.6s;
+            }
+            &-enter {
+                //   opacity: 0;
+                width: 0px;
+            }
+            &-leave {
+                //   opacity: 1;
+                width: 100%;
+            }
+        }
     }
-    &__messages-form {
-      bottom: -30px;
-      width: calc(100% - 20px);
-    }
-    &__contacts {
-      height: calc(100% - 30px);
-      width: calc(100% + 20px);
-      margin-top: -40px;
-      &-enter-active {
-        //   opacity: 1;
-        width: 100%;
-        transition: all 0.6s;
-      }
-      &-leave-active {
-        //   opacity: 0;
-        width: 0px;
-        transition: all 0.6s;
-      }
-      &-enter {
-        //   opacity: 0;
-        width: 0px;
-      }
-      &-leave {
-        //   opacity: 1;
-        width: 100%;
-      }
-    }
-  }
 }
