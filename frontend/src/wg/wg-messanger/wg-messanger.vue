@@ -69,7 +69,7 @@
             </ui-avatar>
             <div class="wg-messanger__message">
               <span class="wg-messanger__message-date-create">{{val.date_created}}
-                <div @click="showMenu=true" class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat wg-messanger__message-but-menu">
+                <div @click="(showMenu=true, dCrMessage=val.date_created)" class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat wg-messanger__message-but-menu">
                   <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                 </div>
               </span>
@@ -107,9 +107,9 @@
       </div>
 
     </div>
-    <ui-menu :show="showMenu" @onHide="showMenu=false" position="left-bottom">
+    <ui-menu :show="showMenu" @onHide="(showMenu=false, dCrMessage=undefined)" position="left-bottom">
       <ul class="wg-card-ad__menu">
-        <li class="wg-card-ad__menu-li">
+        <li @click="deletedMessage" class="wg-card-ad__menu-li">
           Удалить сообщение
         </li>
       </ul>
@@ -132,7 +132,9 @@ export default {
       newMessage: undefined,
       showSmiles: false,
       activeBrauzer: true,
-      showMenu: false
+      showMenu: false,
+      dCrMessage: undefined,
+      dialog_id: undefined
     };
   },
   props: {
@@ -201,6 +203,27 @@ export default {
           response => {
             this.message = "";
             this.$refs.contenteditable.$emit("onAddValue", this.message);
+            this.SetUnreadMessage();
+            this.showMessages();
+          },
+          error => {}
+        );
+    },
+    deletedMessage() {
+      this.showMenu = false;
+      let headers = { "Content-Type": "multipart/form-data" };
+      let params = {
+        user_id: this.$cookie.get("user_id"),
+        session_id: this.$cookie.get("PHPSESSID"),
+        dialog_id: this.dialog_id,
+        date_created: this.dCrMessage
+      };
+      this.description = undefined;
+      this.$http
+        .post(this.$hosts.messages + "/api/delete/messages", params, headers)
+        .then(
+          response => {
+            console.log(response);
             this.SetUnreadMessage();
             this.showMessages();
           },

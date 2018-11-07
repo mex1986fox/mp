@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Controllers\MainController;
 use \App\Models\Api\Messages\Create as MessagesCreate;
+use \App\Models\Api\Messages\Delete as MessagesDelete;
 use \App\Models\Api\Messages\Length as MessagesLength;
 use \App\Models\Api\Messages\Show as MessagesShow;
 use \App\Models\Api\Messages\MarkRead as MessagesMarkRead;
@@ -57,7 +58,15 @@ class MessagesController extends MainController
     }
     public function delete($request, $response, $args)
     {
-
+        $cont = $this->container;
+        $reg = new MessagesDelete($cont, $request, $response);
+        $answer = $reg->run();
+        if (isset($answer['exceptions'])) {
+            $response = $response->withJson($answer, 400);
+        }
+        if (isset($answer['massege'])) {
+            $response = $response->withJson($answer, 200);
+        }
         return $response;
     }
     public function length($request, $response, $args)

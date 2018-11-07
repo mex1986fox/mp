@@ -43,7 +43,7 @@ class Create
             $userID = (int) $p["user_id"];
             $apponentID = (int) $p["apponent_id"];
             if ($userID == $apponentID) {
-                throw new \Exception("Нельзя отправить сообщение самому седбе");
+                throw new \Exception("Нельзя отправить сообщение самому себе");
             }
             // проверить аутентификацию пользователя
             $auths = $this->container['auths'];

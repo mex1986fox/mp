@@ -3,7 +3,7 @@ namespace App\Models\Api\Messages;
 
 use \Zend\Validator\Exception\RuntimeException as RuntimeException;
 
-class Show
+class Delete
 {
     protected $request, $response, $container;
     public function __construct($container, $request, $response)
@@ -21,7 +21,13 @@ class Show
             $p = $this->request->getQueryParams();
 
             //проверяем параметры
-
+            $exceptions = [];
+            if (empty($p["date_created"])) {
+                $exceptions["date_created"] = "Не указана дата создания";
+            }
+            if (empty($p["dialog_id"])) {
+                $exceptions["dialog_id"] = "Не указан номер диалога";
+            }
             if (empty($p["session_id"])) {
                 $exceptions["session_id"] = "Не указана сессия";
             }
@@ -31,14 +37,11 @@ class Show
             if (!empty($exceptions)) {
                 throw new \Exception("Не верные параметры");
             }
-            if (empty($p["apponent_id"])) {
-                $exceptions["apponent_id"] = "Не указан аппонент";
-            }
-            $apponentID = (int) $p["apponent_id"];
-
-            //устанавливаем параметры
+            // устанавливаем параметры
+            $dateCreated = $p["date_created"];
             $sessionID = $p["session_id"];
             $userID = (int) $p["user_id"];
+            $dialogID = $p["dialog_id"];
 
             // проверить аутентификацию пользователя
             $auths = $this->container['auths'];
@@ -46,27 +49,23 @@ class Show
             if (!$authedUser) {
                 throw new \Exception("Не прошел аутентификацию");
             }
-
+ 
             $mdb = $this->container['mongodb'];
-            // проверить есть ли диалог
-            $aggreg = $mdb->dialogs->aggregate([
-                ['$match' => ['_id' => $userID]],
-                ['$unwind' => '$dialogs'],
-                ['$match' => ['dialogs.apponent_id' => $apponentID]],
-                ['$limit' => 5],
-            ]);
-            $arrDial = iterator_to_array($aggreg, false);
-            $dialogId = (count($arrDial) > 0) ? $arrDial[0]["dialogs"]["dialog_id"] : null;
-            if (!empty($dialogId)) {
-                $dialog = $mdb->messages->findOne(['_id' => $dialogId], ['messages' => ['$slice' => 1]]);
-            } else {
-                throw new \Exception("Диалога не найдено");
+            // удалить сообщение
+            $dialog = $mdb->messages->findOne(['_id' => $dialogID]);
+            $messages = iterator_to_array($dialog, true)['messages'];
+            foreach ($messages as $key => $value) {
+                if ($messages[$key]["user_id"] == $userID && $messages[$key]["date_created"] == $dateCreated) {
+                    unset($messages[$key]);
+                }
             }
-            $messages = iterator_to_array($dialog, true)["messages"];
-            return ["messages" => $messages];
+            $mdb->messages->updateOne(['_id' => $dialogID], ['$set' => ['messages' => $messages]]);
+
+            return ["massege" => "Сообщение удалено"];
         } catch (RuntimeException | \Exception $e) {
-            $exceptions['message'] = $e->getMessage();
+            $exceptions['massege'] = $e->getMessage();
             return ["exceptions" => $exceptions];
         }
+
     }
 }
