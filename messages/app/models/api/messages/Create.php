@@ -77,9 +77,9 @@ class Create
             ]);
             // var_dump(iterator_to_array($aggreg, false));
             // var_dump(count(iterator_to_array($aggreg, false)));
-            $arrDial=iterator_to_array($aggreg, false);
+            $arrDial = iterator_to_array($aggreg, false);
             $dialogId = (count($arrDial) > 0) ? $arrDial[0]["dialogs"]["dialog_id"] : null;
-                // var_dump($arrDial);
+            // var_dump($arrDial);
             // если нет диалога
             if (empty($dialogId)) {
                 // создать диалог
@@ -102,9 +102,20 @@ class Create
                 "message" => $message,
                 "user_id" => $userID,
                 "date_created" => date("Y-m-d H:i:s"),
-                "status_read"=>false
+                "status_read" => false,
             ];
-            $mdb->messages->updateOne(["_id" => $dialogId], ['$push' => ['messages' => $upMessage]], ["upsert" => true]);
+            //количество сообщений
+            $length = $mdb->messages->aggregate([
+                ['$match' => ['_id' => $dialogId]],
+                ['$project' => ['length' => ['$size' => '$messages']]],
+            ]);
+            echo $length = iterator_to_array($length, false)[0]['length'];
+
+            $mdb->messages->updateOne(
+                ["_id" => $dialogId],
+                ['$push' => ['messages' => $upMessage], '$set' => ['length' => $length + 1]],
+                ["upsert" => true]
+            );
 
             return ["massege" => "Сообщение отправленно"];
         } catch (RuntimeException | \Exception $e) {

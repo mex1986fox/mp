@@ -58,11 +58,22 @@ class Show
             $arrDial = iterator_to_array($aggreg, false);
             $dialogId = (count($arrDial) > 0) ? $arrDial[0]["dialogs"]["dialog_id"] : null;
             if (!empty($dialogId)) {
-                $dialog = $mdb->messages->findOne(['_id' => $dialogId], ['messages' => ['$slice' => 1]]);
+
+                $dialog = $mdb->messages->find(
+                    ['_id' => $dialogId],
+                    ['projection' => ['messages' => ['$slice' => -10]]]
+                );
+                // $command = 'db.messages.find({ "_id": "'.$dialogId.'" },{"messages":{$slice:1}})';
+                // $dialog = $mdb->execute($command);
             } else {
                 throw new \Exception("Диалога не найдено");
             }
-            $messages = iterator_to_array($dialog, true)["messages"];
+            // var_dump(iterator_to_array($dialog, true));
+
+            $find = iterator_to_array($dialog, true)[0];
+            $messages = $find["messages"];
+            // var_dump($find);
+            $messages['length'] = $find['length'];
             return ["messages" => $messages];
         } catch (RuntimeException | \Exception $e) {
             $exceptions['message'] = $e->getMessage();
