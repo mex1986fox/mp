@@ -40,7 +40,7 @@ class Show
             //устанавливаем параметры
             $sessionID = $p["session_id"];
             $userID = (int) $p["user_id"];
-            $shot = (!empty($p["shot"]) && $p["shot"] != 0) ? $p["shot"] : null;
+            $lastMes = (!empty($p["last_mes"]) && $p["last_mes"] != 0) ? $p["last_mes"] : null;
 
             // проверить аутентификацию пользователя
             $auths = $this->container['auths'];
@@ -60,22 +60,19 @@ class Show
             $arrDial = iterator_to_array($aggreg, false);
             $dialogId = (count($arrDial) > 0) ? $arrDial[0]["dialogs"]["dialog_id"] : null;
             if (!empty($dialogId)) {
-                $dialog = $mdb->messages->find(
-                    ['_id' => $dialogId],
-                    ['projection' => ['messages' => ['$slice' => [-5, 5]]]]
-                );
-                // $command = 'db.messages.find({ "_id": "'.$dialogId.'" },{"messages":{$slice:1}})';
-                // $dialog = $mdb->execute($command);
+                if ($lastMes != null) {
+                    $date_c = $mdb->$dialogId->find(['_id' => new \MongoDB\BSON\ObjectId($lastMes)]);
+                    $date_c = iterator_to_array($date_c, false)[0]['date_created'];
+                    $messages = $mdb->$dialogId->find(['date_created' => ['$gt' => $date_c]], ['limit' => 5, 'sort' => ['_id' => -1]]);
+                } else {
+                    $messages = $mdb->$dialogId->find([], ['limit' => 5, 'sort' => ['_id' => 1]]);
+                }
+
             } else {
                 throw new \Exception("Диалога не найдено");
             }
-            // var_dump(iterator_to_array($dialog, true));
-
-            $find = iterator_to_array($dialog, true)[0];
-            $messages = $find["messages"];
-            // var_dump($find);
-            $shots = intval($find['length'] / 5);
-            return ["messages" => $messages];
+            // var_dump(iterator_to_array($messages, false));
+            return ["messages" => iterator_to_array($messages, false)];
         } catch (RuntimeException | \Exception $e) {
             $exceptions['message'] = $e->getMessage();
             return ["exceptions" => $exceptions];

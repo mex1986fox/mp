@@ -1,14 +1,17 @@
 <template>
-  <div class="wg-messanger" :style="{'height':heightMessanger+'px'}">
+	<div class="wg-messanger"
+	     :style="{'height':heightMessanger+'px'}">
 
-    <div class="wg-messanger__bar">
-      <div class="ui-header ui-header_2 wg-messanger__header">
-        <span>Messanger</span>
-      </div>
-      <button class="ui-button ui-button_circle ui-button_flat wg-form-add__close" @click="isClose">
-        <i class="fa fa-times-thin" aria-hidden="true"></i>
-      </button>
-      <!-- <ui-tabs class="wg-messanger__tabs">
+		<div class="wg-messanger__bar">
+			<div class="ui-header ui-header_2 wg-messanger__header">
+				<span>Messanger</span>
+			</div>
+			<button class="ui-button ui-button_circle ui-button_flat wg-form-add__close"
+			        @click="isClose">
+				<i class="fa fa-times-thin"
+				   aria-hidden="true"></i>
+			</button>
+			<!-- <ui-tabs class="wg-messanger__tabs">
                 <ui-tabs-tab id="wg-messanger-contacts" :checked="tabs=='wg-messanger-contacts'" @onFocus="isTabs">
                     Контакты
                 </ui-tabs-tab>
@@ -17,106 +20,150 @@
                 </ui-tabs-tab>
             </ui-tabs> -->
 
-    </div>
-    <transition name="wg-messanger__button-contacts">
-      <div v-if="!showContacts" @click="showContacts=true" class="ui-button ui-button_circle wg-messanger__button-contacts">
-        <i class="fa fa-users" aria-hidden="true"></i>
-      </div>
-    </transition>
-    <transition name="wg-messanger__button-contacts">
-      <div v-if="showContacts" @click="showContacts=false" class="ui-button ui-button_circle  wg-messanger__button-contacts wg-messanger__button-contacts_right">
-        <i aria-hidden="true" class="fa fa-angle-left"></i>
-      </div>
-    </transition>
-    <div v-if="sumNewMessages!=undefined && sumNewMessages!=0 && !showContacts" class="ui-notific-mes wg-messanger__notific-mes">
-      {{sumNewMessages}}
-    </div>
-    <transition name="wg-messanger__contacts">
-      <div class="wg-messanger__contacts" v-show="showContacts">
-        <div class="wg-messanger__contacts-menu">
-          <div v-if="val.user" v-for="(val, key) in dialogs" :key="key" class="ui-avatar-block wg-messanger__avatar-block" @click="isClickContact(val.apponent_id, val.dialog_id)">
-            <ui-avatar class="ui-avatar" :lable="val.user.login">
-              <img :src="val.user.avatar" alt="">
-            </ui-avatar>
-            <div v-if="newMessage!=undefined && newMessage[val.user.id]!=undefined && newMessage[val.user.id]!=0" class="ui-notific-mes wg-messanger__notific-mes-cont">
-              {{newMessage[val.user.id]}}
-            </div>
-            <a class="ui-link ui-avatar-block__link">
-              {{val.user.name+" "+val.user.surname}}
-            </a>
-            <div class="ui-avatar-block__title">
-              Здесь последнее сообщение
-            </div>
-            <!-- <button class="ui-button ui-button_flat ui-button_circle ui-button_circle_mini wg-messanger__avatar-block-button">
+		</div>
+		<transition name="wg-messanger__button-contacts">
+			<div v-if="!showContacts"
+			     @click="showContacts=true"
+			     class="ui-button ui-button_circle wg-messanger__button-contacts">
+				<i class="fa fa-users"
+				   aria-hidden="true"></i>
+			</div>
+		</transition>
+		<transition name="wg-messanger__button-contacts">
+			<div v-if="showContacts"
+			     @click="showContacts=false"
+			     class="ui-button ui-button_circle  wg-messanger__button-contacts wg-messanger__button-contacts_right">
+				<i aria-hidden="true"
+				   class="fa fa-angle-left"></i>
+			</div>
+		</transition>
+		<div v-if="sumNewMessages!=undefined && sumNewMessages!=0 && !showContacts"
+		     class="ui-notific-mes wg-messanger__notific-mes">
+			{{sumNewMessages}}
+		</div>
+		<transition name="wg-messanger__contacts">
+			<div class="wg-messanger__contacts"
+			     v-show="showContacts">
+				<div class="wg-messanger__contacts-menu">
+					<div v-if="val.user"
+					     v-for="(val, key) in dialogs"
+					     :key="key"
+					     class="ui-avatar-block wg-messanger__avatar-block"
+					     @click="isClickContact(val.apponent_id, val.dialog_id)">
+						<ui-avatar class="ui-avatar"
+						           :lable="val.user.login">
+							<img :src="val.user.avatar"
+							     alt="">
+						</ui-avatar>
+						<div v-if="newMessage!=undefined && newMessage[val.user.id]!=undefined && newMessage[val.user.id]!=0"
+						     class="ui-notific-mes wg-messanger__notific-mes-cont">
+							{{newMessage[val.user.id]}}
+						</div>
+						<a class="ui-link ui-avatar-block__link">
+							{{val.user.name+" "+val.user.surname}}
+						</a>
+						<div class="ui-avatar-block__title">
+							Здесь последнее сообщение
+						</div>
+						<!-- <button class="ui-button ui-button_flat ui-button_circle ui-button_circle_mini wg-messanger__avatar-block-button">
 							<i aria-hidden="true"
 							   class="fa fa-ellipsis-v"></i>
 						</button> -->
-          </div>
+					</div>
 
-        </div>
+				</div>
 
-      </div>
-    </transition>
-    <div class="wg-messanger__messages">
-      <div ref="messages" class="wg-messanger__messages-block" :style="{'height':heightMessanger-heightForm-130+'px'}">
-        <div @click="showMessages(nextShot)" class="ui-button  ui-button_flat ">
-          + старые +
-        </div>
-        <div v-for="(val, key) in messages" :key="key" class="ui-avatar-block wg-messanger__message-block " :class="{'wg-messanger__message-block_noread': !val.status_read && user_id==val.user_id,
+			</div>
+		</transition>
+		<div class="wg-messanger__messages">
+			<div ref="messages"
+			     class="wg-messanger__messages-block"
+			     :style="{'height':heightMessanger-heightForm-130+'px'}">
+				<div @click="showMessages(messages[0]._id.$oid)"
+				     class="ui-button  ui-button_flat ">
+					+ старые +
+				</div>
+				<div v-for="(val, key) in messages"
+				     :key="key"
+				     class="ui-avatar-block wg-messanger__message-block "
+				     :class="{'wg-messanger__message-block_noread': !val.status_read && user_id==val.user_id,
              'wg-messanger__message-block_newread': !val.status_read && user_id!=val.user_id}">
 
-          <div v-if="user_id==val.user_id">
-            <ui-avatar v-if="val.user" class="wg-messanger__avatar" :lable="val.user.login">
-              <img :src="val.user.avatar" alt="">
-            </ui-avatar>
-            <div class="wg-messanger__message">
-              <span class="wg-messanger__message-date-create">{{val.date_created}}
-                <div @click="(showMenu=true, dCrMessage=val.date_created)" class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat wg-messanger__message-but-menu">
-                  <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                </div>
-              </span>
-              <div v-html="val.message"></div>
-            </div>
-          </div>
+					<div v-if="user_id==val.user_id">
+						<ui-avatar v-if="val.user"
+						           class="wg-messanger__avatar"
+						           :lable="val.user.login">
+							<img :src="val.user.avatar"
+							     alt="">
+						</ui-avatar>
+						<div class="wg-messanger__message">
+							<span class="wg-messanger__message-date-create">{{val.date_created}}
+								<div @click="(showMenu=true, dCrMessage=val.date_created)"
+								     class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat wg-messanger__message-but-menu">
+									<i class="fa fa-ellipsis-h"
+									   aria-hidden="true"></i>
+								</div>
+							</span>
+							<div v-html="val.message"></div>
+						</div>
+					</div>
 
-          <div v-if="user_id!=val.user_id">
-            <ui-avatar v-if="val.user" class="wg-messanger__avatar-apponent" :lable="val.user.login">
-              <img :src="val.user.avatar" alt="">
-            </ui-avatar>
-            <div class="wg-messanger__message-apponent">
-              <span class="wg-messanger__message-date-create">{{val.date_created}}
-              </span>
-              <div v-html="val.message"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <ui-menu :show="showSmiles" @onHide="showSmiles=false" position="left-top">
-        <wg-smiles @onClick="isClickSmile"></wg-smiles>
-      </ui-menu>
-      <div ref="form" class="wg-messanger__messages-form">
-        <ui-contenteditable ref="contenteditable" @onInput="isInputMassage" caption="Ваше сообщение" :autoresize="60" :focus="true">
-        </ui-contenteditable>
-        <div class=" wg-messanger__messages-form-button">
-          <div @click="showSmiles=true" class="ui-button ui-button_circle ui-button_circle_mini">
-            <i class="fa fa-smile-o" aria-hidden="true"></i>
-          </div>
-          <button @click="createMessage" v-show="message!=undefined" class="ui-button ui-button_blue ui-button_circle ui-button_circle_mini">
-            <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
-          </button>
-        </div>
+					<div v-if="user_id!=val.user_id">
+						<ui-avatar v-if="val.user"
+						           class="wg-messanger__avatar-apponent"
+						           :lable="val.user.login">
+							<img :src="val.user.avatar"
+							     alt="">
+						</ui-avatar>
+						<div class="wg-messanger__message-apponent">
+							<span class="wg-messanger__message-date-create">{{val.date_created}}
+							</span>
+							<div v-html="val.message"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<ui-menu :show="showSmiles"
+			         @onHide="showSmiles=false"
+			         position="left-top">
+				<wg-smiles @onClick="isClickSmile"></wg-smiles>
+			</ui-menu>
+			<div ref="form"
+			     class="wg-messanger__messages-form">
+				<ui-contenteditable ref="contenteditable"
+				                    @onInput="isInputMassage"
+				                    caption="Ваше сообщение"
+				                    :autoresize="60"
+				                    :focus="true">
+				</ui-contenteditable>
+				<div class=" wg-messanger__messages-form-button">
+					<div @click="showSmiles=true"
+					     class="ui-button ui-button_circle ui-button_circle_mini">
+						<i class="fa fa-smile-o"
+						   aria-hidden="true"></i>
+					</div>
+					<button @click="createMessage"
+					        v-show="message!=undefined"
+					        class="ui-button ui-button_blue ui-button_circle ui-button_circle_mini">
+						<i class="fa fa-paper-plane-o"
+						   aria-hidden="true"></i>
+					</button>
+				</div>
 
-      </div>
+			</div>
 
-    </div>
-    <ui-menu :show="showMenu" @onHide="(showMenu=false, dCrMessage=undefined)" position="left-bottom">
-      <ul class="wg-card-ad__menu">
-        <li @click="deletedMessage" class="wg-card-ad__menu-li">
-          Удалить сообщение
-        </li>
-      </ul>
-    </ui-menu>
-  </div>
+		</div>
+		<ui-menu :show="showMenu"
+		         @onHide="(showMenu=false, dCrMessage=undefined)"
+		         position="left-bottom">
+			<ul class="wg-card-ad__menu">
+				<li @click="deletedMessage"
+				    class="wg-card-ad__menu-li">
+					Удалить сообщение
+				</li>
+			</ul>
+		</ui-menu>
+	</div>
 </template>
 <script>
 export default {
@@ -165,12 +212,31 @@ export default {
       }
     },
 
+    addNewMessages(newMessages) {
+      let flagPush;
+      if (this.messages != undefined) {
+        newMessages.forEach(newMes => {
+          flagPush = true;
+          this.messages.forEach(oldMes => {
+            if (oldMes._id.$oid == newMes._id.$oid) {
+              flagPush = false;
+            }
+          });
+          if (flagPush == true) {
+            this.messages.push(newMes);
+          }
+        });
+      } else {
+        this.messages = newMessages;
+      }
+      this.messages = this.messages.sort((a, b) => a._id.$oid > b._id.$oid);
+    },
     //добавляет юзеров в сообщения
     addUsersToMessages() {
       //  = [];
-      for (const key in this.messages) {
-        this.messages[key]["user"] = this.users[this.messages[key].user_id];
-      }
+      this.messages.forEach(mes => {
+        mes.user = this.users[mes.user_id];
+      });
       let newMes = this.messages;
       this.messages = undefined;
       this.messages = newMes;
@@ -311,31 +377,22 @@ export default {
         );
     },
     // покажет сообщения для юзера
-    showMessages(nextShot) {
+    showMessages(lastMes) {
       let headers = { "Content-Type": "multipart/form-data" };
       let params = {
         user_id: this.$cookie.get("user_id"),
         session_id: this.$cookie.get("PHPSESSID"),
         apponent_id: this.apponent_id
       };
-      if (nextShot != undefined) {
-        params.shot = nextShot;
+      if (lastMes != undefined) {
+        params.last_mes = lastMes;
       }
       this.description = undefined;
       this.$http
         .post(this.$hosts.messages + "/api/show/messages", params, headers)
         .then(
           response => {
-            if (this.messages == undefined) {
-              this.messages = {};
-            }
-            let newMessages = response.body.messages;
-            if (this.nextShot == undefined) {
-              this.nextShot = response.body.shot-1;
-            }
-            for (const key in newMessages) {
-              this.messages[newMessages[key].id] = newMessages[key];
-            }
+            this.addNewMessages(response.body.messages);
 
             let users = [];
             for (const key in this.messages) {

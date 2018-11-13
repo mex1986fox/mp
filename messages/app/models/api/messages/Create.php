@@ -104,25 +104,9 @@ class Create
                 "date_created" => date("Y-m-d H:i:s"),
                 "status_read" => false,
             ];
-            //количество сообщений
-            $length = $mdb->messages->aggregate([
-                ['$match' => ['_id' => $dialogId]],
-                ['$project' => ['length' => ['$size' => '$messages']]],
-            ]);
-            $length = iterator_to_array($length, false)[0]['length'];
+
             // добавить сообщение к диалогу
-            $upMessage = [
-                "id"=>$length + 1,
-                "message" => $message,
-                "user_id" => $userID,
-                "date_created" => date("Y-m-d H:i:s"),
-                "status_read" => false,
-            ];
-            $mdb->messages->updateOne(
-                ["_id" => $dialogId],
-                ['$push' => ['messages' => $upMessage], '$set' => ['length' => $length + 1]],
-                ["upsert" => true]
-            );
+            $mdb->$dialogId->insertOne($upMessage);
 
             return ["massege" => "Сообщение отправленно"];
         } catch (RuntimeException | \Exception $e) {
