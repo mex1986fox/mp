@@ -109,8 +109,15 @@ class Create
                 ['$match' => ['_id' => $dialogId]],
                 ['$project' => ['length' => ['$size' => '$messages']]],
             ]);
-            echo $length = iterator_to_array($length, false)[0]['length'];
-
+            $length = iterator_to_array($length, false)[0]['length'];
+            // добавить сообщение к диалогу
+            $upMessage = [
+                "id"=>$length + 1,
+                "message" => $message,
+                "user_id" => $userID,
+                "date_created" => date("Y-m-d H:i:s"),
+                "status_read" => false,
+            ];
             $mdb->messages->updateOne(
                 ["_id" => $dialogId],
                 ['$push' => ['messages' => $upMessage], '$set' => ['length' => $length + 1]],

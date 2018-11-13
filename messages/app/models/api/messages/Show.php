@@ -34,11 +34,13 @@ class Show
             if (empty($p["apponent_id"])) {
                 $exceptions["apponent_id"] = "Не указан аппонент";
             }
+
             $apponentID = (int) $p["apponent_id"];
 
             //устанавливаем параметры
             $sessionID = $p["session_id"];
             $userID = (int) $p["user_id"];
+            $shot = (!empty($p["shot"]) && $p["shot"] != 0) ? $p["shot"] : null;
 
             // проверить аутентификацию пользователя
             $auths = $this->container['auths'];
@@ -58,10 +60,9 @@ class Show
             $arrDial = iterator_to_array($aggreg, false);
             $dialogId = (count($arrDial) > 0) ? $arrDial[0]["dialogs"]["dialog_id"] : null;
             if (!empty($dialogId)) {
-
                 $dialog = $mdb->messages->find(
                     ['_id' => $dialogId],
-                    ['projection' => ['messages' => ['$slice' => -10]]]
+                    ['projection' => ['messages' => ['$slice' => [-5, 5]]]]
                 );
                 // $command = 'db.messages.find({ "_id": "'.$dialogId.'" },{"messages":{$slice:1}})';
                 // $dialog = $mdb->execute($command);
@@ -73,7 +74,7 @@ class Show
             $find = iterator_to_array($dialog, true)[0];
             $messages = $find["messages"];
             // var_dump($find);
-            $messages['length'] = $find['length'];
+            $shots = intval($find['length'] / 5);
             return ["messages" => $messages];
         } catch (RuntimeException | \Exception $e) {
             $exceptions['message'] = $e->getMessage();

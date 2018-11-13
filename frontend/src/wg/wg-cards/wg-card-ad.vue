@@ -26,7 +26,7 @@
 			         @onHide="showMenu=false"
 			         position="left-bottom">
 
-				<ul v-if="user_id!=undefined && user_id==dObj.user.id"
+				<ul v-if="user_id!=undefined && dObj.user!=undefined && user_id==dObj.user.id"
 				    class="wg-card-ad__menu">
 					<li class="wg-card-ad__menu-li">
 						Редактировать

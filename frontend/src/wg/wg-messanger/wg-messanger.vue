@@ -59,7 +59,9 @@
     </transition>
     <div class="wg-messanger__messages">
       <div ref="messages" class="wg-messanger__messages-block" :style="{'height':heightMessanger-heightForm-130+'px'}">
-
+        <div @click="showMessages(nextShot)" class="ui-button  ui-button_flat ">
+          + старые +
+        </div>
         <div v-for="(val, key) in messages" :key="key" class="ui-avatar-block wg-messanger__message-block " :class="{'wg-messanger__message-block_noread': !val.status_read && user_id==val.user_id,
              'wg-messanger__message-block_newread': !val.status_read && user_id!=val.user_id}">
 
@@ -134,7 +136,8 @@ export default {
       activeBrauzer: true,
       showMenu: false,
       dCrMessage: undefined,
-      dialog_id: undefined
+      dialog_id: undefined,
+      nextShot: 1
     };
   },
   props: {
@@ -164,12 +167,12 @@ export default {
 
     //добавляет юзеров в сообщения
     addUsersToMessages() {
-      let newMes = [];
-      this.messages.forEach(mes => {
-        mes.user = this.users[mes.user_id];
-        newMes.push(mes);
-      });
-      this.messages = [];
+      //  = [];
+      for (const key in this.messages) {
+        this.messages[key]["user"] = this.users[this.messages[key].user_id];
+      }
+      let newMes = this.messages;
+      this.messages = undefined;
       this.messages = newMes;
     },
     // добавляет юзеров в диалоги
@@ -223,7 +226,6 @@ export default {
         .post(this.$hosts.messages + "/api/delete/messages", params, headers)
         .then(
           response => {
-            console.log(response);
             this.SetUnreadMessage();
             this.showMessages();
           },
@@ -266,7 +268,6 @@ export default {
     // запрос к серверу вебсоккетов
     // для получения новых сообщений
     GetUnreadMessages() {
-      console.log("запрашиваю изменения");
       let json = {
         name: "GetUnreadMessages",
         params: [{ name: "userId", val: String(this.$cookie.get("user_id")) }]
@@ -277,7 +278,6 @@ export default {
     // что бы аппоненту пришло уведомление
     // что есть непрочитанные сообщения для него
     SetUnreadMessage() {
-      console.log("устанавливаю что есть изменения");
       let json = {
         name: "SetUnreadMessage",
         params: [{ name: "apponentID", val: String(this.apponent_id) }]
@@ -311,25 +311,37 @@ export default {
         );
     },
     // покажет сообщения для юзера
-    showMessages() {
+    showMessages(nextShot) {
       let headers = { "Content-Type": "multipart/form-data" };
       let params = {
         user_id: this.$cookie.get("user_id"),
         session_id: this.$cookie.get("PHPSESSID"),
         apponent_id: this.apponent_id
       };
+      if (nextShot != undefined) {
+        params.shot = nextShot;
+      }
       this.description = undefined;
       this.$http
         .post(this.$hosts.messages + "/api/show/messages", params, headers)
         .then(
           response => {
-            this.messages = undefined;
+            if (this.messages == undefined) {
+              this.messages = {};
+            }
+            let newMessages = response.body.messages;
+            if (this.nextShot == undefined) {
+              this.nextShot = response.body.shot-1;
+            }
+            for (const key in newMessages) {
+              this.messages[newMessages[key].id] = newMessages[key];
+            }
 
-            this.messages = response.body.messages;
             let users = [];
-            this.messages.forEach(mes => {
-              users.push(mes.user_id);
-            });
+            for (const key in this.messages) {
+              users.push(this.messages[key].user_id);
+            }
+
             this.$store.dispatch("users/add", users);
             this.addUsersToMessages();
             setTimeout(() => {
@@ -363,13 +375,13 @@ export default {
             .then(
               response => {
                 // this.message = response.body.message;
-                console.log("отметил чтопрочитал сообщение");
+                // console.log("отметил чтопрочитал сообщение");
                 this.SetUnreadMessage();
                 this.GetUnreadMessages();
                 this.showMessages();
               },
               error => {
-                console.log(error);
+                // console.log(error);
               }
             );
           return true;
@@ -391,12 +403,12 @@ export default {
     });
   },
   watch: {
-    usersFUpdate(newQ, oldQ) {
-      if (newQ != oldQ) {
-        this.addUsersToMessages();
-        this.addUsersToDialogs();
-      }
-    },
+    // usersFUpdate(newQ, oldQ) {
+    //   if (newQ != oldQ) {
+    //     this.addUsersToMessages();
+    //     this.addUsersToDialogs();
+    //   }
+    // },
     activeBrauzer(newQ, oldQ) {
       if (newQ == true) {
         setTimeout(() => {
@@ -408,9 +420,9 @@ export default {
     }
   },
   computed: {
-    usersFUpdate() {
-      return this.$store.state.users.flagUpdate;
-    },
+    // usersFUpdate() {
+    //   return this.$store.state.users.flagUpdate;
+    // },
     sumNewMessages() {
       if (this.newMessage != undefined) {
         // console.log(this.newMessage)
