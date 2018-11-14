@@ -41,7 +41,8 @@ class Show
             $sessionID = $p["session_id"];
             $userID = (int) $p["user_id"];
             $lastMes = (!empty($p["last_mes"]) && $p["last_mes"] != 0) ? $p["last_mes"] : null;
-
+            $lastFrame = false;
+            $limit = 20;
             // проверить аутентификацию пользователя
             $auths = $this->container['auths'];
             $authedUser = $auths->AuthUser->Authed($sessionID, $userID);
@@ -63,16 +64,21 @@ class Show
                 if ($lastMes != null) {
                     $date_c = $mdb->$dialogId->find(['_id' => new \MongoDB\BSON\ObjectId($lastMes)]);
                     $date_c = iterator_to_array($date_c, false)[0]['date_created'];
-                    $messages = $mdb->$dialogId->find(['date_created' => ['$gt' => $date_c]], ['limit' => 5, 'sort' => ['_id' => -1]]);
+                    $messages = $mdb->$dialogId->find(['date_created' => ['$lt' => $date_c]], ['limit' => $limit, 'sort' => ['$natural' => -1]]);
+                    $messages = iterator_to_array($messages, false);
+                    if (count($messages) < $limit) {
+                        $lastFrame = true;
+                    }
                 } else {
-                    $messages = $mdb->$dialogId->find([], ['limit' => 5, 'sort' => ['_id' => 1]]);
+                    $messages = $mdb->$dialogId->find([], ['limit' => $limit, 'sort' => ['$natural' => -1]]);
+                    $messages = iterator_to_array($messages, false);
                 }
 
             } else {
                 throw new \Exception("Диалога не найдено");
             }
             // var_dump(iterator_to_array($messages, false));
-            return ["messages" => iterator_to_array($messages, false)];
+            return ["messages" => $messages, 'last_frame' => $lastFrame];
         } catch (RuntimeException | \Exception $e) {
             $exceptions['message'] = $e->getMessage();
             return ["exceptions" => $exceptions];

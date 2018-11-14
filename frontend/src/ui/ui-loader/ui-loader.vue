@@ -6,6 +6,6 @@
 </template>
 <script>
 export default {
-  name: "uiLoader"
+  name: "ui_loader"
 };
 </script>

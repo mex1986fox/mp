@@ -44,26 +44,21 @@ func GetUnreadMessage(userID int) map[int]int {
 		UserID      int  `bson:"user_id"`
 		StatusReade bool `bson:"status_read"`
 	}
-	type messages struct {
-		Messages message `bson:"messages"`
-	}
-	massegesCollection := session.DB("messages").C("messages")
-	pipelineM := []bson.M{
-		bson.M{"$match": bson.M{"_id": bson.M{"$in": dialogsID}}},
-		bson.M{"$unwind": "$messages"},
-		bson.M{"$match": bson.M{"messages.status_read": false}},
-	}
-	pipeM := massegesCollection.Pipe(pipelineM)
-	respM := []messages{}
-	err = pipeM.All(&respM)
 
-	// составляем карту новых сообщений
+	//карта новых сообщений
 	unreadMessage := make(map[int]int)
-	for i := 0; i < len(respM); i++ {
-		unreadMessage[respM[i].Messages.UserID] = unreadMessage[respM[i].Messages.UserID] + 1
+
+	for i := 0; i < len(dialogsID); i++ {
+		massegesCollection := session.DB("messages").C(dialogsID[i])
+		respM := []message{}
+		err = massegesCollection.Find(bson.M{"status_read": false}).All(&respM)
+
+		// составляем карту новых сообщений
+		for i := 0; i < len(respM); i++ {
+			unreadMessage[respM[i].UserID] = unreadMessage[respM[i].UserID] + 1
+		}
 	}
 
-	// fmt.Println(respM)
 	return unreadMessage
 	// unreadMessagei[25] = 4
 	//для сравнения со старой картой

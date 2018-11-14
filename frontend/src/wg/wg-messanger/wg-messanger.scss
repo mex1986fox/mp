@@ -173,10 +173,10 @@
             right: -16px;
         }
         &-date-create {
-          width: 100%;
-          margin: 4px 55px 16px 0px;
-          display: block;
-          font-size: 14px;
+            width: 100%;
+            margin: 4px 55px 16px 0px;
+            display: block;
+            font-size: 14px;
             color: $color-description;
         }
         &-but-menu {
@@ -279,6 +279,12 @@
         left: 62px;
         top: 1px;
         z-index: 25;
+    }
+    &__loader {
+        position: absolute;
+        z-index: 10;
+        top: calc(50% - 25px);
+        left: calc(50% - 25px);
     }
 }
 
