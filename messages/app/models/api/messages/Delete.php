@@ -22,11 +22,11 @@ class Delete
 
             //проверяем параметры
             $exceptions = [];
-            if (empty($p["date_created"])) {
-                $exceptions["date_created"] = "Не указана дата создания";
+            if (empty($p["message_id"])) {
+                $exceptions["message_id"] = "Не указана номер сообщения";
             }
-            if (empty($p["dialog_id"])) {
-                $exceptions["dialog_id"] = "Не указан номер диалога";
+            if (empty($p["apponent_id"])) {
+                $exceptions["apponent_id"] = "Не указан аппонент";
             }
             if (empty($p["session_id"])) {
                 $exceptions["session_id"] = "Не указана сессия";
@@ -38,10 +38,10 @@ class Delete
                 throw new \Exception("Не верные параметры");
             }
             // устанавливаем параметры
-            $dateCreated = $p["date_created"];
+            $messageID = $p["message_id"];
             $sessionID = $p["session_id"];
             $userID = (int) $p["user_id"];
-            $dialogID = $p["dialog_id"];
+            $apponentID = $p["apponent_id"];
 
             // проверить аутентификацию пользователя
             $auths = $this->container['auths'];
@@ -49,19 +49,28 @@ class Delete
             if (!$authedUser) {
                 throw new \Exception("Не прошел аутентификацию");
             }
- 
+
             $mdb = $this->container['mongodb'];
             // удалить сообщение
-            $dialog = $mdb->messages->findOne(['_id' => $dialogID]);
-            $messages = iterator_to_array($dialog, true)['messages'];
-            foreach ($messages as $key => $value) {
-                if ($messages[$key]["user_id"] == $userID && $messages[$key]["date_created"] == $dateCreated) {
-                    unset($messages[$key]);
-                }
-            }
-            $mdb->messages->updateOne(['_id' => $dialogID], ['$set' => ['messages' => $messages]]);
+            // проверить есть ли диалог
+            // проверить есть ли диалог
+            $aggreg = $mdb->dialogs->aggregate([
+                ['$match' => ['_id' => $userID]],
+                ['$unwind' => '$dialogs'],
+                ['$match' => ['dialogs.apponent_id' => (int) $apponentID]],
+                ['$limit' => 5],
+            ]);
 
-            return ["massege" => "Сообщение удалено"];
+            $arrDial = iterator_to_array($aggreg, true);
+            $dialogID = $arrDial[0]["dialogs"]["dialog_id"];
+            $dialogID = (count($arrDial) > 0) ? $arrDial[0]["dialogs"]["dialog_id"] : null;
+            if (!empty($dialogID)) {
+                $mdb->$dialogID->deleteOne(['_id' => new \MongoDB\BSON\ObjectId($messageID)]);
+                return ["massege" => "Сообщение удалено", "message_id" => $messageID];
+            }else{
+                throw new \Exception("Нет такого диалога");
+            }
+
         } catch (RuntimeException | \Exception $e) {
             $exceptions['massege'] = $e->getMessage();
             return ["exceptions" => $exceptions];

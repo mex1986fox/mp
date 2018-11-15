@@ -70,7 +70,7 @@
             </ui-avatar>
             <div class="wg-messanger__message">
               <span class="wg-messanger__message-date-create">{{val.date_created}}
-                <div @click="(showMenu=true, dCrMessage=val.date_created)" class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat wg-messanger__message-but-menu">
+                <div @click="(showMenu=true, idDelMess=val._id.$oid)" class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat wg-messanger__message-but-menu">
                   <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                 </div>
               </span>
@@ -124,7 +124,6 @@ export default {
   data() {
     return {
       user_id: this.$cookie.get("user_id"),
-      users: this.$store.state.users.buffer,
       showContacts: false,
       heightForm: 105,
       message: undefined,
@@ -136,13 +135,14 @@ export default {
       showSmiles: false,
       activeBrauzer: true,
       showMenu: false,
-      dCrMessage: undefined,
+      idDelMess: undefined,
       dialog_id: undefined,
       lastMes: undefined,
       stopFrame: false,
       oldScrollHeight: undefined,
       flagLoadingHistory: false,
-      flagLoadingMessages: false
+      flagLoadingMessages: false,
+      flagScroll: true
     };
   },
   props: {
@@ -203,9 +203,7 @@ export default {
       });
       let newMes = this.messages;
       this.messages = undefined;
-      this.messages = newMes.sort(
-        (a, b) => (a.date_created < b.date_created ? -1 : 1)
-      );
+      this.messages = newMes;
     },
     // добавляет юзеров в диалоги
     addUsersToDialogs() {
@@ -250,14 +248,18 @@ export default {
       let params = {
         user_id: this.$cookie.get("user_id"),
         session_id: this.$cookie.get("PHPSESSID"),
-        dialog_id: this.dialog_id,
-        date_created: this.dCrMessage
+        apponent_id: this.apponent_id,
+        message_id: this.idDelMess
       };
       this.description = undefined;
       this.$http
         .post(this.$hosts.messages + "/api/delete/messages", params, headers)
         .then(
           response => {
+            this.flagScroll = false;
+            this.messages = this.messages.filter(mes => {
+              return mes._id.$oid != response.body.message_id;
+            });
             this.SetUnreadMessage();
             this.showMessages();
           },
@@ -330,12 +332,9 @@ export default {
           response => {
             this.dialogs = response.body.dialogs;
             let users = [];
-            this.dialogs.forEach(mes => {
-              if (mes.apponent_id == this.apponent_id) {
-                this.dialog_id = mes.dialog_id;
-              }
-              users.push(mes.apponent_id);
-            });
+            for (const key in this.dialogs) {
+              users.push(this.dialogs[key].apponent_id);
+            }
             this.$store.dispatch("users/add", users);
             this.addUsersToDialogs();
           },
@@ -376,11 +375,14 @@ export default {
             this.addUsersToMessages();
 
             setTimeout(() => {
-              if (this.lastMes == undefined) {
+              if (this.lastMes == undefined && this.flagScroll == true) {
                 this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
               } else {
-                this.$refs.messages.scrollTop =
-                  this.$refs.messages.scrollHeight - this.oldScrollHeight;
+                if (this.$refs.messages.scrollHeight > this.oldScrollHeight) {
+                  this.$refs.messages.scrollTop =
+                    this.$refs.messages.scrollHeight - this.oldScrollHeight;
+                } 
+                this.flagScroll = true;
               }
               if (this.fMoutn == true) {
                 this.isClickContact(this.apponent_id, this.dialog_id);
@@ -463,6 +465,10 @@ export default {
           }
         }, 4000);
       }
+    },
+    users(newQ, oldQ) {
+      this.addUsersToMessages();
+      this.addUsersToDialogs();
     }
   },
   computed: {
@@ -484,6 +490,9 @@ export default {
     },
     heightMessanger() {
       return document.body.clientHeight;
+    },
+    users() {
+      return this.$store.state.users.buffer;
     }
   }
 };

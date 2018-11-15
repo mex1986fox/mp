@@ -46,9 +46,9 @@
                     <div class="wg-multiple-location__chips-container">
                       <ui-chips class="wg-multiple-location__chips__red" @onDeleted="isClickCheckbox" v-for="(val, key) in countries" :key="val.type+key" v-if="val.check" :name="val.type+'[]'" :value="val.id" :caption="val.name" deleted>
                       </ui-chips>
-                      <ui-chips class="wg-multiple-location__chips__blue" @onDeleted="isClickCheckbox" v-for="(val, key) in subjects" :key="val.type+key" v-if="val.check" :name="val.type+'[]'" :value="val.id" :caption="val.name" deleted>
+                      <ui-chips class="wg-multiple-location__chips__blue" @onDeleted="isClickCheckbox" v-for="(val, key) in subjects" :key="val.type+key" v-if="val.check" :name="val.type+'[]'" :value="val.id" :caption="val.name +' ('+getCountry(val.id_country).name+')'" deleted>
                       </ui-chips>
-                      <ui-chips class="wg-multiple-location__chips__green" @onDeleted="isClickCheckbox" v-for="(val, key) in settlements" :key="val.type+key" v-if="val.check" :name="val.type+'[]'" :value="val.id" :caption="val.name" deleted>
+                      <ui-chips class="wg-multiple-location__chips__green" @onDeleted="isClickCheckbox" v-for="(val, key) in settlements" :key="val.type+key" v-if="val.check" :name="val.type+'[]'" :value="val.id" :caption="val.name +' ('+getSubject(val.id_subject).name+')'" deleted>
                       </ui-chips>
                     </div>
                   </div>
@@ -88,7 +88,7 @@ export default {
           id: country.id,
           type: "countries",
           name: country.name,
-          check: this.pCountry.some(e=>e==country.id)
+          check: this.pCountry.some(e => e == country.id)
         };
       }),
       subjects: this.$store.state.locations.subjects.map(subject => {
@@ -97,7 +97,7 @@ export default {
           id_country: subject.country_id,
           type: "subjects",
           name: subject.name,
-          check: this.pSubject.some(e=>e==subject.id)
+          check: this.pSubject.some(e => e == subject.id)
         };
       }),
       settlements: this.$store.state.locations.settlements.map(settlement => {
@@ -107,7 +107,7 @@ export default {
           id_subject: settlement.subject_id,
           type: "settlements",
           name: settlement.name,
-          check: this.pSettlement.some(e=>e==settlement.id)
+          check: this.pSettlement.some(e => e == settlement.id)
         };
       })
     };
@@ -143,6 +143,17 @@ export default {
   },
 
   methods: {
+    getCountry(id) {
+      // console.log( this.$store.getters["locations/getCountry"](id).name);
+      return this.$store.getters["locations/getCountry"](id);
+    },
+    getSubject(id) {
+      return this.$store.getters["locations/getSubject"](id);
+    },
+    getSettlement(id) {
+      return this.$store.getters["locations/getSettlement"](id);
+    },
+
     AllCity() {
       this.settlements = this.settlements.map(settlement => {
         settlement.check = true;

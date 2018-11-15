@@ -33,8 +33,11 @@
             </div>
           </ui-blind>
         </div>
+
+         
       </div>
     </div>
+
     <div v-if="!showFormAdd" @click="isShowFormAdd" class="ui-button ui-button_circle ui-button_red pg-ads__button-show-form-add">
       <i class="fa fa-plus" aria-hidden="true"></i>
     </div>
@@ -47,6 +50,7 @@ export default {
   data() {
     return {
       showFormAdd: false,
+      showFilterAdd: false,
       showSnackbar: false,
       descSnackbar: "",
       ads: undefined
@@ -77,6 +81,7 @@ export default {
         this.showSnackbar = true;
       }
     },
+
     show(event) {
       this.$http.post("/api/show/ads").then(
         response => {

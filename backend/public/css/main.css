@@ -3316,6 +3316,13 @@ select::-ms-expand {
   right: 0px !important;
   z-index: 2; }
 
+.pg-ads__button-show-filter-add {
+  position: fixed;
+  bottom: 60px;
+  left: auto !important;
+  right: 0px !important;
+  z-index: 2; }
+
 .pg-authorization__fon {
   position: fixed;
   height: 100%;

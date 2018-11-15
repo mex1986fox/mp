@@ -13,6 +13,9 @@ const users = {
                     state.buffer[String(user.id)] = user;
                 }
             });
+            let buf= state.buffer;
+            state.buffer=undefined;
+            state.buffer=buf;
         },
         addAvatars(state, avatars) {
             avatars.forEach(avatar => {
@@ -20,6 +23,9 @@ const users = {
                     state.buffer[String(avatar.user_id)].avatar = avatar.lincks[0];
                 }
             });
+            let buf= state.buffer;
+            state.buffer=undefined;
+            state.buffer=buf;
             state.flagUpdate++;
         }
     },
