@@ -1,6 +1,5 @@
 <template>
   <div class="wg-messanger" :style="{'height':heightMessanger+'px'}">
-
     <div class="wg-messanger__bar">
       <div class="ui-header ui-header_2 wg-messanger__header">
         <span>Messanger</span>
@@ -15,106 +14,138 @@
                 <ui-tabs-tab id="wg-messanger-message" :checked="tabs=='wg-messanger-message'" @onFocus="isTabs">
                     Переписки
                 </ui-tabs-tab>
-            </ui-tabs> -->
-
+      </ui-tabs>-->
     </div>
     <transition name="wg-messanger__button-contacts">
-      <div v-if="!showContacts" @click="showContacts=true" class="ui-button ui-button_circle wg-messanger__button-contacts">
+      <div
+        v-if="!showContacts"
+        @click="showContacts=true"
+        class="ui-button ui-button_circle wg-messanger__button-contacts"
+      >
         <i class="fa fa-users" aria-hidden="true"></i>
       </div>
     </transition>
     <transition name="wg-messanger__button-contacts">
-      <div v-if="showContacts" @click="showContacts=false" class="ui-button ui-button_circle  wg-messanger__button-contacts wg-messanger__button-contacts_right">
+      <div
+        v-if="showContacts"
+        @click="showContacts=false"
+        class="ui-button ui-button_circle wg-messanger__button-contacts wg-messanger__button-contacts_right"
+      >
         <i aria-hidden="true" class="fa fa-angle-left"></i>
       </div>
     </transition>
-    <div v-if="sumNewMessages!=undefined && sumNewMessages!=0 && !showContacts" class="ui-notific-mes wg-messanger__notific-mes">
-      {{sumNewMessages}}
-    </div>
+    <div
+      v-if="sumNewMessages!=undefined && sumNewMessages!=0 && !showContacts"
+      class="ui-notific-mes wg-messanger__notific-mes"
+    >{{sumNewMessages}}</div>
     <transition name="wg-messanger__contacts">
       <div class="wg-messanger__contacts" v-show="showContacts">
         <div class="wg-messanger__contacts-menu">
-          <div v-if="val.user" v-for="(val, key) in dialogs" :key="key" class="ui-avatar-block wg-messanger__avatar-block" @click="isClickContact(val.apponent_id, val.dialog_id)">
+          <div
+            v-if="val.user"
+            v-for="(val, key) in dialogs"
+            :key="key"
+            class="ui-avatar-block wg-messanger__avatar-block"
+            @click="isClickContact(val.apponent_id, val.dialog_id)"
+          >
             <ui-avatar class="ui-avatar" :lable="val.user.login">
               <img :src="val.user.avatar" alt="">
             </ui-avatar>
-            <div v-if="newMessage!=undefined && newMessage[val.user.id]!=undefined && newMessage[val.user.id]!=0" class="ui-notific-mes wg-messanger__notific-mes-cont">
-              {{newMessage[val.user.id]}}
-            </div>
-            <a class="ui-link ui-avatar-block__link">
-              {{val.user.name+" "+val.user.surname}}
-            </a>
-            <div class="ui-avatar-block__title">
-              Здесь последнее сообщение
-            </div>
+            <div
+              v-if="newMessage!=undefined && newMessage[val.user.id]!=undefined && newMessage[val.user.id]!=0"
+              class="ui-notific-mes wg-messanger__notific-mes-cont"
+            >{{newMessage[val.user.id]}}</div>
+            <a class="ui-link ui-avatar-block__link">{{val.user.name+" "+val.user.surname}}</a>
+            <div class="ui-avatar-block__title">Здесь последнее сообщение</div>
             <!-- <button class="ui-button ui-button_flat ui-button_circle ui-button_circle_mini wg-messanger__avatar-block-button">
 							<i aria-hidden="true"
 							   class="fa fa-ellipsis-v"></i>
-						</button> -->
+            </button>-->
           </div>
-
         </div>
-
       </div>
     </transition>
     <div class="wg-messanger__messages">
-
-      <div ref="messages" class="wg-messanger__messages-block" :style="{'height':heightMessanger-heightForm-130+'px'}">
-
-        <div v-for="(val, key) in messages" :key="key" class="ui-avatar-block wg-messanger__message-block " :class="{'wg-messanger__message-block_noread': !val.status_read && user_id==val.user_id,
-             'wg-messanger__message-block_newread': !val.status_read && user_id!=val.user_id}">
-
+      <div
+        ref="messages"
+        class="wg-messanger__messages-block"
+        :style="{'height':heightMessanger-heightForm-130+'px'}"
+      >
+        <div
+          v-for="(val, key) in messages"
+          :key="key"
+          class="ui-avatar-block wg-messanger__message-block"
+          :class="{'wg-messanger__message-block_noread': !val.status_read && user_id==val.user_id,
+             'wg-messanger__message-block_newread': !val.status_read && user_id!=val.user_id}"
+        >
           <div v-if="user_id==val.user_id">
             <ui-avatar v-if="val.user" class="wg-messanger__avatar" :lable="val.user.login">
               <img :src="val.user.avatar" alt="">
             </ui-avatar>
             <div class="wg-messanger__message">
-              <span class="wg-messanger__message-date-create">{{val.date_created}}
-                <div @click="(showMenu=true, idDelMess=val._id.$oid)" class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat wg-messanger__message-but-menu">
+              <span class="wg-messanger__message-date-create">
+                {{val.date_created}}
+                <div
+                  @click="(showMenu=true, idDelMess=val._id.$oid)"
+                  class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat wg-messanger__message-but-menu"
+                >
                   <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                 </div>
               </span>
               <div v-html="val.message"></div>
             </div>
           </div>
-
           <div v-if="user_id!=val.user_id">
-            <ui-avatar v-if="val.user" class="wg-messanger__avatar-apponent" :lable="val.user.login">
+            <ui-avatar
+              v-if="val.user"
+              class="wg-messanger__avatar-apponent"
+              :lable="val.user.login"
+            >
               <img :src="val.user.avatar" alt="">
             </ui-avatar>
             <div class="wg-messanger__message-apponent">
-              <span class="wg-messanger__message-date-create">{{val.date_created}}
-              </span>
+              <span class="wg-messanger__message-date-create">{{val.date_created}}</span>
               <div v-html="val.message"></div>
             </div>
           </div>
         </div>
       </div>
-      <ui-loader class="wg-messanger__loader" v-if="flagLoadingHistory==true || flagLoadingMessages==true"></ui-loader>
-
+      <ui-loader
+        class="wg-messanger__loader"
+        v-if="flagLoadingHistory==true || flagLoadingMessages==true"
+      ></ui-loader>
       <ui-menu :show="showSmiles" @onHide="showSmiles=false" position="left-top">
         <wg-smiles @onClick="isClickSmile"></wg-smiles>
       </ui-menu>
       <div ref="form" class="wg-messanger__messages-form">
-        <ui-contenteditable ref="contenteditable" @onInput="isInputMassage" caption="Ваше сообщение" :autoresize="60" :focus="true">
-        </ui-contenteditable>
-        <div class=" wg-messanger__messages-form-button">
+        <ui-contenteditable
+          ref="contenteditable"
+          @onInput="isInputMassage"
+          caption="Ваше сообщение"
+          :autoresize="60"
+          :focus="true"
+        ></ui-contenteditable>
+        <div class="wg-messanger__messages-form-button">
           <div @click="showSmiles=true" class="ui-button ui-button_circle ui-button_circle_mini">
             <i class="fa fa-smile-o" aria-hidden="true"></i>
           </div>
-          <button @click="createMessage" v-show="message!=undefined" class="ui-button ui-button_blue ui-button_circle ui-button_circle_mini">
+          <button
+            @click="createMessage"
+            v-show="message!=undefined"
+            class="ui-button ui-button_blue ui-button_circle ui-button_circle_mini"
+          >
             <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
           </button>
         </div>
-
       </div>
-
     </div>
-    <ui-menu :show="showMenu" @onHide="(showMenu=false, dCrMessage=undefined)" position="left-bottom">
+    <ui-menu
+      :show="showMenu"
+      @onHide="(showMenu=false, dCrMessage=undefined)"
+      position="left-bottom"
+    >
       <ul class="wg-card-ad__menu">
-        <li @click="deletedMessage" class="wg-card-ad__menu-li">
-          Удалить сообщение
-        </li>
+        <li @click="deletedMessage" class="wg-card-ad__menu-li">Удалить сообщение</li>
       </ul>
     </ui-menu>
   </div>
@@ -381,7 +412,7 @@ export default {
                 if (this.$refs.messages.scrollHeight > this.oldScrollHeight) {
                   this.$refs.messages.scrollTop =
                     this.$refs.messages.scrollHeight - this.oldScrollHeight;
-                } 
+                }
                 this.flagScroll = true;
               }
               if (this.fMoutn == true) {

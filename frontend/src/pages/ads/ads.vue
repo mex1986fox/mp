@@ -3,43 +3,74 @@
     <div class="container" v-if="showAds">
       <div class="row">
         <div class="col_12">
-          <ui-snackbar :show="showSnackbar" @onHide="showSnackbar=false" :time="15000">
-            {{descSnackbar}}
-          </ui-snackbar>
+          <ui-snackbar
+            :show="showSnackbar"
+            @onHide="showSnackbar=false"
+            :time="15000"
+          >{{descSnackbar}}</ui-snackbar>
         </div>
         <div class="col_6 col_offset-3 col-phone_6 col-phone_offset-0">
           <div class="row">
             <div class="col-12">
-              <div v-for="(val, key) in cads" :key="key" class="wg-content-frame wg-content-frame_center">
-                <wg-card-ad :object="JSON.parse(JSON.stringify(val))">
-                </wg-card-ad>
+              <div
+                v-for="(val, key) in cads"
+                :key="key"
+                class="wg-content-frame wg-content-frame_center"
+              >
+                <wg-card-ad :object="JSON.parse(JSON.stringify(val))"></wg-card-ad>
               </div>
             </div>
           </div>
         </div>
-
         <div class="col_12">
           <ui-blind :show="showFormAdd" @onHide="showFormAdd=false" animate="right">
             <div class="container container_right">
               <div class="row">
-                <div class="col_7 col_offset-5 col-nbook_9 col-nbook_offset-3 col-tablet_10 col-tablet_offset-2 col-phone_6 col-phone_offset-0">
+                <div
+                  class="col_7 col_offset-5 col-nbook_9 col-nbook_offset-3 col-tablet_10 col-tablet_offset-2 col-phone_6 col-phone_offset-0"
+                >
                   <wg-form-add @onHide="
 								     showFormAdd=false
-								     ">
-
-                  </wg-form-add>
+								     "></wg-form-add>
                 </div>
               </div>
             </div>
           </ui-blind>
         </div>
-
-         
       </div>
     </div>
-
-    <div v-if="!showFormAdd" @click="isShowFormAdd" class="ui-button ui-button_circle ui-button_red pg-ads__button-show-form-add">
+    <div
+      v-if="!showFormAdd"
+      @click="isShowFormAdd"
+      class="ui-button ui-button_circle ui-button_red pg-ads__button-show-form-add"
+    >
       <i class="fa fa-plus" aria-hidden="true"></i>
+    </div>
+    <div class="ui-app-bar-bottom">
+      <div class="ui-app-bar-bottom__content">
+        <div class="container">
+          <div class="row">
+            <div class="col_12">
+              <div class="ui-app-bar-bottom__tab">
+                <i aria-hidden="true" class="fa fa-sliders"></i>
+                <ui-click-feedback></ui-click-feedback>
+              </div>
+              <div class="ui-app-bar-bottom__tab">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <ui-click-feedback></ui-click-feedback>
+              </div>
+              <div class="ui-app-bar-bottom__tab">
+                <i class="fa fa-user-o" aria-hidden="true"></i>
+                <ui-click-feedback></ui-click-feedback>
+              </div>
+              <div class="ui-app-bar-bottom__tab">
+                <i aria-hidden="true" class="fa fa-sliders"></i>
+                <ui-click-feedback></ui-click-feedback>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </layout>
 </template>

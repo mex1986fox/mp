@@ -5,29 +5,36 @@
 				<div class="container">
 					<div class="row">
 						<div class="col_12">
-							<button @click="showNavigation=true" class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat
-                                ui-navigation__burger ">
+							<button
+								@click="showNavigation=true"
+								class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat ui-navigation__burger"
+							>
 								<i class="fa fa-bars" aria-hidden="true"></i>
 							</button>
-
 							<div v-if="user!=undefined" class="ui-app-bar__user">
-								<div @click="logout" class="ui-button ui-button_circle ui-button_flat ui-button_circle_mini ui-app-bar__user-exit">
+								<div
+									@click="logout"
+									class="ui-button ui-button_circle ui-button_flat ui-button_circle_mini ui-app-bar__user-exit"
+								>
 									<i class="fa fa-sign-out" aria-hidden="true"></i>
-
 								</div>
 								<ui-avatar class="ui-app-bar__user-avatar" :lable="user.login">
 									<img :src="user.avatar" alt="">
 								</ui-avatar>
-
 							</div>
 							<div v-if="user==undefined" class="ui-app-bar__user">
-								<router-link to="/authorization" class="ui-button ui-button_circle ui-button_flat ui-button_circle_mini ui-app-bar__user-exit">
+								<router-link
+									to="/authorization"
+									class="ui-button ui-button_circle ui-button_flat ui-button_circle_mini ui-app-bar__user-exit"
+								>
 									<i class="fa fa-sign-in" aria-hidden="true"></i>
-
 								</router-link>
 							</div>
-							<div v-if="path=='/ads'"  class="ui-app-bar__user">
-								<div @click="isShowFilterAdd" class="ui-button ui-button_circle ui-button_flat ui-button_circle_mini ui-app-bar__user-exit">
+							<div v-if="path=='/ads'" class="ui-app-bar__user">
+								<div
+									@click="isShowFilterAdd"
+									class="ui-button ui-button_circle ui-button_flat ui-button_circle_mini ui-app-bar__user-exit"
+								>
 									<i class="fa fa-sliders" aria-hidden="true"></i>
 								</div>
 							</div>
@@ -39,44 +46,40 @@
 		<div class="container">
 			<div class="row">
 				<div class="col_12">
-
 					<ui-navigation :show="showNavigation" @onHide="showNavigation=false">
 						<div class="ui-navigation__header">
 							<router-link to="/">
 								<img class="ui-navigation__header__label" src="/public/img/label.png" alt="">
 							</router-link>
-							<div class="ui-navigation__header__burger ">
-								<button @click="showNavigation=false" class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat ui-navigation__burger">
+							<div class="ui-navigation__header__burger">
+								<button
+									@click="showNavigation=false"
+									class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat ui-navigation__burger"
+								>
 									<i aria-hidden="true" class="fa fa-angle-left"></i>
 								</button>
 							</div>
 						</div>
-
 						<div class="ui-navigation__unit">
 							<ui-navigation-list :show="true">
 								<div slot="header">
-									<div class="ui-navigation__unit__header">
-										Кабинет
-									</div>
+									<div class="ui-navigation__unit__header">Кабинет</div>
 								</div>
 								<div slot="content">
 									<router-link to="/authorization" class="ui-navigation__unit__button">
 										<div class="ui-navigation__unit__icon">
 											<i class="fa fa-th" aria-hidden="true"></i>
-										</div>
-										Вход
+										</div>Вход
 									</router-link>
 									<router-link to="/account/data" class="ui-navigation__unit__button">
 										<div class="ui-navigation__unit__icon">
 											<i class="fa fa-th" aria-hidden="true"></i>
-										</div>
-										Мои данные
+										</div>Мои данные
 									</router-link>
 									<router-link to="/account/ads" class="ui-navigation__unit__button">
 										<div class="ui-navigation__unit__icon">
 											<i class="fa fa-th" aria-hidden="true"></i>
-										</div>
-										Мои объявления
+										</div>Мои объявления
 									</router-link>
 								</div>
 							</ui-navigation-list>
@@ -84,16 +87,13 @@
 						<div class="ui-navigation__unit">
 							<ui-navigation-list :show="true">
 								<div slot="header">
-									<div class="ui-navigation__unit__header">
-										Лента
-									</div>
+									<div class="ui-navigation__unit__header">Лента</div>
 								</div>
 								<div slot="content">
 									<router-link to="/ads" class="ui-navigation__unit__button">
 										<div class="ui-navigation__unit__icon">
 											<i class="fa fa-th" aria-hidden="true"></i>
-										</div>
-										Объявления
+										</div>Объявления
 									</router-link>
 								</div>
 							</ui-navigation-list>
@@ -102,18 +102,16 @@
 				</div>
 			</div>
 		</div>
-		<slot>
-
-		</slot>
+		<slot></slot>
 		<!-- Фильтр сообщений -->
 		<div class="col_12">
 			<ui-blind :show="showFilterAdd" @onHide="showFilterAdd=false" animate="right">
 				<div class="container container_right">
 					<div class="row">
-						<div class="col_7 col_offset-5 col-nbook_9 col-nbook_offset-3 col-tablet_10 col-tablet_offset-2 col-phone_6 col-phone_offset-0">
-							<wg-filter-add @onHide="showFilterAdd=false">
-
-							</wg-filter-add>
+						<div
+							class="col_7 col_offset-5 col-nbook_9 col-nbook_offset-3 col-tablet_10 col-tablet_offset-2 col-phone_6 col-phone_offset-0"
+						>
+							<wg-filter-add @onHide="showFilterAdd=false"></wg-filter-add>
 						</div>
 					</div>
 				</div>
@@ -136,14 +134,14 @@ export default {
         return this.$store.state.user;
       }
       return undefined;
-	},
-	path(){
-		return this.$router.history.current.path
-	}
+    },
+    path() {
+      return this.$router.history.current.path;
+    }
   },
   methods: {
     isShowFilterAdd() {
-	  this.showFilterAdd = true;
+      this.showFilterAdd = true;
     },
     logout() {
       this.$store.dispatch("user/logout");

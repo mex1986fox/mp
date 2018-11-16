@@ -90,3 +90,5 @@ import UiTable from './ui-table/ui-table.vue'
 Vue.component('ui-table', UiTable);
 // import UiAppMenu from './ui-app-menu/ui-app-menu.vue'
 // Vue.component('ui-app-menu', UiAppMenu);
+import UiClickFeedback from './ui-click-feedback/ui-click-feedback.vue'
+Vue.component('ui-click-feedback', UiClickFeedback)
