@@ -12,6 +12,9 @@ import store from "./stores/index.js";
 // которые будем использовать в проекте
 import Hosts from "./plugins/hosts.js";
 Vue.use(Hosts);
+//библиотека для работы с тачпадом телефона
+import Touch from "./plugins/touch.js";
+Vue.use(Touch);
 // подключаем библиотеку UI-простейшие компоненты
 import "./ui/index.js";
 // подключаем библиотеку WG-компоненты виджетов

@@ -1,37 +1,36 @@
 .ui-click-feedback {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    float: left;
-    top: 0;
-    left: 0;
-    &:active {
-        &>.ui-click-feedback__after {
-            animation: ui-click-feedback_effect 0.2s forwards;
-            background-color: #476685a9;
-        }
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  float: left;
+  top: 0;
+  left: 0;
+
+  &__after {
+    content: "";
+    border-radius: 50%;
+    border: 6px solid $color-list-hover;
+    background-color: $color-list-active;
+    height: 50px;
+    width: 50px;
+    position: fixed;
+    opacity: 0;
+    &_forwards {
+      animation: ui-click-feedback_effect 0.2s forwards;
     }
-    &__after {
-        content: "";
-        border-radius: 50%;
-        border: 5px solid #dbdbdb;
-        height: 25px;
-        width: 25px;
-         position: absolute;
-        opacity: 0;
-    }
+  }
 }
 
 @keyframes ui-click-feedback_effect {
-    0% {
-        transform: scale3d(0.6, 0.6, 1);
-    }
-    25%,
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-        transform: scale3d(1, 1, 1);
-    }
+  0% {
+    transform: scale3d(0.6, 0.6, 1);
+  }
+  25%,
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale3d(1, 1, 1);
+  }
 }

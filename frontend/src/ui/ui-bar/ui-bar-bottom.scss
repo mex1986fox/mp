@@ -1,0 +1,53 @@
+.ui-bar-bottom {
+  position: fixed;
+  height: 60px;
+  width: 100%;
+  bottom: 0;
+  overflow: hidden;
+  &__content {
+    height: 60px;
+    width: 100%;
+    background-color: #2b547e;
+    box-shadow: $color-shadow-active;
+    position: fixed;
+    z-index: 2000;
+  }
+  &__tab {
+    color: $color-fon;
+    font-size: 26px;
+    height: 60px;
+    width: 75px;
+    text-align: center;
+    line-height: 55px;
+    float: left;
+    overflow: hidden;
+    position: relative;
+    &:hover {
+      background-color: $color-list-hover;
+    }
+
+    &:active {
+      background-color: $color-list-active;
+    }
+  }
+  &-enter {
+    height: 0px;
+  }
+  &-enter-active {
+    transition-property: height;
+    transition-duration: 500ms;
+  }
+  &-enter-to {
+    height: 60px;
+  }
+  &-leave {
+    height: 60px;
+  }
+  &-leave-active {
+    transition-property: height;
+    transition-duration: 500ms;
+  }
+  &-leave-to {
+    height: 0px;
+  }
+}

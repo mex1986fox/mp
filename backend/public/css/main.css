@@ -341,7 +341,7 @@ body {
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  color: #2495ce;
+  color: #2b547e;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   border-radius: 3px;
@@ -354,14 +354,14 @@ body {
   text-decoration: none; }
   .ui-button:hover {
     cursor: pointer;
-    color: #2495ce;
+    color: #2b547e;
     text-decoration: none; }
   .ui-button:active {
-    color: #2495ce;
+    color: #2b547e;
     text-decoration: none;
     box-shadow: 0px 2px 8px rgba(100, 124, 137, 0.49); }
   .ui-button:visited {
-    color: #2495ce;
+    color: #2b547e;
     text-decoration: none; }
   .ui-button_circle {
     width: 46px;
@@ -397,12 +397,12 @@ body {
     font-size: 11px;
     padding: 0 15px; }
   .ui-button_blue {
-    background-color: #2495ce;
+    background-color: #2b547e;
     color: #ffffff !important; }
     .ui-button_blue:hover {
-      background-color: #1389c4; }
+      background-color: #274d74; }
     .ui-button_blue:active {
-      background-color: #37a1d6; }
+      background-color: #3d75ad; }
   .ui-button_red {
     background-color: #d62526;
     color: #ffffff !important; }
@@ -412,7 +412,7 @@ body {
       background-color: #d62526; }
   .ui-button_flat {
     background-color: rgba(255, 255, 255, 0);
-    color: #2495ce !important;
+    color: #2b547e !important;
     box-shadow: none; }
     .ui-button_flat:hover {
       background-color: rgba(214, 214, 214, 0.35); }
@@ -1720,11 +1720,11 @@ body {
       opacity: 1;
       height: 200px; }
 
-.ui-app-bar {
+.ui-bar {
   position: relative;
   height: 70px;
   width: 100%; }
-  .ui-app-bar__content {
+  .ui-bar__content {
     height: 48px;
     width: 100%;
     background-color: #ffffff;
@@ -1732,32 +1732,33 @@ body {
     padding: 11px 0;
     position: fixed;
     z-index: 2000; }
-  .ui-app-bar__user {
+  .ui-bar__user {
     position: relative;
     float: right;
     right: 0; }
-    .ui-app-bar__user-avatar {
+    .ui-bar__user-avatar {
       height: 40px !important;
       width: 40px !important;
       line-height: 38px !important;
       font-size: 25px !important; }
-    .ui-app-bar__user-exit {
+    .ui-bar__user-exit {
       margin-top: 6px;
       color: #2b2b2b !important; }
 
-.ui-app-bar-bottom {
-  position: relative;
-  height: 70px;
-  width: 100%; }
-  .ui-app-bar-bottom__content {
+.ui-bar-bottom {
+  position: fixed;
+  height: 60px;
+  width: 100%;
+  bottom: 0;
+  overflow: hidden; }
+  .ui-bar-bottom__content {
     height: 60px;
     width: 100%;
     background-color: #2b547e;
     box-shadow: 0px 2px 8px rgba(100, 124, 137, 0.49);
     position: fixed;
-    z-index: 2000;
-    bottom: 0; }
-  .ui-app-bar-bottom__tab {
+    z-index: 2000; }
+  .ui-bar-bottom__tab {
     color: #ffffff;
     font-size: 26px;
     height: 60px;
@@ -1767,8 +1768,24 @@ body {
     float: left;
     overflow: hidden;
     position: relative; }
-    .ui-app-bar-bottom__tab:hover {
-      background-color: #476685; }
+    .ui-bar-bottom__tab:hover {
+      background-color: rgba(214, 214, 214, 0.35); }
+    .ui-bar-bottom__tab:active {
+      background-color: rgba(214, 214, 214, 0.55); }
+  .ui-bar-bottom-enter {
+    height: 0px; }
+  .ui-bar-bottom-enter-active {
+    transition-property: height;
+    transition-duration: 500ms; }
+  .ui-bar-bottom-enter-to {
+    height: 60px; }
+  .ui-bar-bottom-leave {
+    height: 60px; }
+  .ui-bar-bottom-leave-active {
+    transition-property: height;
+    transition-duration: 500ms; }
+  .ui-bar-bottom-leave-to {
+    height: 0px; }
 
 .ui-click-feedback {
   position: absolute;
@@ -1777,17 +1794,17 @@ body {
   float: left;
   top: 0;
   left: 0; }
-  .ui-click-feedback:active > .ui-click-feedback__after {
-    animation: ui-click-feedback_effect 0.2s forwards;
-    background-color: #476685a9; }
   .ui-click-feedback__after {
     content: "";
     border-radius: 50%;
-    border: 5px solid #dbdbdb;
-    height: 25px;
-    width: 25px;
-    position: absolute;
+    border: 6px solid rgba(214, 214, 214, 0.35);
+    background-color: rgba(214, 214, 214, 0.55);
+    height: 50px;
+    width: 50px;
+    position: fixed;
     opacity: 0; }
+    .ui-click-feedback__after_forwards {
+      animation: ui-click-feedback_effect 0.2s forwards; }
 
 @keyframes ui-click-feedback_effect {
   0% {
@@ -2712,11 +2729,14 @@ select::-ms-expand {
 
 .wg-content-frame {
   margin: 35px 15px 25px 0;
-  border-top: 1px solid #bebebe; }
+  border-top: 1px solid #bebebe;
+  overflow: hidden; }
   .wg-content-frame_center {
     margin: 35px 15px 25px 15px; }
   .wg-content-frame_right {
     margin: 35px 0 25px 15px; }
+  .wg-content-frame__padding {
+    padding: 10px 0; }
 
 @media (max-width: 725px) {
   .wg-content-frame {
@@ -2938,17 +2958,16 @@ select::-ms-expand {
     overflow: hidden;
     position: relative;
     margin-bottom: 5px;
-    background-color: #1280b7;
+    background-color: #2b547e;
     padding: 0;
     margin: 0;
     box-shadow: 0px 2px 4px rgba(100, 124, 137, 0.49);
     margin-bottom: 10px;
-    background-image: url(http://www.el-tony.com/wp-content/uploads/2014/10/Lamborghini-Huracan-Side-Abstract-Aerography-Car-2014-Pink-Colors-HD-Wallpapers-design-by-Tony-Kokhan-www.el-tony.com_-900x506.jpg);
     background-position: center center;
     opacity: 0.9; }
     .wg-form-add__bar:before {
       content: "";
-      background-color: rgba(36, 149, 206, 0.91);
+      background-color: #2b547e;
       position: absolute;
       height: 100%;
       width: 100%;
@@ -3376,6 +3395,9 @@ select::-ms-expand {
   left: auto !important;
   right: 0px !important;
   z-index: 2; }
+
+.pg-ads__button-add {
+  margin: 31px 0 0 21px; }
 
 .pg-authorization__fon {
   position: fixed;

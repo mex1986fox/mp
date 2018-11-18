@@ -27,10 +27,10 @@ class Show
                 $id = $p["id"];
             }
 
-            $login = $p["login"];
-            $name = $p["name"];
-            $surname = $p["surname"];
-            $birthdate = $p["birthdate"];
+            // $login = $p["login"];
+            // $name = $p["name"];
+            // $surname = $p["surname"];
+            // $birthdate = $p["birthdate"];
 
             $qWhere = "";
             $qWhere = $qWhere . (empty($id) || !empty($p["users_id"]) ? "" : " id=" . $id);

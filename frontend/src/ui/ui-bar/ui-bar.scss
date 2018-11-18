@@ -1,0 +1,29 @@
+.ui-bar {
+  position: relative;
+  height: 70px;
+  width: 100%;
+  &__content {
+    height: 48px;
+    width: 100%;
+    background-color: $color-fon;
+    box-shadow: $color-shadow-active;
+    padding: 11px 0;
+    position: fixed;
+    z-index: 2000;
+  }
+  &__user {
+    position: relative;
+    float: right;
+    right: 0;
+    &-avatar {
+      height: 40px !important;
+      width: 40px !important;
+      line-height: 38px !important;
+      font-size: 25px !important;
+    }
+    &-exit {
+      margin-top: 6px;
+      color: #2b2b2b !important;
+    }
+  }
+}

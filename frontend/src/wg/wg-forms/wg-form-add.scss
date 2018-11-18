@@ -9,17 +9,17 @@
     overflow: hidden;
     position: relative;
     margin-bottom: 5px;
-    background-color: #1280b7;
+    background-color: #2b547e;
     padding: 0;
     margin: 0;
     box-shadow: $color-shadow;
     margin-bottom: 10px;
-    background-image: url(http://www.el-tony.com/wp-content/uploads/2014/10/Lamborghini-Huracan-Side-Abstract-Aerography-Car-2014-Pink-Colors-HD-Wallpapers-design-by-Tony-Kokhan-www.el-tony.com_-900x506.jpg);
+    // background-image: url(http://www.el-tony.com/wp-content/uploads/2014/10/Lamborghini-Huracan-Side-Abstract-Aerography-Car-2014-Pink-Colors-HD-Wallpapers-design-by-Tony-Kokhan-www.el-tony.com_-900x506.jpg);
     background-position: center center;
     opacity: 0.9;
     &:before {
       content: "";
-      background-color: rgba(36, 149, 206, 0.91);
+      background-color: #2b547e;
       position: absolute;
       height: 100%;
       width: 100%;

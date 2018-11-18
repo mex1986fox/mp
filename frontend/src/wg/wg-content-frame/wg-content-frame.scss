@@ -1,23 +1,27 @@
 //frams
 .wg-content-frame {
-    margin: 35px 15px 25px 0;
-    border-top: 1px solid $color-disabled;
-    &_center {
-        margin: 35px 15px 25px 15px;
-    }
-    &_right {
-        margin: 35px 0 25px 15px;
-    }
+  margin: 35px 15px 25px 0;
+  border-top: 1px solid $color-disabled;
+  overflow: hidden;
+  &_center {
+    margin: 35px 15px 25px 15px;
+  }
+  &_right {
+    margin: 35px 0 25px 15px;
+  }
+  &__padding {
+    padding: 10px 0;
+  }
 }
 
 @media (max-width: 725px) {
-    .wg-content-frame {
-        margin: 35px 0 25px 0;
-        &_center {
-            margin: 35px 0 25px 0;
-        }
-        &_right {
-            margin: 35px 0 25px 0;
-        }
+  .wg-content-frame {
+    margin: 35px 0 25px 0;
+    &_center {
+      margin: 35px 0 25px 0;
     }
+    &_right {
+      margin: 35px 0 25px 0;
+    }
+  }
 }

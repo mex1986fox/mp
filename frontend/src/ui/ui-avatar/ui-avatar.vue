@@ -1,6 +1,7 @@
 <template>
     <div class="ui-avatar">
-        <span v-if="simbol" class="ui-avatar__simbol">
+        <span v-if="simbol"
+              class="ui-avatar__simbol">
             {{simbol}}
         </span>
         <slot>
@@ -20,10 +21,10 @@ export default {
       default: ""
     }
   },
-  computed:{
-      simbol(){
-          return this.lable[0];
-      }
+  computed: {
+    simbol() {
+      return this.lable[0];
+    }
   }
 };
 </script>

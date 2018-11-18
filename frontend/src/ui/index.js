@@ -61,16 +61,16 @@ Vue.component("ui-chips", UiChips);
 // Vue.component('ui-header', UiHeader);
 // import UiLink from './ui-link/ui-link.vue'
 // Vue.component('ui-link', UiLink);
-import UiLoader from './ui-loader/ui-loader.vue'
-Vue.component('ui-loader', UiLoader);
-import UiSearch from './ui-search/ui-search.vue'
-Vue.component('ui-search', UiSearch);
+import UiLoader from "./ui-loader/ui-loader.vue";
+Vue.component("ui-loader", UiLoader);
+import UiSearch from "./ui-search/ui-search.vue";
+Vue.component("ui-search", UiSearch);
 // import UiAccordion from './ui-accordion/ui-accordion.vue'
 // Vue.component('ui-accordion', UiAccordion);
 // import UiContentFrame from './ui-content-frame/ui-content-frame.vue'
 // Vue.component('ui-content-frame', UiContentFrame);
-import UiAvatar from './ui-avatar/ui-avatar.vue'
-Vue.component('ui-avatar', UiAvatar);
+import UiAvatar from "./ui-avatar/ui-avatar.vue";
+Vue.component("ui-avatar", UiAvatar);
 // import UiAvatarBlock from './ui-avatar-block/ui-avatar-block.vue'
 // Vue.component('ui-avatar-block', UiAvatarBlock);
 // import UiBlackout from './ui-blackout/ui-blackout.vue'
@@ -80,15 +80,19 @@ Vue.component('ui-avatar', UiAvatar);
 
 // import UiStatistic from './ui-statistic/ui-statistic.vue'
 // Vue.component('ui-statistic', UiStatistic);
-import UiSnackbar from './ui-snackbar/ui-snackbar.vue'
-Vue.component('ui-snackbar', UiSnackbar);
+import UiSnackbar from "./ui-snackbar/ui-snackbar.vue";
+Vue.component("ui-snackbar", UiSnackbar);
 // import UiEditingWindow from './ui-editing-window/ui-editing-window.vue'
 // Vue.component('ui-editing-window', UiEditingWindow);
 // import UiTableFilter from './ui-table-filter/ui-table-filter.vue'
 // Vue.component('ui-table-filter', UiTableFilter);
-import UiTable from './ui-table/ui-table.vue'
-Vue.component('ui-table', UiTable);
+import UiTable from "./ui-table/ui-table.vue";
+Vue.component("ui-table", UiTable);
 // import UiAppMenu from './ui-app-menu/ui-app-menu.vue'
 // Vue.component('ui-app-menu', UiAppMenu);
-import UiClickFeedback from './ui-click-feedback/ui-click-feedback.vue'
-Vue.component('ui-click-feedback', UiClickFeedback)
+
+import UiClickFeedback from "./ui-click-feedback/ui-click-feedback.vue";
+Vue.component("ui-click-feedback", UiClickFeedback);
+
+import UiBarBottom from "./ui-bar/ui-bar-bottom.vue";
+Vue.component("ui-bar-bottom", UiBarBottom);

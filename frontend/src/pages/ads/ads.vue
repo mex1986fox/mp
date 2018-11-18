@@ -1,34 +1,93 @@
 <template>
   <layout>
-    <div class="container" v-if="showAds">
+    <div class="container"
+         v-if="showAds">
       <div class="row">
         <div class="col_12">
-          <ui-snackbar
-            :show="showSnackbar"
-            @onHide="showSnackbar=false"
-            :time="15000"
-          >{{descSnackbar}}</ui-snackbar>
+          <ui-snackbar :show="showSnackbar"
+                       @onHide="showSnackbar=false"
+                       :time="15000">{{descSnackbar}}</ui-snackbar>
         </div>
-        <div class="col_6 col_offset-3 col-phone_6 col-phone_offset-0">
+        <!-- левый блок -->
+        <div class="col_3 col-phone_3">
           <div class="row">
             <div class="col-12">
-              <div
-                v-for="(val, key) in cads"
-                :key="key"
-                class="wg-content-frame wg-content-frame_center"
-              >
+              <div class="wg-content-frame wg-content-frame_left">
+                <div class="ui-avatar-block wg-card-ad__avatar-block"
+                     v-for="key in 5"
+                     :key="key">
+                  <div class="ui-avatar"><span class="ui-avatar__simbol">
+                      f
+                    </span> <img alt=""
+                         src="http://photos-users.ru/public/photos/avatars/6/Koala.jpg"></div> <a class="ui-link ui-avatar-block__link">
+                    firefox firefox
+                  </a>
+                  <div class="ui-avatar-block__title">
+                    2018-10-17 18:21
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- центральный блок -->
+        <div class="col_6 col-phone_6">
+          <div class="row">
+            <div class="col-12">
+              <div v-for="(val, key) in cads"
+                   :key="key"
+                   class="wg-content-frame wg-content-frame_center">
                 <wg-card-ad :object="JSON.parse(JSON.stringify(val))"></wg-card-ad>
               </div>
             </div>
           </div>
         </div>
+        <!-- правый блок -->
+        <div class="col_3 col-phone_3">
+          <div class="row">
+            <div class="col-12">
+              <div class="wg-content-frame wg-content-frame_right wg-content-frame__padding">
+                <div class="ui-button ui-button_red pg-ads__button-add">
+                  добавить объявление
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="wg-content-frame wg-content-frame_right wg-content-frame__padding">
+                  <div class="ui-navigation__unit__button">
+                    <div class="ui-navigation__unit__icon">
+                      <i aria-hidden="true"
+                         class="fa fa-sliders"></i>
+                    </div>
+                    Фильтр объявлений
+                  </div>
+                  <div class="ui-navigation__unit__button">
+                    <div class="ui-navigation__unit__icon">
+                      <i aria-hidden="true"
+                         class="fa fa-envelope"></i>
+                    </div>
+                    Мессенджер
+                  </div>
+                  <div class="ui-navigation__unit__button">
+                    <div class="ui-navigation__unit__icon">
+                      <i aria-hidden="true"
+                         class="fa fa-user-o"></i>
+                    </div>
+                    Друзья
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="col_12">
-          <ui-blind :show="showFormAdd" @onHide="showFormAdd=false" animate="right">
+          <ui-blind :show="showFormAdd"
+                    @onHide="showFormAdd=false"
+                    animate="right">
             <div class="container container_right">
               <div class="row">
-                <div
-                  class="col_7 col_offset-5 col-nbook_9 col-nbook_offset-3 col-tablet_10 col-tablet_offset-2 col-phone_6 col-phone_offset-0"
-                >
+                <div class="col_7 col_offset-5 col-nbook_9 col-nbook_offset-3 col-tablet_10 col-tablet_offset-2 col-phone_6 col-phone_offset-0">
                   <wg-form-add @onHide="
 								     showFormAdd=false
 								     "></wg-form-add>
@@ -39,39 +98,34 @@
         </div>
       </div>
     </div>
-    <div
-      v-if="!showFormAdd"
-      @click="isShowFormAdd"
-      class="ui-button ui-button_circle ui-button_red pg-ads__button-show-form-add"
-    >
-      <i class="fa fa-plus" aria-hidden="true"></i>
+    <div v-if="!showFormAdd"
+         @click="isShowFormAdd"
+         class="ui-button ui-button_circle ui-button_red pg-ads__button-show-form-add">
+      <i class="fa fa-plus"
+         aria-hidden="true"></i>
     </div>
-    <div class="ui-app-bar-bottom">
-      <div class="ui-app-bar-bottom__content">
-        <div class="container">
-          <div class="row">
-            <div class="col_12">
-              <div class="ui-app-bar-bottom__tab">
-                <i aria-hidden="true" class="fa fa-sliders"></i>
-                <ui-click-feedback></ui-click-feedback>
-              </div>
-              <div class="ui-app-bar-bottom__tab">
-                <i class="fa fa-envelope" aria-hidden="true"></i>
-                <ui-click-feedback></ui-click-feedback>
-              </div>
-              <div class="ui-app-bar-bottom__tab">
-                <i class="fa fa-user-o" aria-hidden="true"></i>
-                <ui-click-feedback></ui-click-feedback>
-              </div>
-              <div class="ui-app-bar-bottom__tab">
-                <i aria-hidden="true" class="fa fa-sliders"></i>
-                <ui-click-feedback></ui-click-feedback>
-              </div>
-            </div>
-          </div>
-        </div>
+    <ui-bar-bottom>
+      <div class="ui-bar-bottom__tab">
+        <i aria-hidden="true"
+           class="fa fa-sliders"></i>
+        <ui-click-feedback></ui-click-feedback>
       </div>
-    </div>
+      <div class="ui-bar-bottom__tab">
+        <i class="fa fa-envelope"
+           aria-hidden="true"></i>
+        <ui-click-feedback></ui-click-feedback>
+      </div>
+      <div class="ui-bar-bottom__tab">
+        <i class="fa fa-user-o"
+           aria-hidden="true"></i>
+        <ui-click-feedback></ui-click-feedback>
+      </div>
+      <div class="ui-bar-bottom__tab">
+        <i aria-hidden="true"
+           class="fa fa-sliders"></i>
+        <ui-click-feedback></ui-click-feedback>
+      </div>
+    </ui-bar-bottom>
   </layout>
 </template>
 

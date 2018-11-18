@@ -9,7 +9,7 @@
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  color: $color-links;
+  color: #2b547e;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   border-radius: 3px;
@@ -22,16 +22,16 @@
   text-decoration: none;
   &:hover {
     cursor: pointer;
-    color: $color-links;
+    color: #2b547e;
     text-decoration: none;
   }
   &:active {
-    color: $color-links;
+    color: #2b547e;
     text-decoration: none;
     box-shadow: $color-shadow-active;
   }
   &:visited {
-    color: $color-links;
+    color: #2b547e;
     text-decoration: none;
   }
   &_circle {
@@ -74,13 +74,13 @@
     padding: 0 15px;
   }
   &_blue {
-    background-color: #2495ce;
+    background-color: #2b547e;
     color: #ffffff !important;
     &:hover {
-      background-color: #1389c4;
+      background-color: #274d74;
     }
     &:active {
-      background-color: #37a1d6;
+      background-color: #3d75ad;
     }
   }
   &_red {
@@ -95,7 +95,7 @@
   }
   &_flat {
     background-color: rgba(255, 255, 255, 0);
-    color: $color-links !important;
+    color: #2b547e !important;
     box-shadow: none;
     &:hover {
       // background-color: #f3f3f3;
