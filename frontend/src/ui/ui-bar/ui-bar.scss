@@ -1,75 +1,75 @@
 .ui-bar {
-    position: fixed;
-    height: 77px;
+  position: fixed;
+  height: 80px;
+  width: 100%;
+  overflow: hidden;
+  z-index: 200;
+  &__fake-margin {
+    position: relative;
+    height: 70px;
     width: 100%;
-    overflow: hidden;
-    z-index: 200;
-    &__fake-margin {
-        position: relative;
-        height: 77px;
-        width: 100%;
-        &-enter {
-            height: 0px;
-        }
-        &-enter-active {
-            transition-property: height;
-            transition-duration: 500ms;
-        }
-        &-enter-to {
-            height: 77px;
-        }
-        &-leave {
-            height: 77px;
-        }
-        &-leave-active {
-            transition-property: height;
-            transition-duration: 500ms;
-        }
-        &-leave-to {
-            height: 0px;
-        }
-    }
-    &__content {
-        height: 48px;
-        width: 100%;
-        background-color: $color-fon;
-        box-shadow: $color-shadow-active;
-        padding: 11px 0;
-        position: relative;
-    }
-    &__user {
-        position: relative;
-        float: right;
-        right: 0;
-        &-avatar {
-            height: 40px !important;
-            width: 40px !important;
-            line-height: 38px !important;
-            font-size: 25px !important;
-        }
-        &-exit {
-            margin-top: 6px;
-            color: #2b2b2b !important;
-        }
-    }
     &-enter {
-        top: -77px;
+      height: 0px;
     }
     &-enter-active {
-        transition-property: top;
-        transition-duration: 500ms;
+      transition-property: height;
+      transition-duration: 500ms;
     }
     &-enter-to {
-        top: 0px;
+      height: 70px;
     }
     &-leave {
-        top: 0px;
+      height: 70px;
     }
     &-leave-active {
-        transition-property: top;
-        transition-duration: 500ms;
+      transition-property: height;
+      transition-duration: 500ms;
     }
     &-leave-to {
-        top: -77px;
+      height: 0px;
     }
+  }
+  &__content {
+    height: 48px;
+    width: 100%;
+    background-color: $color-fon;
+    box-shadow: $color-shadow-active;
+    padding: 11px 0;
+    position: relative;
+  }
+  &__user {
+    position: relative;
+    float: right;
+    right: 0;
+    &-avatar {
+      height: 40px !important;
+      width: 40px !important;
+      line-height: 38px !important;
+      font-size: 25px !important;
+    }
+    &-exit {
+      margin-top: 6px;
+      color: #2b2b2b !important;
+    }
+  }
+  &-enter {
+    top: -70px;
+  }
+  &-enter-active {
+    transition-property: top;
+    transition-duration: 500ms;
+  }
+  &-enter-to {
+    top: 0px;
+  }
+  &-leave {
+    top: 0px;
+  }
+  &-leave-active {
+    transition-property: top;
+    transition-duration: 500ms;
+  }
+  &-leave-to {
+    top: -70px;
+  }
 }

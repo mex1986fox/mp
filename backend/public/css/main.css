@@ -9,6 +9,17 @@
   color: #fff;
 }
 
+
+.ui-fixed-block {
+  background: #4faa93;
+}
+.ui-fixed-block__scroll {
+    background: #af1414;
+    position: sticky;
+    top: 0;
+    height: auto;
+}
+
 .fa-times-thin:before {
   content: '\D7'; }
 
@@ -1747,13 +1758,13 @@ body {
 
 .ui-bar {
   position: fixed;
-  height: 77px;
+  height: 80px;
   width: 100%;
   overflow: hidden;
   z-index: 200; }
   .ui-bar__fake-margin {
     position: relative;
-    height: 77px;
+    height: 70px;
     width: 100%; }
     .ui-bar__fake-margin-enter {
       height: 0px; }
@@ -1761,9 +1772,9 @@ body {
       transition-property: height;
       transition-duration: 500ms; }
     .ui-bar__fake-margin-enter-to {
-      height: 77px; }
+      height: 70px; }
     .ui-bar__fake-margin-leave {
-      height: 77px; }
+      height: 70px; }
     .ui-bar__fake-margin-leave-active {
       transition-property: height;
       transition-duration: 500ms; }
@@ -1789,7 +1800,7 @@ body {
       margin-top: 6px;
       color: #2b2b2b !important; }
   .ui-bar-enter {
-    top: -77px; }
+    top: -70px; }
   .ui-bar-enter-active {
     transition-property: top;
     transition-duration: 500ms; }
@@ -1801,7 +1812,7 @@ body {
     transition-property: top;
     transition-duration: 500ms; }
   .ui-bar-leave-to {
-    top: -77px; }
+    top: -70px; }
 
 .ui-bar-bottom {
   position: fixed;
