@@ -48,6 +48,9 @@
             line-height: 40px;
             text-decoration: none;
             color: $color-description;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
             &:hover {
                 cursor: pointer;
                 background-color: $color-list-hover;

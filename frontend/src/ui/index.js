@@ -96,3 +96,8 @@ Vue.component("ui-click-feedback", UiClickFeedback);
 
 import UiBarBottom from "./ui-bar/ui-bar-bottom.vue";
 Vue.component("ui-bar-bottom", UiBarBottom);
+import UiExpans from "./ui-expans/ui-expans.vue";
+Vue.component("ui-expans", UiExpans);
+
+import UiFixedBlock from "./ui-fixed-block/ui-fixed-block.vue";
+Vue.component("ui-fixed-block", UiFixedBlock);

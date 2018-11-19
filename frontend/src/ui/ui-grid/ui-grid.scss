@@ -204,11 +204,18 @@ body {
 .col_offset-11 {
     margin-left: (100%/12 * 11);
 }
-
+@media (min-width: 1190px) {
+    .col-desktop_clean{
+        display: none;
+    }
+}
 @media (min-width: 990px) and (max-width: 1190px) {
     .container {
         min-width: 970px;
         max-width: 1170px;
+    }
+    .col-nbook_clean{
+        display: none;
     }
     .col-nbook_1 {
         width: (100%/12 * 1);
@@ -289,6 +296,9 @@ body {
         min-width: 750px;
         max-width: 970px;
     }
+    .col-tablet_clean{
+        display: none;
+    }
     .col-tablet_1 {
         width: (100%/12 * 1);
     }
@@ -368,6 +378,9 @@ body {
         min-width: 100%;
         max-width: 770;
         box-sizing: border-box;
+    }
+    .col-phone_clean{
+        display: none;
     }
     .col-phone_1 {
         width: (100%/6 * 1);

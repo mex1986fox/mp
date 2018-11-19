@@ -138,9 +138,10 @@
         border-radius: 7px;
         position: relative;
         left: 0px;
-        max-width: calc(100% - 202px);
+        max-width: calc(100% - 37px);
         float: left;
         white-space: pre-line;
+        overflow: hidden;
         &::before {
             content: "";
             border: 8px solid transparent;
@@ -162,9 +163,10 @@
         border-radius: 7px;
         position: relative;
         left: 0px;
-        max-width: calc(100% - 214px);
+        max-width: calc(100% - 37px);
         float: right;
         white-space: pre-line;
+        overflow: hidden;
         &::before {
             content: "";
             border: 8px solid transparent;
@@ -290,14 +292,14 @@
 
 @media (max-width: 770px) {
     .wg-messanger {
-        margin: -30px -10px;
+        margin: 0px -10px;
         width: calc(100% + 20px);
         &__button-contacts {
             right: 12px;
-            top: 26px;
+            top: 60px;
         }
         &__messages-form {
-            bottom: -30px;
+            bottom: 0px;
             width: calc(100% - 20px);
         }
         &__contacts {

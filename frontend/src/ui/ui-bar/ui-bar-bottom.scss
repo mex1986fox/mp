@@ -4,6 +4,32 @@
   width: 100%;
   bottom: 0;
   overflow: hidden;
+  z-index: 20;
+  &__fake-margin {
+    position: relative;
+    height: 60px;
+    width: 100%;
+    &-enter {
+        height: 0px;
+    }
+    &-enter-active {
+        transition-property: height;
+        transition-duration: 500ms;
+    }
+    &-enter-to {
+        height: 60px;
+    }
+    &-leave {
+        height: 60px;
+    }
+    &-leave-active {
+        transition-property: height;
+        transition-duration: 500ms;
+    }
+    &-leave-to {
+        height: 0px;
+    }
+}
   &__content {
     height: 60px;
     width: 100%;

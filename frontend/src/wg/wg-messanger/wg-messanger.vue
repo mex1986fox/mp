@@ -462,7 +462,11 @@ export default {
   mounted() {
     this.createWebSocket();
     this.showDialogs();
-    this.showMessages();
+    if (this.apponent != undefined) {
+      this.showMessages();
+    } else {
+      this.showContacts = true;
+    }
     this.fMoutn = true;
     window.addEventListener("focus", () => {
       this.activeBrauzer = true;
@@ -498,7 +502,9 @@ export default {
       }
     },
     users(newQ, oldQ) {
-      this.addUsersToMessages();
+      if (this.apponent != undefined) {
+        this.addUsersToMessages();
+      }
       this.addUsersToDialogs();
     }
   },
