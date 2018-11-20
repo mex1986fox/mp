@@ -12,12 +12,11 @@
 
 .ui-fixed-block {
   background: #4faa93;
+  height: 100%;
 }
 .ui-fixed-block__scroll {
     background: #af1414;
-    position: sticky;
     top: 0;
-    height: auto;
 }
 
 .fa-times-thin:before {

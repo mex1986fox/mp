@@ -12,5 +12,8 @@ export default new Router({
     { path: "/authorization", component: Authorization },
     { path: "/account/data", component: AccountData },
     { path: "/ads", component: Ads }
-  ]
+  ],
+  beforeDestroy: function () {
+    this.choicesSelect.destroy()
+  }
 });
