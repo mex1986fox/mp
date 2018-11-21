@@ -11,53 +11,58 @@
         </div>
         <!-- левый блок -->
         <div class="col_3 col-tablet_4 col-phone_clean">
-          <div class="col-nbook_clean col-desktop_clean">
+          <ui-fixed-block>
+            <div class="row">
+              <div class="col-12 col-nbook_clean col-desktop_clean">
+                <div class="row ">
+                  <div class="col-12">
+                    <div class="wg-content-frame wg-content-frame_left wg-content-frame__padding">
+                      <div
+                        @click="isShowFormAdd"
+                        class="ui-button ui-button_red pg-ads__button-add"
+                      >добавить объявление</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="wg-content-frame wg-content-frame_left wg-content-frame__padding wg-content-frame_no-border">
+                      <div @click="showFilterAdd=true" class="ui-navigation__unit__button">
+                        <div class="ui-navigation__unit__icon">
+                          <i aria-hidden="true" class="fa fa-sliders"></i>
+                        </div>Фильтр объявлений
+                      </div>
+                      <div @click="showMessenger=true" class="ui-navigation__unit__button">
+                        <div class="ui-navigation__unit__icon">
+                          <i aria-hidden="true" class="fa fa-envelope"></i>
+                        </div>Мессенджер
+                      </div>
+                      <div class="ui-navigation__unit__button">
+                        <div class="ui-navigation__unit__icon">
+                          <i aria-hidden="true" class="fa fa-user-o"></i>
+                        </div>Друзья
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="row">
               <div class="col-12">
-                <div class="wg-content-frame wg-content-frame_left wg-content-frame__padding">
-                  <div
-                    @click="isShowFormAdd"
-                    class="ui-button ui-button_red pg-ads__button-add"
-                  >добавить объявление</div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <div class="wg-content-frame wg-content-frame_left wg-content-frame__padding">
-                    <div @click="showFilterAdd=true" class="ui-navigation__unit__button">
-                      <div class="ui-navigation__unit__icon">
-                        <i aria-hidden="true" class="fa fa-sliders"></i>
-                      </div>Фильтр объявлений
+                <div class="wg-content-frame wg-content-frame_left">
+                  <div class="ui-avatar-block wg-card-ad__avatar-block" v-for="key in 5" :key="key">
+                    <div class="ui-avatar">
+                      <span class="ui-avatar__simbol">f</span>
+                      <img alt="" src="http://photos-users.ru/public/photos/avatars/6/Koala.jpg">
                     </div>
-                    <div @click="showMessenger=true" class="ui-navigation__unit__button">
-                      <div class="ui-navigation__unit__icon">
-                        <i aria-hidden="true" class="fa fa-envelope"></i>
-                      </div>Мессенджер
-                    </div>
-                    <div class="ui-navigation__unit__button">
-                      <div class="ui-navigation__unit__icon">
-                        <i aria-hidden="true" class="fa fa-user-o"></i>
-                      </div>Друзья
-                    </div>
+                    <a class="ui-link ui-avatar-block__link">firefox firefox</a>
+                    <div class="ui-avatar-block__title">2018-10-17 18:21</div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="wg-content-frame wg-content-frame_left">
-                <div class="ui-avatar-block wg-card-ad__avatar-block" v-for="key in 5" :key="key">
-                  <div class="ui-avatar">
-                    <span class="ui-avatar__simbol">f</span>
-                    <img alt="" src="http://photos-users.ru/public/photos/avatars/6/Koala.jpg">
-                  </div>
-                  <a class="ui-link ui-avatar-block__link">firefox firefox</a>
-                  <div class="ui-avatar-block__title">2018-10-17 18:21</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </ui-fixed-block>
         </div>
         <!-- центральный блок -->
         <div class="col_6 col-tablet_8 col-phone_6">
@@ -86,7 +91,7 @@
                 </div>
               </div>
               <div class="col-12">
-                <div class="wg-content-frame wg-content-frame_right wg-content-frame__padding">
+                <div class="wg-content-frame wg-content-frame_right wg-content-frame__padding wg-content-frame_no-border">
                   <div @click="showFilterAdd=true" class="ui-navigation__unit__button">
                     <div class="ui-navigation__unit__icon">
                       <i aria-hidden="true" class="fa fa-sliders"></i>
@@ -104,30 +109,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12">
-                <div class="wg-content-frame wg-content-frame_right wg-content-frame__padding">
-                  <div
-                    @click="isShowFormAdd"
-                    class="ui-button ui-button_red pg-ads__button-add"
-                  >добавить объявление</div>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="wg-content-frame wg-content-frame_right wg-content-frame__padding">
-                  <div
-                    @click="isShowFormAdd"
-                    class="ui-button ui-button_red pg-ads__button-add"
-                  >добавить объявление</div>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="wg-content-frame wg-content-frame_right wg-content-frame__padding">
-                  <div
-                    @click="isShowFormAdd"
-                    class="ui-button ui-button_red pg-ads__button-add"
-                  >добавить объявление</div>
-                </div>
-              </div>
+          
             </div>
           </ui-fixed-block>
         </div>

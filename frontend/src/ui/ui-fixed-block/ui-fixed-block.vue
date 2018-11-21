@@ -1,113 +1,167 @@
 <template>
-  <div ref="scroll" class="ui-fixed-block">
-    <div ref="block" class="ui-fixed-block__scroll">
-      <slot></slot>
-    </div>
+  <div ref="block" class="ui-fixed-block">
+    <slot></slot>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      scrollTop: 0,
-      faultTop: 0,
-      scrolling: undefined, //up, down
-      fixed: undefined, //top, , bottom, undefined
-      margin: 0
+      heightWindow: undefined, //высота окна
+      heightBlock: undefined, //высота блока
+      widthBlock: undefined,
+      scrollTopBody: undefined, //проскроленный верхний отступ body
+      scrollTopBlock: undefined, //проскроленный верхний отступ блока
+      fixedBlock: "nofixed" //фиксация блока bottom, top, nofixed
     };
+  },
+  props: {
+    paddingBottom: {
+      type: Number,
+      default: 10
+    },
+    paddingTop: {
+      type: Number,
+      default: 72
+    }
   },
   mounted() {
-    console.log(this.$refs.block);
-    window.document.body.onscroll = () => {
-      this.scrollTop = window.pageYOffset
-        ? window.pageYOffset
-        : document.documentElement.scrollTop
-          ? document.documentElement.scrollTop
-          : document.body.scrollTop;
-    };
+    this.scrollTopBody = window.pageYOffset
+      ? window.pageYOffset
+      : document.documentElement.scrollTop
+        ? document.documentElement.scrollTop
+        : document.body.scrollTop;
+    let block = this.$refs.block;
+    this.scrollTopBlock =
+      block.getBoundingClientRect().top < 0
+        ? block.getBoundingClientRect().top * -1
+        : 0;
+    this.heightWindow = window.document.body.clientHeight;
+    this.heightBlock = this.$refs.block.clientHeight;
+    this.widthBlock = this.$refs.block.clientWidth;
+    document.addEventListener(
+      "scroll",
+      () => {
+        this.scrollTopBody = window.pageYOffset
+          ? window.pageYOffset
+          : document.documentElement.scrollTop
+            ? document.documentElement.scrollTop
+            : document.body.scrollTop;
+        this.scrollTopBlock =
+          block.getBoundingClientRect().top < 0
+            ? block.getBoundingClientRect().top * -1
+            : 0;
+        this.heightBlock = this.$refs.block.clientHeight;
+      },
+      true
+    );
+    window.addEventListener(
+      "resize",
+      () => {
+        this.heightWindow = window.document.body.clientHeight;
+        this.heightBlock = this.$refs.block.clientHeight;
+        this.widthBlock = this.$refs.block.clientWidth;
+      },
+      true
+    );
   },
   watch: {
-    scrollTop(newQ, oldQ) {
+    scrollTopBody(newQ, oldQ) {
       if (newQ > oldQ) {
-        this.scrolling = "up";
+        // прокрутка вниз
+        this.scrollingToDown();
       } else {
-        this.scrolling = "down";
+        // прокрутка вверх
+        this.scrollingToUp();
       }
     },
-    scrolling(newQ, oldQ) {
-      this.scrolling = undefined;
-      // ширина скролинга
-      let scrollHeight = window.document.body.scrollHeight;
-      // ширина видимого экрана
-      let windowHeight = window.document.body.clientHeight;
-      // ширина блока
-      let blockHeight = this.$refs.block.scrollHeight;
-      //определить короче блок видимой части или нет
-      if (windowHeight > blockHeight) {
-        this.fixed = "top";
-        console.log("зафиксирован на верху");
-        return;
-      }
-      // крутили вверх
-      if (newQ == "up") {
-        console.log("вверх");
-        //открепляем если в верхнем положении
-        if (this.fixed == "top") {
-          this.fixed = undefined;
-          console.log("откреплена верхняя фиксация");
-          return;
-        }
-        //определяем положение незафиксированного блока
-        // console.log(
-        //   this.scrollTop+" >= "+(blockHeight - windowHeight+170)
-        // );
-        if (this.scrollTop >= blockHeight - windowHeight) {
-          this.fixed = "bottom";
-          console.log("зафиксирован внизу");
-          return;
-        }
-      }
-      if (newQ == "down") {
-        console.log("вниз");
-
-        //открепляем если в верхнем положении
-        if (this.fixed == "bottom") {
-          this.fixed = undefined;
-          this.margin= this.scrollTop-this.$refs.block.scrollHeight;
-          console.log("откреплена нижняя фиксация");
-          return;
-        }
-        //определяем положение незафиксированного блока
-        // if (this.scrollTop >= blockHeight - windowHeight + 110) {
-        //   this.fixed = "bottom";
-        //   console.log("зафиксирован внизу");
-        //   return;
-        // }
-      }
-    },
-    fixed(newQ) {
+    fixedBlock(newQ, oldQ) {
       if (newQ == "bottom") {
-        this.$refs.block.style.cssText = "top: auto; bottom: 20px; position: fixed;";
-      }
-      if (newQ == undefined) {
-        this.$refs.block.style.cssText =
-          "margin-top: " + this.margin + "px; position: relative;";
+        this.fixedBottom();
       }
       if (newQ == "top") {
-        this.$refs.block.style.cssText = "top: 20px; position: fixed;";
+        this.fixedTop();
       }
+    }
+  },
+  methods: {
+    //выполняется при прокрутке вниз
+    scrollingToDown() {
+      //если блок шире окна
+      //закрепить вверху
+      if (this.heightWindow >= this.heightBlock) {
+        this.fixedBlock = "top";
+      } else {
+        //если блок зафиксирован вверху
+        if (this.fixedBlock == "top") {
+          // расфиксировать
+          this.fixedBlock = "nofixed";
+          this.fixedTopInNoFixed();
+        }
+        //если блок не зафиксирован
+        if (this.fixedBlock == "nofixed") {
+          //проверить на сколько он проскроленн вверх
+          if (this.scrollTopBlock > this.heightBlock - this.heightWindow) {
+            this.fixedBlock = "bottom";
+          }
+        }
+      }
+    },
+    //выполняется при прокрутке вверх
+    scrollingToUp() {
+      //если блок шире окна
+      //закрепить вверху
+      if (this.heightWindow >= this.heightBlock) {
+        this.fixedBlock = "top";
+      } else {
+        //если блок зафиксирован вверху
+        if (this.fixedBlock == "bottom") {
+          // расфиксировать
+          this.fixedBlock = "nofixed";
+          this.fixedBottomInNoFixed();
+        }
+        // если блок незафиксирован
+        if (this.fixedBlock == "nofixed") {
+          // проверить на сколько он проскроленн вверх
+          if (this.scrollTopBlock <= 0) {
+            this.fixedBlock = "top";
+          }
+        }
+      }
+    },
+
+    fixedTop() {
+      this.$refs.block.style.cssText =
+        "top: " +
+        this.paddingTop +
+        "px; bottom: auto; position: fixed; width: " +
+        this.widthBlock +
+        "px;";
+    },
+    fixedBottom() {
+      this.$refs.block.style.cssText =
+        "top: auto; bottom: " +
+        this.paddingBottom +
+        "px; position: fixed; width: " +
+        this.widthBlock +
+        "px;";
+    },
+
+    fixedBottomInNoFixed() {
+      let margin =
+        this.scrollTopBody -
+        (this.heightBlock + this.paddingTop - this.heightWindow)+40;
+      this.$refs.block.style.cssText =
+        "margin-top: " + margin + "px; position: relative; width: auto;";
+    },
+    fixedTopInNoFixed() {
+      let margin = this.scrollTopBody;
+      this.$refs.block.style.cssText =
+        "margin-top: " + margin + "px; position: relative;width: auto;";
     }
   }
 };
 </script>
-<style lang="scss">
-.ui-fixed-block {
-  background: #4faa93;
-  height: 100%;
-  &__scroll {
-    background: #af1414;
-    top: 0;
-  }
-}
-</style>
+
+
 

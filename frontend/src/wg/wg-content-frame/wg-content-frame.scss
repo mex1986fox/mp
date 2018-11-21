@@ -12,6 +12,9 @@
   &__padding {
     padding: 10px 0;
   }
+  &_no-border{
+    border-top: none;
+  }
 }
 
 @media (max-width: 725px) {

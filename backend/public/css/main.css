@@ -9,16 +9,6 @@
   color: #fff;
 }
 
-
-.ui-fixed-block {
-  background: #4faa93;
-  height: 100%;
-}
-.ui-fixed-block__scroll {
-    background: #af1414;
-    top: 0;
-}
-
 .fa-times-thin:before {
   content: '\D7'; }
 
@@ -2824,6 +2814,8 @@ select::-ms-expand {
     margin: 35px 0 25px 15px; }
   .wg-content-frame__padding {
     padding: 10px 0; }
+  .wg-content-frame_no-border {
+    border-top: none; }
 
 @media (max-width: 725px) {
   .wg-content-frame {
