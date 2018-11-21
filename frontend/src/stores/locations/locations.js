@@ -48,10 +48,31 @@ const locations = {
     }
   },
   mutations: {
-    updateLocations(state, transport) {
-      state.countries = transport.countries;
-      state.settlements = transport.settlements;
-      state.subjects = transport.subjects;
+    updateLocations(state, locations) {
+      let countrues = locations.countries;
+      state.countries = countrues.map(countr => {
+        countr["extended_name"] =
+          countr["name"].charAt(0).toUpperCase() + countr["name"].slice(1);
+        return countr;
+      });
+      console.dir(state.countries);
+      let subjects = locations.subjects;
+      state.subjects = subjects.map(subj => {
+        let country_name = countrues.filter(countr => {
+          return countr.id == subj.country_id;
+        })[0].name;
+        subj["extended_name"] = subj["name"] + " (" + country_name + ")";
+        return subj;
+      });
+
+      let settlements = locations.settlements;
+      state.settlements = settlements.map(settl => {
+        let subject_name = subjects.filter(subj => {
+          return subj.id == settl.subject_id;
+        })[0].name;
+        settl["extended_name"] = settl["name"] + " (" + subject_name + ")";
+        return settl;
+      });
     }
   },
   actions: {
@@ -67,7 +88,7 @@ const locations = {
             let locations = response.body;
             context.commit("updateLocations", locations);
           },
-          error => { }
+          error => {}
         );
       }
     }
