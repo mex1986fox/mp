@@ -1,106 +1,125 @@
 <template>
   <div class="wg-multiple-location">
-    <span class="ui-text__caption wg-multiple-location__caption"
-          :class="{ 'ui-text__caption_completed wg-multiple-location__caption_completed':modCompleted,
+    <span
+      class="ui-text__caption wg-multiple-location__caption"
+      :class="{ 'ui-text__caption_completed wg-multiple-location__caption_completed':modCompleted,
             'ui-text__caption_active wg-multiple-location__caption_active':showModal, 
                   
-                   'ui-text__caption_disabled':dDisabled}">{{dCaption}}</span>
+                   'ui-text__caption_disabled':dDisabled}"
+    >{{dCaption}}</span>
     <div class="wg-multiple-location__container">
-      <ui-chips class="wg-multiple-location__chips__red"
-                @onDeleted="isClickCheckbox"
-                v-for="(val, key) in countries"
-                :key="val.type+'ch2'+key"
-                v-if="val.check"
-                :name="val.type+'[]'"
-                :value="val.id"
-                :caption="val.extended_name"
-                deleted></ui-chips>
-      <ui-chips class="wg-multiple-location__chips__blue"
-                @onDeleted="isClickCheckbox"
-                v-for="(val, key) in subjects"
-                :key="val.type+'ch2'+key"
-                v-if="val.check"
-                :name="val.type+'[]'"
-                :value="val.id"
-                :caption="val.extended_name"
-                deleted></ui-chips>
-      <ui-chips class="wg-multiple-location__chips__green"
-                @onDeleted="isClickCheckbox"
-                v-for="(val, key) in settlements"
-                :key="val.type+'ch2'+key"
-                v-if="val.check"
-                :name="val.type+'[]'"
-                :value="val.id"
-                :caption="val.extended_name"
-                deleted></ui-chips>
+      <ui-chips
+        class="wg-multiple-location__chips__red"
+        @onDeleted="isClickCheckbox"
+        v-for="(val, key) in countries"
+        :key="val.type+'ch2'+key"
+        v-if="val.check"
+        :name="val.type+'[]'"
+        :value="val.id"
+        :caption="val.extended_name"
+        deleted
+      ></ui-chips>
+      <ui-chips
+        class="wg-multiple-location__chips__blue"
+        @onDeleted="isClickCheckbox"
+        v-for="(val, key) in subjects"
+        :key="val.type+'ch2'+key"
+        v-if="val.check"
+        :name="val.type+'[]'"
+        :value="val.id"
+        :caption="val.extended_name"
+        deleted
+      ></ui-chips>
+      <ui-chips
+        class="wg-multiple-location__chips__green"
+        @onDeleted="isClickCheckbox"
+        v-for="(val, key) in settlements"
+        :key="val.type+'ch2'+key"
+        v-if="val.check"
+        :name="val.type+'[]'"
+        :value="val.id"
+        :caption="val.extended_name"
+        deleted
+      ></ui-chips>
     </div>
-    <hr class="ui-text__border wg-multiple-location__border"
-        :class="{'ui-text__border_active':showModal,
-                  'ui-text__border_disabled':dDisabled}">
-    <div @click="showModal=true"
-         class="ui-button ui-button_circle ui-button_circle_mini ui-button_blue wg-multiple-location__button">
-      <i class="fa fa-map-marker"
-         aria-hidden="true"></i>
+    <hr
+      class="ui-text__border wg-multiple-location__border"
+      :class="{'ui-text__border_active':showModal,
+                  'ui-text__border_disabled':dDisabled}"
+    >
+    <div
+      @click="showModal=true"
+      class="ui-button ui-button_circle ui-button_circle_mini ui-button_blue wg-multiple-location__button"
+    >
+      <i class="fa fa-map-marker" aria-hidden="true"></i>
     </div>
-    <ui-blind :show="showModal"
-              @onHide="showModal=false"
-              :centering="true"
-              animate="opacity">
+    <ui-blind :show="showModal" @onHide="onInsert" :centering="true" animate="opacity">
       <div class="container">
         <div class="row">
           <div class="col_4 col_offset-4 col-phone_6 col-phone_offset-0">
             <!--модальное окно-->
             <div class="ui-modal-window">
               <div class="ui-modal-window__header">
-                <div @click="showModal=false"
-                     class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat ui-modal-window__header__button">
-                  <i class="fa fa-times"
-                     aria-hidden="true"></i>
+                <div
+                  @click="onInsert"
+                  class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat ui-modal-window__header__button"
+                >
+                  <i class="fa fa-times" aria-hidden="true"></i>
                 </div>Местоположение
               </div>
               <div class="ui-modal-window__content">
                 <div class="row">
                   <div class="col_12">
-                    <ui-search :placeholder="'Страна, Регион, Город'"
-                               :showMenu="menuSearch.length>0"
-                               @onInput="isSearch">
+                    <ui-search
+                      :placeholder="'Страна, Регион, Город'"
+                      :showMenu="menuSearch.length>0"
+                      @onInput="isSearch"
+                    >
                       <div class="wg-multiple-location__menu">
-                        <ui-check-box @onClick="isClickCheckbox"
-                                      v-for="(val, key) in menuSearch"
-                                      :key="val.type+key"
-                                      :checked="val.check"
-                                      :name="val.type+'[]'"
-                                      :value="val.id">{{val.extended_name}}</ui-check-box>
+                        <ui-check-box
+                          @onClick="isClickCheckbox"
+                          v-for="(val, key) in menuSearch"
+                          :key="val.type+key"
+                          :checked="val.check"
+                          :name="val.type+'[]'"
+                          :value="val.id"
+                        >{{val.extended_name}}</ui-check-box>
                       </div>
                     </ui-search>
                     <div class="wg-multiple-location__chips-container">
-                      <ui-chips class="wg-multiple-location__chips__red"
-                                @onDeleted="isClickCheckbox"
-                                v-for="(val, key) in countries"
-                                :key="val.type+key"
-                                v-if="val.check"
-                                :name="val.type+'[]'"
-                                :value="val.id"
-                                :caption="val.extended_name"
-                                deleted></ui-chips>
-                      <ui-chips class="wg-multiple-location__chips__blue"
-                                @onDeleted="isClickCheckbox"
-                                v-for="(val, key) in subjects"
-                                :key="val.type+key"
-                                v-if="val.check"
-                                :name="val.type+'[]'"
-                                :value="val.id"
-                                :caption="val.extended_name"
-                                deleted></ui-chips>
-                      <ui-chips class="wg-multiple-location__chips__green"
-                                @onDeleted="isClickCheckbox"
-                                v-for="(val, key) in settlements"
-                                :key="val.type+key"
-                                v-if="val.check"
-                                :name="val.type+'[]'"
-                                :value="val.id"
-                                :caption="val.extended_name"
-                                deleted></ui-chips>
+                      <ui-chips
+                        class="wg-multiple-location__chips__red"
+                        @onDeleted="isClickCheckbox"
+                        v-for="(val, key) in countries"
+                        :key="val.type+key"
+                        v-if="val.check"
+                        :name="val.type+'[]'"
+                        :value="val.id"
+                        :caption="val.extended_name"
+                        deleted
+                      ></ui-chips>
+                      <ui-chips
+                        class="wg-multiple-location__chips__blue"
+                        @onDeleted="isClickCheckbox"
+                        v-for="(val, key) in subjects"
+                        :key="val.type+key"
+                        v-if="val.check"
+                        :name="val.type+'[]'"
+                        :value="val.id"
+                        :caption="val.extended_name"
+                        deleted
+                      ></ui-chips>
+                      <ui-chips
+                        class="wg-multiple-location__chips__green"
+                        @onDeleted="isClickCheckbox"
+                        v-for="(val, key) in settlements"
+                        :key="val.type+key"
+                        v-if="val.check"
+                        :name="val.type+'[]'"
+                        :value="val.id"
+                        :caption="val.extended_name"
+                        deleted
+                      ></ui-chips>
                     </div>
                   </div>
                 </div>
@@ -112,11 +131,8 @@
                 <div @click="AllRegion" class="ui-button ui-button_blue">
                   все регионы
                 </div>-->
-                <div v-if="modCompleted"
-                     @click="isClear"
-                     class="ui-button ui-button_blue">Очистить</div>
-                <div @click="showModal=false"
-                     class="ui-button ui-button_blue">OK</div>
+                <div v-if="modCompleted" @click="isClear" class="ui-button ui-button_blue">Очистить</div>
+                <div @click="onInsert" class="ui-button ui-button_blue">OK</div>
               </div>
             </div>
           </div>
@@ -197,7 +213,6 @@ export default {
 
   methods: {
     getCountry(id) {
-      // console.log( this.$store.getters["locations/getCountry"](id).name);
       return this.$store.getters["locations/getCountry"](id);
     },
     getSubject(id) {
@@ -371,6 +386,24 @@ export default {
         } else {
           return settlement;
         }
+      });
+    },
+    onInsert() {
+ 
+      this.showModal = false;
+      let countries = this.countries.filter(country => {
+        return country.check == true;
+      });
+      let settlements = this.settlements.filter(settlement => {
+        return settlement.check == true;
+      });
+      let subjects = this.subjects.filter(subject => {
+        return subject.check == true;
+      });
+      this.$emit("onInsert", {
+        countries: countries,
+        settlements: settlements,
+        subjects: subjects
       });
     }
   },

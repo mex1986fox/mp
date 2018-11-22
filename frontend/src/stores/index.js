@@ -8,6 +8,7 @@ import Users from "./users/users.js";
 import Locations from "./locations/locations.js";
 import Transports from "./transports/transports.js";
 import Form_add from "./forms/form-add.js";
+import Filter_add from "./filters/filter-add.js";
 const store = new Vuex.Store({
   // строгий режим для отслеживания ошибок
   // в продакшине отключить!!!
@@ -17,7 +18,8 @@ const store = new Vuex.Store({
     users: Users,
     locations: Locations,
     transports: Transports,
-    form_add: Form_add
+    form_add: Form_add,
+    filter_add: Filter_add
   },
   state: {},
   getters: {},

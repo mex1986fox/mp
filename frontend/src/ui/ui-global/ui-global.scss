@@ -1,7 +1,8 @@
 //делает кнопку закрыть  фонт авесом тонкой 
 .fa-times-thin:before {
-	content: '\00d7';
+    content: '\00d7';
 }
+
 //убираем стили по умолчанию
 select {
     -webkit-appearance: none;
@@ -15,11 +16,15 @@ select::-ms-expand {
 *:active,
 *:focus {
     outline: none;
+    outline-style: none;
 }
 
 *::-moz-focus-inner {
     outline: none;
     border: 0;
+}
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
 }
 
 

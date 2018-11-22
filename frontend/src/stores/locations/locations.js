@@ -55,7 +55,6 @@ const locations = {
           countr["name"].charAt(0).toUpperCase() + countr["name"].slice(1);
         return countr;
       });
-      console.dir(state.countries);
       let subjects = locations.subjects;
       state.subjects = subjects.map(subj => {
         let country_name = countrues.filter(countr => {

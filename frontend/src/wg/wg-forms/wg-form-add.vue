@@ -1,250 +1,153 @@
 <template>
-	<div class="wg-form-add"
-	     :style="{'min-height': windowHeight+'px'} ">
+	<div class="wg-form-add" :style="{'min-height': windowHeight+'px'} ">
 		<div class="row">
 			<div class="col-12">
 				<div class="wg-form-add__bar">
 					<div class="ui-header ui-header_2 wg-form-add__header">
 						<span>Форма подачи объявления</span>
 					</div>
-					<button class="ui-button ui-button_circle ui-button_flat wg-form-add__close"
-					        @click="isClose">
+					<button class="ui-button ui-button_circle ui-button_flat wg-form-add__close" @click="isClose">
 						<i class="fa fa-angle-right"></i>
 					</button>
-					<ui-tabs class=" wg-form-add__tabs">
-						<ui-tabs-tab id="basick"
-						             :checked="tabs=='basick'"
-						             @onFocus="isTabs">
-							<div class="ui-tabs__icone">
-								1
-							</div>
-							Основное
+					<ui-tabs class="wg-form-add__tabs">
+						<ui-tabs-tab id="basick" :checked="tabs=='basick'" @onFocus="isTabs">
+							<div class="ui-tabs__icone">1</div>Основное
 						</ui-tabs-tab>
-						<ui-tabs-tab id="photo"
-						             :checked="tabs=='photo'"
-						             @onFocus="isTabs"
-						             :disabled="disabledTabs">
-							<div class="ui-tabs__icone">
-								2
-							</div>
-							Фотографии
+						<ui-tabs-tab id="photo" :checked="tabs=='photo'" @onFocus="isTabs" :disabled="disabledTabs">
+							<div class="ui-tabs__icone">2</div>Фотографии
 						</ui-tabs-tab>
-						<ui-tabs-tab id="excess"
-						             :checked="tabs=='excess'"
-						             @onFocus="isTabs"
-						             :disabled="disabledTabs">
-							<div class="ui-tabs__icone">
-								3
-							</div>
-							Дополнительно
+						<ui-tabs-tab id="excess" :checked="tabs=='excess'" @onFocus="isTabs" :disabled="disabledTabs">
+							<div class="ui-tabs__icone">3</div>Дополнительно
 						</ui-tabs-tab>
 					</ui-tabs>
-
 				</div>
-
-				<div class="wg-form-add__content"
-				     v-show="tabs=='basick'">
-					<form id="formCreateAdd"
-					      @submit.prevent="create">
+				<div class="wg-form-add__content" v-show="tabs=='basick'">
+					<form id="formCreateAdd" @submit.prevent="create">
 						<div class="wg-form-add__hr">
 							<!-- <i class="fa fa-map-marker" aria-hidden="true"></i> -->
 							Местоположение
 						</div>
 						<div class="row">
 							<div class="col_12">
-								<wg-select-location caption="Страна, регион, город">
-								</wg-select-location>
+								<wg-select-location caption="Страна, регион, город"></wg-select-location>
 							</div>
 						</div>
-
 						<div class="wg-form-add__hr">
 							<!-- <i class="fa fa-car" aria-hidden="true"></i> -->
-
 							Автомобиль
 						</div>
 						<div class="row">
 							<div class="col_5">
-								<ui-select name="brand"
-								           caption="Марка"
-								           :menu='menuBrands'
-								           @onSelect='isSelectedBrand'>
-								</ui-select>
+								<ui-select name="brand" caption="Марка" :menu="menuBrands" @onSelect="isSelectedBrand"></ui-select>
 							</div>
 							<div class="col_5 col_offset-2">
-								<ui-select name="model"
-								           caption="Модель"
-								           :menu='menuModels'
-								           :disabled="(menuModels.length==0?true:false)">
-								</ui-select>
+								<ui-select
+									name="model"
+									caption="Модель"
+									:menu="menuModels"
+									:disabled="(menuModels.length==0?true:false)"
+								></ui-select>
 							</div>
 						</div>
-
-						<ui-textarea name="description"
-						             caption="Описание"
-						             :autoresize="250">
-						</ui-textarea>
+						<ui-textarea name="description" caption="Описание" :autoresize="250"></ui-textarea>
 						<div class="row">
-							<div class="col_3 ">
-								<ui-select name="year"
-								           caption="Год выпуска"
-								           :menu='menuYear'>
-								</ui-select>
+							<div class="col_3">
+								<ui-select name="year" caption="Год выпуска" :menu="menuYear"></ui-select>
 							</div>
 							<div class="col_2 col_offset-1">
-								<ui-text name="mileage"
-								         caption="Пробег км."
-								         :masc="{use:mascNumber}"
-								         :maxlength="9"></ui-text>
+								<ui-text name="mileage" caption="Пробег км." :masc="{use:mascNumber}" :maxlength="9"></ui-text>
 							</div>
 						</div>
-
 						<div class="wg-form-add__hr">
 							<!-- <i class="fa fa-money" aria-hidden="true"></i> -->
 							Стоимость
 						</div>
 						<div class="row">
 							<div class="col_5">
-								<ui-text name="price"
-								         caption="Цена руб."
-								         :masc="{use:mascNumber}"
-								         :maxlength="10"></ui-text>
+								<ui-text name="price" caption="Цена руб." :masc="{use:mascNumber}" :maxlength="10"></ui-text>
 							</div>
 						</div>
 						<div class="wg-form-add__buttons">
-							<button class="ui-button ui-button_blue  "
-							        type="submit">
-								Добавить объявление
-							</button>
+							<button class="ui-button ui-button_blue" type="submit">Добавить объявление</button>
 						</div>
 					</form>
 				</div>
-
-				<div class="wg-form-add__content"
-				     v-show="tabs=='photo'">
-
+				<div class="wg-form-add__content" v-show="tabs=='photo'">
 					<div class="wg-form-add__hr">
 						<!-- <i class="fa fa-camera" aria-hidden="true"></i> -->
-
 						Фотографии
 					</div>
 					<div v-if="slide!=undefined">
-						<wg-slider class="wg-card-photo__slider"
-						           :slide='slide'
-						           :select="selectPhoto"
-						           @onSelect="isSelectPhoto">
-						</wg-slider>
-						<wg-slider-navig class="wg-card-photo__slider-navig"
-						                 :slide='slide'
-						                 :select="selectPhoto"
-						                 @onSelect="isSelectPhoto">
-						</wg-slider-navig>
+						<wg-slider
+							class="wg-card-photo__slider"
+							:slide="slide"
+							:select="selectPhoto"
+							@onSelect="isSelectPhoto"
+						></wg-slider>
+						<wg-slider-navig
+							class="wg-card-photo__slider-navig"
+							:slide="slide"
+							:select="selectPhoto"
+							@onSelect="isSelectPhoto"
+						></wg-slider-navig>
 					</div>
-					<form id="formLoadPhotos"
-					      enctype="multipart/form-data"
-					      @submit.prevent="loadPhotos">
-						<ui-file v-if="!rirendLoader"
-						         caption="Выберите фотографии"
-						         captionCompleted="Выбранные фотографии"
-						         :autoresize="300"
-						         accept="image/*"
-						         :percent="percentFL">
-						</ui-file>
+					<form id="formLoadPhotos" enctype="multipart/form-data" @submit.prevent="loadPhotos">
+						<ui-file
+							v-if="!rirendLoader"
+							caption="Выберите фотографии"
+							captionCompleted="Выбранные фотографии"
+							:autoresize="300"
+							accept="image/*"
+							:percent="percentFL"
+						></ui-file>
 					</form>
 				</div>
-				<form id="formUpdateAdd"
-				      @submit.prevent="updateData">
-					<div class="wg-form-add__content"
-					     v-show="tabs=='excess'">
-						<div class="wg-form-add__hr">
-							Двигатель
-						</div>
+				<form id="formUpdateAdd" @submit.prevent="updateData">
+					<div class="wg-form-add__content" v-show="tabs=='excess'">
+						<div class="wg-form-add__hr">Двигатель</div>
 						<div class="row">
 							<div class="col_4">
-								<ui-select name="fuel"
-								           caption="Топливо"
-								           :menu='menuFuels'
-								           @onSelect='isSelectedFuels'>
-								</ui-select>
+								<ui-select name="fuel" caption="Топливо" :menu="menuFuels" @onSelect="isSelectedFuels"></ui-select>
 							</div>
 							<div class="col_3 col_offset-1">
-								<ui-text name="power"
-								         caption="Мошьность, л.с."
-								         :masc="{use:mascNumber}"
-								         :maxlength="4">
-								</ui-text>
+								<ui-text name="power" caption="Мошьность, л.с." :masc="{use:mascNumber}" :maxlength="4"></ui-text>
 							</div>
 							<div class="col_3 col_offset-1">
-								<ui-select v-if="menuVolums.length>0"
-								           name="volume"
-								           caption="Объем, л."
-								           :menu="menuVolums">
-								</ui-select>
+								<ui-select v-if="menuVolums.length>0" name="volume" caption="Объем, л." :menu="menuVolums"></ui-select>
 							</div>
 						</div>
-						<div class="wg-form-add__hr">
-							КПП
-						</div>
+						<div class="wg-form-add__hr">КПП</div>
 						<div class="row">
 							<div class="col_4">
-								<ui-radio name="transmission"
-								          value="1">
-									Автомат
-								</ui-radio>
-								<ui-radio name="transmission"
-								          value="2">
-									Механика
-								</ui-radio>
-								<ui-radio name="transmission"
-								          value="3">
-									Робот
-								</ui-radio>
+								<ui-radio name="transmission" value="1">Автомат</ui-radio>
+								<ui-radio name="transmission" value="2">Механика</ui-radio>
+								<ui-radio name="transmission" value="3">Робот</ui-radio>
 							</div>
 						</div>
-						<div class="wg-form-add__hr">
-							Привод
-						</div>
+						<div class="wg-form-add__hr">Привод</div>
 						<div class="row">
 							<div class="col_4">
-								<ui-radio name="drive"
-								          value="1">
-									Передний
-								</ui-radio>
-								<ui-radio name="drive"
-								          value="2">
-									Задний
-								</ui-radio>
-								<ui-radio name="drive"
-								          value="3">
-									Полный (4WD)
-								</ui-radio>
+								<ui-radio name="drive" value="1">Передний</ui-radio>
+								<ui-radio name="drive" value="2">Задний</ui-radio>
+								<ui-radio name="drive" value="3">Полный (4WD)</ui-radio>
 							</div>
 						</div>
-						<div class="wg-form-add__hr">
-							Кузов
-						</div>
+						<div class="wg-form-add__hr">Кузов</div>
 						<div class="row">
 							<div class="col_4">
-								<ui-radio v-for="(val, key) in menuBodies"
-								          :key="key"
-								          name="body"
-								          :value="val.value">
-									{{val.option}}
-								</ui-radio>
+								<ui-radio
+									v-for="(val, key) in menuBodies"
+									:key="key"
+									name="body"
+									:value="val.value"
+								>{{val.option}}</ui-radio>
 							</div>
 						</div>
-						<div class="wg-form-add__hr">
-							Руль
-						</div>
+						<div class="wg-form-add__hr">Руль</div>
 						<div class="row">
 							<div class="col_4">
-								<ui-radio name="wheel"
-								          value="l">
-									Левый
-								</ui-radio>
-								<ui-radio name="wheel"
-								          value="r">
-									Правый
-								</ui-radio>
+								<ui-radio name="wheel" value="l">Левый</ui-radio>
+								<ui-radio name="wheel" value="r">Правый</ui-radio>
 							</div>
 						</div>
 						<div class="wg-form-add__hr">
@@ -254,29 +157,14 @@
 						<div class="row">
 							<div class="col_12">
 								<div class="wg-form-add__checkboxs">
-									<ui-check-box name="documentation"
-									              value="1"
-									              :checked="true">
-										без документов
-									</ui-check-box>
-									<ui-check-box name="repair"
-									              value="1"
-									              :checked="true">
-										требует ремонта
-									</ui-check-box>
-									<ui-check-box name='exchange'
-									              value="1"
-									              :checked="true">
-										готов к обмену
-									</ui-check-box>
+									<ui-check-box name="documentation" value="1" :checked="true">без документов</ui-check-box>
+									<ui-check-box name="repair" value="1" :checked="true">требует ремонта</ui-check-box>
+									<ui-check-box name="exchange" value="1" :checked="true">готов к обмену</ui-check-box>
 								</div>
 							</div>
 						</div>
 						<div class="wg-form-add__buttons">
-							<button class="ui-button ui-button_blue  "
-							        type="submit">
-								Добавить
-							</button>
+							<button class="ui-button ui-button_blue" type="submit">Добавить</button>
 						</div>
 					</div>
 				</form>
@@ -284,15 +172,10 @@
 		</div>
 		<div class="row">
 			<div class="col_12">
-				<ui-snackbar :show="showSnackbar"
-				             @onHide="showSnackbar=false"
-				             :time="20000">
-					{{descSnackbar}}
-				</ui-snackbar>
+				<ui-snackbar :show="showSnackbar" @onHide="showSnackbar=false" :time="20000">{{descSnackbar}}</ui-snackbar>
 			</div>
 		</div>
 	</div>
-
 </template>
 
 <script>
@@ -469,21 +352,7 @@ export default {
       }
     },
     menuYear() {
-      let maxDate = new Date().getFullYear();
-      let minDate = 1935;
-      let menu = [];
-
-      // {value:"1",option:"Audi", group:"Область", selected:true}
-      while (minDate != maxDate) {
-        menu.push({
-          value: maxDate,
-          option: maxDate,
-          group: "Года",
-          selected: menu.length == 0 ? true : false
-        });
-        maxDate--;
-      }
-      return menu;
+      return this.$store.getters["form_add/getYears"];
     },
     menuFuels() {
       return this.$store.getters["form_add/getFuels"];

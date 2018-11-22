@@ -76,7 +76,7 @@ export default {
       default: undefined
     },
     masc: {
-      type: Object,
+      type: [Object, String],
       default: undefined
     },
     focus: {
@@ -108,6 +108,23 @@ export default {
     isInputText() {
       this.dValue = this.$refs.input.value;
       this.$emit("onInput", this.dValue);
+    },
+     mascNumber(val) {
+      let newQ = val.replace(/[^0-9]/gim, "");
+      if (newQ[0] == 0) {
+        newQ = newQ.substr(1);
+      }
+      if (newQ.length > 4) {
+        let spl = newQ.split("");
+        spl.splice(-3, 0, " ");
+        newQ = spl.join("");
+      }
+      if (newQ.length > 7) {
+        let spl = newQ.split("");
+        spl.splice(-7, 0, " ");
+        newQ = spl.join("");
+      }
+      return newQ;
     }
   },
   computed: {
@@ -125,7 +142,13 @@ export default {
     },
     dValue(newV) {
       if (this.masc != undefined) {
-        this.dValue = this.masc.use(newV);
+        switch (this.masc) {
+          case "mascNumber":
+            this.dValue = this.mascNumber(newV);
+            break;
+          default:
+            this.dValue = this.masc.use(newV);
+        }
       }
     },
     caretStart(newQ) {

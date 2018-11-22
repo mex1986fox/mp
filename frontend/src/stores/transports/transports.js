@@ -70,9 +70,33 @@ const transports = {
   },
   mutations: {
     updateTransports(state, transport) {
-      state.transports = transport.transports;
-      state.brands = transport.brands;
-      state.models = transport.models;
+      // state.transports = transport.transports;
+      // state.brands = transport.brands;
+      // state.models = transport.models;
+      let transports = transport.transports;
+      state.transports = transports.map(transp => {
+        transp["extended_name"] =
+          transp["name"].charAt(0).toUpperCase() + transp["name"].slice(1);
+        return transp;
+      });
+
+      let brands = transport.brands;
+      state.brands = brands.map(brand => {
+        let transp_name = transports.filter(transp => {
+          return transp.id == brand.transport_id;
+        })[0].name;
+        brand["extended_name"] = brand["name"] + " (" + transp_name + ")";
+        return brand;
+      });
+
+      let models = transport.models;
+      state.models = models.map(model => {
+        let brand_name = brands.filter(brand => {
+          return brand.id == model.brand_id;
+        })[0].name;
+        model["extended_name"] = model["name"] + " (" + brand_name + ")";
+        return model;
+      });
       state.drives = transport.drives;
       state.fuels = transport.fuels;
       state.volums = transport.volums;

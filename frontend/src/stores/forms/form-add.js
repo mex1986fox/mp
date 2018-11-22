@@ -114,6 +114,22 @@ const form_add = {
         }
       }
       return bodies;
+    },
+    getYears: (state, getters, rootState, rootGetters) => {
+      let maxDate = new Date().getFullYear();
+      let minDate = 1935;
+      let menu = [];
+      while (minDate != maxDate) {
+        menu.push({
+          value: maxDate,
+          option: maxDate,
+          group: "Года",
+          selected: menu.length == 0 ? true : false
+        });
+        maxDate--;
+      }
+      return menu;
+
     }
   },
   mutations: {

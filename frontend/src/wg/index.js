@@ -26,6 +26,8 @@ import WgSelectLocation from "./wg-select-location/wg-select-location.vue";
 Vue.component("wg-select-location", WgSelectLocation);
 import WgMultipleLocation from "./wg-multiple-location/wg-multiple-location.vue";
 Vue.component("wg-multiple-location", WgMultipleLocation);
+import WgMultipleTransport from "./wg-multiple-transport/wg-multiple-transport.vue";
+Vue.component("wg-multiple-transport", WgMultipleTransport);
 import WgMessanger from "./wg-messanger/wg-messanger.vue";
 Vue.component("wg-messanger", WgMessanger);
 import WgSmiles from "./wg-smiles/wg-smiles.vue";

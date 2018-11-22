@@ -21,11 +21,15 @@ select::-ms-expand {
 
 *:active,
 *:focus {
-  outline: none; }
+  outline: none;
+  outline-style: none; }
 
 *::-moz-focus-inner {
   outline: none;
   border: 0; }
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset; }
 
 @font-face {
   font-family: "Open Sans";
@@ -2386,11 +2390,15 @@ select::-ms-expand {
 
 *:active,
 *:focus {
-  outline: none; }
+  outline: none;
+  outline-style: none; }
 
 *::-moz-focus-inner {
   outline: none;
   border: 0; }
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset; }
 
 .wg-desc-example__description {
   width: 100%;
@@ -3173,6 +3181,46 @@ select::-ms-expand {
   .wg-multiple-location__chips__blue {
     background-color: #0000ff4d; }
 
+.wg-multiple-transport {
+  margin: 23px 0 10px 0; }
+  .wg-multiple-transport__container {
+    overflow: hidden;
+    border-bottom: 1px solid #bebebe;
+    min-height: 40px;
+    padding-top: 10px;
+    max-height: 250px;
+    overflow-y: auto; }
+  .wg-multiple-transport__button {
+    position: absolute;
+    right: 0;
+    left: auto;
+    bottom: 0px; }
+  .wg-multiple-transport__caption {
+    top: 11px; }
+    .wg-multiple-transport__caption_active {
+      font-size: 16px;
+      line-height: 90px; }
+    .wg-multiple-transport__caption_completed {
+      font-size: 13px !important;
+      line-height: 25px; }
+  .wg-multiple-transport__border {
+    position: relative;
+    top: -1px; }
+  .wg-multiple-transport__menu {
+    overflow: hidden;
+    padding: 6px 17px; }
+  .wg-multiple-transport__chips-container {
+    max-height: 160px;
+    overflow: hidden;
+    overflow-y: auto;
+    margin-top: 38px; }
+  .wg-multiple-transport__chips__red {
+    background-color: #ff00004d; }
+  .wg-multiple-transport__chips__green {
+    background-color: #0080004d; }
+  .wg-multiple-transport__chips__blue {
+    background-color: #0000ff4d; }
+
 .wg-messanger {
   width: 100%;
   background-color: #ffffff;
@@ -3455,11 +3503,15 @@ select::-ms-expand {
 
 *:active,
 *:focus {
-  outline: none; }
+  outline: none;
+  outline-style: none; }
 
 *::-moz-focus-inner {
   outline: none;
   border: 0; }
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset; }
 
 .pg-ads__button-show-form-add {
   position: fixed;
