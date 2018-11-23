@@ -25,7 +25,13 @@
 					</div>
 					<div class="row">
 						<div class="col_12">
-							<wg-multiple-location :caption="'Страна, регион, город'" @onInsert="setFilterLocation"></wg-multiple-location>
+							<wg-multiple-location
+								:pCountry="menuCountry"
+								:pSubject="menuSubject"
+								:pSettlement="menuSettlement"
+								:caption="'Страна, регион, город'"
+								@onInsert="setFilterLocation"
+							></wg-multiple-location>
 						</div>
 					</div>
 				</div>
@@ -38,7 +44,13 @@
 					</div>
 					<div class="row">
 						<div class="col_12">
-							<wg-multiple-transport :caption="'Тип, фирма, модель'" @onInsert="setFilterTransport"></wg-multiple-transport>
+							<wg-multiple-transport
+								:pTransport="menuTransport"
+								:pModel="menuModel"
+								:pBrand="menuBrand"
+								:caption="'Тип, фирма, модель'"
+								@onInsert="setFilterTransport"
+							></wg-multiple-transport>
 						</div>
 					</div>
 				</div>
@@ -47,63 +59,126 @@
 				<div class="wg-filter-add__content">
 					<div class="row">
 						<div class="col_6">
-							<ui-select name="marca" caption="Сортировать по" :menu="menuSortBy"></ui-select>
+							<ui-select
+								name="sort_by"
+								caption="Сортировать по"
+								:menu="menuSortBy"
+								@onSelect="setFilterSortBy"
+							></ui-select>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col_6">
-							<ui-text name="price" value="" :masc="'mascNumber'" caption="Цена от" :maxlength="9"></ui-text>
+							<ui-text
+								name="price"
+								:value="valuePrice"
+								:masc="'mascNumber'"
+								caption="Цена от"
+								:maxlength="9"
+								@onInput="setFilterPrice"
+							></ui-text>
 						</div>
 						<div class="col_5 col_offset-1">
-							<ui-text name="pricebef" value="" :masc="'mascNumber'" caption="до" :maxlength="9"></ui-text>
+							<ui-text
+								name="price_bef"
+								:value="valuePriceBef"
+								:masc="'mascNumber'"
+								caption="до"
+								:maxlength="9"
+								@onInput="setFilterPriceBef"
+							></ui-text>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col_6">
-							<ui-select name="year" caption="Год от" :menu="menuYear"></ui-select>
+							<ui-select name="year" caption="Год от" :menu="menuYear" @onSelect="setFilterYear"></ui-select>
 						</div>
 						<div class="col_5 col_offset-1">
-							<ui-select name="yearbef" caption="до" :menu="menuYearBef"></ui-select>
+							<ui-select name="year_bef" caption="до" :menu="menuYearBef" @onSelect="setFilterYearBef"></ui-select>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col_6">
-							<ui-select name="fuel" caption="Топливо" :menu="menuFuels" :multiple="true"></ui-select>
+							<ui-select
+								name="fuel"
+								caption="Топливо"
+								:menu="menuFuels"
+								:multiple="true"
+								@onSelect="setFilterFuel"
+							></ui-select>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col_6">
-							<ui-text name="volume" value="" caption="Объем от" :masc="'mascNumber'" :maxlength="4"></ui-text>
+							<ui-text
+								name="volume"
+								:value="valueVolume"
+								caption="Объем от"
+								:masc="'mascNumber'"
+								:maxlength="4"
+								@onInput="setFilterVolume"
+							></ui-text>
 						</div>
 						<div class="col_5 col_offset-1">
-							<ui-text name="volumebef" value="" caption="до" :masc="'mascNumber'" :maxlength="4"></ui-text>
+							<ui-text
+								name="volume_bef"
+								:value="valueVolumeBef"
+								caption="до"
+								:masc="'mascNumber'"
+								:maxlength="4"
+								@onInput="setFilterVolumeBef"
+							></ui-text>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col_6">
-							<ui-select name="body" caption="Кузов" :menu="menuBodies" :multiple="true"></ui-select>
+							<ui-select
+								name="body"
+								caption="Кузов"
+								:menu="menuBodies"
+								:multiple="true"
+								@onSelect="setFilterBody"
+							></ui-select>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col_6">
-							<ui-select name="drive" caption="Привод" :menu="menuDrives" :multiple="true"></ui-select>
+							<ui-select
+								name="drive"
+								caption="Привод"
+								:menu="menuDrives"
+								:multiple="true"
+								@onSelect="setFilterDrive"
+							></ui-select>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col_6">
-							<ui-select name="transmission" caption="Коробка" :menu="menuTransmissions" :multiple="true"></ui-select>
+							<ui-select
+								name="transmission"
+								caption="Коробка"
+								:menu="menuTransmissions"
+								:multiple="true"
+								@onSelect="setFilterTransmission"
+							></ui-select>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col_6">
-							<ui-select name="helm" caption="Руль" :menu="menuHelms" :multiple="true"></ui-select>
+							<ui-select
+								name="helm"
+								caption="Руль"
+								:menu="menuHelms"
+								:multiple="true"
+								@onSelect="setFilterHelm"
+							></ui-select>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="col_12">
 				<div class="wg-filter-add__buttons">
-					<button class="ui-button ui-button_blue">Применить</button>
+					<button class="ui-button ui-button_blue" @click="loadFilter">Применить</button>
 					<button class="ui-button ui-button_flat">Отмена</button>
 				</div>
 			</div>
@@ -125,6 +200,25 @@ export default {
     };
   },
   computed: {
+    menuTransport() {
+      return this.$store.getters["filter_add/getTransports"];
+    },
+    menuModel() {
+      return this.$store.getters["filter_add/getModels"];
+    },
+    menuBrand() {
+      return this.$store.getters["filter_add/getBrands"];
+    },
+
+    menuCountry() {
+      return this.$store.getters["filter_add/getCountries"];
+    },
+    menuSettlement() {
+      return this.$store.getters["filter_add/getSettlements"];
+    },
+    menuSubject() {
+      return this.$store.getters["filter_add/getSubjects"];
+    },
     menuSortBy() {
       return this.$store.getters["filter_add/getSortBy"];
     },
@@ -148,6 +242,18 @@ export default {
     },
     menuHelms() {
       return this.$store.getters["filter_add/getHelms"];
+    },
+    valuePrice() {
+      return this.$store.getters["filter_add/getPrice"];
+    },
+    valuePriceBef() {
+      return this.$store.getters["filter_add/getPriceBef"];
+    },
+    valueVolume() {
+      return this.$store.getters["filter_add/getVolume"];
+    },
+    valueVolumeBef() {
+      return this.$store.getters["filter_add/getVolumeBef"];
     }
   },
   methods: {
@@ -157,6 +263,25 @@ export default {
     },
     isClose() {
       this.$emit("onHide");
+    },
+    loadFilter() {
+			let headers = { "Content-Type": "multipart/form-data" };
+      let params = {
+        user_id: this.$cookie.get("user_id"),
+        filter: JSON.stringify(this.$store.state.filter_add.filter),
+      };
+      this.$http
+        .post(
+          this.$hosts.ads + "/api/create/adsFilter",
+          params,
+          headers
+        )
+        .then(
+          response => {
+            console.dir(response);
+          },
+          error => {}
+        );
     },
     setFilterLocation(location) {
       this.$store.commit("filter_add/setFilter", {
@@ -168,6 +293,78 @@ export default {
       this.$store.commit("filter_add/setFilter", {
         name: "transport",
         filter: transport
+      });
+    },
+    setFilterSortBy(sortBy) {
+      this.$store.commit("filter_add/setFilter", {
+        name: "sortBy",
+        filter: sortBy
+      });
+    },
+    setFilterPrice(price) {
+      this.$store.commit("filter_add/setFilter", {
+        name: "price",
+        filter: price
+      });
+    },
+    setFilterPriceBef(price) {
+      this.$store.commit("filter_add/setFilter", {
+        name: "priceBef",
+        filter: price
+      });
+    },
+    setFilterYear(year) {
+      this.$store.commit("filter_add/setFilter", {
+        name: "year",
+        filter: year
+      });
+    },
+    setFilterYearBef(year) {
+      this.$store.commit("filter_add/setFilter", {
+        name: "yearBef",
+        filter: year
+      });
+    },
+    setFilterFuel(fuel) {
+      this.$store.commit("filter_add/setFilter", {
+        name: "fuel",
+        filter: fuel
+      });
+    },
+    setFilterVolume(volume) {
+      this.$store.commit("filter_add/setFilter", {
+        name: "volume",
+        filter: volume
+      });
+    },
+    setFilterVolumeBef(volume) {
+      this.$store.commit("filter_add/setFilter", {
+        name: "volumeBef",
+        filter: volume
+      });
+    },
+    setFilterBody(body) {
+      this.$store.commit("filter_add/setFilter", {
+        name: "body",
+        filter: body
+      });
+    },
+    setFilterDrive(drive) {
+      this.$store.commit("filter_add/setFilter", {
+        name: "drive",
+        filter: drive
+      });
+    },
+    setFilterTransmission(transmission) {
+      this.$store.commit("filter_add/setFilter", {
+        name: "transmission",
+        filter: transmission
+      });
+    },
+    setFilterHelm(helm) {
+      this.$store.commit("filter_add/setFilter", {
+        name: "helm",
+        filter: helm
       });
     }
   }

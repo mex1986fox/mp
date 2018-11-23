@@ -3,28 +3,81 @@ const filter_add = {
   namespaced: true,
   state: {
     sortBy: [
-      { value: 1, name: "Цене (сначала дорогие)" },
-      { value: 2, name: "Цене (сначала дешевые)" },
-      { value: 3, name: "Объему (сначала большие)" },
-      { value: 4, name: "Объему (сначала маленькие)" },
+      { id: 1, name: "Цене (сначала дорогие)" },
+      { id: 2, name: "Цене (сначала дешевые)" },
+      { id: 3, name: "Объему (сначала большие)" },
+      { id: 4, name: "Объему (сначала маленькие)" },
     ],
     helms: [
-      { value: 1, name: "левый" },
-      { value: 2, name: "правый" }
+      { id: 1, name: "левый" },
+      { id: 2, name: "правый" }
     ],
     filter: {}
   },
   getters: {
+    getTransports: (state, getters, rootState, rootGetters) => {
+      let transports = [];
+      if (state.filter.transport.transports != undefined) {
+        transports = state.filter.transport.transports.map(trans => { return trans.id });
+      }
+      return transports;
+    },
+    getModels: (state, getters, rootState, rootGetters) => {
+      let models = [];
+      if (state.filter.transport.models != undefined) {
+        models = state.filter.transport.models.map(trans => { return trans.id });
+      }
+      return models;
+    },
+    getBrands: (state, getters, rootState, rootGetters) => {
+      let transports = [];
+      if (state.filter.transport.brands != undefined) {
+        transports = state.filter.transport.brands.map(trans => { return trans.id });
+      }
+      return transports;
+    },
+    getCountries: (state, getters, rootState, rootGetters) => {
+      let countries = [];
+      if (state.filter.location.countries != undefined) {
+        countries = state.filter.location.countries.map(count => { return count.id });
+      }
+      return countries;
+    },
+    getSettlements: (state, getters, rootState, rootGetters) => {
+      let settlements = [];
+      if (state.filter.location.settlements != undefined) {
+        settlements = state.filter.location.settlements.map(count => { return count.id });
+      }
+      return settlements;
+    },
+    getSubjects: (state, getters, rootState, rootGetters) => {
+      let subjects = [];
+      if (state.filter.location.subjects != undefined) {
+        subjects = state.filter.location.subjects.map(count => { return count.id });
+      }
+      return subjects;
+    },
     getSortBy: (state, getters, rootState, rootGetters) => {
       let sortBy = [];
       if (
         state.sortBy
       ) {
         for (let sort of state.sortBy) {
-          sortBy.push({
-            value: sort.id,
-            option: sort.name,
-          });
+          if (state.filter.sortBy != undefined) {
+            let filter = state.filter.sortBy;
+            let selected = filter.filter((fil) => { return fil.value == sort.id ? 1 : 0 }).length == 1 ? true : false;
+            sortBy.push({
+              value: sort.id,
+              option: sort.name,
+              selected: selected
+            });
+          } else {
+            sortBy.push({
+              value: sort.id,
+              option: sort.name,
+              selected: false
+            });
+          }
         }
       }
       return sortBy;
@@ -35,10 +88,21 @@ const filter_add = {
         state.helms
       ) {
         for (let helm of state.helms) {
-          helms.push({
-            value: helm.id,
-            option: helm.name,
-          });
+          if (state.filter.helm != undefined) {
+            let filter = state.filter.helm;
+            let selected = filter.filter((fil) => { return fil.value == helm.id ? 1 : 0 }).length == 1 ? true : false;
+            helms.push({
+              value: helm.id,
+              option: helm.name,
+              selected: selected
+            });
+          } else {
+            helms.push({
+              value: helm.id,
+              option: helm.name,
+              selected: false
+            });
+          }
         }
       }
       return helms;
@@ -49,11 +113,21 @@ const filter_add = {
         rootState.transports.fuels
       ) {
         for (let fuel of rootState.transports.fuels) {
-          fuels.push({
-            value: fuel.id,
-            option: fuel.name,
-            group: "Топливо"
-          });
+          if (state.filter.fuel != undefined) {
+            let filter = state.filter.fuel;
+            let selected = filter.filter((fil) => { return fil.value == fuel.id ? 1 : 0 }).length == 1 ? true : false;
+            fuels.push({
+              value: fuel.id,
+              option: fuel.name,
+              selected: selected,
+            });
+          } else {
+            fuels.push({
+              value: fuel.id,
+              option: fuel.name,
+              selected: false,
+            });
+          }
         }
       }
       return fuels;
@@ -64,10 +138,21 @@ const filter_add = {
         rootState.transports.drives
       ) {
         for (let drive of rootState.transports.drives) {
-          drives.push({
-            value: drive.id,
-            option: drive.name,
-          });
+          if (state.filter.drive != undefined) {
+            let filter = state.filter.drive;
+            let selected = filter.filter((fil) => { return fil.value == drive.id ? 1 : 0 }).length == 1 ? true : false;
+            drives.push({
+              value: drive.id,
+              option: drive.name,
+              selected: selected,
+            });
+          } else {
+            drives.push({
+              value: drive.id,
+              option: drive.name,
+              selected: false,
+            });
+          }
         }
       }
       return drives;
@@ -76,10 +161,21 @@ const filter_add = {
       let transmissions = [];
       if (rootState.transports.transmissions) {
         for (let transmission of rootState.transports.transmissions) {
-          transmissions.push({
-            value: transmission.id,
-            option: transmission.name
-          });
+          if (state.filter.transmission != undefined) {
+            let filter = state.filter.transmission;
+            let selected = filter.filter((fil) => { return fil.value == transmission.id ? 1 : 0 }).length == 1 ? true : false;
+            transmissions.push({
+              value: transmission.id,
+              option: transmission.name,
+              selected: selected,
+            });
+          } else {
+            transmissions.push({
+              value: transmission.id,
+              option: transmission.name,
+              selected: false,
+            });
+          }
         }
       }
       return transmissions;
@@ -88,10 +184,15 @@ const filter_add = {
       let bodies = [];
       if (rootState.transports.bodies) {
         for (let body of rootState.transports.bodies) {
+          let selected = false;
+          if (state.filter.body != undefined) {
+            let filter = state.filter.body;
+            selected = filter.filter((fil) => { return fil.value == body.id ? 1 : 0 }).length == 1 ? true : false;
+          }
           bodies.push({
             value: body.id,
             option: body.name,
-            group: body.name[0]
+            selected: selected,
           });
         }
       }
@@ -102,11 +203,16 @@ const filter_add = {
       let minDate = 1935;
       let menu = [];
       while (minDate != maxDate) {
+        let selected = false;
+        if (state.filter.year != undefined) {
+          let filter = state.filter.year;
+          selected = filter.filter((fil) => { return fil.value == maxDate ? 1 : 0 }).length == 1 ? true : false;
+        }
         menu.push({
           value: maxDate,
           option: maxDate,
           group: "Года",
-          selected: false
+          selected: selected
         });
         maxDate--;
       }
@@ -117,15 +223,48 @@ const filter_add = {
       let minDate = 1935;
       let menu = [];
       while (minDate != maxDate) {
+        let selected = false;
+        if (state.filter.yearBef != undefined) {
+          let filter = state.filter.yearBef;
+          selected = filter.filter((fil) => { return fil.value == maxDate ? 1 : 0 }).length == 1 ? true : false;
+        }
         menu.push({
           value: maxDate,
           option: maxDate,
           group: "Года",
-          selected: false
+          selected: selected
         });
         maxDate--;
       }
       return menu;
+    },
+    getPrice: (state, getters, rootState, rootGetters) => {
+      let price = "";
+      if (state.filter.price != undefined) {
+        price = state.filter.price;
+      }
+      return price;
+    },
+    getPriceBef: (state, getters, rootState, rootGetters) => {
+      let price = "";
+      if (state.filter.priceBef != undefined) {
+        price = state.filter.priceBef;
+      }
+      return price;
+    },
+    getVolume: (state, getters, rootState, rootGetters) => {
+      let volume = "";
+      if (state.filter.volume != undefined) {
+        volume = state.filter.volume;
+      }
+      return volume;
+    },
+    getVolumeBef: (state, getters, rootState, rootGetters) => {
+      let volume = "";
+      if (state.filter.volumeBef != undefined) {
+        volume = state.filter.volumeBef;
+      }
+      return volume;
     }
   },
   mutations: {
@@ -134,8 +273,16 @@ const filter_add = {
       stateFilter[filter.name] = filter.filter;
       state.filter = stateFilter;
       // console.dir(state.filter);
+    },
+    setFilters(state, filters) {
+      state.filter = undefined;
+      state.filter = filters;
+      // console.dir(state.filter);
     }
   },
-  actions: {}
+  actions: {
+
+  }
+
 };
 export default filter_add;

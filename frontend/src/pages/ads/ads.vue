@@ -14,7 +14,7 @@
           <ui-fixed-block>
             <div class="row">
               <div class="col-12 col-nbook_clean col-desktop_clean">
-                <div class="row ">
+                <div class="row">
                   <div class="col-12">
                     <div class="wg-content-frame wg-content-frame_left wg-content-frame__padding">
                       <div
@@ -26,7 +26,9 @@
                 </div>
                 <div class="row">
                   <div class="col-12">
-                    <div class="wg-content-frame wg-content-frame_left wg-content-frame__padding wg-content-frame_no-border">
+                    <div
+                      class="wg-content-frame wg-content-frame_left wg-content-frame__padding wg-content-frame_no-border"
+                    >
                       <div @click="showFilterAdd=true" class="ui-navigation__unit__button">
                         <div class="ui-navigation__unit__icon">
                           <i aria-hidden="true" class="fa fa-sliders"></i>
@@ -47,7 +49,6 @@
                 </div>
               </div>
             </div>
-
             <div class="row">
               <div class="col-12">
                 <div class="wg-content-frame wg-content-frame_left">
@@ -91,7 +92,9 @@
                 </div>
               </div>
               <div class="col-12">
-                <div class="wg-content-frame wg-content-frame_right wg-content-frame__padding wg-content-frame_no-border">
+                <div
+                  class="wg-content-frame wg-content-frame_right wg-content-frame__padding wg-content-frame_no-border"
+                >
                   <div @click="showFilterAdd=true" class="ui-navigation__unit__button">
                     <div class="ui-navigation__unit__icon">
                       <i aria-hidden="true" class="fa fa-sliders"></i>
@@ -109,7 +112,6 @@
                   </div>
                 </div>
               </div>
-          
             </div>
           </ui-fixed-block>
         </div>
@@ -238,6 +240,124 @@ export default {
       this.$http.post("/api/show/ads").then(
         response => {
           this.ads = response.body.ads;
+          let filters = {
+            sortBy: [
+              {
+                value: 1,
+                option: "Цене (сначала дорогие)",
+                selected: true
+              }
+            ],
+            price: "255 222",
+            priceBef: "44 4444",
+            year: [
+              { value: 2010, option: 2010, group: "Года", selected: true }
+            ],
+            yearBef: [
+              { value: 2011, option: 2011, group: "Года", selected: true }
+            ],
+            fuel: [
+              { value: 5, option: "ГБО", selected: true },
+              { value: 1, option: "бензин", selected: true }
+            ],
+            volume: "4444",
+            volumeBef: "4444",
+            body: [{ value: 1, option: "седан", group: "с", selected: true }],
+            transmission: [
+              { value: 1, option: "автомат", selected: true },
+              { value: 2, option: "механика", selected: true }
+            ],
+            helm: [
+              {
+                value: 1,
+                option: "левый",
+                selected: true
+              }
+            ],
+            drive: [
+              { value: 1, option: "передний", selected: true },
+              { value: 2, option: "задний", selected: true }
+            ],
+            transport: {
+              transports: [
+                {
+                  id: 1,
+                  type: "transports",
+                  name: "Легковые",
+                  extended_name: "Легковые",
+                  check: true
+                }
+              ],
+              brands: [],
+              models: []
+            },
+            location: {
+              countries: [],
+              settlements: [
+                {
+                  id: 62,
+                  id_country: 1,
+                  id_subject: 1,
+                  type: "settlements",
+                  name: "Романово",
+                  extended_name: "Романово (Алтайский край)",
+                  check: true
+                },
+                {
+                  id: 93,
+                  id_country: 1,
+                  id_subject: 2,
+                  type: "settlements",
+                  name: "Райчихинск",
+                  extended_name: "Райчихинск (Амурская область)",
+                  check: true
+                }
+              ],
+              subjects: [
+                {
+                  id: 44,
+                  id_country: 1,
+                  type: "subjects",
+                  name: "Республика Адыгея",
+                  extended_name: "Республика Адыгея (Россия)",
+                  check: true
+                },
+                {
+                  id: 45,
+                  id_country: 1,
+                  type: "subjects",
+                  name: "Республика Алтай",
+                  extended_name: "Республика Алтай (Россия)",
+                  check: true
+                },
+                {
+                  id: 46,
+                  id_country: 1,
+                  type: "subjects",
+                  name: "Республика Башкортостан",
+                  extended_name: "Республика Башкортостан (Россия)",
+                  check: true
+                },
+                {
+                  id: 47,
+                  id_country: 1,
+                  type: "subjects",
+                  name: "Республика Бурятия",
+                  extended_name: "Республика Бурятия (Россия)",
+                  check: true
+                },
+                {
+                  id: 57,
+                  id_country: 1,
+                  type: "subjects",
+                  name: "Республика Северная Осетия",
+                  extended_name: "Республика Северная Осетия (Россия)",
+                  check: true
+                }
+              ]
+            }
+          };
+          this.$store.commit("filter_add/setFilters", filters);
           this.updateUsers();
         },
         error => {}

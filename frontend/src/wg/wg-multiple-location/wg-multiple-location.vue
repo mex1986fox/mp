@@ -10,7 +10,7 @@
     <div class="wg-multiple-location__container">
       <ui-chips
         class="wg-multiple-location__chips__red"
-        @onDeleted="isClickCheckbox"
+        @onDeleted="onDeletedChip"
         v-for="(val, key) in countries"
         :key="val.type+'ch2'+key"
         v-if="val.check"
@@ -21,7 +21,7 @@
       ></ui-chips>
       <ui-chips
         class="wg-multiple-location__chips__blue"
-        @onDeleted="isClickCheckbox"
+        @onDeleted="onDeletedChip"
         v-for="(val, key) in subjects"
         :key="val.type+'ch2'+key"
         v-if="val.check"
@@ -32,7 +32,7 @@
       ></ui-chips>
       <ui-chips
         class="wg-multiple-location__chips__green"
-        @onDeleted="isClickCheckbox"
+        @onDeleted="onDeletedChip"
         v-for="(val, key) in settlements"
         :key="val.type+'ch2'+key"
         v-if="val.check"
@@ -388,8 +388,11 @@ export default {
         }
       });
     },
+    onDeletedChip(checkbox) {
+      this.isClickCheckbox(checkbox);
+      this.onInsert();
+    },
     onInsert() {
- 
       this.showModal = false;
       let countries = this.countries.filter(country => {
         return country.check == true;

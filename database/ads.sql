@@ -25,3 +25,10 @@ CREATE TABLE "ads" (
     FOREIGN KEY (fuel_id) REFERENCES transports_fuels(id),
     FOREIGN KEY (transmission_id) REFERENCES transports_transmissions(id)
 );
+CREATE TABLE "ads_filters" (
+    id bigserial,
+    user_id bigint NOT NULL,
+    filter text,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
