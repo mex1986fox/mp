@@ -1,5 +1,5 @@
 <?php
-namespace App\Models\Api\Ads;
+namespace App\Models\Api\AdsFilter;
 
 use \Zend\Validator\Exception\RuntimeException as RuntimeException;
 
@@ -17,17 +17,28 @@ class Show
     {
         try {
             $p = $this->request->getQueryParams();
-            if (!empty($p["id"])) {
-                $id = $p["id"];
+            // проверяем фильтр
+            if (!empty($_SESSION["filter"])) {
+                //отдаем если он есть в сессие
+                return ["filter" => $_SESSION["filter"]];
             }
-            $qWhere = "";
-            $qWhere = $qWhere . (empty($id) ? "" : "id=" . $id);
-            $qWhere = (empty($qWhere) ? "" : "where ") . $qWhere;
-
+            // проверяем авторизачцию пользователя
+            $auths = $this->container['auths'];
+            if (!$auths->AuthUser->Authed()) {
+                throw new \Exception("Нет фильтра для не авторизованого пользователя");
+            }
+            // проверяем фильтр в базе
+            $user_id = $_SESSION["user_id"];
             $db = $this->container['db'];
-            $q = "select *, price::numeric(10,0) from ads " . $qWhere;
-            $ads = $db->query($q, \PDO::FETCH_ASSOC)->fetchAll();
-            return ["ads" => $ads];
+            //сохраняем фильтр в базу
+            $q = "select * from ads_filters where user_id = {$user_id};";
+            $filter = $db->query($q, \PDO::FETCH_ASSOC)->fetch();
+            if ($filter != false) {
+                return ["filter" => $filter["filter"]];
+            } else {
+                throw new \Exception("Нет фильтра для пользователя");
+            }
+
         } catch (RuntimeException | \Exception $e) {
             $exceptions = ['exceptions' => ['massege' => $e->getMessage()]];
             return $exceptions;

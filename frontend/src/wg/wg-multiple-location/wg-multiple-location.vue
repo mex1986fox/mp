@@ -149,36 +149,9 @@ export default {
       dCaption: this.caption,
       showModal: false,
       dDisabled: false,
-      countries: this.$store.state.locations.countries.map(country => {
-        return {
-          id: country.id,
-          type: "countries",
-          name: country.name,
-          extended_name: country.extended_name,
-          check: this.pCountry.some(e => e == country.id)
-        };
-      }),
-      subjects: this.$store.state.locations.subjects.map(subject => {
-        return {
-          id: subject.id,
-          id_country: subject.country_id,
-          type: "subjects",
-          name: subject.name,
-          extended_name: subject.extended_name,
-          check: this.pSubject.some(e => e == subject.id)
-        };
-      }),
-      settlements: this.$store.state.locations.settlements.map(settlement => {
-        return {
-          id: settlement.id,
-          id_country: settlement.country_id,
-          id_subject: settlement.subject_id,
-          type: "settlements",
-          name: settlement.name,
-          extended_name: settlement.extended_name,
-          check: this.pSettlement.some(e => e == settlement.id)
-        };
-      })
+      countries: undefined,
+      subjects: undefined,
+      settlements: undefined
     };
   },
   props: {
@@ -200,15 +173,15 @@ export default {
     }
   },
   watch: {
-    pCountry(newQ) {
-      this.pCountry = newQ;
-    },
-    pSubject(newQ) {
-      this.pSubject = newQ;
-    },
-    pSettlement(newQ) {
-      this.pSettlement = newQ;
-    }
+    // pCountry(newQ) {
+    //   this.pCountry = newQ;
+    // },
+    // pSubject(newQ) {
+    //   this.pSubject = newQ;
+    // },
+    // pSettlement(newQ) {
+    //   this.pSettlement = newQ;
+    // }
   },
 
   methods: {
@@ -404,9 +377,9 @@ export default {
         return subject.check == true;
       });
       this.$emit("onInsert", {
-        countries: countries,
-        settlements: settlements,
-        subjects: subjects
+        countries: JSON.parse(JSON.stringify(countries)),
+        settlements: JSON.parse(JSON.stringify(settlements)),
+        subjects: JSON.parse(JSON.stringify(subjects))
       });
     }
   },
@@ -438,6 +411,41 @@ export default {
       }
       return [];
     }
+  },
+  beforeMount() {
+    this.countries = this.$store.state.locations.countries.map(country => {
+      return {
+        id: country.id,
+        type: "countries",
+        name: country.name,
+        extended_name: country.extended_name,
+        check: this.pCountry.some(e => e == country.id)
+      };
+    });
+
+    this.subjects = this.$store.state.locations.subjects.map(subject => {
+      return {
+        id: subject.id,
+        id_country: subject.country_id,
+        type: "subjects",
+        name: subject.name,
+        extended_name: subject.extended_name,
+        check: this.pSubject.some(e => e == subject.id)
+      };
+    });
+    this.settlements = this.$store.state.locations.settlements.map(
+      settlement => {
+        return {
+          id: settlement.id,
+          id_country: settlement.country_id,
+          id_subject: settlement.subject_id,
+          type: "settlements",
+          name: settlement.name,
+          extended_name: settlement.extended_name,
+          check: this.pSettlement.some(e => e == settlement.id)
+        };
+      }
+    );
   }
 };
 </script>

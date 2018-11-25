@@ -2,8 +2,9 @@
 namespace App\Controllers\Api;
 
 use \App\Controllers\MainController;
-use \App\Models\Api\AdsFilter\Show;
 use \App\Models\Api\AdsFilter\Create;
+use \App\Models\Api\AdsFilter\Show;
+
 class AdsFilterController extends MainController
 {
 
@@ -15,7 +16,7 @@ class AdsFilterController extends MainController
         if (isset($answer['exceptions'])) {
             $response = $response->withJson($answer, 400);
         }
-        if (isset($answer['massege'])) {
+        if (isset($answer['filter'])) {
             $response = $response->withJson($answer, 200);
         }
         return $response;
@@ -32,7 +33,6 @@ class AdsFilterController extends MainController
             $response = $response->withJson($answer, 200);
         }
         return $response;
-
 
         return $response;
 

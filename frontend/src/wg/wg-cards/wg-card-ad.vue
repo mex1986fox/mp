@@ -68,7 +68,7 @@
 			<div class="col_6 col-phone_6">
 				<div class="wg-card-ad__info">
 					<div class="wg-card-ad__info-header">
-						{{mascNumber(dObj.price)}} руб.
+						{{mascNumber(dObj.price_corret)}} руб.
 					</div>
 					<span class="wg-card-ad__info-param">
 						<span class="wg-card-ad__info-title">Пробег</span>
@@ -323,6 +323,12 @@ export default {
         error => {}
       );
     },
+    addZero(i) {
+      if (i < 10) {
+        i = "0" + i;
+      }
+      return i;
+    },
     parseDate(date) {
       let newDate = new Date(date);
 
@@ -333,9 +339,9 @@ export default {
         "-" +
         newDate.getDate() +
         " " +
-        newDate.getHours() +
+        this.addZero(newDate.getHours()) +
         ":" +
-        newDate.getMinutes()
+        this.addZero(newDate.getMinutes())
       );
     },
     mascNumber(val) {

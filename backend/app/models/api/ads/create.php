@@ -46,9 +46,22 @@ class Create
             $year = $fDigits->filter($year);
 
             $db = $this->container['db'];
+            // выбираем  countries_id
+            $q = "select subject_id as subjects_id from locations_settlements where id={$settlements_id}";
+            $subjects_id = $db->query($q, \PDO::FETCH_ASSOC)->fetch()["subjects_id"];
+            $q = "select country_id as countries_id from locations_subjects where id={$subjects_id}";
+            $countries_id = $db->query($q, \PDO::FETCH_ASSOC)->fetch()["countries_id"];
+            $q = "select transport_id, brand_id from transports_models where id={$model_id}";
+            $qtransport = $db->query($q, \PDO::FETCH_ASSOC)->fetch();
+            $transport_id = $qtransport["transport_id"];
+            $brand_id = $qtransport["brand_id"];
             $q = "insert into ads (
                     user_id,
+                    countries_id,
+                    subjects_id,
                     settlements_id,
+                    transport_id,
+                    brand_id,
                     model_id,
                     mileage,
                     description,
@@ -56,13 +69,18 @@ class Create
                     year
                 ) values (
                     {$user_id},
+                    {$countries_id},
+                    {$subjects_id},
                     {$settlements_id},
+                    {$transport_id},
+                    {$brand_id},
                     {$model_id},
                     {$mileage},
                     '{$description}',
                     {$price},
                     {$year}
                 )  RETURNING id;";
+            // var_dump($q);
             $id_add = $db->query($q, \PDO::FETCH_ASSOC)->fetch();
             return ["add_id" => $id_add['id'], "massege" => "Объявление создано успешно"];
         } catch (RuntimeException | \Exception $e) {

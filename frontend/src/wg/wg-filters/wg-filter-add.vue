@@ -26,9 +26,9 @@
 					<div class="row">
 						<div class="col_12">
 							<wg-multiple-location
-								:pCountry="menuCountry"
-								:pSubject="menuSubject"
-								:pSettlement="menuSettlement"
+								:pCountry="JSON.parse(JSON.stringify(menuCountry))"
+								:pSubject="JSON.parse(JSON.stringify(menuSubject))"
+								:pSettlement="JSON.parse(JSON.stringify(menuSettlement))"
 								:caption="'Страна, регион, город'"
 								@onInsert="setFilterLocation"
 							></wg-multiple-location>
@@ -56,17 +56,19 @@
 				</div>
 			</div>
 			<div class="col_12" v-show="tabs=='param'">
-				<div class="wg-filter-add__content">
+        <div class="wg-filter-add__content">
 					<div class="row">
 						<div class="col_6">
 							<ui-select
-								name="sort_by"
-								caption="Сортировать по"
-								:menu="menuSortBy"
-								@onSelect="setFilterSortBy"
+								name="sort"
+								caption="Сортировать по:"
+								:menu="menuSort"
+								@onSelect="setFilterSort"
 							></ui-select>
 						</div>
 					</div>
+				</div>
+				<div class="wg-filter-add__content">
 					<div class="row">
 						<div class="col_6">
 							<ui-text
@@ -166,20 +168,21 @@
 					<div class="row">
 						<div class="col_6">
 							<ui-select
-								name="helm"
+								name="wheel"
 								caption="Руль"
-								:menu="menuHelms"
+								:menu="menuWheels"
 								:multiple="true"
-								@onSelect="setFilterHelm"
+								@onSelect="setFilterWheel"
 							></ui-select>
 						</div>
 					</div>
 				</div>
 			</div>
+
 			<div class="col_12">
 				<div class="wg-filter-add__buttons">
 					<button class="ui-button ui-button_blue" @click="loadFilter">Применить</button>
-					<button class="ui-button ui-button_flat">Отмена</button>
+					<button class="ui-button ui-button_flat" @click="isClose">Отмена</button>
 				</div>
 			</div>
 		</div>
@@ -191,12 +194,7 @@ export default {
   data() {
     return {
       tabs: "city",
-      windowHeight: document.body.clientHeight,
-      marca: [
-        { value: "2", option: "Убыванию цены", group: "Цена", selected: false },
-        { value: "3", option: "Старше", group: "Год", selected: false },
-        { value: "3", option: "Моложе", group: "Год", selected: false }
-      ]
+      windowHeight: document.body.clientHeight
     };
   },
   computed: {
@@ -219,8 +217,8 @@ export default {
     menuSubject() {
       return this.$store.getters["filter_add/getSubjects"];
     },
-    menuSortBy() {
-      return this.$store.getters["filter_add/getSortBy"];
+    menuSort() {
+      return this.$store.getters["filter_add/getSort"];
     },
     menuFuels() {
       return this.$store.getters["filter_add/getFuels"];
@@ -240,8 +238,8 @@ export default {
     menuBodies() {
       return this.$store.getters["filter_add/getBodies"];
     },
-    menuHelms() {
-      return this.$store.getters["filter_add/getHelms"];
+    menuWheels() {
+      return this.$store.getters["filter_add/getWheels"];
     },
     valuePrice() {
       return this.$store.getters["filter_add/getPrice"];
@@ -264,41 +262,75 @@ export default {
     isClose() {
       this.$emit("onHide");
     },
+
     loadFilter() {
-			let headers = { "Content-Type": "multipart/form-data" };
+      let headers = { "Content-Type": "multipart/form-data" };
       let params = {
         user_id: this.$cookie.get("user_id"),
-        filter: JSON.stringify(this.$store.state.filter_add.filter),
+        filter: JSON.stringify(this.$store.state.filter_add.filter)
       };
       this.$http
-        .post(
-          this.$hosts.ads + "/api/create/adsFilter",
-          params,
-          headers
-        )
+        .post(this.$hosts.ads + "/api/create/adsFilter", params, headers)
         .then(
           response => {
             console.dir(response);
+            this.onUpdated();
           },
-          error => {}
+          error => {
+            console.dir(error);
+          }
         );
+    },
+    onUpdated() {
+      this.$emit("onUpdated");
+      this.isClose();
+    },
+    setFilterSort(sort) {
+      this.$store.commit("filter_add/setFilter", {
+        name: "sort",
+        filter: sort.map(sortv => {
+          return sortv.value;
+        })
+      });
     },
     setFilterLocation(location) {
       this.$store.commit("filter_add/setFilter", {
-        name: "location",
-        filter: location
+        name: "countries",
+        filter: location.countries.map(countr => {
+          return countr.id;
+        })
+      });
+      this.$store.commit("filter_add/setFilter", {
+        name: "subjects",
+        filter: location.subjects.map(countr => {
+          return countr.id;
+        })
+      });
+      this.$store.commit("filter_add/setFilter", {
+        name: "settlements",
+        filter: location.settlements.map(countr => {
+          return countr.id;
+        })
       });
     },
     setFilterTransport(transport) {
       this.$store.commit("filter_add/setFilter", {
-        name: "transport",
-        filter: transport
+        name: "brands",
+        filter: transport.brands.map(countr => {
+          return countr.id;
+        })
       });
-    },
-    setFilterSortBy(sortBy) {
       this.$store.commit("filter_add/setFilter", {
-        name: "sortBy",
-        filter: sortBy
+        name: "models",
+        filter: transport.models.map(countr => {
+          return countr.id;
+        })
+      });
+      this.$store.commit("filter_add/setFilter", {
+        name: "transports",
+        filter: transport.transports.map(countr => {
+          return countr.id;
+        })
       });
     },
     setFilterPrice(price) {
@@ -316,19 +348,25 @@ export default {
     setFilterYear(year) {
       this.$store.commit("filter_add/setFilter", {
         name: "year",
-        filter: year
+        filter: year.map(sort => {
+          return sort.value;
+        })
       });
     },
     setFilterYearBef(year) {
       this.$store.commit("filter_add/setFilter", {
         name: "yearBef",
-        filter: year
+        filter: year.map(sort => {
+          return sort.value;
+        })
       });
     },
     setFilterFuel(fuel) {
       this.$store.commit("filter_add/setFilter", {
         name: "fuel",
-        filter: fuel
+        filter: fuel.map(sort => {
+          return sort.value;
+        })
       });
     },
     setFilterVolume(volume) {
@@ -346,25 +384,33 @@ export default {
     setFilterBody(body) {
       this.$store.commit("filter_add/setFilter", {
         name: "body",
-        filter: body
+        filter: body.map(sort => {
+          return sort.value;
+        })
       });
     },
     setFilterDrive(drive) {
       this.$store.commit("filter_add/setFilter", {
         name: "drive",
-        filter: drive
+        filter: drive.map(sort => {
+          return sort.value;
+        })
       });
     },
     setFilterTransmission(transmission) {
       this.$store.commit("filter_add/setFilter", {
         name: "transmission",
-        filter: transmission
+        filter: transmission.map(sort => {
+          return sort.value;
+        })
       });
     },
-    setFilterHelm(helm) {
+    setFilterWheel(wheel) {
       this.$store.commit("filter_add/setFilter", {
-        name: "helm",
-        filter: helm
+        name: "wheel",
+        filter: wheel.map(sort => {
+          return sort.value;
+        })
       });
     }
   }

@@ -10,8 +10,7 @@ class AuthUser
     }
     public function Authed()
     {
-        $user_id = $_SESSION["user_id"];
-        if (!empty($user_id)) {
+        if (!empty($_SESSION["user_id"])) {
             return true;
         }
         return false;

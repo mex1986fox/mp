@@ -16,27 +16,29 @@ class Create
     public function run()
     {
         try {
-            // проверяем авторизацию
-            $auths = $this->container['auths'];
-            if (!$auths->AuthUser->Authed()) {
-                throw new \Exception("Не авторизован");
-            }
+            $p = $this->request->getQueryParams();
+            // проверяем фильтр
             if (empty($p["filter"])) {
                 $exceptions["filter"] = "Не указан фильтр";
             }
-            $p = $this->request->getQueryParams();
-            //передаем параметры в переменные
-            $user_id = $_SESSION["user_id"];
             $filter = $p["filter"];
-            $db = $this->container['db'];
-            $q = "insert into ads_filter (
+            // сохраняем фильтр в сессию
+            $_SESSION["filter"] = $filter;
+            // проверяем авторизацию
+            $auths = $this->container['auths'];
+            if ($auths->AuthUser->Authed()) {
+                //для авторизованных
+                $user_id = $_SESSION["user_id"];
+                $db = $this->container['db'];
+                //сохраняем фильтр в базу
+                $q = "insert into ads_filters (
                     user_id,
                     filter
-                ) values (
-                    {$user_id},
-                    {$filter},
-                )  RETURNING id;";
-            return ["massege" => "Фильтр сохранен успешно"];
+                ) values ({$user_id}, '{$filter}')";
+                $db->query($q, \PDO::FETCH_ASSOC)->fetch();
+                return ["massege" => "Фильтр сохранен для авторизованных пользователей"];
+            }
+            return ["massege" => "Фильтр сохранен для не авторизованных пользователей"];
         } catch (RuntimeException | \Exception $e) {
             $exceptions = ['exceptions' => ['massege' => $e->getMessage()]];
             return $exceptions;

@@ -142,7 +142,7 @@
               <div
                 class="col_7 col_offset-5 col-nbook_9 col-nbook_offset-3 col-tablet_10 col-tablet_offset-2 col-phone_6 col-phone_offset-0"
               >
-                <wg-filter-add @onHide="showFilterAdd=false"></wg-filter-add>
+                <wg-filter-add @onUpdated="updateAds" @onHide="showFilterAdd=false"></wg-filter-add>
               </div>
             </div>
           </div>
@@ -235,129 +235,28 @@ export default {
         this.showSnackbar = true;
       }
     },
-
-    show(event) {
-      this.$http.post("/api/show/ads").then(
+    loadFilter() {
+      this.$http.post("/api/show/adsFilter").then(
+        response => {
+          let filter = response.body.filter;
+          this.$store.commit("filter_add/setFilters", JSON.parse(filter));
+          this.show();
+        },
+        error => {
+          this.show();
+        }
+      );
+    },
+    updateAds() {
+      this.show();
+    },
+    show() {
+      // console.dir(this.$store.state.filter_add.filter);
+      let params = this.$store.state.filter_add.filter;
+      let headers = { "Content-Type": "multipart/form-data" };
+      this.$http.post("/api/show/ads", params, headers).then(
         response => {
           this.ads = response.body.ads;
-          let filters = {
-            sortBy: [
-              {
-                value: 1,
-                option: "Цене (сначала дорогие)",
-                selected: true
-              }
-            ],
-            price: "255 222",
-            priceBef: "44 4444",
-            year: [
-              { value: 2010, option: 2010, group: "Года", selected: true }
-            ],
-            yearBef: [
-              { value: 2011, option: 2011, group: "Года", selected: true }
-            ],
-            fuel: [
-              { value: 5, option: "ГБО", selected: true },
-              { value: 1, option: "бензин", selected: true }
-            ],
-            volume: "4444",
-            volumeBef: "4444",
-            body: [{ value: 1, option: "седан", group: "с", selected: true }],
-            transmission: [
-              { value: 1, option: "автомат", selected: true },
-              { value: 2, option: "механика", selected: true }
-            ],
-            helm: [
-              {
-                value: 1,
-                option: "левый",
-                selected: true
-              }
-            ],
-            drive: [
-              { value: 1, option: "передний", selected: true },
-              { value: 2, option: "задний", selected: true }
-            ],
-            transport: {
-              transports: [
-                {
-                  id: 1,
-                  type: "transports",
-                  name: "Легковые",
-                  extended_name: "Легковые",
-                  check: true
-                }
-              ],
-              brands: [],
-              models: []
-            },
-            location: {
-              countries: [],
-              settlements: [
-                {
-                  id: 62,
-                  id_country: 1,
-                  id_subject: 1,
-                  type: "settlements",
-                  name: "Романово",
-                  extended_name: "Романово (Алтайский край)",
-                  check: true
-                },
-                {
-                  id: 93,
-                  id_country: 1,
-                  id_subject: 2,
-                  type: "settlements",
-                  name: "Райчихинск",
-                  extended_name: "Райчихинск (Амурская область)",
-                  check: true
-                }
-              ],
-              subjects: [
-                {
-                  id: 44,
-                  id_country: 1,
-                  type: "subjects",
-                  name: "Республика Адыгея",
-                  extended_name: "Республика Адыгея (Россия)",
-                  check: true
-                },
-                {
-                  id: 45,
-                  id_country: 1,
-                  type: "subjects",
-                  name: "Республика Алтай",
-                  extended_name: "Республика Алтай (Россия)",
-                  check: true
-                },
-                {
-                  id: 46,
-                  id_country: 1,
-                  type: "subjects",
-                  name: "Республика Башкортостан",
-                  extended_name: "Республика Башкортостан (Россия)",
-                  check: true
-                },
-                {
-                  id: 47,
-                  id_country: 1,
-                  type: "subjects",
-                  name: "Республика Бурятия",
-                  extended_name: "Республика Бурятия (Россия)",
-                  check: true
-                },
-                {
-                  id: 57,
-                  id_country: 1,
-                  type: "subjects",
-                  name: "Республика Северная Осетия",
-                  extended_name: "Республика Северная Осетия (Россия)",
-                  check: true
-                }
-              ]
-            }
-          };
-          this.$store.commit("filter_add/setFilters", filters);
           this.updateUsers();
         },
         error => {}
@@ -503,7 +402,7 @@ export default {
   },
 
   mounted() {
-    this.show();
+    this.loadFilter();
 
     document.addEventListener("onTouchTop", () => {
       this.buttonShowFormAddBottom = false;

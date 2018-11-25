@@ -327,7 +327,6 @@ export default {
           this.isClickCheckbox(checkbox);
         }
       }
-    
     },
     isChecktransport(check, id) {
       this.transports = this.transports.map(transport => {
@@ -389,7 +388,7 @@ export default {
         }
       });
     },
-    onDeletedChip(checkbox){
+    onDeletedChip(checkbox) {
       this.isClickCheckbox(checkbox);
       this.onInsert();
     },
@@ -405,9 +404,9 @@ export default {
         return model.check == true;
       });
       this.$emit("onInsert", {
-        transports: transports,
-        brands: brands,
-        models: models
+        transports: JSON.parse(JSON.stringify(transports)),
+        brands: JSON.parse(JSON.stringify(brands)),
+        models: JSON.parse(JSON.stringify(models))
       });
     }
   },
