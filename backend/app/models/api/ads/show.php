@@ -104,7 +104,7 @@ class Show
             } else {
                 // по умолчанию
                 // дате (новые)
-                $qSort = $qSort . ($sort == '1' ? "date_create DESC, " : "");
+                $qSort = $qSort . "date_create DESC, ";
             }
             $qSort = empty($qSort) ? "" : rtrim($qSort, ', ');
             $qSort = (empty($qSort) ? "" : " ORDER BY ") . $qSort;

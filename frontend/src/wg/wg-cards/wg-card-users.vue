@@ -1,7 +1,7 @@
 <template>
     <div class="wg-card-users">
         <div class="wg-card-users__avatar-block">
-            <ui-avatar class="wg-card-users__avatar" :lable="'figoro'">
+            <ui-avatar class="wg-card-users__avatar" :lable="'drovito'">
                 <img
                     :src="'http://photos-users.ru/public/photos/avatars/5/gen1200_285646914.jpg'"
                     alt=""
@@ -28,12 +28,12 @@
         </div>
         <button
             @click="showMenu=true"
-            class="ui-button ui-button_flat ui-button_circle ui-button_circle_mini wg-card-ad__header-button"
+            class="ui-button ui-button_flat ui-button_circle ui-button_circle_mini wg-card-users__header-button"
         >
             <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
         </button>
         <ui-menu :show="showMenu" @onHide="showMenu=false" position="left-bottom">
-            <ul сlass="wg-card-ad__menu">
+            <ul class="wg-card-ad__menu">
                 <li @click="showMenu=false" class="wg-card-ad__menu-li">Добавить в друзья</li>
                 <li
                     @click="(showMenu=false, showContacts=true)"

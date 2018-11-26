@@ -16,9 +16,9 @@
                 </div>
                 <!-- центральный блок -->
                 <div class="col_6 col-tablet_8 col-phone_6">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="wg-content-frame wg-content-frame_center" v-for="key in 10" :key="key">
+                    <div class="row" v-for="key in 10" :key="key">
+                        <div class="col-12" >
+                            <div class="wg-content-frame wg-content-frame_center" >
                                 <wg-card-users></wg-card-users>
                             </div>
                         </div>

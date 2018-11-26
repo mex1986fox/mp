@@ -2782,11 +2782,18 @@ input:-webkit-autofill {
   .wg-card-users__avatar {
     height: 100px;
     width: 100px;
-    border: 4px solid #2b547e;
     margin-right: 30px; }
     .wg-card-users__avatar-block {
       width: 30%;
       float: left; }
+    .wg-card-users__avatar > .ui-avatar__simbol {
+      margin-top: 22px;
+      font-size: 55px; }
+  .wg-card-users__header-button {
+    position: absolute;
+    right: 8px;
+    left: auto;
+    top: 29px; }
   .wg-card-users__description {
     float: left;
     width: 70%; }
