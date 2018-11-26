@@ -10,9 +10,13 @@
     }
     &__button {
         position: absolute;
-        right: 0;
-        left: auto;
-        bottom: 0px;
+        font-size: 20px;
+        float: right;
+        right: 0px;
+        top: auto;
+        padding: 8px;
+        cursor: pointer;
+        bottom: 10px;
     }
     &__caption {
         top: 11px;
@@ -34,7 +38,7 @@
         padding: 6px 17px;
     }
     &__chips-container {
-        max-height: 160px;
+        height: 160px;
         overflow: hidden;
         overflow-y: auto;
         margin-top: 38px;

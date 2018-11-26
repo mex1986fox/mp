@@ -89,12 +89,34 @@
 									<div class="ui-navigation__unit__header">Лента</div>
 								</div>
 								<div slot="content">
+									<router-link to="/users" class="ui-navigation__unit__button">
+										<div class="ui-navigation__unit__icon">
+											<i class="fa fa-th" aria-hidden="true"></i>
+										</div>Пользователи
+									</router-link>
+								</div>
+								<div slot="content">
 									<router-link to="/ads" class="ui-navigation__unit__button">
 										<div class="ui-navigation__unit__icon">
 											<i class="fa fa-th" aria-hidden="true"></i>
 										</div>Объявления
 									</router-link>
 								</div>
+								<div slot="content">
+									<router-link to="/photos" class="ui-navigation__unit__button">
+										<div class="ui-navigation__unit__icon">
+											<i class="fa fa-th" aria-hidden="true"></i>
+										</div>Фотографии
+									</router-link>
+								</div>
+								<div slot="content">
+									<router-link to="/posts" class="ui-navigation__unit__button">
+										<div class="ui-navigation__unit__icon">
+											<i class="fa fa-th" aria-hidden="true"></i>
+										</div>Посты
+									</router-link>
+								</div>
+								
 							</ui-navigation-list>
 						</div>
 					</ui-navigation>

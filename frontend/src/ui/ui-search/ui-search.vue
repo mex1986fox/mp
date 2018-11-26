@@ -1,16 +1,26 @@
 <template>
   <div class="ui-search" @click="isClick">
-    <input :placeholder="placeholder" ref="input" type="text" class="ui-search__input" :value="dValue" @blur="isBlur" @input="isInput" />
+    <input
+      :placeholder="placeholder"
+      ref="input"
+      type="text"
+      class="ui-search__input"
+      :value="dValue"
+      @blur="isBlur"
+      @input="isInput"
+    >
     <div v-if="!dActive && !dShowMenu" class="ui-search__icon">
       <i class="fa fa-search" aria-hidden="true"></i>
     </div>
-    <div v-if="dActive || dShowMenu" @click="isClean" class="ui-search__icon ui-search__icon_active">
+    <div
+      v-if="dActive || dShowMenu"
+      @click="isClean"
+      class="ui-search__icon ui-search__icon_active"
+    >
       <i aria-hidden="true" class="fa fa-times"></i>
     </div>
     <div ref="menu" v-show="dShowMenu" class="ui-search__menu">
-      <slot>
-
-      </slot>
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -28,7 +38,7 @@ export default {
       type: Boolean,
       default: false
     },
-    placeholder:{
+    placeholder: {
       type: String,
       default: ""
     }
@@ -36,7 +46,15 @@ export default {
   watch: {
     showMenu(newQ) {
       this.dShowMenu = newQ;
+      this.$refs.menu.addEventListener("click", event => {
+        event.stopPropagation();
+      });
     }
+  },
+  mounted() {
+    document.addEventListener("click", event => {
+      this.isClean();
+    });
   },
   methods: {
     isClean() {

@@ -101,6 +101,10 @@ class Show
                 // объему (большой)
                 $qSort = $qSort . ($sort == '10' ? "engin_volume ASC, " : "");
 
+            } else {
+                // по умолчанию
+                // дате (новые)
+                $qSort = $qSort . ($sort == '1' ? "date_create DESC, " : "");
             }
             $qSort = empty($qSort) ? "" : rtrim($qSort, ', ');
             $qSort = (empty($qSort) ? "" : " ORDER BY ") . $qSort;

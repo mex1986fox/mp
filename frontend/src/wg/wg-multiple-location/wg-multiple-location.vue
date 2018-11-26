@@ -1,13 +1,14 @@
 <template>
   <div class="wg-multiple-location">
     <span
+      @click="showModal=true"
       class="ui-text__caption wg-multiple-location__caption"
       :class="{ 'ui-text__caption_completed wg-multiple-location__caption_completed':modCompleted,
             'ui-text__caption_active wg-multiple-location__caption_active':showModal, 
                   
                    'ui-text__caption_disabled':dDisabled}"
     >{{dCaption}}</span>
-    <div class="wg-multiple-location__container">
+    <div @click="showModal=true" class="wg-multiple-location__container">
       <ui-chips
         class="wg-multiple-location__chips__red"
         @onDeleted="onDeletedChip"
@@ -43,13 +44,14 @@
       ></ui-chips>
     </div>
     <hr
+      @click="showModal=true"
       class="ui-text__border wg-multiple-location__border"
       :class="{'ui-text__border_active':showModal,
                   'ui-text__border_disabled':dDisabled}"
     >
     <div
       @click="showModal=true"
-      class="ui-button ui-button_circle ui-button_circle_mini ui-button_blue wg-multiple-location__button"
+      class="wg-multiple-location__button"
     >
       <i class="fa fa-map-marker" aria-hidden="true"></i>
     </div>
@@ -69,7 +71,7 @@
               </div>
               <div class="ui-modal-window__content">
                 <div class="row">
-                  <div class="col_12">
+                  <div class="col_12">Введите в поисковую строку страну, регион или город.
                     <ui-search
                       :placeholder="'Страна, Регион, Город'"
                       :showMenu="menuSearch.length>0"

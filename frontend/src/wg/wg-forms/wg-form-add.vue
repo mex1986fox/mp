@@ -146,8 +146,8 @@
 						<div class="wg-form-add__hr">Руль</div>
 						<div class="row">
 							<div class="col_4">
-								<ui-radio name="wheel" value="l">Левый</ui-radio>
-								<ui-radio name="wheel" value="r">Правый</ui-radio>
+								<ui-radio name="wheel" value="1">Левый</ui-radio>
+								<ui-radio name="wheel" value="2">Правый</ui-radio>
 							</div>
 						</div>
 						<div class="wg-form-add__hr">

@@ -49,5 +49,5 @@ $app->get('/authorization', \App\Controllers\App\AuthorizationController::class 
 $app->get('/account/data', \App\Controllers\App\AccountDataController::class . ":show")->add(new StandardFiltering($container));
 
 $app->get('/ads', \App\Controllers\App\AdsController::class . ":show")->add(new StandardFiltering($container));
-
+$app->get('/users', \App\Controllers\App\UsersController::class . ":show")->add(new StandardFiltering($container));
 $app->run();

@@ -1,13 +1,14 @@
 <template>
   <div class="wg-multiple-transport">
     <span
+      @click="showModal=true"
       class="ui-text__caption wg-multiple-transport__caption"
       :class="{ 'ui-text__caption_completed wg-multiple-transport__caption_completed':modCompleted,
             'ui-text__caption_active wg-multiple-transport__caption_active':showModal, 
                   
                    'ui-text__caption_disabled':dDisabled}"
     >{{dCaption}}</span>
-    <div class="wg-multiple-transport__container">
+    <div @click="showModal=true" class="wg-multiple-transport__container">
       <ui-chips
         class="wg-multiple-transport__chips__red"
         @onDeleted="onDeletedChip"
@@ -43,15 +44,13 @@
       ></ui-chips>
     </div>
     <hr
+      @click="showModal=true"
       class="ui-text__border wg-multiple-transport__border"
       :class="{'ui-text__border_active':showModal,
                   'ui-text__border_disabled':dDisabled}"
     >
-    <div
-      @click="showModal=true"
-      class="ui-button ui-button_circle ui-button_circle_mini ui-button_blue wg-multiple-transport__button"
-    >
-      <i class="fa fa-map-marker" aria-hidden="true"></i>
+    <div @click="showModal=true" class="wg-multiple-transport__button">
+      <i class="fa fa-car" aria-hidden="true"></i>
     </div>
     <ui-blind :show="showModal" @onHide="onInsert" :centering="true" animate="opacity">
       <div class="container">
@@ -70,6 +69,7 @@
               <div class="ui-modal-window__content">
                 <div class="row">
                   <div class="col_12">
+                    Введите в поисковую строку тип транспорта, марку или модель транспорта
                     <ui-search
                       :placeholder="'Тип, марка, модель'"
                       :showMenu="menuSearch.length>0"

@@ -181,7 +181,7 @@
 
 			<div class="col_12">
 				<div class="wg-filter-add__buttons">
-					<button class="ui-button ui-button_blue" @click="loadFilter">Применить</button>
+					<button class="ui-button ui-button_blue" @click="loadFilter">Применить <ui-loader-button v-if="flagLoadFilter" ></ui-loader-button></button>
 					<button class="ui-button ui-button_flat" @click="isClose">Отмена</button>
 				</div>
 			</div>
@@ -194,7 +194,8 @@ export default {
   data() {
     return {
       tabs: "city",
-      windowHeight: document.body.clientHeight
+      windowHeight: document.body.clientHeight,
+      flagLoadFilter: false
     };
   },
   computed: {
@@ -264,6 +265,7 @@ export default {
     },
 
     loadFilter() {
+      this.flagLoadFilter=true;
       let headers = { "Content-Type": "multipart/form-data" };
       let params = {
         user_id: this.$cookie.get("user_id"),
@@ -273,11 +275,11 @@ export default {
         .post(this.$hosts.ads + "/api/create/adsFilter", params, headers)
         .then(
           response => {
-            console.dir(response);
+            this.flagLoadFilter=false;
             this.onUpdated();
           },
           error => {
-            console.dir(error);
+            this.flagLoadFilter=false;
           }
         );
     },

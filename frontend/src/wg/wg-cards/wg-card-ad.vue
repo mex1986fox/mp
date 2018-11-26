@@ -262,7 +262,7 @@ export default {
     },
     wheel() {
       if (this.dObj.wheel != undefined) {
-        return this.dObj.wheel == "l" ? "левый" : "правый";
+        return this.dObj.wheel == 1 ? "левый" : "правый";
       }
       return undefined;
     },

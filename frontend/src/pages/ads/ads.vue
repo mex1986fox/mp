@@ -52,14 +52,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="wg-content-frame wg-content-frame_left">
-                  <div class="ui-avatar-block wg-card-ad__avatar-block" v-for="key in 5" :key="key">
-                    <div class="ui-avatar">
-                      <span class="ui-avatar__simbol">f</span>
-                      <img alt="" src="http://photos-users.ru/public/photos/avatars/6/Koala.jpg">
-                    </div>
-                    <a class="ui-link ui-avatar-block__link">firefox firefox</a>
-                    <div class="ui-avatar-block__title">2018-10-17 18:21</div>
-                  </div>
+                  <wg-frame-friends></wg-frame-friends>
                 </div>
               </div>
             </div>
