@@ -16,10 +16,15 @@
                 </div>
                 <!-- центральный блок -->
                 <div class="col_6 col-tablet_8 col-phone_6">
-                    <div class="row" v-for="key in 10" :key="key">
-                        <div class="col-12" >
-                            <div class="wg-content-frame wg-content-frame_center" >
-                                <wg-card-users></wg-card-users>
+                    <div
+                        v-if="users!=undefined"
+                        class="row"
+                        v-for="(user, key) in users"
+                        :key="key"
+                    >
+                        <div class="col-12">
+                            <div class="wg-content-frame wg-content-frame_center">
+                                <wg-card-users :user="JSON.parse(JSON.stringify(user))"></wg-card-users>
                             </div>
                         </div>
                     </div>
@@ -29,7 +34,6 @@
                     <ui-fixed-block>
                         <div class="row">
                             <div class="col-12">
-
                                 <div
                                     class="wg-content-frame wg-content-frame_right wg-content-frame__padding"
                                 >
@@ -96,13 +100,57 @@ export default {
   name: "pg-ads",
   data() {
     return {
+      users: undefined,
       showFilterUsers: false,
       showMessenger: false
     };
   },
   computed: {},
-  methods: {},
+  methods: {
+    loadUsers() {
+      // console.dir(this.$store.state.filter_add.filter);
+      let params = this.$store.state.filter_add.filter;
+      let headers = { "Content-Type": "multipart/form-data" };
+      this.$http.post("/api/show/users", params, headers).then(
+        response => {
+          this.users = response.body.users;
+          this.loadAvatars();
+        },
+        error => {}
+      );
+    },
+    loadAvatars() {
+      let users_id = [];
+      this.users.forEach(element => {
+        users_id.push(element.id);
+      });
 
-  mounted() {}
+      let params = {
+        users_id: users_id.filter((e, i, a) => a.indexOf(e) == i)
+      };
+      let headers = { "Content-Type": "multipart/form-data" };
+
+      this.$http
+        .post(this.$hosts.photosUsers + "/api/show/avatars", params, headers)
+        .then(
+          response => {
+            let avatars = response.body.avatars;
+            avatars.forEach(avatar => {
+              this.users = this.users.map((ad, key, arr) => {
+                if (ad.id == avatar.user_id) {
+                  arr[key]["avatar"] = avatar.lincks[0];
+                }
+                return ad;
+              });
+            });
+          },
+          error => {}
+        );
+    }
+  },
+
+  mounted() {
+    this.loadUsers();
+  }
 };
 </script>

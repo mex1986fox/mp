@@ -17,6 +17,7 @@ const locations = {
     },
     getSettlement: (state, getters, rootState, rootGetters) => id => {
       for (let settlement of state.settlements) {
+       
         if (id == settlement.id) {
           return settlement;
         }
