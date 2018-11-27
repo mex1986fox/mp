@@ -3462,7 +3462,8 @@ input:-webkit-autofill {
     padding: 50px 26px 20px 26px;
     overflow: hidden;
     float: right;
-    margin-right: -33px; }
+    margin-right: -20px;
+    width: 100%; }
 
 .wg-captcha {
   margin-top: 16px; }

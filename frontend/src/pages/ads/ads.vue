@@ -85,9 +85,7 @@
                 </div>
               </div>
               <div class="col-12">
-                <div
-                  class="wg-content-frame wg-content-frame_right wg-content-frame__padding wg-content-frame_no-border"
-                >
+                <div class="wg-content-frame wg-content-frame_right wg-content-frame_no-border">
                   <div @click="showFilterAdd=true" class="ui-navigation__unit__button">
                     <div class="ui-navigation__unit__icon">
                       <i aria-hidden="true" class="fa fa-sliders"></i>

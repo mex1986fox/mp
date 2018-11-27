@@ -1,9 +1,12 @@
 <template>
   <transition name="ui-tabs__tab_active">
-    <div class="ui-tabs__tab" :class="{'ui-tabs__tab_active':dChecked, 'ui-tabs__tab_disabled':disabled}" @click="isClick">
-      <slot>
-
-      </slot>
+    <div
+      class="ui-tabs__tab"
+      :class="{'ui-tabs__tab_active':dChecked, 'ui-tabs__tab_disabled':disabled}"
+      @click="isClick"
+    >
+      <slot></slot>
+      <ui-click-feedback></ui-click-feedback>
     </div>
   </transition>
 </template>

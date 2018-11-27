@@ -1,51 +1,34 @@
 <template>
-	<div class="wg-slider"
-	     @mouseover="buttonsShow=true"
-	     @mouseout="buttonsShow=false">
-		<div class="wg-slider__buttons"
-		     :style="marginButtons"
-		     v-show="buttonsShow">
-			<div class="wg-slider__left-button"
-			     @click="leafLeft">
-				<button class="ui-button ui-button_circle ui-button_flat wg-slider__button_flat">
-					<i aria-hidden="true"
-					   class="fa fa-angle-left"></i>
-				</button>
-			</div>
-			<div class="wg-slider__right-button"
-			     @click="leafRight">
-				<button class="ui-button ui-button_circle ui-button_flat wg-slider__button_flat">
-					<i aria-hidden="true"
-					   class="fa fa-angle-right"></i>
-				</button>
-			</div>
-		</div>
-		<div class="wg-slider__menu"
-		     v-show="buttonsShow">
-			<div class="wg-slider__numeric">
-				{{dSlide[0].number}} / {{dSlide.length}}
-			</div>
-		</div>
-		<div ref="container"
-		     class="wg-slider__container">
-			<div ref="frame"
-			     @click="isZoom(val.number)"
-			     class="wg-slider__frame"
-			     v-for="(val, key) in dSlide"
-			     :key="key"
-			     v-if="key<3">
-
-				<img class="wg-slider__fon"
-				     :src="val.src"
-				     alt="">
-				<img ref="photo"
-				     class="wg-slider__img"
-				     :class="val.style"
-				     :src="val.src"
-				     alt="">
-			</div>
-		</div>
-	</div>
+  <div class="wg-slider" @mouseover="buttonsShow=true" @mouseout="buttonsShow=false">
+    <div class="wg-slider__buttons" :style="marginButtons" v-show="buttonsShow">
+      <div class="wg-slider__left-button" @click="leafLeft">
+        <button class="ui-button ui-button_circle ui-button_flat wg-slider__button_flat">
+          <i aria-hidden="true" class="fa fa-angle-left"></i>
+        </button>
+      </div>
+      <div class="wg-slider__right-button" @click="leafRight">
+        <button class="ui-button ui-button_circle ui-button_flat wg-slider__button_flat">
+          <i aria-hidden="true" class="fa fa-angle-right"></i>
+        </button>
+      </div>
+    </div>
+    <div class="wg-slider__menu" v-show="buttonsShow">
+      <div class="wg-slider__numeric">{{dSlide[0].number}} / {{dSlide.length}}</div>
+    </div>
+    <div ref="container" class="wg-slider__container">
+      <div
+        ref="frame"
+        @click="isZoom(val.number)"
+        class="wg-slider__frame"
+        v-for="(val, key) in dSlide"
+        :key="key"
+        v-if="key<3"
+      >
+        <img class="wg-slider__fon" :src="val.src" alt>
+        <img ref="photo" class="wg-slider__img" :class="val.style" :src="val.src" alt>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 export default {
@@ -192,10 +175,10 @@ export default {
     this.setPosition();
   },
   mounted() {
-      document.addEventListener("onTouchLeft", () => {
+    this.$refs.container.addEventListener("onTouchLeft", () => {
       this.leafLeft();
     });
-    document.addEventListener("onTouchRight", () => {
+     this.$refs.container.addEventListener("onTouchRight", () => {
       this.leafRight();
     });
 
