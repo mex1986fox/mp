@@ -12,6 +12,8 @@ import WgCardAd from "./wg-cards/wg-card-ad.vue";
 Vue.component("wg-card-ad", WgCardAd);
 import WgCardUsers from "./wg-cards/wg-card-users.vue";
 Vue.component("wg-card-users", WgCardUsers);
+import WgCardPost from "./wg-cards/wg-card-post.vue";
+Vue.component("wg-card-post", WgCardPost);
 import WgCardPhoto from "./wg-cards/wg-card-photo.vue";
 Vue.component("wg-card-photo", WgCardPhoto);
 import WgComments from "./wg-comments/wg-comments.vue";

@@ -50,4 +50,6 @@ $app->get('/account/data', \App\Controllers\App\AccountDataController::class . "
 
 $app->get('/ads', \App\Controllers\App\AdsController::class . ":show")->add(new StandardFiltering($container));
 $app->get('/users', \App\Controllers\App\UsersController::class . ":show")->add(new StandardFiltering($container));
+$app->get('/photos', \App\Controllers\App\PhotosController::class . ":show")->add(new StandardFiltering($container));
+$app->get('/posts', \App\Controllers\App\PostsController::class . ":show")->add(new StandardFiltering($container));
 $app->run();

@@ -192,6 +192,13 @@ export default {
     this.setPosition();
   },
   mounted() {
+      document.addEventListener("onTouchLeft", () => {
+      this.leafLeft();
+    });
+    document.addEventListener("onTouchRight", () => {
+      this.leafRight();
+    });
+
     this.$el.style.transition = "opacity 0.6s";
     this.$el.style.opacity = 0;
     setTimeout(() => {

@@ -37,64 +37,20 @@
 		</a>
 
 		<wg-slider class="wg-card-photo__slider"
-		    :slide='[
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852445.jpg"},
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852304.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852320.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852338.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852364.jpg"},
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852393.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852424.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852445.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852304.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852320.jpg" }
-                        ]'
+		    :slide='JSON.parse(JSON.stringify(slides))'
 		    :select="numberPhoto"
 		    @onSelect="isSelectPhoto"
 		    @onZoom="isZoomPhoto">
 		</wg-slider>
 		<wg-slider-navig class="wg-card-photo__slider-navig"
-		    :slide='[
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852445.jpg"},
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852304.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852320.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852338.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852364.jpg"},
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852393.jpg" , },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852424.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852445.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852304.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852320.jpg" }
-                        ]'
+		    :slide='JSON.parse(JSON.stringify(slides))'
 		    :select="numberPhoto"
 		    @onSelect="isSelectPhoto">
 		</wg-slider-navig>
 
 		<wg-slider-zoom v-if="showZoomSlider"
-		    :slide='[
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852445.jpg"},
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852304.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852320.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852338.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852364.jpg"},
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852393.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852424.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852445.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852304.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852320.jpg" }
-                        ]'
-		    :slideNavigation='[
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852445.jpg"},
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852304.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852320.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852338.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852364.jpg"},
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852393.jpg" , },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852424.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852445.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852304.jpg" },
-                            { src: "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen115_305852320.jpg" }
-                        ]'
+		    :slide='JSON.parse(JSON.stringify(slides))'
+		    :slideNavigation='JSON.parse(JSON.stringify(slides))'
 		    :select="numberZoomPhoto"
 		    :show="showZoomSlider"
 		    @onHide="showZoomSlider=false">
@@ -156,7 +112,49 @@ export default {
       numberPhoto: 1,
       numberZoomPhoto: 1,
       showZoomSlider: false,
-      commentShow: false
+	  commentShow: false,
+	   slides: [
+        {
+          src:
+            "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852445.jpg"
+        },
+        {
+          src:
+            "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852304.jpg"
+        },
+        {
+          src:
+            "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852320.jpg"
+        },
+        {
+          src:
+            "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852338.jpg"
+        },
+        {
+          src:
+            "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852364.jpg"
+        },
+        {
+          src:
+            "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852393.jpg"
+        },
+        {
+          src:
+            "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852424.jpg"
+        },
+        {
+          src:
+            "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852445.jpg"
+        },
+        {
+          src:
+            "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852304.jpg"
+        },
+        {
+          src:
+            "https://s.auto.drom.ru/i24223/s/photos/30552/30551169/gen1200_305852320.jpg"
+        }
+      ]
     };
   },
   methods: {
