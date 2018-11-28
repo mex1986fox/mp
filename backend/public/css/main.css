@@ -3433,6 +3433,12 @@ input:-webkit-autofill {
     top: 18px;
     color: #ffffff !important;
     font-size: 36px; }
+  .wg-form-add__delete {
+    position: absolute;
+    z-index: 75;
+    left: auto;
+    right: 35px;
+    margin-top: -72px; }
   .wg-form-add__header {
     color: #ffffff;
     border: 31px solid transparent;

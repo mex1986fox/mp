@@ -78,7 +78,7 @@ export default {
     },
     // определяет номер выбранной фотки
     isSelect() {
-      this.$emit("onSelect", this.dSlide[1].number);
+      this.$emit("onSelect", this.dSlide[1].number, this.dSlide[1]);
     },
     //вызывает событие увеличения фотографий на весь экран
     isZoom(number) {

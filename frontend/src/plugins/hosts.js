@@ -4,6 +4,7 @@ const Hosts = {
     Vue.prototype.$hosts = {
       ads:"http://drovito.ru",
       photosAds: "http://photos-ads.ru",
+      photosAlbums: "http://photos-albums.ru",
       photosUsers: "http://photos-users.ru",
       likes: "http://likes.ru",
       comments: "http://comments.ru",
