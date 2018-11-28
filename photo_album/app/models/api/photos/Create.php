@@ -60,7 +60,7 @@ class Create
                     file_exists($path . "/");
                     if (!file_exists($path)) {
                         mkdir($path, 0777, true);
-                        $qInsert = "insert into lincks (albums_id, lincks) values ($albumID, '{\"lincks\":[]}');";
+                        echo $qInsert = "insert into lincks (albums_id, lincks) values ($albumID, '{\"lincks\":[]}');";
                         $db->query($qInsert, \PDO::FETCH_ASSOC)->fetch();
                     }
                     //проверить наличие подобного файла

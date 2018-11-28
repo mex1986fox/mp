@@ -62,17 +62,22 @@ class Delete
             $path = MP_PRODIR . "/public/photos/$userID/$albumID/$nameFile";
             unlink($path);
             // удаляем ссылку в базе
-            $qSelect = "select lincks from lincks where albums_id={$albumID}";
-            $dbLincks = $db->query($qSelect, \PDO::FETCH_ASSOC)->fetch();
-            $jsLincks = json_decode($dbLincks["lincks"]);
-            $arrLincks = $jsLincks['lincks'];
+            // $qSelect = "select lincks from lincks where albums_id={$albumID}";
+            // $dbLincks = $db->query($qSelect, \PDO::FETCH_ASSOC)->fetch();
+            // $jsLincks = json_decode($dbLincks["lincks"]);
+            // $arrLincks = $jsLincks->lincks;
             // foreach ($arrLincks as $key => $name) {
-            //     var_dump($name);
-            //     // if ($name == $linck) {
-            //     //     unset($arrLincks[$key]);
-            //     // }
+            //     if ($name == $linck) {
+            //         unset($arrLincks[$key]);
+            //     }
             // }
-            var_dump($arrLincks);
+            // var_dump($arrLincks);
+            $qUpdate = "update lincks
+                set lincks = jsonb_set(lincks, '{lincks}', (lincks->'lincks')-'{$linck}')
+                where albums_id={$albumID};";
+            $dbLincks = $db->query($qUpdate, \PDO::FETCH_ASSOC)->fetch();
+
+            //             $db->query($qUpdate, \PDO::FETCH_ASSOC)->fetch();
             // foreach ($_FILES["files"]["name"] as $key => $name) {
             //     if ($_FILES['files']['error'][$key] == 0) {
 

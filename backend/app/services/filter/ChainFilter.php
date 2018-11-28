@@ -21,10 +21,10 @@ class ChainFilter extends AbstractFilter
         $newValue = $value;
         foreach ($this->filters as $filter) {
             if (isset($filter['otions'])) {
-                $newValue = $filter['filter']->filter($value, $filter['otions']);
+                $newValue = $filter['filter']->filter($newValue, $filter['otions']);
 
             } else {
-                $newValue = $filter['filter']->filter($value);
+                $newValue = $filter['filter']->filter($newValue);
             }
 
         }

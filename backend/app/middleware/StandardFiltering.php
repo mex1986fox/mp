@@ -39,8 +39,9 @@ class StandardFiltering
                 ['filter' => $fTrim,
                     'options' => ['charlist' => '\r\n\t'],
                 ],
-                ['filter' => $fSQL],
                 ['filter' => $fTag],
+                ['filter' => $fSQL],
+
             ]);
             // применяем цепь фильтров ко всем параметрам
             foreach ($p as $key => $value) {
