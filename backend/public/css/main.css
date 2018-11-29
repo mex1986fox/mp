@@ -2916,6 +2916,13 @@ input:-webkit-autofill {
     left: auto;
     background-color: rgba(255, 255, 255, 0.1); }
 
+@media (max-width: 770px) {
+  .wg-card-photo__info {
+    padding: 0; }
+  .wg-card-photo__slider {
+    margin-bottom: 15px;
+    height: 226px !important; } }
+
 .wg-card-post {
   overflow: hidden; }
   .wg-card-post__header {

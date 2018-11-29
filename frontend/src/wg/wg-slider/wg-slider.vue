@@ -91,9 +91,15 @@ export default {
       this.$refs.container.style.cssText =
         "width: " +
         this.containerWidth +
-        "%; margin-left: -" +
-        this.positionIndex * 100 +
-        "%; transition: margin-left 0.6s;";
+        "%; transform: translateX(-" +
+        this.positionIndex * this.sliderWidth +
+        "%); transition: transform 0.3s;";
+      // "width: " +
+      // this.containerWidth +
+      // "%; margin-left: -" +
+      // this.positionIndex * 100 +
+      // "%; transition: margin-left 0.6s;";
+
       this.$emit("onSelect", this.positionIndex, this.dSlides);
     },
     //вызывает событие увеличения фотографий на весь экран
@@ -144,7 +150,15 @@ export default {
     //устанавливает выравнивание картинки относительно блока
     setPositionImg(slide, img) {
       if (this.locSlide(slide) == "hor" && this.locImg(img) == "hor") {
-        img.className = "wg-slider__img wg-slider__img_vertical";
+        // проверить соотношение
+        if (
+          slide.clientWidth / slide.clientHeight <
+          img.naturalWidth / img.naturalHeight
+        ) {
+          img.className = "wg-slider__img wg-slider__img_horizon";
+        } else {
+          img.className = "wg-slider__img wg-slider__img_vertical";
+        }
       }
       if (this.locSlide(slide) == "hor" && this.locImg(img) == "ver") {
         img.className = "wg-slider__img wg-slider__img_vertical";
@@ -153,7 +167,14 @@ export default {
         img.className = "wg-slider__img wg-slider__img_horizon";
       }
       if (this.locSlide(slide) == "ver" && this.locImg(img) == "ver") {
-        img.className = "wg-slider__img wg-slider__img_vertical";
+        if (
+          slide.clientHeight / slide.clientWidth >
+          img.naturalHeight / img.naturalWidth
+        ) {
+          img.className = "wg-slider__img wg-slider__img_horizon";
+        } else {
+          img.className = "wg-slider__img wg-slider__img_vertical";
+        }
       }
     }
   }

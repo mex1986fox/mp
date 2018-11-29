@@ -80,13 +80,13 @@
 					<div v-if="slide!=undefined">
 						<wg-slider
 							class="wg-card-photo__slider"
-							:slide="slide"
+							:slides="slide"
 							:select="selectPhoto"
 							@onSelect="isSelectPhoto"
 						></wg-slider>
 						<wg-slider-navig
 							class="wg-card-photo__slider-navig"
-							:slide="slide"
+							:slides="slide"
 							:select="selectPhoto"
 							@onSelect="isSelectPhoto"
 						></wg-slider-navig>

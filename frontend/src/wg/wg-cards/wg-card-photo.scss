@@ -61,8 +61,8 @@
     overflow: hidden;
     overflow-y: auto;
     box-shadow: $color-shadow-active;
-}
-&__menu-li {
+  }
+  &__menu-li {
     position: relative;
     border: 0;
     padding: 0px 30px;
@@ -78,16 +78,16 @@
     text-overflow: ellipsis;
     color: #202020;
     &:hover {
-        background-color: #f3f3f3;
+      background-color: #f3f3f3;
     }
     &_disabled {
-        color: $color-disabled;
-        cursor: auto;
-        &:hover {
-            background-color: $color-fon;
-        }
+      color: $color-disabled;
+      cursor: auto;
+      &:hover {
+        background-color: $color-fon;
+      }
     }
-}
+  }
   &__description {
     width: 100%;
     margin: 15px 0;
@@ -117,10 +117,14 @@
   }
 }
 
-// @media (max-width: 770px) {
-//   .wg-card-ad {
-//     &__info {
-//       padding: 0;
-//     }
-//   }
-// }
+@media (max-width: 770px) {
+  .wg-card-photo {
+    &__info {
+      padding: 0;
+    }
+    &__slider {
+      margin-bottom: 15px;
+      height: 226px !important;
+    }
+  }
+}
