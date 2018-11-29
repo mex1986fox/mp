@@ -155,7 +155,7 @@ export default {
       photos: undefined,
       showFilterPhotos: false,
       showMessenger: false,
-      showFormPhotos: true,
+      showFormPhotos: false,
       buttonShowFormPhotosBottom: false
     };
   },

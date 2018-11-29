@@ -23,13 +23,13 @@ export default {
   name: "wg-slider-navig",
   data() {
     return {
-      dSlide: JSON.parse(JSON.stringify(this.slide)),
+      dSlide: this.slides,
       dWidthSlide: "0px",
       dMarginSlide: "0px"
     };
   },
   props: {
-    slide: {
+    slides: {
       type: Array,
       default: () => []
     },
@@ -40,7 +40,6 @@ export default {
   },
   beforeMount() {
     this.setNumbers();
-    this.setPosition();
   },
   mounted() {
     this.computedWidth();
@@ -86,10 +85,7 @@ export default {
           "px";
       }
     },
-    setPosition() {
-      let elem = this.dSlide.splice(1, this.dSlide.length - 1);
-      this.dSlide = elem.concat(this.dSlide);
-    },
+
     getPosition(number) {
       for (let k in this.dSlide) {
         if (this.dSlide[k].number == number) {
@@ -100,7 +96,7 @@ export default {
     },
     setNumbers() {
       for (let key in this.dSlide) {
-        this.dSlide[key].number = Number(key) + 1;
+        this.dSlide[key].number = Number(key);
       }
     },
     isClick(number) {

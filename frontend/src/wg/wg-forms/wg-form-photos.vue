@@ -44,20 +44,21 @@
                   <div v-if="slide!=undefined">
                     <wg-slider
                       class="wg-card-photo__slider"
-                      :slide="slide"
+                      :slides="slide"
                       :select="selectPhoto"
                       @onSelect="isSelectPhoto"
                     ></wg-slider>
                     <div
                       @click="deletePhotos"
-                      class="ui-button ui-button_circle ui-button_flat wg-form-add__delete"
+                      class="ui-button ui-button_circle ui-button_flat wg-form-add__delete wg-slider__button_flat"
                     >
                       <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </div>
                     <wg-slider-navig
                       class="wg-card-photo__slider-navig"
-                      :slide="slide"
+                      :slides="slide"
                       :select="selectPhoto"
+                      @onSelect="isSelectPhoto"
                     ></wg-slider-navig>
                   </div>
                   <form
@@ -130,7 +131,15 @@ export default {
     },
     isSelectPhoto(nPhoto, objPhoto) {
       this.selectPhoto = nPhoto;
-      this.selectPhotoObj = objPhoto;
+      if (objPhoto != undefined) {
+        this.selectLinck = undefined;
+        objPhoto.forEach(photo => {
+          if (photo.select == true) {
+            this.selectLinck = photo.src;
+            return;
+          }
+        });
+      }
     },
     create(event) {
       let body = new FormData(event.target);
@@ -182,7 +191,7 @@ export default {
         session_id: this.$cookie.get("PHPSESSID"),
         user_id: this.$cookie.get("user_id"),
         album_id: this.album_id,
-        linck: this.selectPhotoObj.src
+        linck: this.selectLinck
       };
       this.$http
         .post(this.$hosts.photosAlbums + "/api/delete/photos", params, headers)
