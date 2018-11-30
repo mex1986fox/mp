@@ -6,26 +6,27 @@
     background-color: $color-fon;
     margin: -30px auto;
     &__close {
-      position: absolute;
-      left: auto;
-      z-index: 20;
-      right: 15px;
-      top: -15px;
+        position: absolute;
+        left: auto;
+        z-index: 20;
+        right: 15px;
+        top: -5px;
     }
     &__form {
-        position: absolute;
-        bottom: -20px;
+        position: relative;
+        bottom: 0;
         background-color: $color-fon;
         overflow: hidden;
         min-height: 120px;
-        width: calc(100% - 40px);
+        width: 100%;
         z-index: 20;
-        margin: 0 20px;
+        
         &-button {
             left: auto;
             float: right;
             margin-right: 0px;
             margin-top: -13px;
+            margin-bottom: 40px;
         }
     }
     &__avatar {
@@ -61,15 +62,15 @@
         overflow: hidden;
         overflow-y: auto;
         display: block;
-        max-height: 100%;
-        margin: 30px 20px 0 20px;
+        // height: calc(100% - 118px);
+        max-height: 350px;
+        height: auto;
+        margin: 30px 0 0 0;
     }
 }
 
 @media (max-width: 770px) {
     .wg-comments {
-        margin: -30px -10px;
-        width: calc(100% + 20px);
         &__close {
             right: 5px;
             top: -15px;

@@ -139,12 +139,19 @@
         float: left;
         color: $color-disabled;
     }
+    &__comments {
+        // height: 491px;
+        overflow: hidden;
+        position: relative;
+        float: left;
+        width: 100%;
+    }
     &__comments-close {
-      position: absolute;
-      left: auto;
-      z-index: 20;
-      right: -45px;
-      top: -13px;
+        position: absolute;
+        left: auto;
+        z-index: 20;
+        right: -45px;
+        top: -13px;
     }
 }
 
@@ -153,5 +160,6 @@
         &__info {
             padding: 0;
         }
+
     }
 }

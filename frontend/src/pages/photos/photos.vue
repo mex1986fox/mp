@@ -9,7 +9,7 @@
               <div class="col-12 col-nbook_clean col-desktop_clean">
                 <div class="wg-content-frame wg-content-frame_left wg-content-frame__padding">
                   <div
-                    @click="showFormPhotos=true"
+                    @click="isShowFormFotos"
                     class="ui-button ui-button_blue pg-ads__button-add"
                   >добавить фотографии</div>
                 </div>
@@ -38,11 +38,10 @@
         </div>
         <!-- центральный блок -->
         <div class="col_6 col-tablet_8 col-phone_6">
-          <div class="row" v-for=" key in 10" :key="key">
+          <div class="row" v-for="(val, key) in albums" :key="key">
             <div class="col-12">
               <div class="wg-content-frame wg-content-frame_center">
-                <wg-card-photo></wg-card-photo>
-                <!-- <wg-card-photos :photo="JSON.parse(JSON.stringify(photo))"></wg-card-photos> -->
+                <wg-card-album :album="JSON.parse(JSON.stringify(val))"></wg-card-album>
               </div>
             </div>
           </div>
@@ -54,7 +53,7 @@
               <div class="col-12">
                 <div class="wg-content-frame wg-content-frame_right wg-content-frame__padding">
                   <div
-                    @click="showFormPhotos=true"
+                    @click="isShowFormFotos"
                     class="ui-button ui-button_blue pg-ads__button-add"
                   >добавить фотографии</div>
                 </div>
@@ -95,7 +94,11 @@
       </div>
       <!-- форма размещения фотографий -->
       <div class="col_12">
-        <wg-form-photos :show="showFormPhotos" @onHide="showFormPhotos=false"></wg-form-photos>
+        <wg-form-photos
+          :show="showFormPhotos"
+          @onHide="showFormPhotos=false"
+          :key="showFormPhotos+keyForm"
+        ></wg-form-photos>
       </div>
       <!-- мессенджер -->
       <div class="col_12">
@@ -114,12 +117,12 @@
     </div>
     <div class="row">
       <div class="col_12 col-desktop_clean col-nbook_clean col-tablet_clean">
-        <transition name="pg-ads__button-show-form-add">
+        <transition name="pg-albums__button-show-form-add">
           <div
             v-if="!showFormPhotos"
-            @click="showFormPhotos=true"
-            class="ui-button ui-button_circle pg-ads__button-show-form-add"
-            :class="{'pg-ads__button-show-form-add_bottom': buttonShowFormPhotosBottom }"
+            @click="isShowFormFotos"
+            class="ui-button ui-button_circle pg-albums__button-show-form-add"
+            :class="{'pg-albums__button-show-form-add_bottom': buttonShowFormPhotosBottom }"
           >
             <i class="fa fa-plus" aria-hidden="true"></i>
           </div>
@@ -144,6 +147,9 @@
         </ui-bar-bottom>
       </div>
     </div>
+    <div class="col_12">
+      <ui-snackbar :show="showSnackbar" @onHide="showSnackbar=false" :time="15000">{{descSnackbar}}</ui-snackbar>
+    </div>
   </layout>
 </template>
 
@@ -156,14 +162,119 @@ export default {
       showFilterPhotos: false,
       showMessenger: false,
       showFormPhotos: false,
-      buttonShowFormPhotosBottom: false
+      buttonShowFormPhotosBottom: false,
+      showSnackbar: false,
+      descSnackbar: "",
+      keyForm: 0,
+      albums: undefined
     };
   },
   computed: {},
   methods: {
-      isShowFormPhotos(){
-          
+    isShowFormFotos() {
+      if (this.$store.state.user.id != undefined) {
+        this.keyForm++;
+        this.showFormPhotos = true;
+      } else {
+        this.descSnackbar =
+          "Добавлять фотографии могут только авторизованные пользователи. Войдите или зарегистрируйтесь.";
+        this.showSnackbar = true;
       }
+    },
+    loadAlbums() {
+      // console.dir(this.$store.state.filter_add.filter);
+      // let params = this.$store.state.filter_add.filter;
+      let params = {};
+      let headers = { "Content-Type": "multipart/form-data" };
+      this.$http.post("/api/show/albums", params, headers).then(
+        response => {
+          this.albums = response.body.albums;
+          this.loadPhotosAlbums();
+        },
+        error => {}
+      );
+    },
+    loadPhotosAlbums() {
+      let albums_id = [];
+      this.albums.forEach(element => {
+        albums_id.push(element.id);
+      });
+      let params = { albums_id: albums_id };
+      let headers = { "Content-Type": "multipart/form-data" };
+      this.$http
+        .post(this.$hosts.photosAlbums + "/api/show/photos", params, headers)
+        .then(
+          response => {
+            let lincks = response.body.albums;
+            lincks.forEach(linck => {
+              this.albums = this.albums.map((ad, key) => {
+                if (ad.id == linck.id) {
+                  ad.slide = linck.lincks.map(src => {
+                    return { src: src };
+                  });
+                }
+                return ad;
+              });
+            });
+            this.loadUsers();
+          },
+          error => {}
+        );
+    },
+    loadUsers() {
+      let users_id = [];
+      this.albums.forEach(element => {
+        users_id.push(element.user_id);
+      });
+      let params = {
+        users_id: users_id.filter((e, i, a) => a.indexOf(e) == i)
+      };
+      let headers = { "Content-Type": "multipart/form-data" };
+
+      this.$http.post("/api/show/users", params, headers).then(
+        response => {
+          let users = response.body.users;
+          users.forEach(user => {
+            this.albums = this.albums.map((ad, key, arr) => {
+              if (ad.user_id == user.id) {
+                arr[key].user = user;
+              }
+              return ad;
+            });
+          });
+
+          this.loadUsersAvatars();
+        },
+        error => {}
+      );
+    },
+    loadUsersAvatars() {
+      let users_id = [];
+      this.albums.forEach(element => {
+        users_id.push(element.user_id);
+      });
+      let params = {
+        users_id: users_id.filter((e, i, a) => a.indexOf(e) == i)
+      };
+      let headers = { "Content-Type": "multipart/form-data" };
+
+      this.$http
+        .post(this.$hosts.photosUsers + "/api/show/avatars", params, headers)
+        .then(
+          response => {
+            let avatars = response.body.avatars;
+            avatars.forEach(avatar => {
+              this.albums = this.albums.map((ad, key, arr) => {
+                if (ad.user_id == avatar.user_id) {
+                  arr[key].user.avatar = avatar.lincks[0];
+                }
+                return ad;
+              });
+            });
+          },
+          error => {}
+        );
+    }
   },
   mounted() {
     document.addEventListener("onTouchTop", () => {
@@ -172,6 +283,7 @@ export default {
     document.addEventListener("onTouchBottom", () => {
       this.buttonShowFormPhotosBottom = true;
     });
+    this.loadAlbums();
   }
 };
 </script>

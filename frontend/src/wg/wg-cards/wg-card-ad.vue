@@ -41,13 +41,15 @@
     >{{brand.name+" "+model.name+" "+dObj.year+"г. "+city.name}}</router-link>
     <div class="row">
       <div class="col_6 col-phone_6">
-        <wg-slider
-          class="wg-card-ad__slider"
-          :slides="JSON.parse(JSON.stringify(dObj.slide))"
-          :select="numberPhoto"
-          @onSelect="isSelectPhoto"
-          @onZoom="isZoomPhoto"
-        ></wg-slider>
+        <template v-if="dObj.slide!=undefined">
+          <wg-slider
+            class="wg-card-ad__slider"
+            :slides="JSON.parse(JSON.stringify(dObj.slide))"
+            :select="numberPhoto"
+            @onSelect="isSelectPhoto"
+            @onZoom="isZoomPhoto"
+          ></wg-slider>
+        </template>
       </div>
       <div class="col_6 col-phone_6">
         <div class="wg-card-ad__info">
@@ -99,10 +101,18 @@
       </button>
       <span class="wg-card-ad__counter">{{dObj.dislikes!=undefined?dObj.dislikes:"0"}}</span>
       <button
+        v-if="commentShow==false"
         @click="commentShow=true"
         class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat"
       >
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <i aria-hidden="true" class="fa fa-comments-o"></i>
+      </button>
+      <button
+        v-if="commentShow==true"
+        @click="commentShow=false"
+        class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat"
+      >
+        <i aria-hidden="true" class="fa fa-angle-up"></i>
       </button>
       <span class="wg-card-ad__counter">{{dObj.commentsLength!=undefined?dObj.commentsLength:"0"}}</span>
       <button
@@ -114,15 +124,19 @@
         <i class="fa fa-angle-down" aria-hidden="true"></i>
       </button>
     </div>
-    <wg-slider-zoom
-      v-if="showZoomSlider && dObj.slide!=undefined"
-      :slides="JSON.parse(JSON.stringify(dObj.slide))"
-      :slideNavigation="JSON.parse(JSON.stringify(dObj.slide))"
-      :select="numberZoomPhoto"
-      :show="showZoomSlider"
-      @onHide="showZoomSlider=false"
-    ></wg-slider-zoom>
-    <ui-blind
+    <div class="wg-card-ad__comments" v-if="commentShow">
+      <wg-comments :service_id="dObj.id" :service_type="'ads'" @onHide="commentShow=false"></wg-comments>
+    </div>
+    <template v-if="dObj.slide!=undefined">
+      <wg-slider-zoom
+        v-if="showZoomSlider && dObj.slide!=undefined"
+        :slides="JSON.parse(JSON.stringify(dObj.slide))"
+        :select="numberZoomPhoto"
+        :show="showZoomSlider"
+        @onHide="showZoomSlider=false"
+      ></wg-slider-zoom>
+    </template>
+    <!-- <ui-blind
       ref="blind"
       :show="commentShow"
       @onHide="commentShow=false"
@@ -138,7 +152,7 @@
           </div>
         </div>
       </div>
-    </ui-blind>
+    </ui-blind>-->
     <ui-blind
       @onHide="showContacts=!showContacts"
       :show="showContacts"

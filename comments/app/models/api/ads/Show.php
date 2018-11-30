@@ -33,16 +33,21 @@ class Show
                 ]), false);
                 $commentsID = $aggreg[0]['comments']['comments_id'];
             }
+            // var_dump($commentsID);
+            if(empty($commentsID)){
+                throw new \Exception("Нет коментариев к данному объявлению");
+            }
+            
             $aggreg = $mdb->ads->aggregate([
                 ['$match' => ['_id' => $adID]],
                 ['$unwind' => '$comments'],
                 ['$match' => ['comments.id' => ['$in' => $commentsID]]],
             ]);
+           
             $ads = array_map(function ($ad) {
                 return $ad["comments"];
             }, iterator_to_array($aggreg, false));
-            // var_dump($ads);
-            // $ads = $mdb->ads->findOne(["_id" => 8, "comments.id" => ['$in' => [1]]]);
+              // $ads = $mdb->ads->findOne(["_id" => 8, "comments.id" => ['$in' => [1]]]);
 
             return ["comments" => $ads];
         } catch (RuntimeException | \Exception $e) {

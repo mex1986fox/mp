@@ -1,4 +1,4 @@
-.wg-card-photo {
+.wg-card-album {
   overflow: hidden;
   &__header {
     height: 60px;
@@ -118,7 +118,7 @@
 }
 
 @media (max-width: 770px) {
-  .wg-card-photo {
+  .wg-card-album {
     &__info {
       padding: 0;
     }

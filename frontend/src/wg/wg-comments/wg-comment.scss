@@ -67,8 +67,9 @@
 @media (max-width: 770px) {
     .wg-comment {
         &__avatar {
-            height: 30px;
-            width: 30px;
+            height: 35px;
+            width: 35px;
+            margin: 8px 8px 0 0;
         }
         &__login {
             line-height: 13px;

@@ -1,31 +1,52 @@
 <template>
-  <div class="wg-comments" :style="{'height':heightComments+'px'}">
-    <button @click="isClose" class="ui-button ui-button_circle ui-button_circle_big ui-button_circle_mini wg-comments__close">
+  <div class="wg-comments">
+    <!-- <button
+      @click="isClose"
+      class="ui-button ui-button_circle  ui-button_flat ui-button_circle_mini wg-slider__button_flat wg-comments__close"
+    >
       <i aria-hidden="true" class="fa fa-times"></i>
-    </button>
+    </button>-->
+    <div class="wg-comments__container">
+      <span
+        class="ui-header ui-header_4"
+        v-if="flagNoComments==true"
+      >Никто не оставил комментариев. Вы можете быть первым!</span>
+      <wg-comment
+        :service_type="service_type"
+        :service_id="service_id"
+        v-if="comments!=undefined"
+        v-for="(val, key) in comments"
+        :key="key"
+        :comment="JSON.parse(JSON.stringify(val))"
+      ></wg-comment>
+    </div>
     <div ref="form" class="wg-comments__form">
       <!-- <div class="ui-avatar wg-comments__form-avatar">
 				<img src="/public/img/avatar.jpg"
 				     alt="">
-			</div> -->
+      </div>-->
       <!-- <div class="wg-comments__description"> -->
-      <ui-textarea :value="description" @onInput="isInputComment" caption="Ваш комментарий" :autoresize="100" :focus="true">
-      </ui-textarea>
-      <button v-show="description!=undefined" @click="createComment" class="ui-button ui-button_blue ui-button_mini wg-comments__form-button">
-        Комментировать
-      </button>
+      <ui-textarea
+        :value="description"
+        @onInput="isInputComment"
+        caption="Ваш комментарий"
+        :autoresize="100"
+        :focus="false"
+      ></ui-textarea>
+      <button
+        v-show="description!=undefined"
+        @click="createComment"
+        class="ui-button ui-button_blue ui-button_mini wg-comments__form-button"
+      >Комментировать</button>
       <!-- </div> -->
     </div>
-    <div class="wg-comments__container" :style="{'height':heightComments-formHeight-40+'px'}">
-      <wg-comment :service_type="service_type" :service_id="service_id" v-if="comments!=undefined" v-for="(val, key) in comments" :key="key" :comment="JSON.parse(JSON.stringify(val))">
-      </wg-comment>
-    </div>
-
     <div class="row">
       <div class="col_12">
-        <ui-snackbar :show="showSnackbar" @onHide="showSnackbar=false" :time="20000">
-          {{descSnackbar}}
-        </ui-snackbar>
+        <ui-snackbar
+          :show="showSnackbar"
+          @onHide="showSnackbar=false"
+          :time="20000"
+        >{{descSnackbar}}</ui-snackbar>
       </div>
     </div>
   </div>
@@ -38,8 +59,8 @@ export default {
       comments: undefined,
       description: undefined,
       showSnackbar: false,
-      formHeight: 120,
-      descSnackbar: ""
+      descSnackbar: "",
+      flagNoComments: false
     };
   },
   props: {
@@ -53,8 +74,8 @@ export default {
     }
   },
   methods: {
-    isClose(){
-      this.$emit("onHide")
+    isClose() {
+      this.$emit("onHide");
     },
     isInputComment(value) {
       if (value != "") {
@@ -62,7 +83,6 @@ export default {
       } else {
         this.description = undefined;
       }
-      this.formHeight = this.$refs.form.clientHeight;
     },
     createComment() {
       if (this.description != undefined) {
@@ -107,10 +127,18 @@ export default {
         )
         .then(
           response => {
+            this.flagNoComments = false;
             this.comments = response.body.comments;
             this.updateUsers();
           },
-          error => {}
+          error => {
+            if (
+              error.body.exceptions.massege ==
+              "Нет коментариев к данному объявлению"
+            ) {
+              this.flagNoComments = true;
+            }
+          }
         );
     },
     updateUsers() {

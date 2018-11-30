@@ -2766,6 +2766,11 @@ input:-webkit-autofill {
     font-size: 13px;
     float: left;
     color: #bebebe; }
+  .wg-card-ad__comments {
+    overflow: hidden;
+    position: relative;
+    float: left;
+    width: 100%; }
   .wg-card-ad__comments-close {
     position: absolute;
     left: auto;
@@ -2819,18 +2824,18 @@ input:-webkit-autofill {
     .wg-card-users__col_desc {
       color: #454545; }
 
-.wg-card-photo {
+.wg-card-album {
   overflow: hidden; }
-  .wg-card-photo__header {
+  .wg-card-album__header {
     height: 60px;
     padding: 10px 0;
     position: relative; }
-    .wg-card-photo__header-button {
+    .wg-card-album__header-button {
       position: absolute;
       right: 0px;
       left: auto;
       top: 15px; }
-  .wg-card-photo__link {
+  .wg-card-album__link {
     height: 100%;
     width: auto;
     font-size: 18px;
@@ -2839,28 +2844,28 @@ input:-webkit-autofill {
     display: block;
     margin-bottom: 15px;
     margin-top: 5px; }
-  .wg-card-photo__avatar-block {
+  .wg-card-album__avatar-block {
     margin-left: -5px; }
-  .wg-card-photo__slider {
+  .wg-card-album__slider {
     margin-bottom: 15px;
     height: 318px !important; }
-  .wg-card-photo__slider-navig {
+  .wg-card-album__slider-navig {
     top: -5px;
     background-color: #f9f9f9;
     margin-bottom: 8px; }
-  .wg-card-photo__angel {
+  .wg-card-album__angel {
     float: right;
     transform: rotate(0deg);
     -ms-transform: rotate(0deg);
     -webkit-transform: rotate(0deg);
     transition: transform 0.8s ease-in-out;
     line-height: 0px; }
-    .wg-card-photo__angel_transit {
+    .wg-card-album__angel_transit {
       transform: rotate(180deg);
       -ms-transform: rotate(180deg);
       -webkit-transform: rotate(180deg);
       transition: transform 0.8s ease-in-out; }
-  .wg-card-photo__menu {
+  .wg-card-album__menu {
     margin: 0;
     border: 0;
     padding: 0;
@@ -2874,7 +2879,7 @@ input:-webkit-autofill {
     overflow: hidden;
     overflow-y: auto;
     box-shadow: 0px 2px 8px rgba(100, 124, 137, 0.49); }
-  .wg-card-photo__menu-li {
+  .wg-card-album__menu-li {
     position: relative;
     border: 0;
     padding: 0px 30px;
@@ -2889,14 +2894,14 @@ input:-webkit-autofill {
     overflow: hidden;
     text-overflow: ellipsis;
     color: #202020; }
-    .wg-card-photo__menu-li:hover {
+    .wg-card-album__menu-li:hover {
       background-color: #f3f3f3; }
-    .wg-card-photo__menu-li_disabled {
+    .wg-card-album__menu-li_disabled {
       color: #bebebe;
       cursor: auto; }
-      .wg-card-photo__menu-li_disabled:hover {
+      .wg-card-album__menu-li_disabled:hover {
         background-color: #ffffff; }
-  .wg-card-photo__description {
+  .wg-card-album__description {
     width: 100%;
     margin: 15px 0;
     color: #617179;
@@ -2904,22 +2909,22 @@ input:-webkit-autofill {
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 250px; }
-    .wg-card-photo__description-enter, .wg-card-photo__description-leave-to {
+    .wg-card-album__description-enter, .wg-card-album__description-leave-to {
       max-height: 0px; }
-    .wg-card-photo__description-enter-active, .wg-card-photo__description-leave-active {
+    .wg-card-album__description-enter-active, .wg-card-album__description-leave-active {
       transition: max-height 0.5s ease; }
-    .wg-card-photo__description-enter-to, .wg-card-photo__description-leave {
+    .wg-card-album__description-enter-to, .wg-card-album__description-leave {
       max-height: 250px; }
-  .wg-card-photo__comments-close {
+  .wg-card-album__comments-close {
     position: fixed;
     right: 58px;
     left: auto;
     background-color: rgba(255, 255, 255, 0.1); }
 
 @media (max-width: 770px) {
-  .wg-card-photo__info {
+  .wg-card-album__info {
     padding: 0; }
-  .wg-card-photo__slider {
+  .wg-card-album__slider {
     margin-bottom: 15px;
     height: 226px !important; } }
 
@@ -3222,21 +3227,21 @@ input:-webkit-autofill {
     left: auto;
     z-index: 20;
     right: 15px;
-    top: -15px; }
+    top: -5px; }
   .wg-comments__form {
-    position: absolute;
-    bottom: -20px;
+    position: relative;
+    bottom: 0;
     background-color: #ffffff;
     overflow: hidden;
     min-height: 120px;
-    width: calc(100% - 40px);
-    z-index: 20;
-    margin: 0 20px; }
+    width: 100%;
+    z-index: 20; }
     .wg-comments__form-button {
       left: auto;
       float: right;
       margin-right: 0px;
-      margin-top: -13px; }
+      margin-top: -13px;
+      margin-bottom: 40px; }
   .wg-comments__avatar {
     margin: 0px 20px 0px 10px; }
     .wg-comments__avatar_mini {
@@ -3264,16 +3269,14 @@ input:-webkit-autofill {
     overflow: hidden;
     overflow-y: auto;
     display: block;
-    max-height: 100%;
-    margin: 30px 20px 0 20px; }
+    max-height: 350px;
+    height: auto;
+    margin: 30px 0 0 0; }
 
 @media (max-width: 770px) {
-  .wg-comments {
-    margin: -30px -10px;
-    width: calc(100% + 20px); }
-    .wg-comments__close {
-      right: 5px;
-      top: -15px; } }
+  .wg-comments__close {
+    right: 5px;
+    top: -15px; } }
 
 .wg-comment__avatar {
   margin: 0px 20px 0px 0px; }
@@ -3334,8 +3337,9 @@ input:-webkit-autofill {
 
 @media (max-width: 770px) {
   .wg-comment__avatar {
-    height: 30px;
-    width: 30px; }
+    height: 35px;
+    width: 35px;
+    margin: 8px 8px 0 0; }
   .wg-comment__login {
     line-height: 13px; }
     .wg-comment__login > .ui-link {

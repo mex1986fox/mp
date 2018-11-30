@@ -84,7 +84,7 @@ class Update
             $qSet = $qSet . (empty($exchange) ? "" : " exchange=true,");
             $qSet = (empty($qSet) ? "" : substr($qSet, 0, -1));
 
-            echo $q = "update ads set {$qSet} where id={$add_id} and user_id={$user_id}";
+            $q = "update ads set {$qSet} where id={$add_id} and user_id={$user_id}";
             $id_add = $db->query($q, \PDO::FETCH_ASSOC)->fetch();
 
             return ["add_id" => $id_add['id'], "massege" => "Объявление изменено успешно"];

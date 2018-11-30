@@ -1,6 +1,6 @@
 <template>
   <ui-blind :show="showFormPhotos" @onHide="showFormPhotos=false" animate="right">
-    <div class="container container_right">
+    <div v-if="showFormPhotos" class="container container_right">
       <div class="row">
         <div
           class="col_7 col_offset-5 col-nbook_9 col-nbook_offset-3 col-tablet_10 col-tablet_offset-2 col-phone_6 col-phone_offset-0"
@@ -19,12 +19,12 @@
                     <i class="fa fa-angle-right"></i>
                   </button>
                   <ui-tabs class="wg-form-add__tabs">
-                    <ui-tabs-tab id="basick" :checked="tabs=='basick'" @onFocus="isTabs">Основное</ui-tabs-tab>
+                    <ui-tabs-tab id="basick" :checked="tabs=='basick'" @onFocus="isTabs">Альбом</ui-tabs-tab>
                     <ui-tabs-tab id="photo" :checked="tabs=='photo'" @onFocus="isTabs">Фотографии</ui-tabs-tab>
                   </ui-tabs>
                 </div>
                 <div class="wg-form-add__content" v-show="tabs=='basick'">
-                  <form id="formCreatePhotos" @submit.prevent="create">
+                  <form v-if="album_id==undefined" id="formCreatePhotos" @submit.prevent="create">
                     <div class="wg-form-add__hr">Альбом</div>
                     <div class="row">
                       <div class="col_6">
@@ -33,6 +33,17 @@
                     </div>
                     <div class="wg-form-add__buttons">
                       <button class="ui-button ui-button_blue" type="submit">Добавить альбом</button>
+                    </div>
+                  </form>
+                   <form v-if="album_id!=undefined" id="formUpdatePhotos" @submit.prevent="updateAlbum">
+                    <div class="wg-form-add__hr">Альбом</div>
+                    <div class="row">
+                      <div class="col_6">
+                        <ui-text name="name" caption="Новое название альбома"></ui-text>
+                      </div>
+                    </div>
+                    <div class="wg-form-add__buttons">
+                      <button class="ui-button ui-button_blue" type="submit">Изменить альбом</button>
                     </div>
                   </form>
                 </div>
@@ -163,6 +174,32 @@ export default {
         }
       );
     },
+    updateAlbum(){
+      let body = new FormData(event.target);
+      body.set("session_id", this.$cookie.get("PHPSESSID"));
+      body.set("user_id", this.$cookie.get("user_id"));
+      body.set("album_id", this.album_id);
+
+      this.$http.post("/api/update/albums", body).then(
+        response => {
+          this.tabs = "photo";
+          this.album_id = response.body.id;
+          this.showSnackbar = false;
+          this.showSnackbar = true;
+          this.descSnackbar =
+            "Альбом успешно изменен. Можете добавить фотографии.";
+        },
+        error => {
+          let massege = error.body.exceptions.massege;
+
+          if (massege != undefined) {
+            this.showSnackbar = false;
+            this.showSnackbar = true;
+            this.descSnackbar = massege;
+          }
+        }
+      );
+    },
     loadPhotos() {
       this.numberFL = 1;
       let form = document.getElementById("formLoadPhotos");
@@ -180,6 +217,7 @@ export default {
         })
         .then(
           response => {
+            this.descSnackbar = "Фотографии успешно добавлены. ";
             this.updatePhotoLincks();
           },
           error => {}
@@ -197,6 +235,7 @@ export default {
         .post(this.$hosts.photosAlbums + "/api/delete/photos", params, headers)
         .then(
           response => {
+            this.descSnackbar = "Фотография успешно удалена.";
             this.updatePhotoLincks();
           },
           error => {}
@@ -218,7 +257,7 @@ export default {
               this.photoLincks = response.body.albums[0].lincks;
               this.showSnackbar = false;
               this.showSnackbar = true;
-              this.descSnackbar = "Фотографии успешно добавлены. ";
+              
             }, 4);
           },
           error => {}
