@@ -173,6 +173,7 @@ export default {
         response => {
           this.posts = response.body.posts;
           this.loadPhotosPosts();
+          this.loadUsers();
         },
         error => {}
       );
@@ -199,7 +200,7 @@ export default {
                 return ad;
               });
             });
-            this.loadUsers();
+            
           },
           error => {}
         );

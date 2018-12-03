@@ -4,6 +4,8 @@ photo_add/vendor
 photo_add/public/photos
 photo_album/vendor
 photo_album/public/photos
+photo_post/vendor
+photo_post/public/photos
 photo_user/vendor
 photo_user/public/photos
 likes/vendor

@@ -36,7 +36,10 @@ class Show
             foreach ($ans as $key => $value) {
                 // var_dump(json_decode($value["lincks"]));
                 $posts[$key] = ["id" => $value["id"], "lincks" => json_decode($value["lincks"])->lincks];
-                
+
+            }
+            if (empty($posts)) {
+                throw new \Exception("Фотографии для постов не найдены");
             }
             return ["posts" => $posts];
         } catch (RuntimeException | \Exception $e) {
