@@ -2753,7 +2753,8 @@ input:-webkit-autofill {
     display: block;
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: 250px; }
+    max-height: 250px;
+    white-space: pre-line; }
     .wg-card-ad__description-enter, .wg-card-ad__description-leave-to {
       max-height: 0px; }
     .wg-card-ad__description-enter-active, .wg-card-ad__description-leave-active {

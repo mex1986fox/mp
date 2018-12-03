@@ -9,6 +9,7 @@ import Locations from "./locations/locations.js";
 import Transports from "./transports/transports.js";
 import Form_add from "./forms/form-add.js";
 import Filter_add from "./filters/filter-add.js";
+import Filter_album from "./filters/filter-album.js";
 const store = new Vuex.Store({
   // строгий режим для отслеживания ошибок
   // в продакшине отключить!!!
@@ -19,7 +20,8 @@ const store = new Vuex.Store({
     locations: Locations,
     transports: Transports,
     form_add: Form_add,
-    filter_add: Filter_add
+    filter_add: Filter_add,
+    filter_album: Filter_album
   },
   state: {},
   getters: {},

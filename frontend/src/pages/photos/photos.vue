@@ -80,17 +80,7 @@
     <div class="row">
       <!-- Фильтр фотографий -->
       <div class="col_12">
-        <ui-blind :show="showFilterPhotos" @onHide="showFilterPhotos=false" animate="right">
-          <div class="container container_right">
-            <div class="row">
-              <div
-                class="col_7 col_offset-5 col-nbook_9 col-nbook_offset-3 col-tablet_10 col-tablet_offset-2 col-phone_6 col-phone_offset-0"
-              >
-                <wg-filter-photos @onHide="showFilterPhotos=false"></wg-filter-photos>
-              </div>
-            </div>
-          </div>
-        </ui-blind>
+        <wg-filter-album :show="showFilterPhotos" @onHide="showFilterPhotos=false"></wg-filter-album>
       </div>
       <!-- форма размещения фотографий -->
       <div class="col_12">

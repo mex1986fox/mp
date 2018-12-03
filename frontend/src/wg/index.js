@@ -22,10 +22,15 @@ import WgComment from "./wg-comments/wg-comment.vue";
 Vue.component("wg-comment", WgComment);
 import WgFilterAdd from "./wg-filters/wg-filter-add.vue";
 Vue.component("wg-filter-add", WgFilterAdd);
+import WgFilterAlbum from "./wg-filters/wg-filter-album.vue";
+Vue.component("wg-filter-album", WgFilterAlbum);
+
 import WgFormAdd from "./wg-forms/wg-form-add.vue";
 Vue.component("wg-form-add", WgFormAdd);
 import WgFormPhotos from "./wg-forms/wg-form-photos.vue";
 Vue.component("wg-form-photos", WgFormPhotos);
+import WgFormPosts from "./wg-forms/wg-form-posts.vue";
+Vue.component("wg-form-posts", WgFormPosts);
 import WgCaptcha from "./wg-captcha/wg-captcha.vue";
 Vue.component("wg-captcha", WgCaptcha);
 import WgSelectLocation from "./wg-select-location/wg-select-location.vue";

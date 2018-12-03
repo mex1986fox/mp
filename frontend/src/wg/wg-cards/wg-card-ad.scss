@@ -119,6 +119,7 @@
         overflow-x: hidden;
         overflow-y: auto;
         max-height: 250px;
+        white-space: pre-line;
         &-enter,
         &-leave-to {
             max-height: 0px;

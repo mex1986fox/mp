@@ -6,6 +6,7 @@ const Hosts = {
       photosAds: "http://photos-ads.ru",
       photosAlbums: "http://photos-albums.ru",
       photosUsers: "http://photos-users.ru",
+      photosPosts: "http://photos-posts.ru",
       likes: "http://likes.ru",
       comments: "http://comments.ru",
       messages: "http://messages.ru",
