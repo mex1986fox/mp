@@ -59,7 +59,9 @@ export default {
   methods: {
     isClean() {
       this.dActive = false;
-      this.$refs.input.value = "";
+      if (this.$refs.input != undefined) {
+        this.$refs.input.value = "";
+      }
       this.dValue = "";
       this.$emit("onInput", this.dValue);
     },

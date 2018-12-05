@@ -1,15 +1,15 @@
 <template>
-    <nav class="ui-tabs">
-        <div ref="line" class="ui-tabs__line">
-            <div class="ui-tabs__button ui-tabs__button_left" @click="clickLeft" v-if="dShowBut">
-                <i class="fa fa-angle-left" aria-hidden="true"></i>
-            </div>
-            <div class="ui-tabs__button ui-tabs__button_right" @click="clickRight" v-if="dShowBut">
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
-            </div>
-            <slot></slot>
-        </div>
-    </nav>
+  <nav class="ui-tabs">
+    <div ref="line" class="ui-tabs__line">
+      <div class="ui-tabs__button ui-tabs__button_left" @click="clickLeft" v-if="dShowBut">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+      </div>
+      <div class="ui-tabs__button ui-tabs__button_right" @click="clickRight" v-if="dShowBut">
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
+      </div>
+      <slot></slot>
+    </div>
+  </nav>
 </template>
 <script>
 export default {
@@ -60,7 +60,9 @@ export default {
           childW = childW + child.$el.clientWidth;
         }
       }
-      this.$refs.line.style.marginLeft = lineW < childW ? "60px" : "";
+      if (this.$refs.line != undefined) {
+        this.$refs.line.style.marginLeft = lineW < childW ? "60px" : "";
+      }
       this.dShowBut = lineW < childW ? true : false;
     }
   },

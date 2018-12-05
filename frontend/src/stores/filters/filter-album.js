@@ -5,8 +5,8 @@ const filter_album = {
     sort: [
       { id: 1, name: "дате (новые)" },
       { id: 2, name: "дате (старые)" },
-      { id: 5, name: "году (новые)" },
-      { id: 6, name: "году (старые)" }
+      { id: 3, name: "году (новые)" },
+      { id: 4, name: "году (старые)" }
     ],
     filter: {}
   },
@@ -30,6 +30,7 @@ const filter_album = {
         });
       });
       return menu;
+      
     },
     getTransports: (state, getters, rootState, rootGetters) => {
       let transports = [];
@@ -140,6 +141,7 @@ const filter_album = {
     setFilter(state, filter) {
       let stateFilter = state.filter;
       stateFilter[filter.name] = filter.filter;
+      state.filter = undefined;
       state.filter = stateFilter;
       // console.dir(state.filter);
     },

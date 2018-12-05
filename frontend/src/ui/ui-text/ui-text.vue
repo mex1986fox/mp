@@ -1,25 +1,39 @@
 <template>
-	<div class="ui-text"
-	     @click="isClick()">
-		<span class="ui-text__caption"
-		      :class="{'ui-text__caption_completed':modCompleted,
+  <div class="ui-text" @click="isClick()">
+    <span
+      class="ui-text__caption"
+      :class="{'ui-text__caption_completed':modCompleted,
             'ui-text__caption_active':modFocus, 
                    
                    'ui-text__caption_disabled':dDisabled}"
-		      @click="isClick()">
-			{{dCaption}}
-		</span>
-		<input class="ui-text__input" :class="{'ui-text__input_active':modFocus,
-                   'ui-text__input_disabled':dDisabled}" ref="input" @focus="isFocus()" @blur="isBlur()" @input="isInputText()" :name="dName" :value="dValue" :readonly="dReadonly" :disabled="dDisabled" :maxlength="maxlength" />
-		<hr class="ui-text__border" :class="{'ui-text__border_active':modFocus,
-                  'ui-text__border_disabled':dDisabled}">
-		<span class="ui-text__help"
-		      :class="{'ui-text__help_active':help,
+      @click="isClick()"
+    >{{dCaption}}</span>
+    <input
+      class="ui-text__input"
+      :class="{'ui-text__input_active':modFocus,
+                   'ui-text__input_disabled':dDisabled}"
+      ref="input"
+      @focus="isFocus()"
+      @blur="isBlur()"
+      @input="isInputText()"
+      :name="dName"
+      :value="dValue"
+      :readonly="dReadonly"
+      :disabled="dDisabled"
+      :maxlength="maxlength"
+    >
+    <hr
+      class="ui-text__border"
+      :class="{'ui-text__border_active':modFocus,
+                  'ui-text__border_disabled':dDisabled}"
+    >
+    <span
+      class="ui-text__help"
+      :class="{'ui-text__help_active':help,
                     'ui-text__help_disabled':dDisabled}"
-		      @click="isClick()">
-			{{help}}
-		</span>
-	</div>
+      @click="isClick()"
+    >{{help}}</span>
+  </div>
 </template>
 
 <script>
@@ -109,7 +123,7 @@ export default {
       this.dValue = this.$refs.input.value;
       this.$emit("onInput", this.dValue);
     },
-     mascNumber(val) {
+    mascNumber(val) {
       let newQ = val.replace(/[^0-9]/gim, "");
       if (newQ[0] == 0) {
         newQ = newQ.substr(1);
@@ -138,7 +152,11 @@ export default {
   },
   watch: {
     value(newQ, oldQ) {
-      this.dValue = newQ;
+      if (newQ == undefined) {
+        this.dValue = "";
+      } else {
+        this.dValue = newQ;
+      }
     },
     dValue(newV) {
       if (this.masc != undefined) {

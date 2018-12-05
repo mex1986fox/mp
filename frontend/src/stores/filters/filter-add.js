@@ -311,6 +311,7 @@ const filter_add = {
     setFilter(state, filter) {
       let stateFilter = state.filter;
       stateFilter[filter.name] = filter.filter;
+      state.filter = undefined;
       state.filter = stateFilter;
       // console.dir(state.filter);
     },

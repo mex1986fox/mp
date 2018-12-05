@@ -178,7 +178,7 @@ export default {
         filter: JSON.stringify(this.$store.state.filter_album.filter)
       };
       this.$http
-        .post(this.$hosts.ads + "/api/create/adsFilter", params, headers)
+        .post(this.$hosts.ads + "/api/create/albumsFilter", params, headers)
         .then(
           response => {
             this.flagLoadFilter = false;

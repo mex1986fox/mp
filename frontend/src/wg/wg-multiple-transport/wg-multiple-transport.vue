@@ -1,14 +1,14 @@
 <template>
   <div class="wg-multiple-transport">
     <span
-      @click="showModal=true"
+      @click.self="showModal=true"
       class="ui-text__caption wg-multiple-transport__caption"
       :class="{ 'ui-text__caption_completed wg-multiple-transport__caption_completed':modCompleted,
             'ui-text__caption_active wg-multiple-transport__caption_active':showModal, 
                   
                    'ui-text__caption_disabled':dDisabled}"
     >{{dCaption}}</span>
-    <div @click="showModal=true" class="wg-multiple-transport__container">
+    <div @click.self="showModal=true" class="wg-multiple-transport__container">
       <ui-chips
         class="wg-multiple-transport__chips__red"
         @onDeleted="onDeletedChip"
@@ -44,7 +44,7 @@
       ></ui-chips>
     </div>
     <hr
-      @click="showModal=true"
+      @click.self="showModal=true"
       class="ui-text__border wg-multiple-transport__border"
       :class="{'ui-text__border_active':showModal,
                   'ui-text__border_disabled':dDisabled}"

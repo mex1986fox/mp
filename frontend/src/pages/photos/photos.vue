@@ -171,6 +171,18 @@ export default {
         this.showSnackbar = true;
       }
     },
+    loadFilter() {
+      this.$http.post("/api/show/albumsFilter").then(
+        response => {
+          let filter = response.body.filter;
+          this.$store.commit("filter_album/setFilters", JSON.parse(filter));
+          this.loadAlbums();
+        },
+        error => {
+          this.loadAlbums();
+        }
+      );
+    },
     loadAlbums() {
       // console.dir(this.$store.state.filter_add.filter);
       // let params = this.$store.state.filter_add.filter;
@@ -273,7 +285,7 @@ export default {
     document.addEventListener("onTouchBottom", () => {
       this.buttonShowFormPhotosBottom = true;
     });
-    this.loadAlbums();
+    this.loadFilter();
   }
 };
 </script>
