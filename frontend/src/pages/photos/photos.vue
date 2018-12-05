@@ -185,8 +185,7 @@ export default {
     },
     loadAlbums() {
       // console.dir(this.$store.state.filter_add.filter);
-      // let params = this.$store.state.filter_add.filter;
-      let params = {};
+      let params = this.$store.state.filter_album.filter;
       let headers = { "Content-Type": "multipart/form-data" };
       this.$http.post("/api/show/albums", params, headers).then(
         response => {

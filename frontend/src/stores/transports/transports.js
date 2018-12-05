@@ -12,6 +12,17 @@ const transports = {
     transmissions: undefined
   },
   getters: {
+    getTransport: (state, getters, rootState, rootGetters) => id => {
+      if (state.transports!=undefined) {
+        for (let transport of state.transports) {
+          if (id == transport.id) {
+            return transport;
+          }
+        }
+      } else {
+        return undefined;
+      }
+    },
     getBrand: (state, getters, rootState, rootGetters) => id => {
       if (state.brands!=undefined) {
         for (let brand of state.brands) {

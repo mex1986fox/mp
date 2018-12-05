@@ -1,192 +1,198 @@
 <template>
-	<div class="wg-filter-add" :style="{'min-height': windowHeight+'px'}">
-		<div class="row">
-			<div class="col_12">
-				<div class="wg-filter-add__bar">
-					<div class="ui-header ui-header_2 wg-filter-add__header">Фильтр объявлений</div>
-					<button
-						class="ui-button ui-button_circle ui-button_flat wg-filter-add__close"
-						@click="isClose"
-					>
-						<i class="fa fa-angle-right"></i>
-					</button>
-					<ui-tabs class="wg-filter-add__tabs">
-						<ui-tabs-tab id="city" :checked="true" @onFocus="isTabs">Города</ui-tabs-tab>
-						<ui-tabs-tab id="model" @onFocus="isTabs">Модели</ui-tabs-tab>
-						<ui-tabs-tab id="param" @onFocus="isTabs">Параметры</ui-tabs-tab>
-					</ui-tabs>
-				</div>
-			</div>
-			<div class="col_12" v-show="tabs=='city'">
-				<div class="wg-filter-add__content">
-					<div class="wg-form-add__hr">
-						<!-- <i class="fa fa-map-marker" aria-hidden="true"></i> -->
-						Местоположение
-					</div>
-					<div class="row">
-						<div class="col_12">
-							<wg-multiple-location
-								:pCountry="JSON.parse(JSON.stringify(menuCountry))"
-								:pSubject="JSON.parse(JSON.stringify(menuSubject))"
-								:pSettlement="JSON.parse(JSON.stringify(menuSettlement))"
-								:caption="'Страна, регион, город'"
-								@onInsert="setFilterLocation"
-							></wg-multiple-location>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col_12" v-show="tabs=='model'">
-				<div class="wg-filter-add__content">
-					<div class="wg-form-add__hr">
-						<!-- <i class="fa fa-map-marker" aria-hidden="true"></i> -->
-						Вид транспорта
-					</div>
-					<div class="row">
-						<div class="col_12">
-							<wg-multiple-transport
-								:pTransport="menuTransport"
-								:pModel="menuModel"
-								:pBrand="menuBrand"
-								:caption="'Тип, фирма, модель'"
-								@onInsert="setFilterTransport"
-							></wg-multiple-transport>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col_12" v-show="tabs=='param'">
+  <div class="wg-filter-add" ref="filter">
+    <div class="row">
+      <div class="col_12">
+        <div class="wg-filter-add__bar">
+          <div class="ui-header ui-header_2 wg-filter-add__header">Фильтр объявлений</div>
+          <button
+            class="ui-button ui-button_circle ui-button_flat wg-filter-add__close"
+            @click="isClose"
+          >
+            <i class="fa fa-angle-right"></i>
+          </button>
+          <ui-tabs class="wg-filter-add__tabs">
+            <ui-tabs-tab id="city" :checked="true" @onFocus="isTabs">Города</ui-tabs-tab>
+            <ui-tabs-tab id="model" @onFocus="isTabs">Модели</ui-tabs-tab>
+            <ui-tabs-tab id="param" @onFocus="isTabs">Параметры</ui-tabs-tab>
+          </ui-tabs>
+        </div>
+      </div>
+      <div class="col_12" v-show="tabs=='city'">
         <div class="wg-filter-add__content">
-					<div class="row">
-						<div class="col_6">
-							<ui-select
-								name="sort"
-								caption="Сортировать по:"
-								:menu="menuSort"
-								@onSelect="setFilterSort"
-							></ui-select>
-						</div>
-					</div>
-				</div>
-				<div class="wg-filter-add__content">
-					<div class="row">
-						<div class="col_6">
-							<ui-text
-								name="price"
-								:value="valuePrice"
-								:masc="'mascNumber'"
-								caption="Цена от"
-								:maxlength="9"
-								@onInput="setFilterPrice"
-							></ui-text>
-						</div>
-						<div class="col_5 col_offset-1">
-							<ui-text
-								name="price_bef"
-								:value="valuePriceBef"
-								:masc="'mascNumber'"
-								caption="до"
-								:maxlength="9"
-								@onInput="setFilterPriceBef"
-							></ui-text>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col_6">
-							<ui-select name="year" caption="Год от" :menu="menuYear" @onSelect="setFilterYear"></ui-select>
-						</div>
-						<div class="col_5 col_offset-1">
-							<ui-select name="year_bef" caption="до" :menu="menuYearBef" @onSelect="setFilterYearBef"></ui-select>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col_6">
-							<ui-select
-								name="fuel"
-								caption="Топливо"
-								:menu="menuFuels"
-								:multiple="true"
-								@onSelect="setFilterFuel"
-							></ui-select>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col_6">
-							<ui-text
-								name="volume"
-								:value="valueVolume"
-								caption="Объем от"
-								:masc="'mascNumber'"
-								:maxlength="4"
-								@onInput="setFilterVolume"
-							></ui-text>
-						</div>
-						<div class="col_5 col_offset-1">
-							<ui-text
-								name="volume_bef"
-								:value="valueVolumeBef"
-								caption="до"
-								:masc="'mascNumber'"
-								:maxlength="4"
-								@onInput="setFilterVolumeBef"
-							></ui-text>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col_6">
-							<ui-select
-								name="body"
-								caption="Кузов"
-								:menu="menuBodies"
-								:multiple="true"
-								@onSelect="setFilterBody"
-							></ui-select>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col_6">
-							<ui-select
-								name="drive"
-								caption="Привод"
-								:menu="menuDrives"
-								:multiple="true"
-								@onSelect="setFilterDrive"
-							></ui-select>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col_6">
-							<ui-select
-								name="transmission"
-								caption="Коробка"
-								:menu="menuTransmissions"
-								:multiple="true"
-								@onSelect="setFilterTransmission"
-							></ui-select>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col_6">
-							<ui-select
-								name="wheel"
-								caption="Руль"
-								:menu="menuWheels"
-								:multiple="true"
-								@onSelect="setFilterWheel"
-							></ui-select>
-						</div>
-					</div>
-				</div>
-			</div>
+          <div class="wg-form-add__hr">
+            Местоположение
+          </div>
+          <div class="row">
+            <div class="col_12">
+              <wg-multiple-location
+                :pCountry="JSON.parse(JSON.stringify(menuCountry))"
+                :pSubject="JSON.parse(JSON.stringify(menuSubject))"
+                :pSettlement="JSON.parse(JSON.stringify(menuSettlement))"
+                :caption="'Страна, регион, город'"
+                @onInsert="setFilterLocation"
+              ></wg-multiple-location>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col_12" v-show="tabs=='model'">
+        <div class="wg-filter-add__content">
+          <div class="wg-form-add__hr">
+            Вид транспорта
+          </div>
+          <div class="row">
+            <div class="col_12">
+              <wg-multiple-transport
+                :pTransport="menuTransport"
+                :pModel="menuModel"
+                :pBrand="menuBrand"
+                :caption="'Тип, фирма, модель'"
+                @onInsert="setFilterTransport"
+              ></wg-multiple-transport>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col_12" v-show="tabs=='param'">
+        <div class="wg-filter-add__content">
+          <div class="wg-form-add__hr">
+            Параметры
+          </div>
+            <div class="row">
+            <div class="col_6">
+              <ui-select
+                name="sort"
+                caption="Сортировать по:"
+                :menu="menuSort"
+                @onSelect="setFilterSort"
+              ></ui-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col_6">
+              <ui-text
+                name="price"
+                :value="valuePrice"
+                :masc="'mascNumber'"
+                caption="Цена от"
+                :maxlength="9"
+                @onInput="setFilterPrice"
+              ></ui-text>
+            </div>
+            <div class="col_5 col_offset-1">
+              <ui-text
+                name="price_bef"
+                :value="valuePriceBef"
+                :masc="'mascNumber'"
+                caption="до"
+                :maxlength="9"
+                @onInput="setFilterPriceBef"
+              ></ui-text>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col_6">
+              <ui-select name="year" caption="Год от" :menu="menuYear" @onSelect="setFilterYear"></ui-select>
+            </div>
+            <div class="col_5 col_offset-1">
+              <ui-select
+                name="year_bef"
+                caption="до"
+                :menu="menuYearBef"
+                @onSelect="setFilterYearBef"
+              ></ui-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col_6">
+              <ui-select
+                name="fuel"
+                caption="Топливо"
+                :menu="menuFuels"
+                :multiple="true"
+                @onSelect="setFilterFuel"
+              ></ui-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col_6">
+              <ui-text
+                name="volume"
+                :value="valueVolume"
+                caption="Объем от"
+                :masc="'mascNumber'"
+                :maxlength="4"
+                @onInput="setFilterVolume"
+              ></ui-text>
+            </div>
+            <div class="col_5 col_offset-1">
+              <ui-text
+                name="volume_bef"
+                :value="valueVolumeBef"
+                caption="до"
+                :masc="'mascNumber'"
+                :maxlength="4"
+                @onInput="setFilterVolumeBef"
+              ></ui-text>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col_6">
+              <ui-select
+                name="body"
+                caption="Кузов"
+                :menu="menuBodies"
+                :multiple="true"
+                @onSelect="setFilterBody"
+              ></ui-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col_6">
+              <ui-select
+                name="drive"
+                caption="Привод"
+                :menu="menuDrives"
+                :multiple="true"
+                @onSelect="setFilterDrive"
+              ></ui-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col_6">
+              <ui-select
+                name="transmission"
+                caption="Коробка"
+                :menu="menuTransmissions"
+                :multiple="true"
+                @onSelect="setFilterTransmission"
+              ></ui-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col_6">
+              <ui-select
+                name="wheel"
+                caption="Руль"
+                :menu="menuWheels"
+                :multiple="true"
+                @onSelect="setFilterWheel"
+              ></ui-select>
+            </div>
+          </div>
+        </div>
+      </div>
 
-			<div class="col_12">
-				<div class="wg-filter-add__buttons">
-					<button class="ui-button ui-button_blue" @click="loadFilter">Применить <ui-loader-button v-if="flagLoadFilter" ></ui-loader-button></button>
-					<button class="ui-button ui-button_flat" @click="isClose">Отмена</button>
-				</div>
-			</div>
-		</div>
-	</div>
+      <div class="col_12">
+        <div class="wg-filter-add__buttons">
+          <button class="ui-button ui-button_blue" @click="loadFilter">Применить
+            <ui-loader-button v-if="flagLoadFilter"></ui-loader-button>
+          </button>
+          <button class="ui-button ui-button_flat" @click="isClose">Отмена</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 export default {
@@ -194,7 +200,6 @@ export default {
   data() {
     return {
       tabs: "city",
-      windowHeight: document.body.clientHeight,
       flagLoadFilter: false
     };
   },
@@ -255,7 +260,33 @@ export default {
       return this.$store.getters["filter_add/getVolumeBef"];
     }
   },
+  watch: {
+    flagLoadFilter(newQ) {
+      this.autoHeight();
+    }
+  },
+  mounted() {
+    window.addEventListener("resize", () => {
+      this.autoHeight();
+    });
+    this.autoHeight();
+  },
   methods: {
+    // устанавливает  длину контейнера контетнта
+    autoHeight() {
+
+      setTimeout(() => {
+        if (this.$refs.filter != undefined) {
+          let height = window.document.body.clientHeight - 258;
+          let contents = this.$refs.filter.querySelectorAll(
+            ".wg-filter-add__content"
+          );
+          contents.forEach(content => {
+            content.style.cssText = "min-height: " + height + "px";
+          });
+        }
+      }, 4);
+    },
     isTabs(id) {
       this.tabs = id;
       //   console.log(id);
@@ -265,7 +296,7 @@ export default {
     },
 
     loadFilter() {
-      this.flagLoadFilter=true;
+      this.flagLoadFilter = true;
       let headers = { "Content-Type": "multipart/form-data" };
       let params = {
         user_id: this.$cookie.get("user_id"),
@@ -275,11 +306,11 @@ export default {
         .post(this.$hosts.ads + "/api/create/adsFilter", params, headers)
         .then(
           response => {
-            this.flagLoadFilter=false;
+            this.flagLoadFilter = false;
             this.onUpdated();
           },
           error => {
-            this.flagLoadFilter=false;
+            this.flagLoadFilter = false;
           }
         );
     },

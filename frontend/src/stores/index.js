@@ -8,6 +8,7 @@ import Users from "./users/users.js";
 import Locations from "./locations/locations.js";
 import Transports from "./transports/transports.js";
 import Form_add from "./forms/form-add.js";
+import Form_album from "./forms/form-album.js";
 import Filter_add from "./filters/filter-add.js";
 import Filter_album from "./filters/filter-album.js";
 const store = new Vuex.Store({
@@ -20,6 +21,7 @@ const store = new Vuex.Store({
     locations: Locations,
     transports: Transports,
     form_add: Form_add,
+    form_album: Form_album,
     filter_add: Filter_add,
     filter_album: Filter_album
   },

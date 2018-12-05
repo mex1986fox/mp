@@ -3370,8 +3370,7 @@ input:-webkit-autofill {
     background-color: #2b547e;
     padding: 0;
     margin: 0;
-    box-shadow: 0px 2px 4px rgba(100, 124, 137, 0.49);
-    margin-bottom: 40px; }
+    box-shadow: 0px 2px 4px rgba(100, 124, 137, 0.49); }
   .wg-filter-add__tabs .ui-tabs__tab {
     color: #ffffff; }
     .wg-filter-add__tabs .ui-tabs__tab:after {
@@ -3429,7 +3428,6 @@ input:-webkit-autofill {
     padding: 0;
     margin: 0;
     box-shadow: 0px 2px 4px rgba(100, 124, 137, 0.49);
-    margin-bottom: 10px;
     background-position: center center;
     opacity: 0.9; }
     .wg-form-add__bar:before {
@@ -3489,11 +3487,10 @@ input:-webkit-autofill {
     margin-top: 15px;
     float: left; }
   .wg-form-add__buttons {
-    padding: 50px 26px 20px 26px;
+    padding: 30px;
     overflow: hidden;
-    float: right;
-    margin-right: -20px;
-    width: 100%; }
+    width: 100%;
+    height: 48px; }
 
 .wg-captcha {
   margin-top: 16px; }
@@ -3515,9 +3512,13 @@ input:-webkit-autofill {
     padding-top: 10px; }
   .wg-select-location__button {
     position: absolute;
-    right: 0;
-    left: auto;
-    bottom: 0px; }
+    font-size: 20px;
+    float: right;
+    right: 0px;
+    top: auto;
+    padding: 8px;
+    cursor: pointer;
+    bottom: 10px; }
   .wg-select-location__caption {
     top: 11px; }
     .wg-select-location__caption_active {
@@ -3527,6 +3528,34 @@ input:-webkit-autofill {
       font-size: 13px !important;
       line-height: 25px; }
   .wg-select-location__border {
+    position: relative;
+    top: -1px; }
+
+.wg-select-transport {
+  margin: 23px 0 10px 0; }
+  .wg-select-transport__container {
+    overflow: hidden;
+    border-bottom: 1px solid #bebebe;
+    min-height: 40px;
+    padding-top: 10px; }
+  .wg-select-transport__button {
+    position: absolute;
+    font-size: 20px;
+    float: right;
+    right: 0px;
+    top: auto;
+    padding: 8px;
+    cursor: pointer;
+    bottom: 10px; }
+  .wg-select-transport__caption {
+    top: 11px; }
+    .wg-select-transport__caption_active {
+      font-size: 16px;
+      line-height: 90px; }
+    .wg-select-transport__caption_completed {
+      font-size: 13px !important;
+      line-height: 25px; }
+  .wg-select-transport__border {
     position: relative;
     top: -1px; }
 

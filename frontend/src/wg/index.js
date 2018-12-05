@@ -35,6 +35,8 @@ import WgCaptcha from "./wg-captcha/wg-captcha.vue";
 Vue.component("wg-captcha", WgCaptcha);
 import WgSelectLocation from "./wg-select-location/wg-select-location.vue";
 Vue.component("wg-select-location", WgSelectLocation);
+import WgSelectTransport from "./wg-select-transport/wg-select-transport.vue";
+Vue.component("wg-select-transport", WgSelectTransport);
 import WgMultipleLocation from "./wg-multiple-location/wg-multiple-location.vue";
 Vue.component("wg-multiple-location", WgMultipleLocation);
 import WgMultipleTransport from "./wg-multiple-transport/wg-multiple-transport.vue";

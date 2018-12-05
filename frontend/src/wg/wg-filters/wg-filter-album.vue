@@ -5,7 +5,7 @@
         <div
           class="col_7 col_offset-5 col-nbook_9 col-nbook_offset-3 col-tablet_10 col-tablet_offset-2 col-phone_6 col-phone_offset-0"
         >
-          <div class="wg-filter-add" :style="{'min-height': windowHeight+'px'}">
+          <div ref="filter" class="wg-filter-add">
             <div class="row">
               <div class="col_12">
                 <div class="wg-filter-add__bar">
@@ -19,9 +19,9 @@
                     <i class="fa fa-angle-right"></i>
                   </button>
                   <ui-tabs class="wg-filter-add__tabs">
-                    <ui-tabs-tab id="city" :checked="true" @onFocus="isTabs">Города</ui-tabs-tab>
-                    <ui-tabs-tab id="model" @onFocus="isTabs">Модели</ui-tabs-tab>
-                    <ui-tabs-tab id="param" @onFocus="isTabs">Параметры</ui-tabs-tab>
+                    <ui-tabs-tab id="city" :checked="tabs=='city'" @onFocus="isTabs">Города</ui-tabs-tab>
+                    <ui-tabs-tab id="model" :checked="tabs=='model'" @onFocus="isTabs">Модели</ui-tabs-tab>
+                    <ui-tabs-tab id="param" :checked="tabs=='param'" @onFocus="isTabs">Параметры</ui-tabs-tab>
                   </ui-tabs>
                 </div>
               </div>
@@ -65,6 +65,7 @@
               </div>
               <div class="col_12" v-show="tabs=='param'">
                 <div class="wg-filter-add__content">
+                  <div class="wg-form-add__hr">Параметры</div>
                   <div class="row">
                     <div class="col_6">
                       <ui-select
@@ -118,7 +119,6 @@ export default {
     return {
       dShow: this.show,
       tabs: "city",
-      windowHeight: document.body.clientHeight,
       flagLoadFilter: false
     };
   },
@@ -131,6 +131,7 @@ export default {
   watch: {
     show(newQ) {
       this.dShow = newQ;
+      this.autoHeight();
     }
   },
   computed: {
@@ -162,7 +163,27 @@ export default {
       return this.$store.getters["filter_album/getYearsBef"];
     }
   },
+  mounted() {
+    window.addEventListener("resize", () => {
+      this.autoHeight();
+    });
+    this.autoHeight();
+  },
   methods: {
+    // устанавливает  длину контейнера контетнта
+    autoHeight() {
+      setTimeout(() => {
+        if (this.$refs.filter != undefined) {
+          let height = window.document.body.clientHeight - 258;
+          let contents = this.$refs.filter.querySelectorAll(
+            ".wg-filter-add__content"
+          );
+          contents.forEach(content => {
+            content.style.cssText = "min-height: " + height + "px";
+          });
+        }
+      }, 4);
+    },
     isTabs(id) {
       this.tabs = id;
       //   console.log(id);

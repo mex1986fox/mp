@@ -31,7 +31,27 @@ class Update
                 throw new \Exception("Не указан номер альбома");
             }
             $name = (!empty($p["name"]) ? $p["name"] : "");
+            // $country = (!empty($p["country"]) ? $p["country"] : "");
+            // $subject = (!empty($p["subject"]) ? $p["subject"] : "");
 
+            if (!empty($p["settlement"])) {
+                $settlement_id = $p["settlement"];
+                $q = "select subject_id as subjects_id from locations_settlements where id={$settlements_id}";
+                $subjects_id = $db->query($q, \PDO::FETCH_ASSOC)->fetch()["subjects_id"];
+                $q = "select country_id as countries_id from locations_subjects where id={$subjects_id}";
+                $countries_id = $db->query($q, \PDO::FETCH_ASSOC)->fetch()["countries_id"];
+            }
+
+            // $transport = (!empty($p["transport"]) ? $p["transport"] : "");
+            // $brand = (!empty($p["brand"]) ? $p["brand"] : "");
+            if (!empty($p["model"])) {
+                $model_id = $p["model"];
+                $q = "select transport_id, brand_id from transports_models where id={$model_id}";
+                $qtransport = $db->query($q, \PDO::FETCH_ASSOC)->fetch();
+                $transport_id=$qtransport['transport_id'];
+                $brand_id=$qtransport['brand_id'];
+            }
+            $year = (!empty($p["year"]) ? $p["year"] : "");
             $db = $this->container['db'];
 
             // формируем запрос
