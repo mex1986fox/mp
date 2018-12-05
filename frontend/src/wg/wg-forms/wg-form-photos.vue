@@ -20,11 +20,17 @@
                   </button>
                   <ui-tabs class="wg-form-add__tabs">
                     <ui-tabs-tab id="basick" :checked="tabs=='basick'" @onFocus="isTabs">Альбом</ui-tabs-tab>
-                    <ui-tabs-tab id="photo" :checked="tabs=='photo'" @onFocus="isTabs">Фотографии</ui-tabs-tab>
+                    <ui-tabs-tab
+                      id="photo"
+                      :checked="tabs=='photo'"
+                      @onFocus="isTabs"
+                      :disabled="!album_id"
+                    >Фотографии</ui-tabs-tab>
                     <ui-tabs-tab
                       id="excess"
                       :checked="tabs=='excess'"
                       @onFocus="isTabs"
+                      :disabled="!album_id"
                     >Дополнительно</ui-tabs-tab>
                   </ui-tabs>
                 </div>
@@ -104,11 +110,7 @@
                   <div class="wg-form-add__buttons"></div>
                 </div>
                 <div v-show="tabs=='excess'">
-                  <form
-                    v-if="album_id!=undefined"
-                    id="formUpdateExcess"
-                    @submit.prevent="updateAlbum"
-                  >
+                  <form id="formUpdateExcess" @submit.prevent="updateAlbum">
                     <div class="wg-form-add__content">
                       <div class="wg-form-add__hr">
                         <!-- <i class="fa fa-camera" aria-hidden="true"></i> -->
@@ -116,13 +118,14 @@
                       </div>
                       <div class="row">
                         <div class="col_12">
-                          <wg-select-location caption="Страна, регион, город"></wg-select-location>
+                          <wg-select-location :caption="'Укажите ваш город'"></wg-select-location>
                         </div>
                         <div class="col_12">
-                          <wg-select-transport caption="Тип транспорта, марка, модель"></wg-select-transport>
+                          <wg-select-transport :caption="'Укажите модель транспорта'"></wg-select-transport>
                         </div>
+
                         <div class="col_3">
-                          <ui-select name="year" caption="Год выпуска" :menu="menuYear"></ui-select>
+                          <ui-select name="year" :caption="'Год выпуска'" :menu="menuYear"></ui-select>
                         </div>
                       </div>
                     </div>
@@ -246,18 +249,12 @@ export default {
 
       this.$http.post("/api/update/albums", body).then(
         response => {
-          this.tabs = "photo";
           this.album_id = response.body.id;
-          this.showSnackbar = false;
-          this.showSnackbar = true;
           this.descSnackbar = "Альбом успешно изменен.";
         },
         error => {
           let massege = error.body.exceptions.massege;
-
           if (massege != undefined) {
-            this.showSnackbar = false;
-            this.showSnackbar = true;
             this.descSnackbar = massege;
           }
         }

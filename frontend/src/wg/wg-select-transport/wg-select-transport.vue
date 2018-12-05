@@ -52,7 +52,7 @@
                   class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat ui-modal-window__header__button"
                 >
                   <i class="fa fa-times" aria-hidden="true"></i>
-                </div>Местоположение
+                </div>Транспорт
               </div>
               <div class="ui-modal-window__content">
                 <div class="row">
@@ -171,10 +171,7 @@ export default {
     ) {
       this.isSelTransport(this.selectedTransport);
     }
-    if (
-      this.selectedBrand != undefined &&
-      this.selectedModel == undefined
-    ) {
+    if (this.selectedBrand != undefined && this.selectedModel == undefined) {
       this.isSelBrand(this.selectedBrand);
     }
     if (this.selectedModel != undefined) {
@@ -194,7 +191,9 @@ export default {
     },
     transport(id) {
       if (this.dSelTransport != undefined) {
-        return this.$store.getters["transports/getTransport"](this.dSelTransport);
+        return this.$store.getters["transports/getTransport"](
+          this.dSelTransport
+        );
       }
       return undefined;
     },
@@ -206,9 +205,7 @@ export default {
     },
     model(id) {
       if (this.dSelModel != undefined) {
-        return this.$store.getters["transports/getModel"](
-          this.dSelModel
-        );
+        return this.$store.getters["transports/getModel"](this.dSelModel);
       }
       return undefined;
     },
