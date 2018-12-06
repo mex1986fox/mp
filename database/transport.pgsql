@@ -47,8 +47,6 @@ CREATE TABLE transports_volums(
     PRIMARY KEY (id),
     FOREIGN KEY (transport_id) REFERENCES transports(id)
 );
-
-
 CREATE TABLE transports_bodies(
     id serial NOT NULL,
     transport_id INTEGER,
@@ -57,7 +55,6 @@ CREATE TABLE transports_bodies(
     PRIMARY KEY (id),
     FOREIGN KEY (transport_id) REFERENCES transports(id)
 );
-
 CREATE TABLE transports_transmissions(
     id serial NOT NULL,
     transport_id INTEGER,

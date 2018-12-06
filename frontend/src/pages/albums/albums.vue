@@ -80,7 +80,11 @@
     <div class="row">
       <!-- Фильтр фотографий -->
       <div class="col_12">
-        <wg-filter-album :show="showFilterPhotos" @onHide="showFilterPhotos=false"></wg-filter-album>
+        <wg-filter-album
+          @onUpdated="loadAlbums"
+          :show="showFilterPhotos"
+          @onHide="showFilterPhotos=false"
+        ></wg-filter-album>
       </div>
       <!-- форма размещения фотографий -->
       <div class="col_12">
@@ -159,7 +163,14 @@ export default {
       albums: undefined
     };
   },
-  computed: {},
+  computed: {
+    user() {
+      if (this.$store.state.user.id != undefined) {
+        return this.$store.state.user;
+      }
+      return undefined;
+    },
+  },
   methods: {
     isShowFormFotos() {
       if (this.$store.state.user.id != undefined) {
@@ -172,7 +183,12 @@ export default {
       }
     },
     loadFilter() {
-      this.$http.post("/api/show/albumsFilter").then(
+      let params = {};
+      if (this.$store.state.user.id != undefined) {
+        params.user_id = this.$store.state.user.id;
+      }
+      let headers = { "Content-Type": "multipart/form-data" };
+      this.$http.post(this.$hosts.albums + "/api/show/filter", params, headers).then(
         response => {
           let filter = response.body.filter;
           this.$store.commit("filter_album/setFilters", JSON.parse(filter));
@@ -183,40 +199,16 @@ export default {
         }
       );
     },
+
     loadAlbums() {
       // console.dir(this.$store.state.filter_add.filter);
       let params = this.$store.state.filter_album.filter;
       let headers = { "Content-Type": "multipart/form-data" };
-      this.$http.post("/api/show/albums", params, headers).then(
-        response => {
-          this.albums = response.body.albums;
-          this.loadPhotosAlbums();
-        },
-        error => {}
-      );
-    },
-    loadPhotosAlbums() {
-      let albums_id = [];
-      this.albums.forEach(element => {
-        albums_id.push(element.id);
-      });
-      let params = { albums_id: albums_id };
-      let headers = { "Content-Type": "multipart/form-data" };
       this.$http
-        .post(this.$hosts.photosAlbums + "/api/show/photos", params, headers)
+        .post(this.$hosts.albums + "/api/show/albums", params, headers)
         .then(
           response => {
-            let lincks = response.body.albums;
-            lincks.forEach(linck => {
-              this.albums = this.albums.map((ad, key) => {
-                if (ad.id == linck.id) {
-                  ad.slide = linck.lincks.map(src => {
-                    return { src: src };
-                  });
-                }
-                return ad;
-              });
-            });
+            this.albums = response.body.albums;
             this.loadUsers();
           },
           error => {}
@@ -275,6 +267,11 @@ export default {
           },
           error => {}
         );
+    }
+  },
+  watch:{
+    user(newQ){
+      this.loadFilter();
     }
   },
   mounted() {

@@ -1,3 +1,11 @@
+
+CREATE DATABASE albums WITH 
+    ENCODING='UTF8' 
+    TEMPLATE = template0;
+CREATE USER drovito WITH password 'drovito';
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "drovito";
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO "drovito";
+
 CREATE TABLE "albums" (
     id bigserial,
     user_id bigint NOT NULL,
@@ -16,14 +24,18 @@ CREATE TABLE "albums" (
     FOREIGN KEY (countries_id) REFERENCES locations_countries(id),
     FOREIGN KEY (model_id) REFERENCES transports_models(id),
     FOREIGN KEY (brand_id) REFERENCES transports_brands(id),
-    FOREIGN KEY (transport_id) REFERENCES transports(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
-
+    FOREIGN KEY (transport_id) REFERENCES transports(id)
 );
-CREATE TABLE "albums_filters" (
+
+CREATE TABLE "lincks" (
+    albums_id bigint NOT NULL,
+    lincks jsonb,
+    FOREIGN KEY (albums_id) REFERENCES albums(id)
+);
+
+CREATE TABLE "filters" (
     id bigserial,
     user_id bigint NOT NULL,
     filter text,
-    PRIMARY KEY (id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    PRIMARY KEY (id)
 );

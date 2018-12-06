@@ -30,7 +30,7 @@ const filter_album = {
         });
       });
       return menu;
-      
+
     },
     getTransports: (state, getters, rootState, rootGetters) => {
       let transports = [];
@@ -87,54 +87,52 @@ const filter_album = {
       return subjects;
     },
     getYears: (state, getters, rootState, rootGetters) => {
-      let maxDate = new Date().getFullYear();
-      let minDate = 1935;
-      let menu = [];
-      while (minDate != maxDate) {
-        let selected = false;
-        if (state.filter.year != undefined) {
-          let filter = state.filter.year;
-          selected =
-            filter.filter(fil => {
-              return fil == maxDate ? 1 : 0;
-            }).length == 1
-              ? true
-              : false;
-        }
-        menu.push({
-          value: maxDate,
-          option: maxDate,
+      if (state.filter.year != undefined) {
+        let maxDate = new Date().getFullYear();
+        let minDate = 1935;
+        let filter = state.filter.year;
+        let menu = [{
+          value: "",
+          option: "",
           group: "Года",
-          selected: selected
-        });
-        maxDate--;
+          selected: filter == "" ? true : false
+        }];
+        while (minDate != maxDate) {
+          menu.push({
+            value: maxDate,
+            option: maxDate,
+            group: "Года",
+            selected: filter ==  maxDate ? true : false
+          });
+          maxDate--;
+        }
+        return menu;
       }
-      return menu;
+      return [];
     },
     getYearsBef: (state, getters, rootState, rootGetters) => {
-      let maxDate = new Date().getFullYear();
-      let minDate = 1935;
-      let menu = [];
-      while (minDate != maxDate) {
-        let selected = false;
-        if (state.filter.yearBef != undefined) {
-          let filter = state.filter.yearBef;
-          selected =
-            filter.filter(fil => {
-              return fil == maxDate ? 1 : 0;
-            }).length == 1
-              ? true
-              : false;
-        }
-        menu.push({
-          value: maxDate,
-          option: maxDate,
+      if (state.filter.yearBef != undefined) {
+        let maxDate = new Date().getFullYear();
+        let minDate = 1935;
+        let filter = state.filter.yearBef;
+        let menu = [{
+          value: "",
+          option: "",
           group: "Года",
-          selected: selected
-        });
-        maxDate--;
+          selected: filter == "" ? true : false
+        }];
+        while (minDate != maxDate) {
+          menu.push({
+            value: maxDate,
+            option: maxDate,
+            group: "Года",
+            selected: filter ==  maxDate ? true : false
+          });
+          maxDate--;
+        }
+        return menu;
       }
-      return menu;
+      return [];
     }
   },
   mutations: {

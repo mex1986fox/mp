@@ -8,7 +8,7 @@
         <div
           class="ui-link ui-avatar-block__link"
         >{{dAlbum.user ? dAlbum.user.name+' '+dAlbum.user.surname:''}}</div>
-        <div class="ui-avatar-block__title">25/17/2018</div>
+        <div class="ui-avatar-block__title">{{parseDate(dAlbum.date_create)}}</div>
       </div>
 
       <button
@@ -130,6 +130,27 @@ export default {
       // console.log(numberPhoto);
       this.showZoomSlider = true;
       this.numberZoomPhoto = numberPhoto;
+    },
+    addZero(i) {
+      if (i < 10) {
+        i = "0" + i;
+      }
+      return i;
+    },
+    parseDate(date) {
+      let newDate = new Date(date);
+
+      return (
+        newDate.getFullYear() +
+        "-" +
+        newDate.getMonth() +
+        "-" +
+        newDate.getDate() +
+        " " +
+        this.addZero(newDate.getHours()) +
+        ":" +
+        this.addZero(newDate.getMinutes())
+      );
     }
   }
 };

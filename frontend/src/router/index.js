@@ -5,9 +5,9 @@ import Authorization from "../pages/authorization/authorization.vue";
 import AccountData from "../pages/account/data/data.vue";
 
 import Users from "../pages/users/users.vue";
-import Photos from "../pages/photos/photos.vue";
 import Posts from "../pages/posts/posts.vue";
 import Ads from "../pages/ads/ads.vue";
+import Albums from "../pages/albums/albums.vue";
 Vue.use(Router);
 export default new Router({
   mode: "history", // приводит к нормальным URL без #
@@ -16,8 +16,9 @@ export default new Router({
     { path: "/account/data", component: AccountData },
     { path: "/users", component: Users },
     { path: "/ads", component: Ads },
-    { path: "/photos", component: Photos },
+    { path: "/albums", component: Albums },
     { path: "/posts", component: Posts }
+
   ],
   beforeDestroy: function () {
     this.choicesSelect.destroy()

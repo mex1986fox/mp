@@ -87,16 +87,16 @@
     }
     &-enter-active {
         opacity: 1;
-        transition: opacity 6s;
+        transition: opacity 4s;
     }
-    &-leave-active {
-        opacity: 0;
-        transition: opacity 6s;
-    }
+    // &-leave-active {
+    //     opacity: 0;
+    //     transition: opacity 6s;
+    // }
     &-enter {
         opacity: 0;
     }
-    &-leave {
-        opacity: 1;
-    }
+    // &-leave {
+    //     opacity: 1;
+    // }
 }

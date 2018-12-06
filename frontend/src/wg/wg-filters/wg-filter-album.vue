@@ -99,8 +99,8 @@
 
               <div class="col_12">
                 <div class="wg-filter-add__buttons">
-                  <button class="ui-button ui-button_blue" @click="loadFilter">Применить
-                    <ui-loader-button v-if="flagLoadFilter"></ui-loader-button>
+                  <button class="ui-button ui-button_blue" @click="unloadFilter">Применить
+                    <ui-loader-button v-if="flagUnloadFilter"></ui-loader-button>
                   </button>
                   <button class="ui-button ui-button_flat" @click="isClose">Отмена</button>
                 </div>
@@ -119,7 +119,7 @@ export default {
     return {
       dShow: this.show,
       tabs: "city",
-      flagLoadFilter: false
+      flagUnloadFilter: false
     };
   },
   props: {
@@ -184,6 +184,10 @@ export default {
         }
       }, 4);
     },
+    onUpdated() {
+      this.$emit("onUpdated");
+      this.isClose();
+    },
     isTabs(id) {
       this.tabs = id;
       //   console.log(id);
@@ -191,22 +195,22 @@ export default {
     isClose() {
       this.$emit("onHide");
     },
-    loadFilter() {
-      this.flagLoadFilter = true;
+    unloadFilter() {
+      this.flagUnloadFilter = true;
       let headers = { "Content-Type": "multipart/form-data" };
       let params = {
         user_id: this.$cookie.get("user_id"),
         filter: JSON.stringify(this.$store.state.filter_album.filter)
       };
       this.$http
-        .post(this.$hosts.ads + "/api/create/albumsFilter", params, headers)
+        .post(this.$hosts.albums + "/api/create/filter", params, headers)
         .then(
           response => {
-            this.flagLoadFilter = false;
+            this.flagUnloadFilter = false;
             this.onUpdated();
           },
           error => {
-            this.flagLoadFilter = false;
+            this.flagUnloadFilter = false;
           }
         );
     },
@@ -267,7 +271,7 @@ export default {
         name: "year",
         filter: year.map(sort => {
           return sort.value;
-        })
+        })[0]
       });
     },
     setFilterYearBef(year) {
@@ -275,7 +279,7 @@ export default {
         name: "yearBef",
         filter: year.map(sort => {
           return sort.value;
-        })
+        })[0]
       });
     }
   }

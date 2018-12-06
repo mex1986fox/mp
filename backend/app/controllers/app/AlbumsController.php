@@ -2,7 +2,7 @@
 namespace App\Controllers\App;
 
 
-class PhotosController extends \App\Controllers\MainController
+class AlbumsController extends \App\Controllers\MainController
 {
 
     public function show($request, $response, $args)

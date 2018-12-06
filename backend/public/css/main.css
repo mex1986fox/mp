@@ -3101,14 +3101,9 @@ input:-webkit-autofill {
     right: 0; }
   .wg-slider-enter-active {
     opacity: 1;
-    transition: opacity 6s; }
-  .wg-slider-leave-active {
-    opacity: 0;
-    transition: opacity 6s; }
+    transition: opacity 4s; }
   .wg-slider-enter {
     opacity: 0; }
-  .wg-slider-leave {
-    opacity: 1; }
 
 .wg-slider-navig {
   position: relative;

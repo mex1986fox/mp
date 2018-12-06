@@ -103,10 +103,10 @@
 									</router-link>
 								</div>
 								<div slot="content">
-									<router-link to="/photos" class="ui-navigation__unit__button">
+									<router-link to="/albums" class="ui-navigation__unit__button">
 										<div class="ui-navigation__unit__icon">
 											<i class="fa fa-th" aria-hidden="true"></i>
-										</div>Фотографии
+										</div>Фотоальбомы
 									</router-link>
 								</div>
 								<div slot="content">
