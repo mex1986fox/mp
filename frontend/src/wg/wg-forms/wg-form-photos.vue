@@ -35,7 +35,7 @@
                   </ui-tabs>
                 </div>
                 <div v-show="tabs=='basick'">
-                  <form v-if="album_id==undefined" id="formCreatePhotos" @submit.prevent="create">
+                  <form v-if="album_id==undefined" id="formCreatePhotos" @submit.prevent="createAlbum">
                     <div class="wg-form-add__content">
                       <div class="wg-form-add__hr">Альбом</div>
                       <div class="row">
@@ -95,7 +95,7 @@
                     <form
                       id="formLoadPhotos"
                       enctype="multipart/form-data"
-                      @submit.prevent="loadPhotos"
+                      @submit.prevent="uploadPhotos"
                     >
                       <ui-file
                         v-if="!rirendLoader"
@@ -219,9 +219,11 @@ export default {
         });
       }
     },
-    create(event) {
+    createAlbum(event) {
       let body = new FormData(event.target);
-      this.$http.post("/api/create/albums", body).then(
+      body.set("session_id", this.$cookie.get("PHPSESSID"));
+      body.set("user_id", this.$cookie.get("user_id"));
+      this.$http.post(this.$hosts.albums +"/api/create/albums", body).then(
         response => {
           this.tabs = "photo";
           this.album_id = response.body.id;
@@ -246,8 +248,7 @@ export default {
       body.set("session_id", this.$cookie.get("PHPSESSID"));
       body.set("user_id", this.$cookie.get("user_id"));
       body.set("album_id", this.album_id);
-
-      this.$http.post("/api/update/albums", body).then(
+      this.$http.post(this.$hosts.albums +"/api/update/albums", body).then(
         response => {
           this.album_id = response.body.id;
           this.descSnackbar = "Альбом успешно изменен.";
@@ -260,7 +261,7 @@ export default {
         }
       );
     },
-    loadPhotos() {
+    uploadPhotos() {
       this.numberFL = 1;
       let form = document.getElementById("formLoadPhotos");
       let body = new FormData(form);
@@ -268,7 +269,7 @@ export default {
       body.set("user_id", this.$cookie.get("user_id"));
       body.set("album_id", this.album_id);
       this.$http
-        .post(this.$hosts.photosAlbums + "/api/create/photos", body, {
+        .post(this.$hosts.albums + "/api/create/photos", body, {
           progress: function(e) {
             if (e.lengthComputable) {
               this.percentFL = (e.loaded / e.total) * 100;
@@ -278,7 +279,27 @@ export default {
         .then(
           response => {
             this.descSnackbar = "Фотографии успешно добавлены. ";
-            this.updatePhotoLincks();
+            this.loadPhotos();
+          },
+          error => {}
+        );
+    },
+    loadPhotos() {
+      this.numberFL = 1;
+      let form = document.getElementById("formLoadPhotos");
+      let body = new FormData(form);
+      body.set("album_id", this.album_id);
+      this.$http
+        .post(this.$hosts.albums + "/api/show/photos", body, {
+          progress: function(e) {
+            if (e.lengthComputable) {
+              this.percentFL = (e.loaded / e.total) * 100;
+            }
+          }.bind(this)
+        })
+        .then(
+          response => {
+            this.photoLincks=response.body.lincks;
           },
           error => {}
         );
@@ -292,32 +313,11 @@ export default {
         linck: this.selectLinck
       };
       this.$http
-        .post(this.$hosts.photosAlbums + "/api/delete/photos", params, headers)
+        .post(this.$hosts.albums + "/api/delete/photos", params, headers)
         .then(
           response => {
             this.descSnackbar = "Фотография успешно удалена.";
             this.updatePhotoLincks();
-          },
-          error => {}
-        );
-    },
-    updatePhotoLincks() {
-      let params = { album_id: this.album_id };
-      let headers = { "Content-Type": "multipart/form-data" };
-
-      this.$http
-        .post(this.$hosts.photosAlbums + "/api/show/photos", params, headers)
-        .then(
-          response => {
-            this.photoLincks = undefined;
-            this.rirendLoader = true;
-            setTimeout(() => {
-              this.percentFL = undefined;
-              this.rirendLoader = false;
-              this.photoLincks = response.body.albums[0].lincks;
-              this.showSnackbar = false;
-              this.showSnackbar = true;
-            }, 4);
           },
           error => {}
         );

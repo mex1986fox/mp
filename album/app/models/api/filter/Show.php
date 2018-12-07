@@ -18,31 +18,23 @@ class Show
         try {
             $p = $this->request->getQueryParams();
             // проверяем фильтр
-            if (!empty($_SESSION["filter"])) {
-                //отдаем если он есть в сессие
-                return ["filter" => $_SESSION["filter"]];
+            empty($p['user_id']) ? $exceptions["user_id"] = "Не указан" : $userID = $p['user_id'];
+            if (!empty($exceptions)) {
+                throw new \Exception("Ошибки в парамметрах");
             }
-
-            // проверяем фильтр в базе
-
-            if (!empty($p["user_id"])) {
-                $user_id = $p["user_id"];
-                $db = $this->container['db'];
-                //выбираем фильтр из базы
-                $q = "select * from filters where user_id = {$user_id};";
-                $filter = $db->query($q, \PDO::FETCH_ASSOC)->fetch();
-                if ($filter != false) {
-                    return ["filter" => $filter["filter"]];
-                } else {
-                    throw new \Exception("Нет фильтра для авторизованного пользователя");
-                }
+            $userID = $p["user_id"];
+            $db = $this->container['db'];
+            //выбираем фильтр из базы
+            $q = "select * from filters where user_id = {$userID};";
+            $filter = $db->query($q, \PDO::FETCH_ASSOC)->fetch();
+            if ($filter != false) {
+                return ["filter" => $filter["filter"]];
             } else {
-                throw new \Exception("Нет фильтра для неавторизованного пользователя");
+                throw new \Exception("Фильтер не найден");
             }
-
         } catch (RuntimeException | \Exception $e) {
-            $exceptions = ['exceptions' => ['massege' => $e->getMessage()]];
-            return $exceptions;
+            $exceptions['massege'] = $e->getMessage();
+            return ["exceptions" => $exceptions];
         }
     }
 }

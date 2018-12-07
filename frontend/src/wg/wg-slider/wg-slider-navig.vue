@@ -1,22 +1,20 @@
 <template>
-	<div class="wg-slider-navig">
-		<div ref="container"
-		     class="wg-slider-navig__container">
-
-			<div ref="slide"
-			     @click="isClick(val.number)"
-			     class="wg-slider-navig__slide"
-			     :style="{'width':dWidthSlide}"
-			     :class="{'wg-slider-navig__slide_active':val.number==select}"
-			     v-for="(val, key) in dSlide"
-			     :key="key">
-				<img class="wg-slider__fon"
-				     :src="val.src">
-				<img ref="photo" class="wg-slider__img"
-				     :src="val.src">
-			</div>
-		</div>
-	</div>
+  <div class="wg-slider-navig">
+    <div ref="container" class="wg-slider-navig__container">
+      <div
+        ref="slide"
+        @click="isClick(val.number)"
+        class="wg-slider-navig__slide"
+        :style="{'width':dWidthSlide}"
+        :class="{'wg-slider-navig__slide_active':val.number==select}"
+        v-for="(val, key) in dSlide"
+        :key="key"
+      >
+        <img class="wg-slider__fon" :src="val.src">
+        <img ref="photo" class="wg-slider__img" :src="val.src">
+      </div>
+    </div>
+  </div>
 </template>
     <script>
 export default {
@@ -38,13 +36,19 @@ export default {
       default: 1
     }
   },
+  watch: {
+    slides(newQ) {
+      this.dSlide = newQ;
+      this.setNumbers();
+    }
+  },
   beforeMount() {
     this.setNumbers();
   },
   mounted() {
     this.computedWidth();
     this.computedMLeft();
-    this.setStyleImg()
+    this.setStyleImg();
   },
   updated() {
     this.computedMLeft();
@@ -53,12 +57,12 @@ export default {
   methods: {
     //   вычисляет ширину слайдов
     computedWidth() {
-      this.dWidthSlide = this.$refs.container.clientHeight * 16 / 9 + "px";
+      this.dWidthSlide = (this.$refs.container.clientHeight * 16) / 9 + "px";
     }, // устанавливает отступ первого слайда
     computedMLeft() {
       // ширина контейнера
       let wContainer = this.$refs.container.clientWidth; // ширина слайда
-      let wSlide = this.$refs.container.clientHeight * 16 / 9; // количество слайдов помещающихся в контейнер
+      let wSlide = (this.$refs.container.clientHeight * 16) / 9; // количество слайдов помещающихся в контейнер
       let lengthSlids = Math.floor(wContainer / (wSlide + 2)); // центральный слайд
       let centerSlide = Math.floor(lengthSlids / 2);
       if (centerSlide < this.getPosition(this.select)) {
@@ -107,8 +111,8 @@ export default {
       let interval = [];
       for (let k in this.$refs.photo) {
         this.$refs.photo[k].onload = function(event) {
-          let photo=event.target;
-           let locPhoto = photo.naturalHeight - photo.naturalWidth;
+          let photo = event.target;
+          let locPhoto = photo.naturalHeight - photo.naturalWidth;
           if (locPhoto < 0) {
             photo.className = "wg-slider-navig__img_horizon";
           } else {

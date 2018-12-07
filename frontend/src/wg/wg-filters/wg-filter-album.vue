@@ -196,23 +196,28 @@ export default {
       this.$emit("onHide");
     },
     unloadFilter() {
-      this.flagUnloadFilter = true;
-      let headers = { "Content-Type": "multipart/form-data" };
-      let params = {
-        user_id: this.$cookie.get("user_id"),
-        filter: JSON.stringify(this.$store.state.filter_album.filter)
-      };
-      this.$http
-        .post(this.$hosts.albums + "/api/create/filter", params, headers)
-        .then(
-          response => {
-            this.flagUnloadFilter = false;
-            this.onUpdated();
-          },
-          error => {
-            this.flagUnloadFilter = false;
-          }
-        );
+      // помещаем фильтр в куки
+      this.$cookie.set("filter_albums", JSON.stringify(this.$store.state.filter_album.filter));
+      if (this.$cookie.get("user_id") != undefined) {
+        this.flagUnloadFilter = true;
+        let headers = { "Content-Type": "multipart/form-data" };
+        let params = {
+          session_id: this.$cookie.get("PHPSESSID"),
+          user_id: this.$cookie.get("user_id"),
+          filter: this.$cookie.get("filter_albums")
+        };
+        this.$http
+          .post(this.$hosts.albums + "/api/create/filter", params, headers)
+          .then(
+            response => {
+              this.flagUnloadFilter = false;
+              this.onUpdated();
+            },
+            error => {
+              this.flagUnloadFilter = false;
+            }
+          );
+      }
     },
     onUpdated() {
       this.$emit("onUpdated");

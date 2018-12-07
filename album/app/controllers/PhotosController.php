@@ -16,7 +16,7 @@ class PhotosController extends MainController
         if (isset($answer['exceptions'])) {
             $response = $response->withJson($answer, 400);
         }
-        if (isset($answer['albums'])) {
+        if (isset($answer['lincks'])) {
             $response = $response->withJson($answer, 200);
         }
         return $response;

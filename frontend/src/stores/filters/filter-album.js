@@ -3,6 +3,7 @@ const filter_album = {
   namespaced: true,
   state: {
     sort: [
+      { id: 0, name: "" },
       { id: 1, name: "дате (новые)" },
       { id: 2, name: "дате (старые)" },
       { id: 3, name: "году (новые)" },
@@ -87,52 +88,47 @@ const filter_album = {
       return subjects;
     },
     getYears: (state, getters, rootState, rootGetters) => {
-      if (state.filter.year != undefined) {
-        let maxDate = new Date().getFullYear();
-        let minDate = 1935;
-        let filter = state.filter.year;
-        let menu = [{
-          value: "",
-          option: "",
+      let maxDate = new Date().getFullYear();
+      let minDate = 1935;
+      let filter = state.filter.year;
+      let menu = [{
+        value: "",
+        option: "",
+        group: "Года",
+        selected: filter == "" ? true : false
+      }];
+      while (minDate != maxDate) {
+        menu.push({
+          value: maxDate,
+          option: maxDate,
           group: "Года",
-          selected: filter == "" ? true : false
-        }];
-        while (minDate != maxDate) {
-          menu.push({
-            value: maxDate,
-            option: maxDate,
-            group: "Года",
-            selected: filter ==  maxDate ? true : false
-          });
-          maxDate--;
-        }
-        return menu;
+          selected: filter == maxDate ? true : false
+        });
+        maxDate--;
       }
-      return [];
+      return menu;
+
     },
     getYearsBef: (state, getters, rootState, rootGetters) => {
-      if (state.filter.yearBef != undefined) {
-        let maxDate = new Date().getFullYear();
-        let minDate = 1935;
-        let filter = state.filter.yearBef;
-        let menu = [{
-          value: "",
-          option: "",
+      let maxDate = new Date().getFullYear();
+      let minDate = 1935;
+      let filter = state.filter.yearBef;
+      let menu = [{
+        value: "",
+        option: "",
+        group: "Года",
+        selected: filter == "" ? true : false
+      }];
+      while (minDate != maxDate) {
+        menu.push({
+          value: maxDate,
+          option: maxDate,
           group: "Года",
-          selected: filter == "" ? true : false
-        }];
-        while (minDate != maxDate) {
-          menu.push({
-            value: maxDate,
-            option: maxDate,
-            group: "Года",
-            selected: filter ==  maxDate ? true : false
-          });
-          maxDate--;
-        }
-        return menu;
+          selected: filter == maxDate ? true : false
+        });
+        maxDate--;
       }
-      return [];
+      return menu;
     }
   },
   mutations: {

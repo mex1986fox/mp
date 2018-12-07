@@ -66,7 +66,7 @@ class Show
             if (!empty($p["sort"])) {
                 $sort = implode("", $p["sort"]);
                 // дате (новые)
-                $qSort = $qSort . ($sort == '1' ? "date_create DESC, " : "");
+                $qSort = $qSort . ($sort == '1' || $sort == '0' ? "date_create DESC, " : "");
                 // дате (старые)
                 $qSort = $qSort . ($sort == '2' ? "date_create ASC, " : "");
                 // году (новые)
@@ -83,7 +83,7 @@ class Show
             $qSort = (empty($qSort) ? "" : " ORDER BY ") . $qSort;
 
             $db = $this->container['db'];
-            $q = "select * from albums " . $qWhere . $qSort;
+            $q = "select * from albums LEFT JOIN lincks ON lincks.albums_id = albums.id " . $qWhere . $qSort;
             $ads = $db->query($q, \PDO::FETCH_ASSOC)->fetchAll();
             return ["albums" => $ads];
         } catch (RuntimeException | \Exception $e) {

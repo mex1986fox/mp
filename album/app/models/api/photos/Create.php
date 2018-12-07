@@ -21,37 +21,28 @@ class Create
             $p = $this->request->getQueryParams();
 
             //проверяем параметры
-            $exceptions = [];
-            if (!isset($p["session_id"])) {
-                $exceptions["session_id"] = "Не указан";
-            }
-            if (!isset($p["user_id"])) {
-                $exceptions["user_id"] = "Не указан";
-            }
-            if (!isset($p["album_id"])) {
-                $exceptions["album_id"] = "Не указан";
-            }
+            empty($p["album_id"])? $exceptions["album_id"] = "Не указан" : $albumID = $p["album_id"];
+            empty($p['session_id']) ? $exceptions["session_id"] = "Не указан" : $sessionID = $p['session_id'];
+            empty($p['user_id']) ? $exceptions["user_id"] = "Не указан" : $userID = $p['user_id'];
             if (!empty($exceptions)) {
-                throw new \Exception("Не верные параметры");
+                throw new \Exception("Ошибки в парамметрах");
             }
-            //устанавливаем параметры
-            $sessionID = $p["session_id"];
-            $userID = $p["user_id"];
-            $albumID = $p["album_id"];
+
             // проверить аутентификацию пользователя
             $auths = $this->container['auths'];
             $authedUser = $auths->AuthUser->Authed($sessionID, $userID);
             if (!$authedUser) {
                 throw new \Exception("Не прошел аутентификацию");
             }
+           
             // проверить есть ли у юзера такой альбом
-            $authedAlbum = $auths->AuthAlbum->Authed($userID, $albumID);
-            if (!$authedAlbum) {
+            $db = $this->container['db'];
+            
+            $qInsert = "select id from albums where id={$albumID} and user_id={$userID}";
+            $qUser=$db->query($qInsert, \PDO::FETCH_ASSOC)->fetch();
+            if (!$qUser && $qUser->id!=$albumID) {
                 throw new \Exception("У пользователя нет такого альбома");
             }
-
-            // сохраняем файл на сервер
-            $db = $this->container['db'];
 
             foreach ($_FILES["files"]["name"] as $key => $name) {
                 if ($_FILES['files']['error'][$key] == 0) {
@@ -60,7 +51,7 @@ class Create
                     file_exists($path . "/");
                     if (!file_exists($path)) {
                         mkdir($path, 0777, true);
-                        echo $qInsert = "insert into lincks (albums_id, lincks) values ($albumID, '{\"lincks\":[]}');";
+                        $qInsert = "insert into lincks (albums_id, lincks) values ($albumID, '{\"lincks\":[]}');";
                         $db->query($qInsert, \PDO::FETCH_ASSOC)->fetch();
                     }
                     //проверить наличие подобного файла

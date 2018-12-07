@@ -41,7 +41,7 @@
           <div class="row" v-for="(val, key) in albums" :key="key">
             <div class="col-12">
               <div class="wg-content-frame wg-content-frame_center">
-                <wg-card-album :album="JSON.parse(JSON.stringify(val))"></wg-card-album>
+                <wg-card-album :album="JSON.parse(JSON.stringify(val))" :key="'album-'+key"></wg-card-album>
               </div>
             </div>
           </div>
@@ -169,7 +169,7 @@ export default {
         return this.$store.state.user;
       }
       return undefined;
-    },
+    }
   },
   methods: {
     isShowFormFotos() {
@@ -186,18 +186,20 @@ export default {
       let params = {};
       if (this.$store.state.user.id != undefined) {
         params.user_id = this.$store.state.user.id;
+        let headers = { "Content-Type": "multipart/form-data" };
+        this.$http
+          .post(this.$hosts.albums + "/api/show/filter", params, headers)
+          .then(
+            response => {
+              let filter = response.body.filter;
+              this.$store.commit("filter_album/setFilters", JSON.parse(filter));
+              this.loadAlbums();
+            },
+            error => {
+              this.loadAlbums();
+            }
+          );
       }
-      let headers = { "Content-Type": "multipart/form-data" };
-      this.$http.post(this.$hosts.albums + "/api/show/filter", params, headers).then(
-        response => {
-          let filter = response.body.filter;
-          this.$store.commit("filter_album/setFilters", JSON.parse(filter));
-          this.loadAlbums();
-        },
-        error => {
-          this.loadAlbums();
-        }
-      );
     },
 
     loadAlbums() {
@@ -208,8 +210,11 @@ export default {
         .post(this.$hosts.albums + "/api/show/albums", params, headers)
         .then(
           response => {
-            this.albums = response.body.albums;
-            this.loadUsers();
+            this.albums = undefined;
+            setTimeout(() => {
+              this.albums = response.body.albums;
+              this.loadUsers();
+            }, 4);
           },
           error => {}
         );
@@ -269,8 +274,8 @@ export default {
         );
     }
   },
-  watch:{
-    user(newQ){
+  watch: {
+    user(newQ) {
       this.loadFilter();
     }
   },

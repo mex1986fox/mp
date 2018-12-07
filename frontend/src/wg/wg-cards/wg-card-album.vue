@@ -29,24 +29,24 @@
       class="ui-link wg-card-album__link"
       href="http://google.com"
     >{{dAlbum.name!=undefined?dAlbum.name:""}}</a>
-    <template v-if="dAlbum.slide!=undefined">
+    <template v-if="dSlide!=undefined">
       <wg-slider
         class="wg-card-album__slider"
-        :slides="JSON.parse(JSON.stringify(dAlbum.slide))"
+        :slides="JSON.parse(JSON.stringify(dSlide))"
         @onSelect="isSelectPhoto"
         @onZoom="isZoomPhoto"
         :select="numberPhoto"
       ></wg-slider>
       <wg-slider-navig
         class="wg-card-album__slider-navig"
-        :slides="JSON.parse(JSON.stringify(dAlbum.slide))"
+        :slides="JSON.parse(JSON.stringify(dSlide))"
         :select="numberPhoto"
         @onSelect="isSelectPhoto"
       ></wg-slider-navig>
 
       <wg-slider-zoom
         v-if="showZoomSlider"
-        :slides="JSON.parse(JSON.stringify(dAlbum.slide))"
+        :slides="JSON.parse(JSON.stringify(dSlide))"
         :select="numberZoomPhoto"
         :show="showZoomSlider"
         @onHide="showZoomSlider=false"
@@ -104,7 +104,8 @@ export default {
       numberZoomPhoto: 1,
       showZoomSlider: false,
       commentShow: false,
-      dAlbum: this.album
+      dAlbum: this.album,
+      dSlide: undefined
     };
   },
   props: {
@@ -116,6 +117,11 @@ export default {
   watch: {
     album(newQ) {
       this.dAlbum = newQ;
+      let slides = JSON.parse(newQ.lincks).lincks;
+      this.dSlide = undefined;
+      this.dSlide = slides.map(slide => {
+        return { src: slide };
+      });
     }
   },
   methods: {

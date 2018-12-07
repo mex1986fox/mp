@@ -18,30 +18,29 @@ class Create
         try {
             $p = $this->request->getQueryParams();
             // проверяем фильтр
-            if (empty($p["filter"])) {
-                $exceptions["filter"] = "Не указан фильтр";
+            empty($p["filter"]) ? $exceptions["filter"] = "Не указан" : $filter = $p["filter"];
+            empty($p['session_id']) ? $exceptions["session_id"] = "Не указан" : $sessionID = $p['session_id'];
+            empty($p['user_id']) ? $exceptions["user_id"] = "Не указан" : $userID = $p['user_id'];
+            if (!empty($exceptions)) {
+                throw new \Exception("Ошибки в парамметрах");
             }
-            $filter = $p["filter"];
-            // сохраняем фильтр в сессию
-            $_SESSION["filter"] = $filter;
             // проверяем авторизацию
             $auths = $this->container['auths'];
-            if ($auths->AuthUser->Authed()) {
-                //для авторизованных
-                $user_id = $_SESSION["user_id"];
+            $authedUser = $auths->AuthUser->Authed($sessionID, $userID);
+            if ($authedUser) {
                 $db = $this->container['db'];
                 //сохраняем фильтр в базу
-                $q = "insert into filters (
-                    user_id,
-                    filter
-                ) values ({$user_id}, '{$filter}')";
+                $q = "insert into filters (user_id, filter) VALUES ({$userID}, '{$filter}') 
+                on conflict (user_id) do update set user_id={$userID}, filter='{$filter}'";
                 $db->query($q, \PDO::FETCH_ASSOC)->fetch();
-                return ["massege" => "Фильтр сохранен для авторизованных пользователей"];
+                return ["massege" => "Фильтр сохранен"];
+            }else{
+                throw new \Exception("Пользователь не авторизован");
             }
-            return ["massege" => "Фильтр сохранен для не авторизованных пользователей"];
+
         } catch (RuntimeException | \Exception $e) {
-            $exceptions = ['exceptions' => ['massege' => $e->getMessage()]];
-            return $exceptions;
+            $exceptions['massege'] = $e->getMessage();
+            return ["exceptions" => $exceptions];
         }
     }
 }

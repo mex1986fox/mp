@@ -34,8 +34,7 @@ CREATE TABLE "lincks" (
 );
 
 CREATE TABLE "filters" (
-    id bigserial,
-    user_id bigint NOT NULL,
+    user_id bigint NOT NULL UNIQUE,
     filter text,
-    PRIMARY KEY (id)
+    PRIMARY KEY (user_id)
 );

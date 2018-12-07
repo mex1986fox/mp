@@ -16,34 +16,36 @@ class Create
     public function run()
     {
         try {
-            // проверяем авторизацию
-            $auths = $this->container['auths'];
-            if (!$auths->AuthUser->Authed()) {
-                throw new \Exception("Не авторизован");
-            }
 
             $p = $this->request->getQueryParams();
+
             //передаем параметры в переменные
-            $user_id = $_SESSION["user_id"];
-            if (empty($p["name"])) {
-                throw new \Exception("Не указано имя альбома");
+            empty($p["name"])? $exceptions["name"] = "Не указан" : $name = $p["name"];
+            empty($p['session_id']) ? $exceptions["session_id"] = "Не указан" : $sessionID = $p['session_id'];
+            empty($p['user_id']) ? $exceptions["user_id"] = "Не указан" : $userID = $p['user_id'];
+            if (!empty($exceptions)) {
+                throw new \Exception("Ошибки в парамметрах");
             }
-            $name = $p["name"];
+
+            // проверяем авторизацию
+            $auths = $this->container['auths'];
+            if (!$auths->AuthUser->Authed($sessionID, $userID)) {
+                throw new \Exception("Не авторизован");
+            }
 
             $db = $this->container['db'];
             $q = "insert into albums (
                     user_id,
                     name
                 ) values (
-                    {$user_id},
+                    {$userID},
                     '{$name}'
                 )  RETURNING id;";
-            // var_dump($q);
             $id_add = $db->query($q, \PDO::FETCH_ASSOC)->fetch();
             return ["id" => $id_add['id'], "massege" => "Альбом создан успешно"];
         } catch (RuntimeException | \Exception $e) {
-            $exceptions = ['exceptions' => ['massege' => $e->getMessage()]];
-            return $exceptions;
+            $exceptions['massege'] = $e->getMessage();
+            return ["exceptions" => $exceptions];
         }
     }
 }

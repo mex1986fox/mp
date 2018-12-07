@@ -19,15 +19,15 @@ class Show
             $p = $this->request->getQueryParams();
             $db = $this->container['db'];
             $qWhere = "";
-            $qWhere = $qWhere . (empty($p["album_id"]) || !empty($p["albums_id"]) ? "" : "albums_id=" . $p["album_id"]);
+            $qWhere = $qWhere . (empty($p["album_id"]) ? "" : "albums_id=" . $p["album_id"]);
             // var_dump($p);
-            if (!empty($p["albums_id"])) {
-                $inalbums = "";
-                foreach ($p["albums_id"] as $key => $value) {
-                    $inalbums = $inalbums == "" ? $value : $inalbums . ", " . $value;
-                }
-                $qWhere = "albums_id IN (" . $inalbums . ") ";
-            }
+            // if (!empty($p["albums_id"])) {
+            //     $inalbums = "";
+            //     foreach ($p["albums_id"] as $key => $value) {
+            //         $inalbums = $inalbums == "" ? $value : $inalbums . ", " . $value;
+            //     }
+            //     $qWhere = "albums_id IN (" . $inalbums . ") ";
+            // }
 
             $qWhere = (empty($qWhere) ? "" : " where ") . $qWhere;
 
@@ -35,10 +35,9 @@ class Show
             $ans = $db->query($q, \PDO::FETCH_ASSOC)->fetchAll();
             foreach ($ans as $key => $value) {
                 // var_dump(json_decode($value["lincks"]));
-                $albums[$key] = ["id" => $value["id"], "lincks" => json_decode($value["lincks"])->lincks];
-                
+                $lincks = json_decode($value["lincks"])->lincks;
             }
-            return ["albums" => $albums];
+            return ["lincks" => $lincks];
         } catch (RuntimeException | \Exception $e) {
             $exceptions = ['exceptions' => ['massege' => $e->getMessage()]];
             return $exceptions;
