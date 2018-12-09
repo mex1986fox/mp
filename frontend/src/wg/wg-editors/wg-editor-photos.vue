@@ -10,7 +10,7 @@
               <div class="col-12">
                 <div class="wg-form-add__bar">
                   <div class="ui-header ui-header_2 wg-form-add__header">
-                    <span>Форма подачи фотографий</span>
+                    <span>Редактор альбомов</span>
                   </div>
                   <button
                     class="ui-button ui-button_circle ui-button_flat wg-form-add__close"
@@ -20,53 +20,30 @@
                   </button>
                   <ui-tabs class="wg-form-add__tabs">
                     <ui-tabs-tab id="basick" :checked="tabs=='basick'" @onFocus="isTabs">Альбом</ui-tabs-tab>
-                    <ui-tabs-tab
-                      id="photo"
-                      :checked="tabs=='photo'"
-                      @onFocus="isTabs"
-                      :disabled="!album_id"
-                    >Фотографии</ui-tabs-tab>
+                    <ui-tabs-tab id="photo" :checked="tabs=='photo'" @onFocus="isTabs">Фотографии</ui-tabs-tab>
                     <ui-tabs-tab
                       id="excess"
                       :checked="tabs=='excess'"
                       @onFocus="isTabs"
-                      :disabled="!album_id"
                     >Дополнительно</ui-tabs-tab>
                   </ui-tabs>
                 </div>
                 <div v-show="tabs=='basick'">
-                  <form
-                    v-if="album_id==undefined"
-                    id="formCreatePhotos"
-                    @submit.prevent="createAlbum"
-                  >
+                  <form id="formUpdatePhotos" @submit.prevent="updateAlbum">
                     <div class="wg-form-add__content">
                       <div class="wg-form-add__hr">Альбом</div>
                       <div class="row">
                         <div class="col_6">
-                          <ui-text name="name" caption="Название нового альбома"></ui-text>
+                          <ui-text
+                            :value="album!=undefined?album.name:''"
+                            name="name"
+                            caption="Новое название альбома"
+                          ></ui-text>
                         </div>
                       </div>
                     </div>
                     <div class="wg-form-add__buttons">
-                      <button class="ui-button ui-button_blue" type="submit">Добавить альбом</button>
-                    </div>
-                  </form>
-                  <form
-                    v-if="album_id!=undefined"
-                    id="formUpdatePhotos"
-                    @submit.prevent="updateAlbum"
-                  >
-                    <div class="wg-form-add__content">
-                      <div class="wg-form-add__hr">Альбом</div>
-                      <div class="row">
-                        <div class="col_6">
-                          <ui-text name="name" caption="Новое название альбома"></ui-text>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="wg-form-add__buttons">
-                      <button class="ui-button ui-button_blue" type="submit">Изменить альбом</button>
+                      <button class="ui-button ui-button_blue" type="submit">Изменить название</button>
                     </div>
                   </form>
                 </div>
@@ -78,8 +55,8 @@
                     </div>
                     <div v-if="slide!=undefined">
                       <wg-slider
-                        class="wg-card-photo__slider"
-                        :slides="slide"
+                        class="wg-card-album__slider"
+                        :slides="JSON.parse(JSON.stringify(slide))"
                         :select="selectPhoto"
                         @onSelect="isSelectPhoto"
                       ></wg-slider>
@@ -90,8 +67,8 @@
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                       </div>
                       <wg-slider-navig
-                        class="wg-card-photo__slider-navig"
-                        :slides="slide"
+                        class="wg-card-album__slider-navig"
+                        :slides="JSON.parse( JSON.stringify(slide))"
                         :select="selectPhoto"
                         @onSelect="isSelectPhoto"
                       ></wg-slider-navig>
@@ -101,6 +78,9 @@
                       enctype="multipart/form-data"
                       @submit.prevent="uploadPhotos"
                     >
+                      <div
+                        class="ui-description ui-description_mini wg-form-add__description"
+                      >Выберите фотографии которые хотите опубликовать и загрузите их на сервер.</div>
                       <ui-file
                         v-if="!rirendLoader"
                         caption="Выберите фотографии"
@@ -118,14 +98,23 @@
                     <div class="wg-form-add__content">
                       <div class="wg-form-add__hr">
                         <!-- <i class="fa fa-camera" aria-hidden="true"></i> -->
-                        Дополнительно
+                        Дополнительная информация
                       </div>
+                      <div
+                        class="ui-description ui-description_mini wg-form-add__description"
+                      >Дополнительная информация помогает пользователям быстрее находить ваши фотографии</div>
                       <div class="row">
                         <div class="col_12">
-                          <wg-select-location :caption="'Укажите ваш город'"></wg-select-location>
+                          <wg-select-location
+                            :selectedSettlement="selectedSettlement"
+                            :caption="'Укажите ваш город'"
+                          ></wg-select-location>
                         </div>
                         <div class="col_12">
-                          <wg-select-transport :caption="'Укажите модель транспорта'"></wg-select-transport>
+                          <wg-select-transport
+                            :selectedModel="selectedModel"
+                            :caption="'Укажите модель транспорта'"
+                          ></wg-select-transport>
                         </div>
 
                         <div class="col_3">
@@ -134,7 +123,7 @@
                       </div>
                     </div>
                     <div class="wg-form-add__buttons">
-                      <button class="ui-button ui-button_blue" type="submit">Добавить данные</button>
+                      <button class="ui-button ui-button_blue" type="submit">Изменить данные</button>
                     </div>
                   </form>
                 </div>
@@ -157,7 +146,7 @@
 </template>
 <script>
 export default {
-  name: "wg-form-photos",
+  name: "wg-editor-photos",
   data() {
     return {
       showFormPhotos: this.show,
@@ -169,19 +158,30 @@ export default {
       rirendLoader: false,
       percentFL: undefined,
       photoLincks: undefined,
-      album_id: undefined
+      album_id: this.id,
+      album: undefined
     };
   },
   props: {
     show: {
       type: Boolean,
       default: false
+    },
+    id: {
+      type: Number,
+      default: undefined
     }
   },
   watch: {
     show(newQ) {
       this.showFormPhotos = newQ;
       this.autoHeight();
+      if (newQ == true) {
+        this.loadAlbum();
+      }
+    },
+    id(newQ) {
+      this.album_id = newQ;
     }
   },
   mounted() {
@@ -196,6 +196,13 @@ export default {
     },
     isTabs(id) {
       this.tabs = id;
+      if (this.tabs == "photo") {
+        let lincks = this.photoLincks;
+        this.photoLincks = undefined;
+        setTimeout(() => {
+          this.photoLincks = lincks;
+        }, 4);
+      }
     },
     // устанавливает  длину контейнера контетнта
     autoHeight() {
@@ -222,6 +229,21 @@ export default {
           }
         });
       }
+    },
+    loadAlbum() {
+      let params = { album_id: this.album_id };
+      let headers = { "Content-Type": "multipart/form-data" };
+      this.$http
+        .post(this.$hosts.albums + "/api/show/albums", params, headers)
+        .then(
+          response => {
+            this.album = response.body.albums[0];
+            this.photoLincks = JSON.parse(
+              response.body.albums[0].lincks
+            ).lincks;
+          },
+          error => {}
+        );
     },
     createAlbum(event) {
       let body = new FormData(event.target);
@@ -330,6 +352,16 @@ export default {
     }
   },
   computed: {
+    selectedModel() {
+      return this.album != undefined && this.album.model_id != undefined
+        ? this.album.model_id
+        : undefined;
+    },
+    selectedSettlement() {
+      return this.album != undefined && this.album.settlements_id != undefined
+        ? this.album.settlements_id
+        : undefined;
+    },
     slide() {
       if (this.photoLincks != undefined) {
         return this.photoLincks.map(function(slide) {
@@ -339,7 +371,18 @@ export default {
       return undefined;
     },
     menuYear() {
-      return this.$store.getters["form_album/getYears"];
+      let years = this.$store.getters["filter_album/getYears"];
+      if (this.album != undefined && this.album.year != undefined) {
+        years = years.map(year => {
+          if (year.value == this.album.year) {
+            year.selected = true;
+          } else {
+            year.selected = false;
+          }
+          return year;
+        });
+      }
+      return years;
     }
   }
 };

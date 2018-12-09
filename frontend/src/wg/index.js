@@ -20,17 +20,25 @@ import WgComments from "./wg-comments/wg-comments.vue";
 Vue.component("wg-comments", WgComments);
 import WgComment from "./wg-comments/wg-comment.vue";
 Vue.component("wg-comment", WgComment);
+
+// фильтры
 import WgFilterAdd from "./wg-filters/wg-filter-add.vue";
 Vue.component("wg-filter-add", WgFilterAdd);
 import WgFilterAlbum from "./wg-filters/wg-filter-album.vue";
 Vue.component("wg-filter-album", WgFilterAlbum);
 
+// формы
 import WgFormAdd from "./wg-forms/wg-form-add.vue";
 Vue.component("wg-form-add", WgFormAdd);
 import WgFormPhotos from "./wg-forms/wg-form-photos.vue";
 Vue.component("wg-form-photos", WgFormPhotos);
 import WgFormPosts from "./wg-forms/wg-form-posts.vue";
 Vue.component("wg-form-posts", WgFormPosts);
+
+// редакторы
+import WgEditorPhotos from "./wg-editors/wg-editor-photos.vue";
+Vue.component("wg-editor-photos", WgEditorPhotos);
+
 import WgCaptcha from "./wg-captcha/wg-captcha.vue";
 Vue.component("wg-captcha", WgCaptcha);
 import WgSelectLocation from "./wg-select-location/wg-select-location.vue";

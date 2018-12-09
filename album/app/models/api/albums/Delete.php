@@ -1,9 +1,9 @@
 <?php
-namespace App\Models\Api\Photos;
+namespace App\Models\Api\Albums;
 
 use \Zend\Validator\Exception\RuntimeException as RuntimeException;
 
-class Create
+class Delete
 {
     protected $request, $response, $container;
     public function __construct($container, $request, $response)
@@ -38,48 +38,45 @@ class Create
             $sessionID = $p["session_id"];
             $userID = $p["user_id"];
             $albumID = $p["album_id"];
+
             // проверить аутентификацию пользователя
             $auths = $this->container['auths'];
             $authedUser = $auths->AuthUser->Authed($sessionID, $userID);
             if (!$authedUser) {
                 throw new \Exception("Не прошел аутентификацию");
             }
+
             // проверить есть ли у юзера такой альбом
-            $authedAlbum = $auths->AuthAlbum->Authed($userID, $albumID);
-            if (!$authedAlbum) {
+            $db = $this->container['db'];
+            $qInsert = "select id from albums where id={$albumID} and user_id={$userID}";
+            $qUser = $db->query($qInsert, \PDO::FETCH_ASSOC)->fetch();
+            if (!$qUser && $qUser->id != $albumID) {
                 throw new \Exception("У пользователя нет такого альбома");
             }
 
-            // сохраняем файл на сервер
-            $db = $this->container['db'];
+            // удаляем фотографии
+            $this->removeDirectory(MP_PRODIR . "/public/photos/$userID/$albumID");
 
-            foreach ($_FILES["files"]["name"] as $key => $name) {
-                if ($_FILES['files']['error'][$key] == 0) {
-                    $path = MP_PRODIR . "/public/photos/$userID/$albumID";
-                    $links = $thisHost . "/public/photos/$userID/$albumID";
-                    file_exists($path . "/");
-                    if (!file_exists($path)) {
-                        mkdir($path, 0777, true);
-                        echo $qInsert = "insert into lincks (albums_id, lincks) values ($albumID, '{\"lincks\":[]}');";
-                        $db->query($qInsert, \PDO::FETCH_ASSOC)->fetch();
-                    }
-                    //проверить наличие подобного файла
-                    if (!file_exists($path . "/" . $name)) {
-                        //сохраняем если нет такого файла
-                        move_uploaded_file($_FILES['files']['tmp_name'][$key], $path . "/" . $name);
-                        $qUpdate = "update lincks
-                                        set lincks = jsonb_set(lincks, '{lincks}', lincks->'lincks'||'\"{$links}/{$name}\"')
-                                        where albums_id={$albumID};";
-                        $db->query($qUpdate, \PDO::FETCH_ASSOC)->fetch();
-                    }
+            // удаляем фльбом
+            $qDelLincks = "delete from lincks where albums_id={$albumID}";
+            $db->query($qDelLincks, \PDO::FETCH_ASSOC)->fetch();
+            $qDelAlbums = "delete from albums where id={$albumID}";
+            $db->query($qDelAlbums, \PDO::FETCH_ASSOC)->fetch();
 
-                }
-            }
-            return ["message" => "Фотографии добавлены успешно"];
+            return ["message" => "Альбом удален успешно"];
         } catch (RuntimeException | \Exception $e) {
             $exceptions['massege'] = $e->getMessage();
             return ["exceptions" => $exceptions];
         }
 
+    }
+    public function removeDirectory($dir)
+    {
+        if ($objs = glob($dir . "/*")) {
+            foreach ($objs as $obj) {
+                is_dir($obj) ? $this->removeDirectory($obj) : unlink($obj);
+            }
+        }
+        rmdir($dir);
     }
 }

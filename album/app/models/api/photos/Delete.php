@@ -49,57 +49,22 @@ class Delete
                 throw new \Exception("Не прошел аутентификацию");
             }
             // проверить есть ли у юзера такой альбом
-            $authedAlbum = $auths->AuthAlbum->Authed($userID, $albumID);
-            if (!$authedAlbum) {
+            $db = $this->container['db'];
+            $qInsert = "select id from albums where id={$albumID} and user_id={$userID}";
+            $qUser = $db->query($qInsert, \PDO::FETCH_ASSOC)->fetch();
+            if (!$qUser && $qUser->id != $albumID) {
                 throw new \Exception("У пользователя нет такого альбома");
             }
-
-            // сохраняем файл на сервер
-            $db = $this->container['db'];
 
             // удаляем фотографию
             $nameFile = str_replace($thisHost . "/public/photos/$userID/$albumID", "", $linck);
             $path = MP_PRODIR . "/public/photos/$userID/$albumID/$nameFile";
             unlink($path);
             // удаляем ссылку в базе
-            // $qSelect = "select lincks from lincks where albums_id={$albumID}";
-            // $dbLincks = $db->query($qSelect, \PDO::FETCH_ASSOC)->fetch();
-            // $jsLincks = json_decode($dbLincks["lincks"]);
-            // $arrLincks = $jsLincks->lincks;
-            // foreach ($arrLincks as $key => $name) {
-            //     if ($name == $linck) {
-            //         unset($arrLincks[$key]);
-            //     }
-            // }
-            // var_dump($arrLincks);
             $qUpdate = "update lincks
                 set lincks = jsonb_set(lincks, '{lincks}', (lincks->'lincks')-'{$linck}')
                 where albums_id={$albumID};";
             $dbLincks = $db->query($qUpdate, \PDO::FETCH_ASSOC)->fetch();
-
-            //             $db->query($qUpdate, \PDO::FETCH_ASSOC)->fetch();
-            // foreach ($_FILES["files"]["name"] as $key => $name) {
-            //     if ($_FILES['files']['error'][$key] == 0) {
-
-            //         $links = $thisHost . "/public/photos/$userID/$albumID";
-            //         file_exists($path . "/");
-            //         if (!file_exists($path)) {
-            //             mkdir($path, 0777, true);
-            //             $qInsert = "insert into lincks (albums_id, lincks) values ($albumID, '{\"lincks\":[]}');";
-            //             $db->query($qInsert, \PDO::FETCH_ASSOC)->fetch();
-            //         }
-            //         //проверить наличие подобного файла
-            //         if (!file_exists($path . "/" . $name)) {
-            //             //сохраняем если нет такого файла
-            //             move_uploaded_file($_FILES['files']['tmp_name'][$key], $path . "/" . $name);
-            //             $qUpdate = "update lincks
-            //                             set lincks = jsonb_set(lincks, '{lincks}', lincks->'lincks'||'\"{$links}/{$name}\"')
-            //                             where albums_id={$albumID};";
-            //             $db->query($qUpdate, \PDO::FETCH_ASSOC)->fetch();
-            //         }
-
-            //     }
-            // }
             return ["message" => "Фотография удалена успешно"];
         } catch (RuntimeException | \Exception $e) {
             $exceptions['massege'] = $e->getMessage();

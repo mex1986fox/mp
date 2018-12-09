@@ -19,23 +19,21 @@ class Update
             $p = $this->request->getQueryParams();
             $db = $this->container['db'];
 
+            //передаем параметры в переменные
+            empty($p['session_id']) ? $exceptions["session_id"] = "Не указан" : $sessionID = $p['session_id'];
+            empty($p['user_id']) ? $exceptions["user_id"] = "Не указан" : $userID = $p['user_id'];
+            empty($p['album_id']) ? $exceptions["album_id"] = "Не указан" : $albumID = $p['album_id'];
+            if (!empty($exceptions)) {
+                throw new \Exception("Ошибки в парамметрах");
+            }
+
             // проверяем авторизацию
             $auths = $this->container['auths'];
-            if (!$auths->AuthUser->Authed()) {
+            if (!$auths->AuthUser->Authed($sessionID, $userID)) {
                 throw new \Exception("Не авторизован");
             }
 
-            //передаем параметры в переменные
-            $user_id = $_SESSION["user_id"];
-            if (!empty($p["album_id"])) {
-                $album_id = $p["album_id"];
-            } else {
-                throw new \Exception("Не указан номер альбома");
-            }
             $name = (!empty($p["name"]) ? $p["name"] : "");
-            // $country = (!empty($p["country"]) ? $p["country"] : "");
-            // $subject = (!empty($p["subject"]) ? $p["subject"] : "");
-
             if (!empty($p["settlement"])) {
                 $settlements_id = $p["settlement"];
                 $q = "select subject_id as subjects_id from locations_settlements where id={$settlements_id}";
@@ -43,9 +41,6 @@ class Update
                 $q = "select country_id as countries_id from locations_subjects where id={$subjects_id}";
                 $countries_id = $db->query($q, \PDO::FETCH_ASSOC)->fetch()["countries_id"];
             }
-
-            // $transport = (!empty($p["transport"]) ? $p["transport"] : "");
-            // $brand = (!empty($p["brand"]) ? $p["brand"] : "");
             if (!empty($p["model"])) {
                 $model_id = $p["model"];
                 $q = "select transport_id, brand_id from transports_models where id={$model_id}";
@@ -64,16 +59,16 @@ class Update
             $qSet = $qSet . (empty($model_id) ? "" : " model_id='{$model_id}',");
             $qSet = $qSet . (empty($transport_id) ? "" : " transport_id='{$transport_id}',");
             $qSet = $qSet . (empty($brand_id) ? "" : " brand_id='{$brand_id}',");
-            $qSet = $qSet . (empty($year) ? "" : " year='{$year}',");
+            $qSet = $qSet . (empty($year) ? " year=null," : " year='{$year}',");
             $qSet = (empty($qSet) ? "" : substr($qSet, 0, -1));
 
             if (empty($qSet)) {
                 throw new \Exception("Запрс на изменение не сформирован");
             }
-            $q = "update albums set {$qSet} where id={$album_id} and user_id={$user_id}";
+            $q = "update albums set {$qSet} where id={$albumID} and user_id={$userID}";
             $id = $db->query($q, \PDO::FETCH_ASSOC)->fetch();
 
-            return ["id" => $album_id, "massege" => "Альбом изменен успешно"];
+            return ["id" => $albumID, "massege" => "Альбом изменен успешно"];
         } catch (RuntimeException | \Exception $e) {
             $exceptions = ['exceptions' => ['massege' => $e->getMessage()]];
             return $exceptions;

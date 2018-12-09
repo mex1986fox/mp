@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use \App\Controllers\MainController;
 use \App\Models\Api\Albums\Create as AlbumsCreate;
+use \App\Models\Api\Albums\Delete as AlbumsDelete;
 use \App\Models\Api\Albums\Show as AlbumsShow;
 use \App\Models\Api\Albums\Update as AlbumsUpdate;
 
@@ -24,7 +25,7 @@ class AlbumsController extends MainController
         $answer = $reg->run();
         if (isset($answer['exceptions'])) {
             $response = $response->withJson($answer, 400);
-        }else{
+        } else {
             $response = $response->withJson($answer, 200);
         }
         return $response;
@@ -37,13 +38,21 @@ class AlbumsController extends MainController
         $answer = $reg->run();
         if (isset($answer['exceptions'])) {
             $response = $response->withJson($answer, 400);
-        }else{
+        } else {
             $response = $response->withJson($answer, 200);
         }
         return $response;
     }
     public function delete($request, $response, $args)
     {
+        $cont = $this->container;
+        $reg = new AlbumsDelete($cont, $request, $response);
+        $answer = $reg->run();
+        if (isset($answer['exceptions'])) {
+            $response = $response->withJson($answer, 400);
+        } else {
+            $response = $response->withJson($answer, 200);
+        }
         return $response;
     }
 }

@@ -3,8 +3,8 @@ namespace App\Controllers;
 
 use App\Controllers\MainController;
 use \App\Models\Api\Photos\Create as PhotosCreate;
-use \App\Models\Api\Photos\Show as PhotosShow;
 use \App\Models\Api\Photos\Delete as PhotosDelete;
+use \App\Models\Api\Photos\Show as PhotosShow;
 
 class PhotosController extends MainController
 {
@@ -43,6 +43,7 @@ class PhotosController extends MainController
     }
     public function delete($request, $response, $args)
     {
+
         $cont = $this->container;
         $reg = new PhotosDelete($cont, $request, $response);
         $answer = $reg->run();

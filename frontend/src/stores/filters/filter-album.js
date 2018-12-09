@@ -31,7 +31,6 @@ const filter_album = {
         });
       });
       return menu;
-
     },
     getTransports: (state, getters, rootState, rootGetters) => {
       let transports = [];
@@ -91,34 +90,35 @@ const filter_album = {
       let maxDate = new Date().getFullYear();
       let minDate = 1935;
       let filter = state.filter.year;
-      let menu = [{
-        value: "",
-        option: "",
-        group: "Года",
-        selected: filter == "" ? true : false
-      }];
+      let menu = [
+        {
+          value: "",
+          option: "",
+          selected: filter == "" ? true : false
+        }
+      ];
       while (minDate != maxDate) {
         menu.push({
           value: maxDate,
           option: maxDate,
-          group: "Года",
           selected: filter == maxDate ? true : false
         });
         maxDate--;
       }
       return menu;
-
     },
     getYearsBef: (state, getters, rootState, rootGetters) => {
       let maxDate = new Date().getFullYear();
       let minDate = 1935;
       let filter = state.filter.yearBef;
-      let menu = [{
-        value: "",
-        option: "",
-        group: "Года",
-        selected: filter == "" ? true : false
-      }];
+      let menu = [
+        {
+          value: "",
+          option: "",
+          group: "Года",
+          selected: filter == "" ? true : false
+        }
+      ];
       while (minDate != maxDate) {
         menu.push({
           value: maxDate,

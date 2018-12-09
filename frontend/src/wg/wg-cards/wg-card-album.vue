@@ -18,9 +18,22 @@
         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
       </button>
       <ui-menu :show="showMenu" @onHide="showMenu=false" position="left-bottom">
-        <ul class="wg-card-album__menu">
-          <li class="wg-card-album__menu-li">Комментарии</li>
-          <li class="wg-card-album__menu-li">Пожаловаться</li>
+        <ul
+          v-if="user_id!=undefined && dAlbum.user!=undefined && user_id==dAlbum.user.id"
+          class="wg-card-ad__menu"
+        >
+          <li class="wg-card-ad__menu-li" @click="(showMenu=false, showEditor=true)">Редактировать</li>
+          <li class="wg-card-ad__menu-li" @click="(showMenu=false, showDroper=true)">Удалить</li>
+        </ul>
+        <ul v-else class="wg-card-ad__menu">
+          <li
+            @click="(showMenu=false, showDroper=true)"
+            class="wg-card-ad__menu-li"
+          >Показать контакты</li>
+          <li
+            @click="(showMenu=false, showMessenger=true)"
+            class="wg-card-ad__menu-li"
+          >Написать сообщение</li>
         </ul>
       </ui-menu>
     </div>
@@ -91,6 +104,48 @@
         </div>
       </div>
     </ui-blind>
+    <!-- редактор альбома -->
+    <wg-editor-photos :id="dAlbum.id" :show="showEditor" @onHide="showEditor=false"></wg-editor-photos>
+    <!-- окно удаления -->
+    <ui-blind
+      @onHide="showDroper=!showDroper"
+      :show="showDroper"
+      animate="opacity"
+      centering
+      :selector="'.ui-modal-window'"
+      class="pg-authorization__blind"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col_6 col_offset-3 col-phone_6 col-phone_offset-0">
+            <div class="row">
+              <div class="col_12">
+                <div class="ui-modal-window">
+                  <div class="ui-modal-window__header">
+                    <button
+                      @click="showDroper=false"
+                      class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat ui-modal-window__header__button"
+                    >
+                      <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                    Удаление альбома
+                  </div>
+                  <div class="ui-modal-window__content">
+                    <div
+                      class="ui-description ui-description_mini"
+                    >Вы действительно хотите удалить альбом?</div>
+                  </div>
+                  <div class="ui-modal-window__footer-buttons">
+                    <div class="ui-button ui-button_blue" @click="dropAlbum">Удалить</div>
+                    <div class="ui-button ui-button_flat" @click="showDroper=false">Отмена</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ui-blind>
   </div>
 </template>
 <script>
@@ -98,6 +153,9 @@ export default {
   name: "wg-card-album",
   data() {
     return {
+      user_id: this.$cookie.get("user_id"),
+      showEditor: false,
+      showDroper: false,
       showMenu: false,
       descActive: false,
       numberPhoto: 0,
@@ -157,6 +215,22 @@ export default {
         ":" +
         this.addZero(newDate.getMinutes())
       );
+    },
+    dropAlbum() {
+      let params = {
+        album_id: this.album.id,
+        user_id: this.user_id,
+        session_id: this.$cookie.get("PHPSESSID")
+      };
+      let headers = { "Content-Type": "multipart/form-data" };
+      this.$http
+        .post(this.$hosts.albums + "/api/delete/albums", params, headers)
+        .then(
+          response => {
+            console.dir(response.body);
+          },
+          error => {}
+        );
     }
   }
 };

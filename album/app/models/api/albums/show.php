@@ -17,13 +17,13 @@ class Show
     {
         try {
             $p = $this->request->getQueryParams();
-            if (!empty($p["id"])) {
-                $id = $p["id"];
-            }
+
             //формируем условия выборки
-            $qWhere = "";
+            //убираем без фотографий
+            $qWhere = " lincks.lincks is not null and lincks.lincks!='{\"lincks\": []}' and ";
             // для номера альбома
-            $qWhere = $qWhere . (empty($id) ? "" : "id=" . $id . " and ");
+            $qWhere = $qWhere . (empty($p["id"]) ? "" : "id=" . $p["id"] . " and ");
+            $qWhere = $qWhere . (empty($p["album_id"]) ? "" : "id=" . $p["album_id"] . " and ");
 
             //для местоположения
             if (!empty($p["settlements"]) || !empty($p["subjects"]) || !empty($p["countries"])) {
