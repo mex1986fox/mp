@@ -446,6 +446,18 @@ body {
       box-shadow: none;
       background-color: rgba(214, 214, 214, 0.55);
       transition-duration: 200ms; }
+    .ui-button_flat-disabled {
+      background-color: #ffffff;
+      color: #bebebe !important;
+      box-shadow: none; }
+      .ui-button_flat-disabled:hover {
+        cursor: default;
+        background-color: #ffffff;
+        color: #bebebe !important; }
+      .ui-button_flat-disabled:active {
+        background-color: #ffffff;
+        color: #bebebe !important;
+        box-shadow: none; }
 
 .ui-text {
   width: 100%;
@@ -462,7 +474,9 @@ body {
     color: #646464;
     position: absolute;
     transition-duration: 300ms;
-    line-height: 90px; }
+    line-height: 90px;
+    display: inline-block;
+    white-space: nowrap; }
     .ui-text__caption_active {
       font-size: 13px;
       line-height: 45px;
@@ -471,7 +485,9 @@ body {
     .ui-text__caption_completed {
       font-size: 13px;
       line-height: 45px;
-      transition-duration: 300ms; }
+      transition-duration: 300ms;
+      display: inline-block;
+      white-space: nowrap; }
     .ui-text__caption_disabled {
       color: #bebebe; }
   .ui-text__input {
@@ -556,7 +572,9 @@ body {
     color: #646464;
     position: absolute;
     transition-duration: 300ms;
-    line-height: 90px; }
+    line-height: 90px;
+    display: inline-block;
+    white-space: nowrap; }
     .ui-textarea__caption_active {
       font-size: 13px;
       line-height: 45px;
@@ -565,7 +583,9 @@ body {
     .ui-textarea__caption_completed {
       font-size: 13px;
       line-height: 45px;
-      transition-duration: 300ms; }
+      transition-duration: 300ms;
+      display: inline-block;
+      white-space: nowrap; }
     .ui-textarea__caption_disabled {
       color: #bebebe; }
   .ui-textarea__input {
@@ -649,7 +669,9 @@ body {
     color: #646464;
     position: absolute;
     transition-duration: 300ms;
-    line-height: 90px; }
+    line-height: 90px;
+    display: inline-block;
+    white-space: nowrap; }
     .ui-contenteditable__caption_active {
       font-size: 13px;
       line-height: 45px;
@@ -658,7 +680,9 @@ body {
     .ui-contenteditable__caption_completed {
       font-size: 13px;
       line-height: 45px;
-      transition-duration: 300ms; }
+      transition-duration: 300ms;
+      display: inline-block;
+      white-space: nowrap; }
     .ui-contenteditable__caption_disabled {
       color: #bebebe; }
   .ui-contenteditable__input {
@@ -740,7 +764,9 @@ body {
     color: #646464;
     position: absolute;
     transition-duration: 300ms;
-    line-height: 90px; }
+    line-height: 90px;
+    display: inline-block;
+    white-space: nowrap; }
     .ui-password__caption_active {
       font-size: 13px;
       line-height: 45px;
@@ -749,7 +775,9 @@ body {
     .ui-password__caption_completed {
       font-size: 13px;
       line-height: 45px;
-      transition-duration: 300ms; }
+      transition-duration: 300ms;
+      display: inline-block;
+      white-space: nowrap; }
     .ui-password__caption_disabled {
       color: #bebebe; }
   .ui-password__input {
@@ -3320,6 +3348,9 @@ input:-webkit-autofill {
 
 .wg-comment__ansvers {
   padding-left: 30px; }
+  .wg-comment__ansvers-buttons {
+    width: 100%;
+    overflow: hidden; }
   .wg-comment__ansvers-enter-active {
     opacity: 1;
     max-height: 1000px;
@@ -3336,7 +3367,13 @@ input:-webkit-autofill {
     max-height: 1000px; }
 
 .wg-comment__form {
-  margin-top: -36px; }
+  position: relative;
+  bottom: 0;
+  background-color: #ffffff;
+  overflow: hidden;
+  min-height: 120px;
+  width: 100%;
+  z-index: 20; }
 
 @media (max-width: 770px) {
   .wg-comment__avatar {
@@ -3356,7 +3393,7 @@ input:-webkit-autofill {
     padding-left: 10px; } }
 
 .wg-answer__avatar {
-  margin: 4px 20px 0px 10px;
+  margin: 12px 20px 0px 10px;
   height: 25px;
   width: 25px;
   line-height: 23px; }

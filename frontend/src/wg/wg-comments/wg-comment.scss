@@ -1,91 +1,101 @@
 .wg-comment {
-    &__avatar {
-        margin: 0px 20px 0px 0px;
-        &_mini {
-            height: 25px;
-            width: 25px;
-            line-height: 23px;
-        }
+  &__avatar {
+    margin: 0px 20px 0px 0px;
+    &_mini {
+      height: 25px;
+      width: 25px;
+      line-height: 23px;
     }
-    &__login {
-        float: left;
-        display: block;
-        line-height: 29px;
-        margin-right: 20px;
-        color: $color-text-header;
-        font-weight: 600;
+  }
+  &__login {
+    float: left;
+    display: block;
+    line-height: 29px;
+    margin-right: 20px;
+    color: $color-text-header;
+    font-weight: 600;
+  }
+  &__date {
+    // float: left;
+    display: block;
+    line-height: 30px;
+    margin-right: 20px;
+    color: $color-disabled;
+  }
+  &__description {
+    position: relative;
+    margin: 10px 10px 10px 0px;
+    overflow: hidden;
+    white-space: pre-line;
+  }
+  &__buttons {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+  }
+  &__comment {
+    padding: 0px;
+    overflow: hidden;
+    width: 100%;
+  }
+  &__ansvers {
+    &-buttons {
+      width: 100%;
+      overflow: hidden;
     }
-    &__date {
-        // float: left;
-        display: block;
-        line-height: 30px;
-        margin-right: 20px;
-        color: $color-disabled;
+    padding-left: 30px;
+    &-enter-active {
+      opacity: 1;
+      max-height: 1000px;
+      transition: all 0.9s;
     }
-    &__description {
-        position: relative;
-        margin: 10px 10px 10px 0px;
-        overflow: hidden;
-        white-space: pre-line;
+    &-leave-active {
+      opacity: 0;
+      max-height: 0px;
+      transition: all 0.7s;
     }
-    &__buttons {
-        position: relative;
-        width: 100%;
-        height: auto;
-        overflow: hidden;
+    &-enter {
+      opacity: 0;
+      max-height: 0px;
     }
-    &__comment {
-        padding: 0px;
-        overflow: hidden;
-        width: 100%;
+    &-leave {
+      opacity: 1;
+      max-height: 1000px;
     }
-    &__ansvers {
-        padding-left: 30px;
-        &-enter-active {
-            opacity: 1;
-            max-height: 1000px;
-            transition: all 0.9s;
-        }
-        &-leave-active {
-            opacity: 0;
-            max-height: 0px;
-            transition: all 0.7s;
-        }
-        &-enter {
-            opacity: 0;
-            max-height: 0px;
-        }
-        &-leave {
-            opacity: 1;
-            max-height: 1000px;
-        }
-    }
-    &__form {
-        margin-top: -36px;
-    }
+  }
+  &__form {
+    position: relative;
+    bottom: 0;
+    background-color: $color-fon;
+    overflow: hidden;
+    min-height: 120px;
+    width: 100%;
+    z-index: 20;
+  }
 }
 
 @media (max-width: 770px) {
-    .wg-comment {
-        &__avatar {
-            height: 35px;
-            width: 35px;
-            margin: 8px 8px 0 0;
-        }
-        &__login {
-            line-height: 13px;
-            &>.ui-link {
-                font-size: 12px;
-            }
-        }
-        &__date {
-            line-height: 23px;
-            width: 100%;
-            overflow: hidden;
-            font-size: 12px;
-        }
-        &__ansvers {
-            padding-left: 10px;
-        }
+  .wg-comment {
+    &__avatar {
+      height: 35px;
+      width: 35px;
+      margin: 8px 8px 0 0;
     }
+    &__login {
+      line-height: 13px;
+      & > .ui-link {
+        font-size: 12px;
+      }
+    }
+    &__date {
+      line-height: 23px;
+      width: 100%;
+      overflow: hidden;
+      font-size: 12px;
+    }
+    &__ansvers {
+      padding-left: 10px;
+    }
+  }
 }

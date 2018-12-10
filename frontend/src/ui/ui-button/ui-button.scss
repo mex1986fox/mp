@@ -107,5 +107,20 @@
       background-color: $color-list-active;
       transition-duration: 200ms;
     }
+    &-disabled {
+      background-color: $color-fon;
+      color: $color-disabled !important;
+      box-shadow: none;
+      &:hover {
+        cursor: default;
+        background-color: $color-fon;
+        color: $color-disabled !important;
+      }
+      &:active {
+        background-color: $color-fon;
+        color: $color-disabled !important;
+        box-shadow: none;
+      }
+    }
   }
 }

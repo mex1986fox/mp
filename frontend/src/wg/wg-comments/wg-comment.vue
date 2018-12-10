@@ -29,9 +29,8 @@
             class="ui-button ui-button_mini ui-button_flat"
             style="margin-top: 10px;"
           >Ответить</button>
-          <div v-if="comment.ansversLength!=undefined">
+          <div v-if="!dShowComments && comment.ansversLength!=undefined">
             <button
-              v-if="!dShowComments"
               @click="isShowComments"
               class="ui-button ui-button_circle ui-button_circle_mini ui-button_flat"
             >
@@ -45,7 +44,7 @@
           <ui-textarea
             @onBlur="isBlurComment"
             @onInput="isInputComment"
-            caption="Ваш ответ"
+            :caption="'Ваш ответ'"
             :autoresize="100"
             :focus="true"
           ></ui-textarea>
@@ -68,7 +67,12 @@
           :key="key"
           :comment="JSON.parse(JSON.stringify(val))"
         ></wg-comment>
-        <div class="ui-button ui-button_mini ui-button_flat" @click="showMoreComments">показать еще</div>
+        <div v-if="showMoreButtons" class="wg-comment__ansvers-buttons">
+          <div
+            class="ui-button ui-button_mini ui-button_flat"
+            @click="showMoreComments"
+          >{{'еще ответы для '+comment.user.login}}</div>
+        </div>
       </div>
     </transition>
   </div>
@@ -148,11 +152,17 @@ export default {
         .then(
           response => {
             this.comments = response.body.comments;
+            if (response.body.comments.length < 2) {
+              this.showMoreButtons = false;
+            } else {
+              this.showMoreButtons = true;
+            }
             this.updateUsers();
+            this.dShowComments = true;
           },
           error => {}
         );
-      this.dShowComments = !this.dShowComments;
+      this.dShowComments = false;
     },
     showMoreComments() {
       let headers = { "Content-Type": "multipart/form-data" };
@@ -170,6 +180,11 @@ export default {
         .then(
           response => {
             let moreComments = response.body.comments;
+            if (response.body.comments.length < 2) {
+              this.showMoreButtons = false;
+            } else {
+              this.showMoreButtons = true;
+            }
             let comments = this.comments;
             moreComments.forEach(mComment => {
               comments.push(mComment);

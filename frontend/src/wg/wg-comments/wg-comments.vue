@@ -19,7 +19,13 @@
         :key="key"
         :comment="JSON.parse(JSON.stringify(val))"
       ></wg-comment>
-      <div class="ui-button ui-button_flat" @click="showMoreComments">показать еще</div>
+
+      <div v-if="showMoreButtons" class="wg-comment__ansvers-buttons">
+        <div
+          class="ui-button ui-button_mini ui-button_flat"
+          @click="showMoreComments"
+        >еще комментарии ...</div>
+      </div>
     </div>
     <div ref="form" class="wg-comments__form">
       <!-- <div class="ui-avatar wg-comments__form-avatar">
@@ -61,7 +67,8 @@ export default {
       description: undefined,
       showSnackbar: false,
       descSnackbar: "",
-      flagNoComments: false
+      flagNoComments: false,
+      showMoreButtons: false
     };
   },
   props: {
@@ -130,7 +137,11 @@ export default {
           response => {
             this.flagNoComments = false;
             this.comments = response.body.comments;
-            console.dir(this.comments);
+            if (response.body.comments.length < 2) {
+              this.showMoreButtons = false;
+            } else {
+              this.showMoreButtons = true;
+            }
             this.updateUsers();
           },
           error => {
@@ -158,6 +169,11 @@ export default {
         .then(
           response => {
             let moreComments = response.body.comments;
+            if (response.body.comments.length < 2) {
+              this.showMoreButtons = false;
+            } else {
+              this.showMoreButtons = true;
+            }
             let comments = this.comments;
             moreComments.forEach(mComment => {
               comments.push(mComment);
