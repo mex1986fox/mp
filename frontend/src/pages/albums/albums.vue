@@ -41,7 +41,11 @@
           <div class="row" v-for="(val, key) in albums" :key="key">
             <div class="col-12">
               <div class="wg-content-frame wg-content-frame_center">
-                <wg-card-album :album="JSON.parse(JSON.stringify(val))" :key="'album-'+key"></wg-card-album>
+                <wg-card-album
+                  @onDeleteAlbum="dropAlbum"
+                  :album="JSON.parse(JSON.stringify(val))"
+                  :key="'album-'+key"
+                ></wg-card-album>
               </div>
             </div>
           </div>
@@ -55,7 +59,7 @@
                   <div
                     @click="isShowFormFotos"
                     class="ui-button ui-button_blue pg-ads__button-add"
-                  >добавить фотографии</div>
+                  >добавить фотоальбом</div>
                 </div>
               </div>
               <div class="col-12">
@@ -201,7 +205,9 @@ export default {
           );
       }
     },
-
+    dropAlbum() {
+      this.loadAlbums();
+    },
     loadAlbums() {
       // console.dir(this.$store.state.filter_add.filter);
       let params = this.$store.state.filter_album.filter;

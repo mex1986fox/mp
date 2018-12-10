@@ -20,7 +20,7 @@ class Length
             $ID = array_map('intval', $p["id"]);
 
             $mdb = $this->container['mongodb'];
-            $find = $mdb->ads->find(["_id" => ['$in' => $ID]]);
+            $find = $mdb->albums->find(["_id" => ['$in' => $ID]]);
             $length = array_map(function ($val) {
                 return ["id" => $val["_id"], "length" => $val["commentsLength"]];
             }, iterator_to_array($find, true));

@@ -14,11 +14,12 @@
       <wg-comment
         :service_type="service_type"
         :service_id="service_id"
-        v-if="comments!=undefined"
+        v-if="comments.length>0"
         v-for="(val, key) in comments"
         :key="key"
         :comment="JSON.parse(JSON.stringify(val))"
       ></wg-comment>
+      <div class="ui-button ui-button_flat" @click="showMoreComments">показать еще</div>
     </div>
     <div ref="form" class="wg-comments__form">
       <!-- <div class="ui-avatar wg-comments__form-avatar">
@@ -56,7 +57,7 @@ export default {
   name: "wg-comments",
   data() {
     return {
-      comments: undefined,
+      comments: [],
       description: undefined,
       showSnackbar: false,
       descSnackbar: "",
@@ -90,7 +91,7 @@ export default {
         let params = {
           user_id: this.$cookie.get("user_id"),
           session_id: this.$cookie.get("PHPSESSID"),
-          ad_id: this.service_id,
+          id: this.service_id,
           description: this.description
         };
         this.description = undefined;
@@ -117,7 +118,7 @@ export default {
     showComments() {
       let headers = { "Content-Type": "multipart/form-data" };
       let params = {
-        ad_id: this.service_id
+        id: this.service_id
       };
       this.$http
         .post(
@@ -129,6 +130,40 @@ export default {
           response => {
             this.flagNoComments = false;
             this.comments = response.body.comments;
+            console.dir(this.comments);
+            this.updateUsers();
+          },
+          error => {
+            if (
+              error.body.exceptions.massege ==
+              "Нет коментариев к данному объявлению"
+            ) {
+              this.flagNoComments = true;
+            }
+          }
+        );
+    },
+    showMoreComments() {
+      let headers = { "Content-Type": "multipart/form-data" };
+      let params = {
+        id: this.service_id,
+        pagin_id: this.comments[this.comments.length - 1].id
+      };
+      this.$http
+        .post(
+          this.$hosts.comments + "/api/show/" + this.service_type,
+          params,
+          headers
+        )
+        .then(
+          response => {
+            let moreComments = response.body.comments;
+            let comments = this.comments;
+            moreComments.forEach(mComment => {
+              comments.push(mComment);
+            });
+            this.comments = undefined;
+            this.comments = comments;
             this.updateUsers();
           },
           error => {

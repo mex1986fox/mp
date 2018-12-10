@@ -15,5 +15,6 @@ $config = [
         'this' => 'http://comments.ru',
         'auth' => 'http://drovito.ru',
         'ads' => 'http://drovito.ru',
+        'albums' => 'http://albums.drovito.ru',
     ],
 ];

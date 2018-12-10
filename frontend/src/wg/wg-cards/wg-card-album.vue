@@ -83,27 +83,9 @@
       </button>
       <span class="wg-card-ad__counter">296</span>
     </div>
-    <ui-blind
-      ref="blind"
-      :show="commentShow"
-      @onHide="commentShow=false"
-      :centering="true"
-      animate="opacity"
-    >
-      <div class="container">
-        <div class="row">
-          <div class="col_8 col_offset-2">
-            <button
-              @click="commentShow=false"
-              class="ui-button ui-button_circle ui-button_circle_big ui-button_flat wg-card-ad__comments-close"
-            >
-              <i aria-hidden="true" class="fa fa-times"></i>
-            </button>
-            <wg-comments></wg-comments>
-          </div>
-        </div>
-      </div>
-    </ui-blind>
+       <div class="wg-card-ad__comments" v-if="commentShow">
+      <wg-comments :service_id="dAlbum.id" :service_type="'albums'" @onHide="commentShow=false"></wg-comments>
+    </div>
     <!-- редактор альбома -->
     <wg-editor-photos :id="dAlbum.id" :show="showEditor" @onHide="showEditor=false"></wg-editor-photos>
     <!-- окно удаления -->
@@ -146,6 +128,11 @@
         </div>
       </div>
     </ui-blind>
+    <div class="row">
+			<div class="col_12">
+				<ui-snackbar :show="showSnackbar" @onHide="showSnackbar=false" :time="20000">{{descSnackbar}}</ui-snackbar>
+			</div>
+		</div>
   </div>
 </template>
 <script>
@@ -163,7 +150,9 @@ export default {
       showZoomSlider: false,
       commentShow: false,
       dAlbum: this.album,
-      dSlide: undefined
+      dSlide: undefined,
+      showSnackbar: false,
+      descSnackbar: undefined
     };
   },
   props: {
@@ -227,7 +216,10 @@ export default {
         .post(this.$hosts.albums + "/api/delete/albums", params, headers)
         .then(
           response => {
-            console.dir(response.body);
+            this.showSnackbar=true;
+            this.showDroper=false;
+            this.descSnackbar="Альбом удален успешно";
+            this.$emit("onDeleteAlbum", this.dAlbum);
           },
           error => {}
         );

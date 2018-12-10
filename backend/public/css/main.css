@@ -3304,7 +3304,8 @@ input:-webkit-autofill {
 .wg-comment__description {
   position: relative;
   margin: 10px 10px 10px 0px;
-  overflow: hidden; }
+  overflow: hidden;
+  white-space: pre-line; }
 
 .wg-comment__buttons {
   position: relative;

@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\Auth;
 
-class AuthAds
+class Authalbums
 {
     protected $container;
     public function __construct($container)
@@ -10,13 +10,13 @@ class AuthAds
     }
     public function Authed($id)
     {
-        $authHost = $this->container["hosts"]["ads"];
+        $authHost = $this->container["hosts"]["albums"];
         $jsonDatas = array(
             'id' => $id,
         );
         $jsonDataEncoded = json_encode($jsonDatas);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $authHost . "/api/show/ads");
+        curl_setopt($ch, CURLOPT_URL, $authHost . "/api/show/albums");
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
         curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
@@ -27,7 +27,7 @@ class AuthAds
         curl_close($ch);
         $dj = json_decode($output);
         if ($rCode == 200 && !isset($dj->exceptions)) {
-            if (count($dj->ads) != 0 && $dj->ads[0]->id == $id) {
+            if (count($dj->albums) != 0 && $dj->albums[0]->id == $id) {
                 return true;
             }
         };

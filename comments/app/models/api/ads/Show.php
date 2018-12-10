@@ -17,17 +17,17 @@ class Show
     {
         try {
             $p = $this->request->getQueryParams();
-            $adID = (int) $p["ad_id"];
+            $ID = (int) $p["id"];
             if (!empty($p["comment_id"])) {
                 $commentID = (int) $p["comment_id"];
             }
             $mdb = $this->container['mongodb'];
             // db.ads.find({'_id': 8, "comments":{$elemMatch: { "id" : 1 }}},{"comments.id":1, "comments":{$elemMatch: { "id" : 1 }}})
             if (empty($commentID)) {
-                $commentsID = $mdb->ads->findOne(["_id" => $adID])["comments_id"];
+                $commentsID = $mdb->ads->findOne(["_id" => $ID])["comments_id"];
             } else {
                 $aggreg = iterator_to_array($mdb->ads->aggregate([
-                    ['$match' => ['_id' => $adID]],
+                    ['$match' => ['_id' => $ID]],
                     ['$unwind' => '$comments'],
                     ['$match' => ['comments.id' => $commentID]],
                 ]), false);
@@ -39,7 +39,7 @@ class Show
             }
             
             $aggreg = $mdb->ads->aggregate([
-                ['$match' => ['_id' => $adID]],
+                ['$match' => ['_id' => $ID]],
                 ['$unwind' => '$comments'],
                 ['$match' => ['comments.id' => ['$in' => $commentsID]]],
             ]);

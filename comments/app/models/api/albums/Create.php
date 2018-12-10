@@ -1,5 +1,5 @@
 <?php
-namespace App\Models\Api\Ads;
+namespace App\Models\Api\Albums;
 
 use \Zend\Validator\Exception\RuntimeException as RuntimeException;
 
@@ -53,15 +53,15 @@ class Create
             }
             // проверить есть ли объект сервиса по id
             $mdb = $this->container['mongodb'];
-            $find = $mdb->ads->findOne(["_id" => $ID]);
+            $find = $mdb->albums->findOne(["_id" => $ID]);
             // если нет
             if (empty($find["_id"])) {
-                $authedAds = $auths->AuthAds->Authed($ID);
-                if (!$authedAds) {
+                $authedAlbums = $auths->AuthAlbums->Authed($ID);
+                if (!$authedAlbums) {
                     throw new \Exception("Нет такого объявления");
                 }
                 //создать новый объект объявления и коментарий
-                $ad = [
+                $album = [
                     "_id" => $ID,
                     "commentsLength" => 1,
                     "comments_id" => [1],
@@ -77,7 +77,7 @@ class Create
                         ],
                     ],
                 ];
-                $mdb->ads->insertOne($ad);
+                $mdb->albums->insertOne($album);
 
             } else {
                 //обновить объект объявления и добавить комментарий
@@ -92,14 +92,14 @@ class Create
                     "comments_id" => [],
                 ];
 
-                $mdb->ads->updateOne(["_id" => $ID], ['$push' => ["comments" => $comment], '$inc' => ['commentsLength' => 1]]);
+                $mdb->albums->updateOne(["_id" => $ID], ['$push' => ["comments" => $comment], '$inc' => ['commentsLength' => 1]]);
                 // получить номер комментария
                 // и добавить его к массиву ответов если это нужно
                 if (!empty($commentID)) {
 
-                    $mdb->ads->updateOne(["_id" => $ID, "comments.id" => (int) $commentID], ['$push' => ["comments.$.comments_id" => $comLeng], '$inc' => ['comments.$.ansversLength' => 1]]);
+                    $mdb->albums->updateOne(["_id" => $ID, "comments.id" => (int) $commentID], ['$push' => ["comments.$.comments_id" => $comLeng], '$inc' => ['comments.$.ansversLength' => 1]]);
                 }else{
-                    $mdb->ads->updateOne(["_id" => $ID], ['$push' => ["comments_id" => $comLeng]]);
+                    $mdb->albums->updateOne(["_id" => $ID], ['$push' => ["comments_id" => $comLeng]]);
                 }
             }
             return ["massege" => "Комментарий сохранен"];
