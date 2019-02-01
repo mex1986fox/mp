@@ -86,7 +86,8 @@ export default {
       dShowComments: false,
       showAnswers: false,
       showForm: false,
-      description: undefined
+      description: undefined,
+      showMoreButtons: false
     };
   },
   methods: {
