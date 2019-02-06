@@ -214,6 +214,9 @@ export default {
     },
     disabled(newQ) {
       this.dDisabled = newQ;
+    },
+    help(newQ){
+      this.dHelp=newQ;
     }
   },
   mounted() {

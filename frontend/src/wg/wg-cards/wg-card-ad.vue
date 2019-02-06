@@ -220,8 +220,8 @@ export default {
       descActive: false,
       commentShow: false,
       dObj: this.object,
-      numberPhoto: 1,
-      numberZoomPhoto: 1,
+      numberPhoto: 0,
+      numberZoomPhoto: 0,
       showZoomSlider: false
     };
   },

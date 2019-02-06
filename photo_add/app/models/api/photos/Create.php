@@ -60,6 +60,11 @@ class Create
                     file_exists($path . "/");
                     if (!file_exists($path)) {
                         mkdir($path, 0777, true);
+                       
+                    }
+                    //проверить налицие поля в таблице
+
+                    if(empty($db->query("select ads_id from lincks;", \PDO::FETCH_ASSOC)->fetch()["ads_id"])){
                         $qInsert = "insert into lincks (ads_id, lincks) values ($addID, '{\"lincks\":[]}');";
                         $db->query($qInsert, \PDO::FETCH_ASSOC)->fetch();
                     }

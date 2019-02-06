@@ -26,7 +26,7 @@ class Authentication
             }
             // var_dump($_SESSION);
             if (!isset($_SESSION["user_id"])) {
-                throw new \Exception("Пользователь не авторизован2");
+                throw new \Exception("Пользователь не авторизован");
             }
 
             if($_SESSION["user_id"] != $user_id){

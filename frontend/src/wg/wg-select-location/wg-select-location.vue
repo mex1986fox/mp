@@ -40,6 +40,12 @@
     <div @click="showModal=true" class="wg-select-location__button">
       <i class="fa fa-map-marker" aria-hidden="true"></i>
     </div>
+    <span
+      class="ui-text__help ui-text__help_active"
+     
+      @click="showModal=true"
+    >{{help}}</span>
+
     <ui-blind :show="showModal" @onHide="showModal=false" :centering="true" animate="opacity">
       <div class="container">
         <div class="row">
@@ -118,7 +124,11 @@ export default {
     selectedSettlement: {
       type: Number,
       default: undefined
-    }
+    },
+    help: {
+      type: String,
+      default: ""
+    },
   },
   watch: {
     selectedCountry(newQ) {

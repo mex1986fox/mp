@@ -29,7 +29,8 @@
 						</div>
 						<div class="row">
 							<div class="col_12">
-								<wg-select-location caption="Страна, регион, город"></wg-select-location>
+								<wg-select-location :help="helpLocation" caption="Страна, регион, город"></wg-select-location>
+                
 							</div>
 						</div>
 						<div class="wg-form-add__hr">
@@ -42,6 +43,7 @@
 							</div>
 							<div class="col_5 col_offset-2">
 								<ui-select
+                  :help="helpModel"
 									name="model"
 									caption="Модель"
 									:menu="menuModels"
@@ -52,10 +54,10 @@
 						<ui-textarea name="description" caption="Описание" :autoresize="250"></ui-textarea>
 						<div class="row">
 							<div class="col_3">
-								<ui-select name="year" caption="Год выпуска" :menu="menuYear"></ui-select>
+								<ui-select :help="helpYear" name="year" caption="Год выпуска" :menu="menuYear"></ui-select>
 							</div>
 							<div class="col_2 col_offset-1">
-								<ui-text name="mileage" caption="Пробег км." :masc="{use:mascNumber}" :maxlength="9"></ui-text>
+								<ui-text :help="helpMilage" name="mileage" caption="Пробег км." :masc="{use:mascNumber}" :maxlength="9"></ui-text>
 							</div>
 						</div>
 						<div class="wg-form-add__hr">
@@ -64,7 +66,7 @@
 						</div>
 						<div class="row">
 							<div class="col_5">
-								<ui-text name="price" caption="Цена руб." :masc="{use:mascNumber}" :maxlength="10"></ui-text>
+								<ui-text :help="helpPrice" name="price" caption="Цена руб." :masc="{use:mascNumber}" :maxlength="10"></ui-text>
 							</div>
 						</div>
 						<div class="wg-form-add__buttons">
@@ -195,7 +197,12 @@ export default {
       selectPhoto: 0,
       percentFL: undefined,
       rirendLoader: false,
-      windowHeight: document.body.clientHeight
+      windowHeight: document.body.clientHeight,
+      helpLocation:"",
+      helpModel:"",
+      helpMilage:"",
+      helpYear:"",
+      helpPrice:""
     };
   },
   methods: {
@@ -232,13 +239,19 @@ export default {
             "Объявление успешно создано. Можете добавить фотографии.";
         },
         error => {
-          let massege = error.body.exceptions.massege;
+          let exceptions = error.body.exceptions;
 
-          if (massege != undefined) {
+          if (exceptions.massege != undefined) {
             this.showSnackbar = false;
             this.showSnackbar = true;
-            this.descSnackbar = massege;
+            this.descSnackbar = exceptions.massege;
+            
           }
+          this.helpLocation=(exceptions.settlement!=undefined)?exceptions.settlement:"";
+          this.helpModel=(exceptions.model!=undefined)?exceptions.model:"";
+          this.helpMilage=(exceptions.mileage!=undefined)?exceptions.mileage:"";
+          this.helpYear=(exceptions.year!=undefined)?exceptions.year:"";
+          this.helpPrice=(exceptions.price!=undefined)?exceptions.price:"";
         }
       );
     },

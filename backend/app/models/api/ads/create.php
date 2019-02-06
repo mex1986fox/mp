@@ -23,6 +23,15 @@ class Create
             }
 
             $p = $this->request->getQueryParams();
+            // проверяем параметры
+            if (empty($p["settlement"])) $exceptions["settlement"] = "Не указан город";
+            if (empty($p["model"])) $exceptions["model"] = "Не указана модель";
+            if (empty($p["mileage"])) $exceptions["mileage"] = "Не указан пробег";
+            if (empty($p["price"])) $exceptions["price"] = "Не указана цена";
+            if (empty($p["year"])) $exceptions["year"] = "Не указан год";
+            if (!empty($exceptions)) throw new \Exception("Ошибки в параметрах");
+            
+
             //передаем параметры в переменные
             $user_id = $_SESSION["user_id"];
             $settlements_id = $p["settlement"];
@@ -84,8 +93,8 @@ class Create
             $id_add = $db->query($q, \PDO::FETCH_ASSOC)->fetch();
             return ["add_id" => $id_add['id'], "massege" => "Объявление создано успешно"];
         } catch (RuntimeException | \Exception $e) {
-            $exceptions = ['exceptions' => ['massege' => $e->getMessage()]];
-            return $exceptions;
+            $exceptions['massege'] = $e->getMessage();
+            return ["exceptions" => $exceptions];
         }
     }
 }
