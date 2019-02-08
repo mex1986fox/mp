@@ -124,7 +124,7 @@ const form_add = {
           value: maxDate,
           option: maxDate,
           group: "Года",
-          selected: menu.length == 0 ? true : false
+          selected: false
         });
         maxDate--;
       }

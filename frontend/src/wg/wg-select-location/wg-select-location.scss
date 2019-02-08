@@ -1,34 +1,35 @@
 .wg-select-location {
-  margin: 23px 0 10px 0;
-  &__container {
-    overflow: hidden;
-    border-bottom: 1px solid $color-disabled;
-    min-height: 40px;
-    padding-top: 10px;
-  }
-  &__button {
-    position: absolute;
-    font-size: 20px;
-    float: right;
-    right: 0px;
-    top: auto;
-    padding: 8px;
-    cursor: pointer;
-    bottom: 10px;
-  }
-  &__caption {
-    top: 11px;
-    &_active {
-      font-size: 16px;
-      line-height: 90px;
+    margin: 23px 0 10px 0;
+    &__container {
+        overflow: hidden;
+        border-bottom: 1px solid $color-disabled;
+        min-height: 40px;
+        padding-top: 10px;
     }
-    &_completed {
-      font-size: 13px !important;
-      line-height: 25px;
+    &__button {
+        position: absolute;
+        font-size: 20px;
+        float: right;
+        right: 0px;
+        top: auto;
+        padding: 8px;
+        cursor: pointer;
+        bottom: 10px;
     }
-  }
-  &__border {
-    position: relative;
-    top: -1px;
-  }
+    &__caption {
+        top: 11px;
+        &_active {
+            font-size: 16px;
+            line-height: 90px;
+        }
+        &_completed {
+            font-size: 13px !important;
+            line-height: 25px;
+        }
+    }
+    &__border {
+        position: relative;
+        top: -1px;
+    }
+
 }

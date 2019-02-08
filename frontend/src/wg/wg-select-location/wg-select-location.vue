@@ -46,7 +46,7 @@
       @click="showModal=true"
     >{{help}}</span>
 
-    <ui-blind :show="showModal" @onHide="showModal=false" :centering="true" animate="opacity">
+    <ui-blind :show="showModal" @onHide="showModal=false" selector=".ui-modal-window" :centering="true" animate="opacity">
       <div class="container">
         <div class="row">
           <div class="col_4 col_offset-4 col-phone_6 col-phone_offset-0">

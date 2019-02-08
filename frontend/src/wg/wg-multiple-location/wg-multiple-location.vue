@@ -55,7 +55,7 @@
     >
       <i class="fa fa-map-marker" aria-hidden="true"></i>
     </div>
-    <ui-blind :show="showModal" @onHide="onInsert" :centering="true" animate="opacity">
+    <ui-blind :show="showModal" @onHide="onInsert" selector=".ui-modal-window" :centering="true" animate="opacity">
       <div class="container">
         <div class="row">
           <div class="col_4 col_offset-4 col-phone_6 col-phone_offset-0">

@@ -19,6 +19,7 @@
   &_enter-act_left,
   &_leave-act_left {
     transition-property: left, opacity;
+    transition-delay: 100ms;
     transition-duration: 500ms;
   }
   &_enter-to_left,
@@ -35,6 +36,7 @@
   &_enter-act_right,
   &_leave-act_right {
     transition-property: left, opacity;
+    transition-delay: 100ms;
     transition-duration: 500ms;
   }
   &_enter-to_right,
@@ -51,6 +53,7 @@
   &_enter-act_top,
   &_leave-act_top {
     transition-property: top, opacity;
+    transition-delay: 100ms;
     transition-duration: 500ms;
   }
   &_enter-to_top,
@@ -67,6 +70,7 @@
   &_enter-act_bottom,
   &_leave-act_bottom {
     transition-property: top, opacity;
+    transition-delay: 100ms;
     transition-duration: 500ms;
   }
   &_enter-to_bottom,
@@ -87,6 +91,7 @@
   &_enter-act_opacity,
   &_leave-act_opacity {
     transition-property: opacity;
+    transition-delay: 100ms;
     transition-duration: 500ms;
   }
   &_enter-to_opacity,

@@ -40,7 +40,7 @@
     <div @click="showModal=true" class="wg-select-transport__button">
       <i aria-hidden="true" class="fa fa-car"></i>
     </div>
-    <ui-blind :show="showModal" @onHide="showModal=false" :centering="true" animate="opacity">
+    <ui-blind :show="showModal" @onHide="showModal=false" selector=".ui-modal-window" :centering="true" animate="opacity">
       <div class="container">
         <div class="row">
           <div class="col_4 col_offset-4 col-phone_6 col-phone_offset-0">

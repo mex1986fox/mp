@@ -81,7 +81,7 @@
 					<div class="row">
 						<div class="col_12">
 
-							<ui-blind :show="showFormData" @onHide="showFormData=false" animate="bottom" style="background-color: rgba(255, 255, 255, 0);">
+							<ui-blind :show="showFormData" :centering="true" selector=".wg-form-add" @onHide="showFormData=false" animate="bottom" style="background-color: rgba(255, 255, 255, 0);">
 								<div class="container">
 									<div class="row">
 										<div class="col_6 col_offset-3 col-tablet_8 col-tablet_offset-2 col-phone_6 col-phone_offset-0">
@@ -96,7 +96,7 @@
 					<div class="row">
 						<div class="col_12">
 
-							<ui-blind :show="showFormAvatar" @onHide="showFormAvatar=false" animate="bottom" style="background-color: rgba(255, 255, 255, 0);">
+							<ui-blind :show="showFormAvatar" @onHide="showFormAvatar=false" animate="bottom" :centering="true" selector=".wg-form-add" style="background-color: rgba(255, 255, 255, 0);">
 								<div class="container">
 									<div class="row">
 										<div class="col_6 col_offset-3 col-tablet_8 col-tablet_offset-2 col-phone_6 col-phone_offset-0">

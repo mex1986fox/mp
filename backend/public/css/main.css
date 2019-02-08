@@ -1593,6 +1593,7 @@ body {
     left: -100%; }
   .ui-blind_enter-act_left, .ui-blind_leave-act_left {
     transition-property: left, opacity;
+    transition-delay: 100ms;
     transition-duration: 500ms; }
   .ui-blind_enter-to_left, .ui-blind_leave_left {
     opacity: 1;
@@ -1602,6 +1603,7 @@ body {
     left: 100%; }
   .ui-blind_enter-act_right, .ui-blind_leave-act_right {
     transition-property: left, opacity;
+    transition-delay: 100ms;
     transition-duration: 500ms; }
   .ui-blind_enter-to_right, .ui-blind_leave_right {
     opacity: 1;
@@ -1611,6 +1613,7 @@ body {
     top: -100%; }
   .ui-blind_enter-act_top, .ui-blind_leave-act_top {
     transition-property: top, opacity;
+    transition-delay: 100ms;
     transition-duration: 500ms; }
   .ui-blind_enter-to_top, .ui-blind_leave_top {
     opacity: 1;
@@ -1620,6 +1623,7 @@ body {
     top: 100%; }
   .ui-blind_enter-act_bottom, .ui-blind_leave-act_bottom {
     transition-property: top, opacity;
+    transition-delay: 100ms;
     transition-duration: 500ms; }
   .ui-blind_enter-to_bottom, .ui-blind_leave_bottom {
     opacity: 1;
@@ -1631,6 +1635,7 @@ body {
     opacity: 0; }
   .ui-blind_enter-act_opacity, .ui-blind_leave-act_opacity {
     transition-property: opacity;
+    transition-delay: 100ms;
     transition-duration: 500ms; }
   .ui-blind_enter-to_opacity, .ui-blind_leave_opacity {
     opacity: 1; }
@@ -3527,7 +3532,8 @@ input:-webkit-autofill {
     margin-top: 15px;
     float: left; }
   .wg-form-add__buttons {
-    padding: 30px;
+    padding: 60px 0px 30px 0px;
+    margin-left: -4px;
     overflow: hidden;
     width: 100%;
     height: 48px; }

@@ -64,7 +64,7 @@ class Create
                     }
                     //проверить налицие поля в таблице
 
-                    if(empty($db->query("select ads_id from lincks;", \PDO::FETCH_ASSOC)->fetch()["ads_id"])){
+                    if(empty($db->query("select ads_id from lincks where ads_id = ".$addID.";", \PDO::FETCH_ASSOC)->fetch()["ads_id"])){
                         $qInsert = "insert into lincks (ads_id, lincks) values ($addID, '{\"lincks\":[]}');";
                         $db->query($qInsert, \PDO::FETCH_ASSOC)->fetch();
                     }
