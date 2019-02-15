@@ -44,7 +44,8 @@ const form_add = {
           brands.push({
             value: brand.id,
             option: brand.name,
-            group: brand.name[0]
+            group: brand.name[0],
+            selected: false
           });
         }
       }

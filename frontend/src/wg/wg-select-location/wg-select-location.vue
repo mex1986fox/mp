@@ -68,6 +68,7 @@
                       caption="Страна"
                       :menu="menuCountry"
                       @onSelect="isSelCountry"
+                      typesort = "a-z"
                     ></ui-select>
                     <ui-select
                       :disabled="menuSubjects==undefined"
@@ -75,6 +76,7 @@
                       caption="Субъект"
                       :menu="menuSubjects"
                       @onSelect="isSelSubject"
+                      typesort = "a-z"
                     ></ui-select>
                     <ui-select
                       :disabled="menuSettlements==undefined"
@@ -82,6 +84,7 @@
                       caption="Город"
                       :menu="menuSettlements"
                       @onSelect="isSelSettlement"
+                      typesort = "a-z"
                     ></ui-select>
                   </div>
                 </div>

@@ -65,13 +65,19 @@
                   caption="Модель"
                   :menu="menuModels"
                   :disabled="(menuModels.length==0?true:false)"
+                  typesort="a-z"
                 ></ui-select>
               </div>
             </div>
             <ui-textarea name="description" caption="Описание" :autoresize="250"></ui-textarea>
             <div class="row">
               <div class="col_3">
-                <ui-select :help="helpYear" name="year" caption="Год выпуска" :menu="menuYear"></ui-select>
+                <ui-select
+                  :help="helpYear"
+                  name="year"
+                  caption="Год выпуска"
+                  :menu="menuYear"
+                ></ui-select>
               </div>
               <div class="col_2 col_offset-1">
                 <ui-text
@@ -152,6 +158,7 @@
                   caption="Топливо"
                   :menu="menuFuels"
                   @onSelect="isSelectedFuels"
+                  typesort = "a-z"
                 ></ui-select>
               </div>
               <div class="col_3 col_offset-1">
@@ -168,6 +175,7 @@
                   name="volume"
                   caption="Объем, л."
                   :menu="menuVolums"
+                  typesort = "a-z"
                 ></ui-select>
               </div>
             </div>
@@ -288,7 +296,7 @@ export default {
       this.helpMilage = "";
       this.helpYear = "";
       this.helpPrice = "";
-      if (add_id == undefined) {
+      if (this.add_id == undefined) {
         let body = new FormData(event.target);
         this.$http.post("/api/create/ads", body).then(
           response => {

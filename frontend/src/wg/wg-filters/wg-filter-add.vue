@@ -19,9 +19,7 @@
       </div>
       <div class="col_12" v-show="tabs=='city'">
         <div class="wg-filter-add__content">
-          <div class="wg-form-add__hr">
-            Местоположение
-          </div>
+          <div class="wg-form-add__hr">Местоположение</div>
           <div class="row">
             <div class="col_12">
               <wg-multiple-location
@@ -37,9 +35,7 @@
       </div>
       <div class="col_12" v-show="tabs=='model'">
         <div class="wg-filter-add__content">
-          <div class="wg-form-add__hr">
-            Вид транспорта
-          </div>
+          <div class="wg-form-add__hr">Вид транспорта</div>
           <div class="row">
             <div class="col_12">
               <wg-multiple-transport
@@ -55,10 +51,8 @@
       </div>
       <div class="col_12" v-show="tabs=='param'">
         <div class="wg-filter-add__content">
-          <div class="wg-form-add__hr">
-            Параметры
-          </div>
-            <div class="row">
+          <div class="wg-form-add__hr">Параметры</div>
+          <div class="row">
             <div class="col_6">
               <ui-select
                 name="sort"
@@ -92,10 +86,17 @@
           </div>
           <div class="row">
             <div class="col_6">
-              <ui-select name="year" caption="Год от" :menu="menuYear" @onSelect="setFilterYear"></ui-select>
+              <ui-select
+                name="year"
+                :cleaner="true"
+                caption="Год от"
+                :menu="menuYear"
+                @onSelect="setFilterYear"
+              ></ui-select>
             </div>
             <div class="col_5 col_offset-1">
               <ui-select
+                :cleaner="true"
                 name="year_bef"
                 caption="до"
                 :menu="menuYearBef"
@@ -139,6 +140,7 @@
           <div class="row">
             <div class="col_6">
               <ui-select
+                :cleaner="true"
                 name="body"
                 caption="Кузов"
                 :menu="menuBodies"
@@ -274,7 +276,6 @@ export default {
   methods: {
     // устанавливает  длину контейнера контетнта
     autoHeight() {
-
       setTimeout(() => {
         if (this.$refs.filter != undefined) {
           let height = window.document.body.clientHeight - 258;

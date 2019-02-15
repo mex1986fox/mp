@@ -36,6 +36,11 @@
     </transition>
     <ui-blind :show="dFocus" @onHide="dFocus=false" animate="opacity" class="ui-select__blind">
       <ul ref="menu" class="ui-select__menu" v-show="dFocus">
+        <li v-if="cleaner==true" @click="clickClianer" class="ui-select__option ui-select__cleaner">
+          <i aria-hidden="true" class="fa fa-times-thin"></i>
+          <span class="ui-select__cleaner-option">очистить</span>
+        </li>
+
         <template v-for="(val, key) in sortMenu">
           <template v-if="val.group!=undefined">
             <li
@@ -121,6 +126,16 @@ export default {
       default() {
         return [];
       }
+    },
+    typesort: {
+      type: String,
+      default() {
+        return undefined;
+      }
+    },
+    cleaner: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -174,19 +189,44 @@ export default {
         selValStr = selValStr + selValArr[k].option + ",  ";
       }
       this.dValue = selValStr.replace(/,\s*$/, "");
+    },
+    clickClianer(){
+      this.$emit("onSelect", []);
+      this.dFocus = false;
     }
   },
   computed: {
     // возвращает отсортированное меню
     sortMenu() {
       let menu = this.dMenu;
-      return menu.sort(function(d1, d2) {
-        if (d1.group != undefined) {
-          return d1.group.toLowerCase() > d2.group.toLowerCase();
-        } else {
-          return d1.name > d2.name;
-        }
-      });
+      //без сортировки
+      if (this.typesort == undefined) {
+        return menu;
+      }
+      //сортировка по алфавиту
+      if (this.typesort == "a-z" || this.typesort == "A-Z") {
+        return menu.sort(function(a, b) {
+          if (a.option > b.option) {
+            return 1;
+          }
+          if (a.option < b.option) {
+            return -1;
+          }
+          return 0;
+        });
+      }
+      //сортировка против алфанита
+      if (this.typesort == "z-a" || this.typesort == "Z-A") {
+        return menu.sort(function(a, b) {
+          if (a.option > b.option) {
+            return -1;
+          }
+          if (a.option < b.option) {
+            return 1;
+          }
+          return 0;
+        });
+      }
     }
   },
   watch: {
@@ -215,8 +255,8 @@ export default {
     disabled(newQ) {
       this.dDisabled = newQ;
     },
-    help(newQ){
-      this.dHelp=newQ;
+    help(newQ) {
+      this.dHelp = newQ;
     }
   },
   mounted() {

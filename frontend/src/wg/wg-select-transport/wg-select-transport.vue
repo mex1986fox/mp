@@ -62,6 +62,7 @@
                       caption="Тип транспорта"
                       :menu="menuTransport"
                       @onSelect="isSelTransport"
+                      typesort = "a-z"
                     ></ui-select>
                     <ui-select
                       :disabled="menuBrands==undefined"
@@ -69,6 +70,7 @@
                       caption="Марка"
                       :menu="menuBrands"
                       @onSelect="isSelBrand"
+                      typesort = "a-z"
                     ></ui-select>
                     <ui-select
                       :disabled="menuModels==undefined"
@@ -76,6 +78,7 @@
                       caption="Модель"
                       :menu="menuModels"
                       @onSelect="isSelModel"
+                      typesort = "a-z"
                     ></ui-select>
                   </div>
                 </div>
