@@ -69,6 +69,8 @@
               >
                 <wg-card-ad :object="JSON.parse(JSON.stringify(val))"></wg-card-ad>
               </div>
+              <!-- автоматическая подгрузка странниц при прокрутке -->
+              <wg-autopag-ad :show="false"></wg-autopag-ad>
             </div>
           </div>
         </div>

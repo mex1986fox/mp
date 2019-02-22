@@ -158,6 +158,7 @@
       :show="showContacts"
       animate="opacity"
       centering
+      selector=".ui-modal-window"
       class="pg-authorization__blind"
     >
       <div class="container">

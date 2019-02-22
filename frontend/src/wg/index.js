@@ -21,6 +21,10 @@ Vue.component("wg-comments", WgComments);
 import WgComment from "./wg-comments/wg-comment.vue";
 Vue.component("wg-comment", WgComment);
 
+//пагинация страниц
+import WgAutopagAd from "./wg-autopags/wg-autopag-ad.vue";
+Vue.component("wg-autopag-ad", WgAutopagAd);
+
 // фильтры
 import WgFilterAdd from "./wg-filters/wg-filter-add.vue";
 Vue.component("wg-filter-add", WgFilterAdd);

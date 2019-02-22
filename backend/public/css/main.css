@@ -3982,6 +3982,11 @@ input:-webkit-autofill {
 .wg-frame-friends__header {
   color: #525252; }
 
+.wg-autopag-ad__title {
+  text-align: center;
+  font-size: 15px;
+  margin-top: 5px; }
+
 .fa-times-thin:before {
   content: '\D7'; }
 
