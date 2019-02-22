@@ -390,9 +390,11 @@ export default {
         .post(this.$hosts.photosAds + "/api/show/photos", params, headers)
         .then(
           response => {
+            
             this.photoLincks = undefined;
             this.rirendLoader = true;
             setTimeout(() => {
+              this.isTabs("excess");
               this.percentFL = undefined;
               this.rirendLoader = false;
               this.photoLincks = response.body.ads[0].lincks;
